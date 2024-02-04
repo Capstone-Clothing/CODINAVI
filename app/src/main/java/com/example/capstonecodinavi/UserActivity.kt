@@ -24,5 +24,22 @@ class UserActivity : AppCompatActivity() {
             val intent = Intent(this, UserActivity::class.java)
             startActivity(intent)
         }
+
+//        binding.genderBtn.setOnClickListener {
+//          //성별 바꾸는 화면으로 이동
+//        }
+
+        binding.guideBtn.setOnClickListener {
+            val intent = Intent(this, GuideActivity::class.java)
+            startActivity(intent)
+        }
+
+//        binding.administratorBtn.setOnClickListener {
+//          //관리자 문의 화면으로 이동
+//        }
+
+//        binding.logoutBtn.setOnClickListener {
+//          //로그아웃
+//        }
     }
 }
