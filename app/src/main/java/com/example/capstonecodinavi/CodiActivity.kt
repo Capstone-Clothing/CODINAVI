@@ -2,13 +2,13 @@ package com.example.capstonecodinavi
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.capstonecodinavi.databinding.ActivityWeatherBinding
+import com.example.capstonecodinavi.databinding.ActivityCodiBinding
 
-class WeatherActivity : AppCompatActivity() {
-    lateinit var binding: ActivityWeatherBinding
+class CodiActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityCodiBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityWeatherBinding.inflate(layoutInflater)
+        binding = ActivityCodiBinding.inflate(layoutInflater)
         setContentView(binding.root)
     }
 }

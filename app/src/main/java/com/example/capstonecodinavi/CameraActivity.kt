@@ -22,7 +22,10 @@ class CameraActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         checkPermission()
+        action()
+    }
 
+    private fun action() {
         binding.mainBtnCameraOpen.setOnClickListener {
             Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
                 takePictureIntent.resolveActivity(packageManager)?.also {
@@ -30,8 +33,18 @@ class CameraActivity : AppCompatActivity() {
                 }
             }
         }
-    }
 
+        // 추가해야 할 것 : 밑의 두 개의 콜백 함수가 실행되기 위해서는 먼저 clothIv에 이미지가 있어야 함. -> if문으로 조건 걸어야 함.
+        binding.codiBtn.setOnClickListener {
+            val intent = Intent(this, CodiActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.colorBtn.setOnClickListener {
+            val intent = Intent(this, ColorActivity::class.java)
+            startActivity(intent)
+        }
+    }
     private fun checkPermission() {
         var permission = mutableMapOf<String, String>()
         permission["camera"] = Manifest.permission.CAMERA
@@ -64,7 +77,7 @@ class CameraActivity : AppCompatActivity() {
         if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             val imageBitmap = data?.extras?.get("data") as Bitmap
 
-            binding.photoIv.setImageBitmap(imageBitmap)
+            binding.clothIv.setImageBitmap(imageBitmap)
         }
     }
 }

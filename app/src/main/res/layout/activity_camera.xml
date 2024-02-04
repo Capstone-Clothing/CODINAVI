@@ -7,16 +7,84 @@
     android:orientation="vertical"
     tools:context=".CameraActivity">
 
-    <ImageView
-        android:id="@+id/photoIv"
-        android:layout_width="400dp"
-        android:layout_height="400dp"
-        android:layout_gravity="center|bottom" />
-
-    <Button
-        android:id="@+id/main_btn_camera_open"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center|bottom"
-        android:text="카메라 열기" />
+        android:layout_margin="16dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/view_border"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/homeBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/home" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textSize="24sp"
+                android:textColor="@color/black"
+                android:gravity="center"
+                android:background="@drawable/view_border"
+                android:text="CODINAVI" />
+
+            <ImageButton
+                android:id="@+id/profileBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/profile" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/clothIv"
+            android:layout_width="350dp"
+            android:layout_height="300dp"
+            android:layout_marginTop="16dp"
+            android:layout_gravity="center" />
+
+        <Button
+            android:id="@+id/main_btn_camera_open"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|bottom"
+            android:layout_margin="10dp"
+            android:text="카메라" />
+
+        <TextView
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:gravity="center"
+            android:text="옷 정보 설명"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/codiBtn"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:layout_marginRight="10dp"
+            android:text="코디 추천" />
+
+        <Button
+            android:id="@+id/colorBtn"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="10dp"
+            android:text="색상 추천" />
+    </LinearLayout>
+
 </LinearLayout>
