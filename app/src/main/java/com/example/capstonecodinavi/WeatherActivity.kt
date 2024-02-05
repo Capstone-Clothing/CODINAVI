@@ -19,6 +19,7 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.gms.location.*
+import com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.BufferedReader
@@ -33,6 +34,8 @@ class WeatherActivity : AppCompatActivity() {
         var requestQueue: RequestQueue? = null
     }
     lateinit var binding: ActivityWeatherBinding
+    private var lat: Double? = null
+    private var lon: Double? = null
     private var mFusedLocationProviderClient: FusedLocationProviderClient? = null // 현재 위치를 가져오기 위한 변수
     lateinit var mLastLocation: Location // 위치(위도, 경도) 값을 가지고 있는 객체
     internal lateinit var mLocationRequest: LocationRequest
@@ -41,8 +44,39 @@ class WeatherActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityWeatherBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        if(checkPermissionForLocation(this)) {
+            getCurrentLocation()
+        }
         action()
         setting()
+    }
+    private fun action() {
+        binding.homeBtn.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.profileBtn.setOnClickListener {
+            val intent = Intent(this, UserActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.Button.setOnClickListener {
+            val now = System.currentTimeMillis()
+            val date = Date(now)
+            val simpleDateFormatDay = SimpleDateFormat("MM")
+            val getMonth = simpleDateFormatDay.format(date)
+            val getDate = """
+                $getMonth
+            """.trimIndent()
+
+            CurrentWeatherCall()
+
+            if (getMonth == "12" || getMonth == "01" || getMonth == "02") binding.dateView.text = "겨울"
+            else if (getMonth == "03" || getMonth == "04" || getMonth == "05") binding.dateView.text = "봄"
+            else if (getMonth == "06" || getMonth == "07" || getMonth == "08") binding.dateView.text = "여름"
+            else binding.dateView.text = "가을"
+        }
     }
     private fun setting() {
         mLocationRequest = LocationRequest.create().apply {
@@ -54,7 +88,7 @@ class WeatherActivity : AppCompatActivity() {
         }
     }
     private fun CurrentWeatherCall() {
-        val url = "https://api.openweathermap.org/data/2.5/weather?lat=${mLastLocation.latitude}&lon=${mLastLocation.longitude}&appid=2d360c1fe9d2bade8fc08a1679683e24"
+        val url = "https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=2d360c1fe9d2bade8fc08a1679683e24"
         val request = object : StringRequest(
             Request.Method.GET,
             url,
@@ -85,64 +119,29 @@ class WeatherActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_PERMISSION_LOCATION) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                startLocationUpdates()
+                getCurrentLocation()
             } else {
                 Log.d("ttt", "onRequestPermissionResult() _ 권한 허용 거부")
                 Toast.makeText(this, "권한이 없어 해당 기능을 실행할 수 없습니다", Toast.LENGTH_SHORT).show()
             }
         }
     }
-    private fun action() {
-        binding.homeBtn.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.profileBtn.setOnClickListener {
-            val intent = Intent(this, UserActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.currentStateBtn.setOnClickListener {
-            // https://developer.android.com/training/location/permissions?hl=ko => 현재 위치를 가져오기 위한 api 문서
-            // 나중에는 위도와 경도의 값만 필요하니까 이 콜백함수 지우고 밑에 코드만 action() 밑이나 위에 놔두면 됨.
-            if(checkPermissionForLocation(this)) {
-                startLocationUpdates()
-            }
-        }
-        binding.Button.setOnClickListener {
-            val now = System.currentTimeMillis()
-            val date = Date(now)
-            val simpleDateFormatDay = SimpleDateFormat("MM")
-            val getMonth = simpleDateFormatDay.format(date)
-            val getDate = """
-                $getMonth
-            """.trimIndent()
-
-            CurrentWeatherCall()
-
-            if (getMonth == "12" || getMonth == "01" || getMonth == "02") binding.dateView.text = "겨울"
-            else if (getMonth == "03" || getMonth == "04" || getMonth == "05") binding.dateView.text = "봄"
-            else if (getMonth == "06" || getMonth == "07" || getMonth == "08") binding.dateView.text = "여름"
-            else binding.dateView.text = "가을"
-        }
-    }
-
-    private val mLocationCallback = object: LocationCallback() {
-        override fun onLocationResult(locationResult: LocationResult) {
-            // 시스템에서 받은 location 정보를 onLocationChanged()에 전달
-            onLocationChanged(locationResult.lastLocation)
-        }
-    }
-    private fun startLocationUpdates() {
+    private fun getCurrentLocation() {
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
             && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return
         }
-        // 기기의 위치에 관한 정기 업데이트를 요청하는 메서드 실행
-        // 지정한 루퍼 스레드(Looper.myLooper())에서 콜백(mLocationCallback)으로 위치 업데이트를 요청
-        mFusedLocationProviderClient!!.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper())
+
+        mFusedLocationProviderClient!!.getCurrentLocation(PRIORITY_HIGH_ACCURACY, null)
+            .addOnSuccessListener {success: Location? ->
+                success?.let { location ->
+                    lat = location.latitude
+                    lon = location.longitude
+                    Toast.makeText(this,"현재 위도 : ${lat}",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,"현재 경도 : ${lon}",Toast.LENGTH_SHORT).show()
+                }
+            }
     }
     private fun checkPermissionForLocation(context: Context): Boolean {
         // Android 6.0 Marshmallow 이상에서는 위치 권한에 추가 런타임 권한이 필요
@@ -157,10 +156,5 @@ class WeatherActivity : AppCompatActivity() {
         } else {
             true
         }
-    }
-    fun onLocationChanged(location: Location) {
-        mLastLocation = location
-        binding.text1.setText("위도 : " + mLastLocation.latitude)
-        binding.text2.setText("경도 : " + mLastLocation.longitude)
     }
 }
