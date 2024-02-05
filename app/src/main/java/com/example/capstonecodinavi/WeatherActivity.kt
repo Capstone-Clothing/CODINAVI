@@ -37,6 +37,21 @@ class WeatherActivity : AppCompatActivity() {
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         }
     }
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_PERMISSION_LOCATION) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                startLocationUpdates()
+            } else {
+                Log.d("ttt", "onRequestPermissionResult() _ 권한 허용 거부")
+                Toast.makeText(this, "권한이 없어 해당 기능을 실행할 수 없습니다", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
     private fun action() {
         binding.homeBtn.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
@@ -64,12 +79,6 @@ class WeatherActivity : AppCompatActivity() {
         }
         mFusedLocationProviderClient!!.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper())
     }
-    fun onLocationChanged(location: Location) {
-        mLastLocation = location
-        binding.text1.setText("위도 : " + mLastLocation.latitude)
-        binding.text2.setText("경도 : " + mLastLocation.longitude)
-    }
-
     private fun checkPermissionForLocation(context: Context): Boolean {
         // Android 6.0 Marshmallow 이상에서는 위치 권한에 추가 런타임 권한이 필요
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -84,19 +93,9 @@ class WeatherActivity : AppCompatActivity() {
             true
         }
     }
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == REQUEST_PERMISSION_LOCATION) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                startLocationUpdates()
-            } else {
-                Log.d("ttt", "onRequestPermissionResult() _ 권한 허용 거부")
-                Toast.makeText(this, "권한이 없어 해당 기능을 실행할 수 없습니다", Toast.LENGTH_SHORT).show()
-            }
-        }
+    fun onLocationChanged(location: Location) {
+        mLastLocation = location
+        binding.text1.setText("위도 : " + mLastLocation.latitude)
+        binding.text2.setText("경도 : " + mLastLocation.longitude)
     }
 }
