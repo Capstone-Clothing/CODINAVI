@@ -126,6 +126,20 @@ class WeatherActivity : AppCompatActivity() {
             }
         }
     }
+    private fun checkPermissionForLocation(context: Context): Boolean {
+        // Android 6.0 Marshmallow 이상에서는 위치 권한에 추가 런타임 권한이 필요
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                true
+            } else {
+                // 권한이 없으므로 권한 요청 알림 보내기
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_PERMISSION_LOCATION)
+                false
+            }
+        } else {
+            true
+        }
+    }
     private fun getCurrentLocation() {
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
@@ -142,19 +156,5 @@ class WeatherActivity : AppCompatActivity() {
                     Toast.makeText(this,"현재 경도 : ${lon}",Toast.LENGTH_SHORT).show()
                 }
             }
-    }
-    private fun checkPermissionForLocation(context: Context): Boolean {
-        // Android 6.0 Marshmallow 이상에서는 위치 권한에 추가 런타임 권한이 필요
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                true
-            } else {
-                // 권한이 없으므로 권한 요청 알림 보내기
-                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_PERMISSION_LOCATION)
-                false
-            }
-        } else {
-            true
-        }
     }
 }
