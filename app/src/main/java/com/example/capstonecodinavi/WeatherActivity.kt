@@ -13,29 +13,69 @@ import android.os.Looper
 import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import com.android.volley.Request
+import com.android.volley.RequestQueue
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.google.android.gms.location.*
+import org.json.JSONException
+import org.json.JSONObject
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.net.HttpURLConnection
+import java.net.URL
+import java.text.SimpleDateFormat
+import java.util.Date
 
 class WeatherActivity : AppCompatActivity() {
+    companion object {
+        var requestQueue: RequestQueue? = null
+    }
     lateinit var binding: ActivityWeatherBinding
     private var mFusedLocationProviderClient: FusedLocationProviderClient? = null // 현재 위치를 가져오기 위한 변수
-    lateinit var mLastLocation: Location // 위치 값을 가지고 있는 객체
+    lateinit var mLastLocation: Location // 위치(위도, 경도) 값을 가지고 있는 객체
     internal lateinit var mLocationRequest: LocationRequest
     private val REQUEST_PERMISSION_LOCATION = 10
-    private val mLocationCallback = object: LocationCallback() {
-        override fun onLocationResult(locationResult: LocationResult) {
-            locationResult.lastLocation
-            onLocationChanged(locationResult.lastLocation)
-        }
-    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityWeatherBinding.inflate(layoutInflater)
         setContentView(binding.root)
         action()
-
+        setting()
+    }
+    private fun setting() {
         mLocationRequest = LocationRequest.create().apply {
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         }
+
+        if (requestQueue == null) {
+            requestQueue = Volley.newRequestQueue(applicationContext)
+        }
+    }
+    private fun CurrentWeatherCall() {
+        val url = "https://api.openweathermap.org/data/2.5/weather?lat=${mLastLocation.latitude}&lon=${mLastLocation.longitude}&appid=2d360c1fe9d2bade8fc08a1679683e24"
+        val request = object : StringRequest(
+            Request.Method.GET,
+            url,
+            Response.Listener { response ->
+                try {
+                    // JSON 데이터 가져오기
+                    val jsonObject = JSONObject(response)
+                    val weatherJson = jsonObject.getJSONArray("weather")
+                    val weatherObj = weatherJson.getJSONObject(0)
+                    val weather = weatherObj.getString("main")
+                    if (weather.contains("Rain")) binding.weatherView!!.text = "비"
+                    else if (weather.contains("Snow")) binding.weatherView!!.text = "눈"
+                    else if (weather.contains("Clouds")) binding.weatherView!!.text = "흐림"
+                    else binding.weatherView!!.text = "맑음"
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+            },
+            Response.ErrorListener { }) { }
+        request.setShouldCache(false) // 이전 결과가 있어도 새 요청하여 결과 보여주기
+        requestQueue!!.add(request)
     }
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -70,6 +110,29 @@ class WeatherActivity : AppCompatActivity() {
                 startLocationUpdates()
             }
         }
+        binding.Button.setOnClickListener {
+            val now = System.currentTimeMillis()
+            val date = Date(now)
+            val simpleDateFormatDay = SimpleDateFormat("MM")
+            val getMonth = simpleDateFormatDay.format(date)
+            val getDate = """
+                $getMonth
+            """.trimIndent()
+
+            CurrentWeatherCall()
+
+            if (getMonth == "12" || getMonth == "01" || getMonth == "02") binding.dateView.text = "겨울"
+            else if (getMonth == "03" || getMonth == "04" || getMonth == "05") binding.dateView.text = "봄"
+            else if (getMonth == "06" || getMonth == "07" || getMonth == "08") binding.dateView.text = "여름"
+            else binding.dateView.text = "가을"
+        }
+    }
+
+    private val mLocationCallback = object: LocationCallback() {
+        override fun onLocationResult(locationResult: LocationResult) {
+            // 시스템에서 받은 location 정보를 onLocationChanged()에 전달
+            onLocationChanged(locationResult.lastLocation)
+        }
     }
     private fun startLocationUpdates() {
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
@@ -77,6 +140,8 @@ class WeatherActivity : AppCompatActivity() {
             && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return
         }
+        // 기기의 위치에 관한 정기 업데이트를 요청하는 메서드 실행
+        // 지정한 루퍼 스레드(Looper.myLooper())에서 콜백(mLocationCallback)으로 위치 업데이트를 요청
         mFusedLocationProviderClient!!.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper())
     }
     private fun checkPermissionForLocation(context: Context): Boolean {

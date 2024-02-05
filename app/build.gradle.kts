@@ -49,6 +49,7 @@ dependencies {
     //날씨
     implementation ("com.loopj.android:android-async-http:1.4.11")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation ("com.android.volley:volley:1.2.1")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
