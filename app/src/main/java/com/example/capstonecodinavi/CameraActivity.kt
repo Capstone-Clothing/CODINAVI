@@ -12,7 +12,7 @@ import androidx.core.content.ContextCompat
 import com.example.capstonecodinavi.databinding.ActivityCameraBinding
 import android.Manifest
 
-
+// yoon mongchongeeeeeeeeeee
 class CameraActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCameraBinding
     val REQUEST_IMAGE_CAPTURE = 1
