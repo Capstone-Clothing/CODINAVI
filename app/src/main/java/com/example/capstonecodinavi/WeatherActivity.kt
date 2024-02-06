@@ -24,10 +24,14 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.InputStreamReader
+import java.math.RoundingMode
 import java.net.HttpURLConnection
 import java.net.URL
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.Date
+import kotlin.math.round
+import kotlin.math.roundToInt
 
 class WeatherActivity : AppCompatActivity() {
     companion object {
@@ -72,10 +76,10 @@ class WeatherActivity : AppCompatActivity() {
 
             CurrentWeatherCall()
 
-            if (getMonth == "12" || getMonth == "01" || getMonth == "02") binding.dateView.text = "겨울"
-            else if (getMonth == "03" || getMonth == "04" || getMonth == "05") binding.dateView.text = "봄"
-            else if (getMonth == "06" || getMonth == "07" || getMonth == "08") binding.dateView.text = "여름"
-            else binding.dateView.text = "가을"
+            if (getMonth == "12" || getMonth == "01" || getMonth == "02") binding.seasonTv.text = "겨울"
+            else if (getMonth == "03" || getMonth == "04" || getMonth == "05") binding.seasonTv.text = "봄"
+            else if (getMonth == "06" || getMonth == "07" || getMonth == "08") binding.seasonTv.text = "여름"
+            else binding.seasonTv.text = "가을"
         }
     }
     private fun setting() {
@@ -96,13 +100,24 @@ class WeatherActivity : AppCompatActivity() {
                 try {
                     // JSON 데이터 가져오기
                     val jsonObject = JSONObject(response)
-                    val weatherJson = jsonObject.getJSONArray("weather")
-                    val weatherObj = weatherJson.getJSONObject(0)
-                    val weather = weatherObj.getString("main")
-                    if (weather.contains("Rain")) binding.weatherView!!.text = "비"
-                    else if (weather.contains("Snow")) binding.weatherView!!.text = "눈"
-                    else if (weather.contains("Clouds")) binding.weatherView!!.text = "흐림"
-                    else binding.weatherView!!.text = "맑음"
+                    val weather = jsonObject.getJSONArray("weather").getJSONObject(0).getString("main")
+                    val temp = jsonObject.getJSONObject("main").getString("temp").toDouble()
+                    val changedTemp = changeTemp(temp)
+
+                    //날씨
+                    if (weather.contains("Rain")) {
+                        binding.weatherTv.setText("비")
+                    } else if (weather.contains("Snow")) {
+                        binding.weatherTv.setText("눈")
+                    } else if (weather.contains("Clouds")) {
+                        binding.weatherTv.setText("흐림")
+                    } else {
+                        binding.weatherTv.setText("맑음")
+                    }
+
+                    //기온
+                    binding.tempTv.setText(changedTemp)
+
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }
@@ -125,6 +140,13 @@ class WeatherActivity : AppCompatActivity() {
                 Toast.makeText(this, "권한이 없어 해당 기능을 실행할 수 없습니다", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+    private fun changeTemp(temp: Double): String {
+        val changedTemp = (temp - 273.15)
+        val df = DecimalFormat("#.#")
+        df.roundingMode = RoundingMode.DOWN
+        val roundoff = df.format(changedTemp)
+        return roundoff
     }
     private fun checkPermissionForLocation(context: Context): Boolean {
         // Android 6.0 Marshmallow 이상에서는 위치 권한에 추가 런타임 권한이 필요
@@ -158,5 +180,4 @@ class WeatherActivity : AppCompatActivity() {
             }
     }
 
-    //merge test
 }

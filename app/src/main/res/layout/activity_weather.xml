@@ -40,7 +40,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/dateView"
+        android:id="@+id/seasonTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -49,13 +49,24 @@
         android:padding="20dp"/>
 
     <TextView
-        android:id="@+id/weatherView"
+        android:id="@+id/weatherTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:padding="20dp"
         android:text="날씨"
         android:textSize="40sp"/>
+
+    <TextView
+        android:id="@+id/tempTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:padding="20dp"
+        android:text="기온"
+        android:textSize="40sp"/>
+
+
     <Button
         android:id="@+id/Button"
         android:layout_width="wrap_content"
