@@ -9,7 +9,6 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Build
-import android.os.Looper
 import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -22,16 +21,10 @@ import com.google.android.gms.location.*
 import com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
 import org.json.JSONException
 import org.json.JSONObject
-import java.io.BufferedReader
-import java.io.InputStreamReader
 import java.math.RoundingMode
-import java.net.HttpURLConnection
-import java.net.URL
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.Date
-import kotlin.math.round
-import kotlin.math.roundToInt
 
 class WeatherActivity : AppCompatActivity() {
     companion object {
@@ -74,7 +67,7 @@ class WeatherActivity : AppCompatActivity() {
                 $getMonth
             """.trimIndent()
 
-            CurrentWeatherCall()
+            getCurrentWeather()
 
             if (getMonth == "12" || getMonth == "01" || getMonth == "02") binding.seasonTv.text = "겨울"
             else if (getMonth == "03" || getMonth == "04" || getMonth == "05") binding.seasonTv.text = "봄"
@@ -91,7 +84,7 @@ class WeatherActivity : AppCompatActivity() {
             requestQueue = Volley.newRequestQueue(applicationContext)
         }
     }
-    private fun CurrentWeatherCall() {
+    private fun getCurrentWeather() {
         val url = "https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=2d360c1fe9d2bade8fc08a1679683e24"
         val request = object : StringRequest(
             Request.Method.GET,
@@ -126,42 +119,6 @@ class WeatherActivity : AppCompatActivity() {
         request.setShouldCache(false) // 이전 결과가 있어도 새 요청하여 결과 보여주기
         requestQueue!!.add(request)
     }
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == REQUEST_PERMISSION_LOCATION) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                getCurrentLocation()
-            } else {
-                Log.d("ttt", "onRequestPermissionResult() _ 권한 허용 거부")
-                Toast.makeText(this, "권한이 없어 해당 기능을 실행할 수 없습니다", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-    private fun changeTemp(temp: Double): String {
-        val changedTemp = (temp - 273.15)
-        val df = DecimalFormat("#.#")
-        df.roundingMode = RoundingMode.DOWN
-        val roundoff = df.format(changedTemp)
-        return roundoff
-    }
-    private fun checkPermissionForLocation(context: Context): Boolean {
-        // Android 6.0 Marshmallow 이상에서는 위치 권한에 추가 런타임 권한이 필요
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                true
-            } else {
-                // 권한이 없으므로 권한 요청 알림 보내기
-                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_PERMISSION_LOCATION)
-                false
-            }
-        } else {
-            true
-        }
-    }
     private fun getCurrentLocation() {
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
@@ -179,5 +136,42 @@ class WeatherActivity : AppCompatActivity() {
                 }
             }
     }
+    private fun changeTemp(temp: Double): String {
+        val changedTemp = (temp - 273.15)
+        val df = DecimalFormat("#.#")
+        df.roundingMode = RoundingMode.DOWN
+        val roundoff = df.format(changedTemp)
+        return roundoff
+    }
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_PERMISSION_LOCATION) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                getCurrentLocation()
+            } else {
+                Log.d("ttt", "onRequestPermissionResult() _ 권한 허용 거부")
+                Toast.makeText(this, "권한이 없어 해당 기능을 실행할 수 없습니다", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+    private fun checkPermissionForLocation(context: Context): Boolean {
+        // Android 6.0 Marshmallow 이상에서는 위치 권한에 추가 런타임 권한이 필요
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                true
+            } else {
+                // 권한이 없으므로 권한 요청 알림 보내기
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_PERMISSION_LOCATION)
+                false
+            }
+        } else {
+            true
+        }
+    }
+
 
 }
