@@ -12,7 +12,6 @@ import androidx.core.content.ContextCompat
 import com.example.capstonecodinavi.databinding.ActivityCameraBinding
 import android.Manifest
 
-
 class CameraActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCameraBinding
     val REQUEST_IMAGE_CAPTURE = 1
@@ -26,6 +25,16 @@ class CameraActivity : AppCompatActivity() {
     }
 
     private fun action() {
+        binding.homeBtn.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.profileBtn.setOnClickListener {
+            val intent = Intent(this, UserActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.mainBtnCameraOpen.setOnClickListener {
             Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
                 takePictureIntent.resolveActivity(packageManager)?.also {

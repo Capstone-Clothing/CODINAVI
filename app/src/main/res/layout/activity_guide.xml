@@ -38,4 +38,38 @@
             android:src="@drawable/profile" />
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/introduceCodinaviTv"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:gravity="center_vertical"
+            android:background="@drawable/view_border"
+            android:textSize="20sp"
+            android:text="코디나비는 시각장애인을 위한 코디 추천 서비스 어플입니다. 카메라를 통해 옷의 정보를 제공하고 그에 맞는 코디를 추천해주며 날씨에 맞는 옷차림을 소개해줍니다." />
+
+        <Button
+            android:id="@+id/introduceCameraBtn"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginTop="80dp"
+            android:textSize="25sp"
+            android:text="카메라 버튼 기능 설명 (버튼)" />
+
+        <TextView
+            android:id="@+id/introduceWeatherTv"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginTop="80dp"
+            android:gravity="center_vertical"
+            android:background="@drawable/view_border"
+            android:textSize="20sp"
+            android:text="날씨 버튼은 사용자가 현재 위치나 원하는 위치를 입력하면 날씨 정보를 제공하고 그 날씨에 맞는 옷차림을 추천합니다." />
+    </LinearLayout>
+
 </LinearLayout>
