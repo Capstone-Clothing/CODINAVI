@@ -9,7 +9,6 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Build
-import android.os.Looper
 import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -22,10 +21,8 @@ import com.google.android.gms.location.*
 import com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
 import org.json.JSONException
 import org.json.JSONObject
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.net.HttpURLConnection
-import java.net.URL
+import java.math.RoundingMode
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.Date
 
@@ -70,13 +67,12 @@ class WeatherActivity : AppCompatActivity() {
                 $getMonth
             """.trimIndent()
 
-            CurrentWeatherCall()
+            getCurrentWeather()
 
-
-            if (getMonth == "12" || getMonth == "01" || getMonth == "02") binding.dateView.text = "겨울"
-            else if (getMonth == "03" || getMonth == "04" || getMonth == "05") binding.dateView.text = "봄"
-            else if (getMonth == "06" || getMonth == "07" || getMonth == "08") binding.dateView.text = "여름"
-            else binding.dateView.text = "가을"
+            if (getMonth == "12" || getMonth == "01" || getMonth == "02") binding.seasonTv.text = "겨울"
+            else if (getMonth == "03" || getMonth == "04" || getMonth == "05") binding.seasonTv.text = "봄"
+            else if (getMonth == "06" || getMonth == "07" || getMonth == "08") binding.seasonTv.text = "여름"
+            else binding.seasonTv.text = "가을"
         }
     }
     private fun setting() {
@@ -88,7 +84,7 @@ class WeatherActivity : AppCompatActivity() {
             requestQueue = Volley.newRequestQueue(applicationContext)
         }
     }
-    private fun CurrentWeatherCall() {
+    private fun getCurrentWeather() {
         val url = "https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=2d360c1fe9d2bade8fc08a1679683e24"
         val request = object : StringRequest(
             Request.Method.GET,
@@ -97,13 +93,24 @@ class WeatherActivity : AppCompatActivity() {
                 try {
                     // JSON 데이터 가져오기
                     val jsonObject = JSONObject(response)
-                    val weatherJson = jsonObject.getJSONArray("weather")
-                    val weatherObj = weatherJson.getJSONObject(0)
-                    val weather = weatherObj.getString("main")
-                    if (weather.contains("Rain")) binding.weatherView!!.text = "비"
-                    else if (weather.contains("Snow")) binding.weatherView!!.text = "눈"
-                    else if (weather.contains("Clouds")) binding.weatherView!!.text = "흐림"
-                    else binding.weatherView!!.text = "맑음"
+                    val weather = jsonObject.getJSONArray("weather").getJSONObject(0).getString("main")
+                    val temp = jsonObject.getJSONObject("main").getString("temp").toDouble()
+                    val changedTemp = changeTemp(temp)
+
+                    //날씨
+                    if (weather.contains("Rain")) {
+                        binding.weatherTv.setText("비")
+                    } else if (weather.contains("Snow")) {
+                        binding.weatherTv.setText("눈")
+                    } else if (weather.contains("Clouds")) {
+                        binding.weatherTv.setText("흐림")
+                    } else {
+                        binding.weatherTv.setText("맑음")
+                    }
+
+                    //기온
+                    binding.tempTv.setText(changedTemp)
+
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }
@@ -111,21 +118,6 @@ class WeatherActivity : AppCompatActivity() {
             Response.ErrorListener { }) { }
         request.setShouldCache(false) // 이전 결과가 있어도 새 요청하여 결과 보여주기
         requestQueue!!.add(request)
-    }
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == REQUEST_PERMISSION_LOCATION) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                getCurrentLocation()
-            } else {
-                Log.d("ttt", "onRequestPermissionResult() _ 권한 허용 거부")
-                Toast.makeText(this, "권한이 없어 해당 기능을 실행할 수 없습니다", Toast.LENGTH_SHORT).show()
-            }
-        }
     }
     private fun getCurrentLocation() {
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
@@ -144,6 +136,28 @@ class WeatherActivity : AppCompatActivity() {
                 }
             }
     }
+    private fun changeTemp(temp: Double): String {
+        val changedTemp = (temp - 273.15)
+        val df = DecimalFormat("#.#")
+        df.roundingMode = RoundingMode.DOWN
+        val roundoff = df.format(changedTemp)
+        return roundoff
+    }
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_PERMISSION_LOCATION) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                getCurrentLocation()
+            } else {
+                Log.d("ttt", "onRequestPermissionResult() _ 권한 허용 거부")
+                Toast.makeText(this, "권한이 없어 해당 기능을 실행할 수 없습니다", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
     private fun checkPermissionForLocation(context: Context): Boolean {
         // Android 6.0 Marshmallow 이상에서는 위치 권한에 추가 런타임 권한이 필요
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -158,4 +172,6 @@ class WeatherActivity : AppCompatActivity() {
             true
         }
     }
+
+
 }
