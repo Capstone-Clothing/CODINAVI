@@ -72,6 +72,7 @@ class WeatherActivity : AppCompatActivity() {
 
             CurrentWeatherCall()
 
+
             if (getMonth == "12" || getMonth == "01" || getMonth == "02") binding.dateView.text = "겨울"
             else if (getMonth == "03" || getMonth == "04" || getMonth == "05") binding.dateView.text = "봄"
             else if (getMonth == "06" || getMonth == "07" || getMonth == "08") binding.dateView.text = "여름"
