@@ -27,25 +27,40 @@ import java.text.SimpleDateFormat
 import java.util.Date
 
 class WeatherActivity : AppCompatActivity() {
+    lateinit var binding: ActivityWeatherBinding
+
+    //위치
+    private var mFusedLocationProviderClient: FusedLocationProviderClient? = null // 현재 위치를 가져오기 위한 객체
+    internal lateinit var mLocationRequest: LocationRequest //위치 요청에 대한 설정을 정의하는 객체. 현재 위치를 요청할 때 위치 정확도, 업데이트 간격 등을 설정함.
+    private val REQUEST_PERMISSION_LOCATION = 10
+    private var lat: Double? = null
+    private var lon: Double? = null
+
+    //날씨 및 기온
     companion object {
         var requestQueue: RequestQueue? = null
     }
-    lateinit var binding: ActivityWeatherBinding
-    private var lat: Double? = null
-    private var lon: Double? = null
-    private var mFusedLocationProviderClient: FusedLocationProviderClient? = null // 현재 위치를 가져오기 위한 변수
-    lateinit var mLastLocation: Location // 위치(위도, 경도) 값을 가지고 있는 객체
-    internal lateinit var mLocationRequest: LocationRequest
-    private val REQUEST_PERMISSION_LOCATION = 10
+    private var setWeather: String? = null
+    private var setTemp: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityWeatherBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        setting()
         if(checkPermissionForLocation(this)) {
             getCurrentLocation()
         }
         action()
-        setting()
+    }
+    private fun setting() {
+        mLocationRequest = LocationRequest.create().apply {
+            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        }
+
+        if (requestQueue == null) {
+            requestQueue = Volley.newRequestQueue(applicationContext)
+        }
     }
     private fun action() {
         binding.homeBtn.setOnClickListener {
@@ -67,28 +82,37 @@ class WeatherActivity : AppCompatActivity() {
                 $getMonth
             """.trimIndent()
 
-            getCurrentWeather()
-
             if (getMonth == "12" || getMonth == "01" || getMonth == "02") binding.seasonTv.text = "겨울"
             else if (getMonth == "03" || getMonth == "04" || getMonth == "05") binding.seasonTv.text = "봄"
             else if (getMonth == "06" || getMonth == "07" || getMonth == "08") binding.seasonTv.text = "여름"
             else binding.seasonTv.text = "가을"
+
+            getCurrentWeather()
+
+            binding.instructionTv.text = "현재 계절은 ${binding.seasonTv.text}이고 날씨는 ${setWeather}이며 기온은 ${setTemp}입니다."
         }
     }
-    private fun setting() {
-        mLocationRequest = LocationRequest.create().apply {
-            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+    private fun getCurrentLocation() {
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+            && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return
         }
 
-        if (requestQueue == null) {
-            requestQueue = Volley.newRequestQueue(applicationContext)
-        }
+        mFusedLocationProviderClient!!.getCurrentLocation(PRIORITY_HIGH_ACCURACY, null)
+            .addOnSuccessListener {success: Location? ->
+                success?.let { location ->  //success가 null이 아닌 경우
+                    lat = location.latitude
+                    lon = location.longitude
+                    Toast.makeText(this,"현재 위도 : ${lat}",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,"현재 경도 : ${lon}",Toast.LENGTH_SHORT).show()
+                }
+            }
     }
     private fun getCurrentWeather() {
         val url = "https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=2d360c1fe9d2bade8fc08a1679683e24"
-        val request = object : StringRequest(
-            Request.Method.GET,
-            url,
+        val request = object : StringRequest(Request.Method.GET, url,
             Response.Listener { response ->
                 try {
                     // JSON 데이터 가져오기
@@ -100,16 +124,21 @@ class WeatherActivity : AppCompatActivity() {
                     //날씨
                     if (weather.contains("Rain")) {
                         binding.weatherTv.setText("비")
+                        setWeather = "비"
                     } else if (weather.contains("Snow")) {
                         binding.weatherTv.setText("눈")
+                        setWeather = "눈"
                     } else if (weather.contains("Clouds")) {
                         binding.weatherTv.setText("흐림")
+                        setWeather = "흐림"
                     } else {
                         binding.weatherTv.setText("맑음")
+                        setWeather = "맑음"
                     }
 
                     //기온
                     binding.tempTv.setText(changedTemp)
+                    setTemp = changedTemp
 
                 } catch (e: JSONException) {
                     e.printStackTrace()
@@ -118,23 +147,6 @@ class WeatherActivity : AppCompatActivity() {
             Response.ErrorListener { }) { }
         request.setShouldCache(false) // 이전 결과가 있어도 새 요청하여 결과 보여주기
         requestQueue!!.add(request)
-    }
-    private fun getCurrentLocation() {
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-            && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return
-        }
-
-        mFusedLocationProviderClient!!.getCurrentLocation(PRIORITY_HIGH_ACCURACY, null)
-            .addOnSuccessListener {success: Location? ->
-                success?.let { location ->
-                    lat = location.latitude
-                    lon = location.longitude
-                    Toast.makeText(this,"현재 위도 : ${lat}",Toast.LENGTH_SHORT).show()
-                    Toast.makeText(this,"현재 경도 : ${lon}",Toast.LENGTH_SHORT).show()
-                }
-            }
     }
     private fun changeTemp(temp: Double): String {
         val changedTemp = (temp - 273.15)
