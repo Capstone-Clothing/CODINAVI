@@ -7,8 +7,11 @@ import com.example.capstonecodinavi.databinding.ActivityWeatherBinding
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
+import android.location.Address
+import android.location.Geocoder
 import android.location.Location
 import android.os.Build
+import android.provider.Telephony.Mms.Addr
 import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -20,8 +23,12 @@ import com.google.android.gms.location.*
 import com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
 import org.json.JSONException
 import org.json.JSONObject
+import java.io.IOException
 import java.math.RoundingMode
 import java.text.DecimalFormat
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class WeatherActivity : AppCompatActivity() {
     lateinit var binding: ActivityWeatherBinding
@@ -30,13 +37,13 @@ class WeatherActivity : AppCompatActivity() {
     private val REQUEST_PERMISSION_LOCATION = 10
     private var lat: Double? = null
     private var lon: Double? = null
+    private var address: List<String>? = null
 
+    private var season: String? = null
     //날씨 및 기온
     companion object {
         var requestQueue: RequestQueue? = null
     }
-    private var setSeason: String? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityWeatherBinding.inflate(layoutInflater)
@@ -79,10 +86,34 @@ class WeatherActivity : AppCompatActivity() {
                 success?.let { location ->
                     lat = location.latitude
                     lon = location.longitude
+                    address = getAddress(lat!!, lon!!)
 
+                    //Log.d("checkcheck","${address!!.adminArea} ${address!!.locality} ${address!!.thoroughfare}")
+                    Log.d("checkcheck","${address!!.get(1)} ${address!!.get(2)} ${address!!.get(3)}")
                     getCurrentWeather()
+                    getSeason()
+
                 }
             }
+    }
+    private fun getAddress(lat: Double, lon: Double): List<String>? {
+        lateinit var address: List<String>
+
+        return try {
+            val geocoder = Geocoder(this, Locale.KOREA)
+            val addrList = geocoder.getFromLocation(lat, lon, 1)
+
+            if (addrList != null) {
+                for (addr in addrList) {
+                    val spliteAddr = addr.getAddressLine(0).split(" ")
+                    address = spliteAddr
+                }
+            }
+            address
+        } catch (e: IOException) {
+            Toast.makeText(this, "주소를 가져올 수 없습니다",Toast.LENGTH_SHORT).show()
+            null
+        }
     }
     private fun getCurrentWeather() {
         val url = "https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=2d360c1fe9d2bade8fc08a1679683e24"
@@ -97,7 +128,6 @@ class WeatherActivity : AppCompatActivity() {
                         val weather = jsonObject.getJSONArray("weather").getJSONObject(0).getString("main")
                         val kelvin = jsonObject.getJSONObject("main").getString("temp").toDouble()
                         val celsius = changeKelvinToCelsius(kelvin)
-
                         var weatherStr: String
 
                         //날씨
@@ -111,7 +141,7 @@ class WeatherActivity : AppCompatActivity() {
                             weatherStr = "맑음"
                         }
 
-                        binding.instructionTv.text = "현재 계절은 ${setSeason}이고 날씨는 ${weatherStr}이며 기온은 ${celsius}도 입니다."
+                        //binding.instructionTv.text = "현재 위치는 ${address!!.adminArea} ${address!!.subAdminArea} ${address!!.thoroughfare}입니다. 계절은 ${season}이고 날씨는 ${weatherStr}이며 기온은 ${celsius}도 입니다."
                     } catch (e: JSONException) {
                         e.printStackTrace()
                     }
@@ -121,6 +151,19 @@ class WeatherActivity : AppCompatActivity() {
 
         request.setShouldCache(false) // 이전 결과가 있어도 새 요청하여 결과 보여주기
         requestQueue!!.add(request)
+    }
+    private fun getSeason() {
+        val now = System.currentTimeMillis()
+        val date = Date(now)
+        val simpleDateFormatDay = SimpleDateFormat("MM")
+        val getMonth = simpleDateFormatDay.format(date)
+        val getDate = """
+             $getMonth
+            """.trimIndent()
+        if (getMonth == "12" || getMonth == "01" || getMonth == "02") season = "겨울"
+        else if (getMonth == "03" || getMonth == "04" || getMonth == "05") season = "봄"
+        else if (getMonth == "06" || getMonth == "07" || getMonth == "08") season = "여름"
+        else season = "가을"
     }
     private fun changeKelvinToCelsius(temp: Double): String {
         val changedTemp = (temp - 273.15)
