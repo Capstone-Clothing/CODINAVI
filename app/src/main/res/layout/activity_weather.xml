@@ -48,12 +48,4 @@
         android:background="@drawable/view_border"
         android:text="" />
 
-    <Button
-        android:id="@+id/Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Click"
-        android:textSize="40sp" />
-
 </LinearLayout>
