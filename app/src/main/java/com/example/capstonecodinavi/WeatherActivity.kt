@@ -42,6 +42,7 @@ class WeatherActivity : AppCompatActivity() {
     }
     private var setWeather: String? = null
     private var setTemp: String? = null
+    private var setSeason: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityWeatherBinding.inflate(layoutInflater)
@@ -82,14 +83,19 @@ class WeatherActivity : AppCompatActivity() {
                 $getMonth
             """.trimIndent()
 
-            if (getMonth == "12" || getMonth == "01" || getMonth == "02") binding.seasonTv.text = "겨울"
-            else if (getMonth == "03" || getMonth == "04" || getMonth == "05") binding.seasonTv.text = "봄"
-            else if (getMonth == "06" || getMonth == "07" || getMonth == "08") binding.seasonTv.text = "여름"
-            else binding.seasonTv.text = "가을"
-
+            if (getMonth == "12" || getMonth == "01" || getMonth == "02") {
+                setSeason = "겨울"
+            }
+            else if (getMonth == "03" || getMonth == "04" || getMonth == "05") {
+                setSeason = "봄"
+            }
+            else if (getMonth == "06" || getMonth == "07" || getMonth == "08") {
+                setSeason = "여름"
+            }
+            else {
+                setSeason = "가을"
+            }
             getCurrentWeather()
-
-            binding.instructionTv.text = "현재 계절은 ${binding.seasonTv.text}이고 날씨는 ${setWeather}이며 기온은 ${setTemp}입니다."
         }
     }
     private fun getCurrentLocation() {
@@ -123,23 +129,19 @@ class WeatherActivity : AppCompatActivity() {
 
                     //날씨
                     if (weather.contains("Rain")) {
-                        binding.weatherTv.setText("비")
                         setWeather = "비"
                     } else if (weather.contains("Snow")) {
-                        binding.weatherTv.setText("눈")
                         setWeather = "눈"
                     } else if (weather.contains("Clouds")) {
-                        binding.weatherTv.setText("흐림")
                         setWeather = "흐림"
                     } else {
-                        binding.weatherTv.setText("맑음")
                         setWeather = "맑음"
                     }
 
                     //기온
-                    binding.tempTv.setText(changedTemp)
                     setTemp = changedTemp
 
+                    binding.instructionTv.text = "현재 계절은 ${setSeason}이고 날씨는 ${setWeather}이며 기온은 ${setTemp}입니다."
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }
