@@ -88,8 +88,9 @@ class WeatherActivity : AppCompatActivity() {
                     lon = location.longitude
                     address = getAddress(lat!!, lon!!)
 
-                    //Log.d("checkcheck","${address!!.adminArea} ${address!!.locality} ${address!!.thoroughfare}")
-                    Log.d("checkcheck","${address!!.get(1)} ${address!!.get(2)} ${address!!.get(3)}")
+                    //Log.d("checkcheck2","${address!!.adminArea} ${address!!.locality} ${address!!.thoroughfare}")
+                    //Log.d("hihi", "$address")
+                    //Log.d("checkcheck","${address!!.get(1)} ${address!!.get(2)} ${address!!.get(3)}")
                     getCurrentWeather()
                     getSeason()
 
@@ -141,7 +142,7 @@ class WeatherActivity : AppCompatActivity() {
                             weatherStr = "맑음"
                         }
 
-                        //binding.instructionTv.text = "현재 위치는 ${address!!.adminArea} ${address!!.subAdminArea} ${address!!.thoroughfare}입니다. 계절은 ${season}이고 날씨는 ${weatherStr}이며 기온은 ${celsius}도 입니다."
+                        binding.instructionTv.text = "현재 위치는 ${address!!.get(1)} ${address!!.get(2)} ${address!!.get(3)}입니다. \n계절은 ${season}이고 날씨는 ${weatherStr}이며 기온은 ${celsius}도 입니다."
                     } catch (e: JSONException) {
                         e.printStackTrace()
                     }
