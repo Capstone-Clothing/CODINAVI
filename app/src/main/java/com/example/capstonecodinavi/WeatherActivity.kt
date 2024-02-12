@@ -14,6 +14,7 @@ import android.os.Build
 import android.provider.Telephony.Mms.Addr
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import com.android.volley.RequestQueue
 import com.android.volley.Response
@@ -37,7 +38,7 @@ class WeatherActivity : AppCompatActivity() {
     private val REQUEST_PERMISSION_LOCATION = 10
     private var lat: Double? = null
     private var lon: Double? = null
-    private var address = ArrayList<String>()
+    private lateinit var address: List<Address>
     private var season: String? = null
     //날씨 및 기온
     companion object {
@@ -85,33 +86,31 @@ class WeatherActivity : AppCompatActivity() {
                 success?.let { location ->
                     lat = location.latitude
                     lon = location.longitude
-                    address = getAddress(lat!!, lon!!)!!
+                    val address = getAddress(lat!!, lon!!)?.get(0)
 
-                    //Log.d("checkcheck2","${address!!.adminArea} ${address!!.locality} ${address!!.thoroughfare}")
+                    Log.d("checkcheck2","${address!!.adminArea} ${address!!.locality} ${address!!.thoroughfare}")
                     Log.d("hihi", "$address")
-                    Log.d("checkcheck","${address!!.get(1)} ${address!!.get(2)} ${address!!.get(3)}")
+//                    Log.d("checkcheck","${address!!.get(1)} ${address!!.get(2)} ${address!!.get(3)}")
                     getCurrentWeather()
                     getCurrentSeason()
                 }
             }
     }
-    private fun getAddress(lat: Double, lon: Double): ArrayList<String>? {
-        lateinit var address: ArrayList<String>
+    private fun getAddress(lat: Double, lng: Double): List<Address>? {
+        lateinit var address: List<Address>
 
-        try {
-            val geocoder = Geocoder(this, Locale.KOREA)
-            val addrList = geocoder.getFromLocation(lat, lon, 1)
-
-            if (addrList != null) {
-                for (addr in addrList) {
-                    val spliteAddr = addr.getAddressLine(0).split(" ")
-                    address = spliteAddr as ArrayList<String>
+        return try {
+            val geocoder = Geocoder(this, Locale.getDefault())
+            val geocodeListener = @RequiresApi(33) object: Geocoder.GeocodeListener {
+                override fun onGeocode(addresses: MutableList<Address>) {
+                    address = addresses
                 }
             }
-            return address
+            address = geocoder.getFromLocation(lat, lng, 1,geocodeListener) as List<Address>
+            address
         } catch (e: IOException) {
-            Toast.makeText(this, "주소를 가져올 수 없습니다",Toast.LENGTH_SHORT).show()
-            return null
+            Toast.makeText(this, "주소를 가져올 수 없습니다", Toast.LENGTH_SHORT).show()
+            null
         }
     }
     private fun getCurrentWeather() {
@@ -140,81 +139,8 @@ class WeatherActivity : AppCompatActivity() {
                             weatherStr = "맑음"
                         }
 
-                        var newAddrList = ArrayList<String>()
-                        var i= 0
-                        Log.d("addrcheck","$address")
-                        for(addr in address!!) {
-                            if(addr == "서울특별시" || addr.endsWith("도")) {
-                                newAddrList!!.add(0, addr) //0
-                                i++
-                                if(addr != "서울특별시" && addr.endsWith("시")) {
-                                    newAddrList!!.add(1, addr) //1
-                                    i++
-                                    if(addr.endsWith("군")) {
-                                        newAddrList!!.add(2, addr) //2
-                                        i++
-                                        if(addr.endsWith("읍")) {
-                                            newAddrList!!.add(3, addr) //3
-                                            i++
-                                            if (addr.endsWith("리")) {
-                                                newAddrList!!.add(4, addr) //4
-                                            }
-                                        }
-                                        else if (addr.endsWith("면")) {
-                                            newAddrList!!.add(3, addr) //3
-                                            i++
-                                            if (addr.endsWith("리")) {
-                                                newAddrList!!.add(4, addr) //4
-                                            }
-                                        }
-                                        else if (addr.endsWith("리")) {
-                                            newAddrList!!.add(3, addr) //3
-                                        }
-                                    }
-                                    else if(addr.endsWith("구")) {
-                                        newAddrList!!.add(2, addr) //2
-                                        i++
-                                        if(addr.endsWith("읍")) {
-                                            newAddrList!!.add(3, addr) //3
-                                            i++
-                                            if(addr.endsWith("리")) {
-                                                newAddrList!!.add(4, addr) //4
-                                            }
-                                        }
-                                        else if (addr.endsWith("면")) {
-                                            newAddrList!!.add(3, addr) //3
-                                            i++
-                                            if(addr.endsWith("리")) {
-                                                newAddrList!!.add(4, addr) //4
-                                            }
-                                        }
-                                        else if (addr.endsWith("동")) {
-                                            newAddrList!!.add(3, addr) //3
-                                        }
-                                    }
-                                    else {
-                                        if(addr.endsWith("읍")) {
-                                            newAddrList!!.add(2, addr) //2
-                                            i++
-                                            if(addr.endsWith("리")) {
-                                                newAddrList!!.add(3, addr) //3
-                                            }
-                                        }
-                                        else if (addr.endsWith("면")) {
-                                            newAddrList!!.add(2, addr) //2
-                                            i++
-                                            if(addr.endsWith("리")) {
-                                                newAddrList!!.add(3, addr) //3
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            else {
-                                Toast.makeText(this,"현재 위치의 주소가 없습니다.",Toast.LENGTH_SHORT).show()
-                            }
-                        }
-                        binding.instructionTv.text = "현재 위치는 ${newAddrList!!.get(newAddrList.size-(newAddrList.size))} ${newAddrList!!.get(newAddrList.size-(newAddrList.size-1))} ${newAddrList!!.get(newAddrList.size-(newAddrList.size-2))}입니다. \n계절은 ${season}이고 날씨는 ${weatherStr}이며 기온은 ${celsius}도 입니다."
+
+                        //binding.instructionTv.text = "현재 위치는 ${address!!.get(newAddrList.size-(newAddrList.size))} ${address!!.get(newAddrList.size-(newAddrList.size-1))} ${address!!.get(newAddrList.size-(newAddrList.size-2))}입니다. \n계절은 ${season}이고 날씨는 ${weatherStr}이며 기온은 ${celsius}도 입니다."
                     } catch (e: JSONException) {
                         e.printStackTrace()
                     }
