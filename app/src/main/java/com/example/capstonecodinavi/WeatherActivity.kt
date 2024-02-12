@@ -37,7 +37,7 @@ class WeatherActivity : AppCompatActivity() {
     private val REQUEST_PERMISSION_LOCATION = 10
     private var lat: Double? = null
     private var lon: Double? = null
-    private var address: List<String>? = null
+    private var address: ArrayList<String>? = null
 
     private var season: String? = null
     //날씨 및 기온
@@ -87,33 +87,28 @@ class WeatherActivity : AppCompatActivity() {
                     lat = location.latitude
                     lon = location.longitude
                     address = getAddress(lat!!, lon!!)
-
-                    //Log.d("checkcheck2","${address!!.adminArea} ${address!!.locality} ${address!!.thoroughfare}")
-                    //Log.d("hihi", "$address")
-                    //Log.d("checkcheck","${address!!.get(1)} ${address!!.get(2)} ${address!!.get(3)}")
                     getCurrentWeather()
                     getSeason()
-
                 }
             }
     }
-    private fun getAddress(lat: Double, lon: Double): List<String>? {
-        lateinit var address: List<String>
+    private fun getAddress(lat: Double, lon: Double): ArrayList<String>? {
+        lateinit var address: ArrayList<String>
 
-        return try {
+        try {
             val geocoder = Geocoder(this, Locale.KOREA)
             val addrList = geocoder.getFromLocation(lat, lon, 1)
 
             if (addrList != null) {
                 for (addr in addrList) {
                     val spliteAddr = addr.getAddressLine(0).split(" ")
-                    address = spliteAddr
+                    address = spliteAddr as ArrayList<String>
                 }
             }
-            address
+            return address
         } catch (e: IOException) {
             Toast.makeText(this, "주소를 가져올 수 없습니다",Toast.LENGTH_SHORT).show()
-            null
+            return null
         }
     }
     private fun getCurrentWeather() {
@@ -142,6 +137,13 @@ class WeatherActivity : AppCompatActivity() {
                             weatherStr = "맑음"
                         }
 
+                        for (addr in address!!) {
+                            Log.d("finaltest","$addr")
+                            //var addressList: ArrayList<String>()
+                            if (addr == "서울특별시" || addr.endsWith("도")) {
+
+                            }
+                        }
                         binding.instructionTv.text = "현재 위치는 ${address!!.get(1)} ${address!!.get(2)} ${address!!.get(3)}입니다. \n계절은 ${season}이고 날씨는 ${weatherStr}이며 기온은 ${celsius}도 입니다."
                     } catch (e: JSONException) {
                         e.printStackTrace()
