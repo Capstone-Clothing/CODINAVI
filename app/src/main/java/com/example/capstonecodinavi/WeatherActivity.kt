@@ -38,8 +38,11 @@ class WeatherActivity : AppCompatActivity() {
     private val REQUEST_PERMISSION_LOCATION = 10
     private var lat: Double? = null
     private var lon: Double? = null
-    private lateinit var address: List<Address>
+    private var address: Address? = null
     private var season: String? = null
+    private var addrArea: String? = null
+    private var addrLocal: String? = null
+    private var addrFare: String? = null
     //날씨 및 기온
     companion object {
         var requestQueue: RequestQueue? = null
@@ -86,9 +89,11 @@ class WeatherActivity : AppCompatActivity() {
                 success?.let { location ->
                     lat = location.latitude
                     lon = location.longitude
-                    val address = getAddress(lat!!, lon!!)?.get(0)
+                    addrArea = getAddress(lat!!, lon!!)?.adminArea
+                    addrLocal = getAddress(lat!!, lon!!)?.locality
+                    addrFare = getAddress(lat!!, lon!!)?.thoroughfare
 
-                    Log.d("checkcheck2","${address!!.adminArea} ${address!!.locality} ${address!!.thoroughfare}")
+                    Log.d("checkcheck2","${addrArea} ${addrLocal} ${addrFare}")
                     Log.d("hihi", "$address")
 //                    Log.d("checkcheck","${address!!.get(1)} ${address!!.get(2)} ${address!!.get(3)}")
                     getCurrentWeather()
@@ -96,17 +101,19 @@ class WeatherActivity : AppCompatActivity() {
                 }
             }
     }
-    private fun getAddress(lat: Double, lng: Double): List<Address>? {
-        lateinit var address: List<Address>
+    private fun getAddress(lat: Double, lng: Double): Address? {
+        lateinit var address: Address
 
         return try {
             val geocoder = Geocoder(this, Locale.getDefault())
             val geocodeListener = @RequiresApi(33) object: Geocoder.GeocodeListener {
                 override fun onGeocode(addresses: MutableList<Address>) {
-                    address = addresses
+                    Log.d("addresscheck","$addresses")
+                    address = addresses[0]
+                    address
                 }
             }
-            address = geocoder.getFromLocation(lat, lng, 1,geocodeListener) as List<Address>
+            geocoder.getFromLocation(lat, lng, 1,geocodeListener)
             address
         } catch (e: IOException) {
             Toast.makeText(this, "주소를 가져올 수 없습니다", Toast.LENGTH_SHORT).show()
@@ -139,8 +146,7 @@ class WeatherActivity : AppCompatActivity() {
                             weatherStr = "맑음"
                         }
 
-
-                        //binding.instructionTv.text = "현재 위치는 ${address!!.get(newAddrList.size-(newAddrList.size))} ${address!!.get(newAddrList.size-(newAddrList.size-1))} ${address!!.get(newAddrList.size-(newAddrList.size-2))}입니다. \n계절은 ${season}이고 날씨는 ${weatherStr}이며 기온은 ${celsius}도 입니다."
+                        binding.instructionTv.text = "현재 위치는 ${addrArea} ${addrLocal} ${addrFare} 입니다. \n계절은 ${season}이고 날씨는 ${weatherStr}이며 기온은 ${celsius}도 입니다."
                     } catch (e: JSONException) {
                         e.printStackTrace()
                     }
