@@ -89,36 +89,37 @@ class WeatherActivity : AppCompatActivity() {
                 success?.let { location ->
                     lat = location.latitude
                     lon = location.longitude
-                    addrArea = getAddress(lat!!, lon!!)?.adminArea
-                    addrLocal = getAddress(lat!!, lon!!)?.locality
-                    addrFare = getAddress(lat!!, lon!!)?.thoroughfare
+                    //addrArea = getAddress(lat!!, lon!!)?.adminArea
+                    //addrLocal = getAddress(lat!!, lon!!)?.locality
+                    //addrFare = getAddress(lat!!, lon!!)?.thoroughfare
 
-                    Log.d("checkcheck2","$addrArea $addrLocal $addrFare")
-                    Log.d("hihi", "$address")
-//                    Log.d("checkcheck","${address!!.get(1)} ${address!!.get(2)} ${address!!.get(3)}")
+                    //Log.d("checkcheck2","$addrArea $addrLocal $addrFare")
+                    //Log.d("hihi", "$address")
+                    //Log.d("checkcheck","${address!!.get(1)} ${address!!.get(2)} ${address!!.get(3)}")
+                    getAddress(lat!!, lon!!)
                     getCurrentWeather()
                     getCurrentSeason()
                 }
             }
     }
-    private fun getAddress(lat: Double, lng: Double): Address? {
+    private fun getAddress(lat: Double, lng: Double) {
         lateinit var address: Address
 
-        return try {
+        try {
             val geocoder = Geocoder(this, Locale.getDefault())
             val geocodeListener = object: Geocoder.GeocodeListener {
                 override fun onGeocode(addresses: MutableList<Address>) {
-                    Log.d("addresscheck","$addresses")
                     address = addresses[0]
-                    address
-                    Log.d("testtest", "${addresses[0]}")
+                    address?.let {
+                        binding.instructionTv2.text = "${it.adminArea}, ${it.locality}, ${it.thoroughfare}"
+                    }
                 }
             }
-            geocoder.getFromLocation(lat, lng, 1,geocodeListener)
-            address
+            geocoder.getFromLocation(lat, lng, 7, geocodeListener)//return address
+
         } catch (e: IOException) {
             Toast.makeText(this, "주소를 가져올 수 없습니다", Toast.LENGTH_SHORT).show()
-            null
+            //return null
         }
     }
     private fun getCurrentWeather() {
@@ -147,7 +148,7 @@ class WeatherActivity : AppCompatActivity() {
                             weatherStr = "맑음"
                         }
 
-                        binding.instructionTv.text = "현재 위치는 ${addrArea} ${addrLocal} ${addrFare} 입니다. \n계절은 ${season}이고 날씨는 ${weatherStr}이며 기온은 ${celsius}도 입니다."
+                        binding.instructionTv.text = "계절은 ${season}이고 날씨는 ${weatherStr}이며 기온은 ${celsius}도 입니다."
                     } catch (e: JSONException) {
                         e.printStackTrace()
                     }
