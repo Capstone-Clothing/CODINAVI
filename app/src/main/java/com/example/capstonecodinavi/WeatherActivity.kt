@@ -111,7 +111,7 @@ class WeatherActivity : AppCompatActivity() {
                 override fun onGeocode(addresses: MutableList<Address>) {
                     address = addresses[0]
                     address?.let {
-                        binding.instructionTv2.text = "${it.adminArea}, ${it.locality}, ${it.locality}"
+                        binding.instructionTv2.text = "${it.adminArea}, ${it.locality}, ${it.thoroughfare}"
                     }
                 }
             }
