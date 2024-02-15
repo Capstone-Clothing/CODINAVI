@@ -86,6 +86,8 @@ class WeatherActivity : AppCompatActivity() {
                 success?.let { location ->
                     lat = location.latitude
                     lon = location.longitude
+//                    lat = 37.3401906
+//                    lon = 126.7335293
                     getAddress(lat!!, lon!!)
                     getCurrentWeather()
                     getCurrentSeason()
@@ -97,24 +99,25 @@ class WeatherActivity : AppCompatActivity() {
         val geocoder = Geocoder(this, Locale.getDefault())
         try {
             val geocodeListener = Geocoder.GeocodeListener { addresses ->
-                Log.d("check10", "${addresses}")
+                address = addresses[5]
+                Log.d("check123", "$addresses")
                 for (addr in addresses) {
-                    if (addr.adminArea != null) {
+                    if (addr.adminArea != null && adminArea == null) {
                         adminArea = addr.adminArea
                     }
-                    if (addr.locality != null) {
+                    if (addr.locality != null && locality == null) {
                         locality = addr.locality
                     }
-                    if (addr.locality == null) {
-                        locality = ""
-                    }
-                    if (addr.thoroughfare != null) {
+                    if (addr.thoroughfare != null && thoroughfare == null) {
                         thoroughfare = addr.thoroughfare
                     }
                 }
-                address = addresses[5]
                 address?.let {
-                    binding.instructionTv2.text = "현재 위치는 ${adminArea} ${locality} ${thoroughfare} 입니다."
+                    if (locality != null) {
+                        binding.instructionTv2.text = "현재 위치는 ${adminArea} ${locality} ${thoroughfare} 입니다."
+                    } else {
+                        binding.instructionTv2.text = "현재 위치는 ${adminArea} ${thoroughfare} 입니다."
+                    }
                 }
             }
             geocoder.getFromLocation(lat, lng, 7, geocodeListener)
