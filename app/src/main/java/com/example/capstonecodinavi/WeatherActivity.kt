@@ -90,20 +90,19 @@ class WeatherActivity : AppCompatActivity() {
             }
     }
     private fun getAddress(lat: Double, lng: Double) {
-        lateinit var address: Address
+        var address: Address? = null
+        val geocoder = Geocoder(this, Locale.getDefault())
 
         try {
-            val geocoder = Geocoder(this, Locale.getDefault())
-            val geocodeListener = object: Geocoder.GeocodeListener {
-                override fun onGeocode(addresses: MutableList<Address>) {
-                    address = addresses[0]
-                    address?.let {
-                        binding.instructionTv2.text = "현재 위치는 ${it.adminArea} ${it.locality} ${it.thoroughfare} 입니다."
-                    }
+            val geocodeListener = Geocoder.GeocodeListener { addresses ->
+                address = addresses[5]
+                address?.let {
+                    Log.d("check10", "${address}")
+                    Log.d("check11", "${it.locality} ${it.thoroughfare}")
+                    binding.instructionTv2.text = "현재 위치는 ${it.getAddressLine(0)} 입니다."
                 }
             }
             geocoder.getFromLocation(lat, lng, 7, geocodeListener)//return address
-
         } catch (e: IOException) {
             Toast.makeText(this, "주소를 가져올 수 없습니다", Toast.LENGTH_SHORT).show()
         }
