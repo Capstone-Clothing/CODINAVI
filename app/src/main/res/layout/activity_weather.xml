@@ -40,20 +40,12 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/text1"
+        android:id="@+id/instructionTv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="위도" />
+        android:layout_margin="16dp"
+        android:textSize="18sp"
+        android:background="@drawable/view_border"
+        android:text="" />
 
-    <TextView
-        android:id="@+id/text2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="경도" />
-
-    <Button
-        android:id="@+id/currentStateBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="현재 위치 가져오기" />
 </LinearLayout>
