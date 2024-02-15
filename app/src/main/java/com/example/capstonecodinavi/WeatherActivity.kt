@@ -38,6 +38,9 @@ class WeatherActivity : AppCompatActivity() {
     private var lat: Double? = null
     private var lon: Double? = null
     private var season: String? = null
+    private var adminArea: String? = null
+    private var locality: String? = null
+    private var thoroughfare: String? = null
     companion object {
         var requestQueue: RequestQueue? = null
     }
@@ -90,22 +93,35 @@ class WeatherActivity : AppCompatActivity() {
             }
     }
     private fun getAddress(lat: Double, lng: Double) {
-        var address: Address? = null
+        var address: Address
         val geocoder = Geocoder(this, Locale.getDefault())
-
         try {
             val geocodeListener = Geocoder.GeocodeListener { addresses ->
+                Log.d("check10", "${addresses}")
+                for (addr in addresses) {
+                    if (addr.adminArea != null) {
+                        adminArea = addr.adminArea
+                    }
+                    if (addr.locality != null) {
+                        locality = addr.locality
+                    }
+                    if (addr.locality == null) {
+                        locality = ""
+                    }
+                    if (addr.thoroughfare != null) {
+                        thoroughfare = addr.thoroughfare
+                    }
+                }
                 address = addresses[5]
                 address?.let {
-                    Log.d("check10", "${address}")
-                    Log.d("check11", "${it.locality} ${it.thoroughfare}")
-                    binding.instructionTv2.text = "현재 위치는 ${it.getAddressLine(0)} 입니다."
+                    binding.instructionTv2.text = "현재 위치는 ${adminArea} ${locality} ${thoroughfare} 입니다."
                 }
             }
-            geocoder.getFromLocation(lat, lng, 7, geocodeListener)//return address
+            geocoder.getFromLocation(lat, lng, 7, geocodeListener)
         } catch (e: IOException) {
             Toast.makeText(this, "주소를 가져올 수 없습니다", Toast.LENGTH_SHORT).show()
         }
+
     }
     private fun getCurrentWeather() {
         val url = "https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=2d360c1fe9d2bade8fc08a1679683e24"
