@@ -93,7 +93,7 @@ class WeatherActivity : AppCompatActivity() {
                     addrLocal = getAddress(lat!!, lon!!)?.locality
                     addrFare = getAddress(lat!!, lon!!)?.thoroughfare
 
-                    Log.d("checkcheck2","${addrArea} ${addrLocal} ${addrFare}")
+                    Log.d("checkcheck2","$addrArea $addrLocal $addrFare")
                     Log.d("hihi", "$address")
 //                    Log.d("checkcheck","${address!!.get(1)} ${address!!.get(2)} ${address!!.get(3)}")
                     getCurrentWeather()
@@ -106,11 +106,12 @@ class WeatherActivity : AppCompatActivity() {
 
         return try {
             val geocoder = Geocoder(this, Locale.getDefault())
-            val geocodeListener = @RequiresApi(33) object: Geocoder.GeocodeListener {
+            val geocodeListener = object: Geocoder.GeocodeListener {
                 override fun onGeocode(addresses: MutableList<Address>) {
                     Log.d("addresscheck","$addresses")
                     address = addresses[0]
                     address
+                    Log.d("testtest", "${addresses[0]}")
                 }
             }
             geocoder.getFromLocation(lat, lng, 1,geocodeListener)
