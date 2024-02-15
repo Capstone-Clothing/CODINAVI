@@ -34,16 +34,10 @@ import java.util.Locale
 class WeatherActivity : AppCompatActivity() {
     lateinit var binding: ActivityWeatherBinding
 
-    //위치
     private val REQUEST_PERMISSION_LOCATION = 10
     private var lat: Double? = null
     private var lon: Double? = null
-    private var address: Address? = null
     private var season: String? = null
-    private var addrArea: String? = null
-    private var addrLocal: String? = null
-    private var addrFare: String? = null
-    //날씨 및 기온
     companion object {
         var requestQueue: RequestQueue? = null
     }
@@ -89,13 +83,6 @@ class WeatherActivity : AppCompatActivity() {
                 success?.let { location ->
                     lat = location.latitude
                     lon = location.longitude
-                    //addrArea = getAddress(lat!!, lon!!)?.adminArea
-                    //addrLocal = getAddress(lat!!, lon!!)?.locality
-                    //addrFare = getAddress(lat!!, lon!!)?.thoroughfare
-
-                    //Log.d("checkcheck2","$addrArea $addrLocal $addrFare")
-                    //Log.d("hihi", "$address")
-                    //Log.d("checkcheck","${address!!.get(1)} ${address!!.get(2)} ${address!!.get(3)}")
                     getAddress(lat!!, lon!!)
                     getCurrentWeather()
                     getCurrentSeason()
@@ -111,7 +98,7 @@ class WeatherActivity : AppCompatActivity() {
                 override fun onGeocode(addresses: MutableList<Address>) {
                     address = addresses[0]
                     address?.let {
-                        binding.instructionTv2.text = "${it.adminArea}, ${it.locality}, ${it.thoroughfare}"
+                        binding.instructionTv2.text = "현재 위치는 ${it.adminArea} ${it.locality} ${it.thoroughfare} 입니다."
                     }
                 }
             }
@@ -119,7 +106,6 @@ class WeatherActivity : AppCompatActivity() {
 
         } catch (e: IOException) {
             Toast.makeText(this, "주소를 가져올 수 없습니다", Toast.LENGTH_SHORT).show()
-            //return null
         }
     }
     private fun getCurrentWeather() {
