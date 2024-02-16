@@ -113,10 +113,14 @@ class WeatherActivity : AppCompatActivity() {
                     }
                 }
                 address?.let {
-                    if (locality != null) {
+                    if (locality != null && adminArea != null && thoroughfare != null) {
                         binding.instructionTv2.text = "현재 위치는 ${adminArea} ${locality} ${thoroughfare} 입니다."
-                    } else {
+                    } else if (locality == null) {
                         binding.instructionTv2.text = "현재 위치는 ${adminArea} ${thoroughfare} 입니다."
+                    } else if (adminArea == null) {
+                        binding.instructionTv2.text = "현재 위치는 ${locality} ${thoroughfare} 입니다."
+                    } else {
+                        binding.instructionTv2.text = "현재 위치는 ${adminArea} ${locality} 입니다."
                     }
                 }
             }
