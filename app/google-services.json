@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "162663343225",
+    "project_id": "codinavi-b05c8",
+    "storage_bucket": "codinavi-b05c8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:162663343225:android:34e16b78d28598f5aaa0a8",
+        "android_client_info": {
+          "package_name": "com.example.capstonecodinavi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAt4lrhoTL4Vkvsf31PxS4u1I9vQ0NEKjs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

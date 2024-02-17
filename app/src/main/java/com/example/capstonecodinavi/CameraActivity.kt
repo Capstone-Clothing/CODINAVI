@@ -14,15 +14,17 @@ import android.Manifest
 
 class CameraActivity : AppCompatActivity() {
     lateinit var binding: ActivityCameraBinding
-    val REQUEST_IMAGE_CAPTURE = 1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCameraBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.clothIv.setImageBitmap(MainActivity.imageBitmap)
+        setClothImage()
         action()
     }
 
+    private fun setClothImage() {
+        binding.clothIv.setImageBitmap(MainActivity.imageBitmap)
+    }
     private fun action() {
         binding.homeBtn.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
