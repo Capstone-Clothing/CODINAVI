@@ -1,16 +1,9 @@
-package com.example.capstonecodinavi
+package com.example.codinavi
 
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.MediaStore
-import android.widget.Toast
-import androidx.core.content.ContextCompat
-import com.example.capstonecodinavi.databinding.ActivityCameraBinding
-import android.Manifest
+import com.example.codinavi.databinding.ActivityCameraBinding
 
 class CameraActivity : AppCompatActivity() {
     lateinit var binding: ActivityCameraBinding

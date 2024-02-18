@@ -1,17 +1,16 @@
-package com.example.capstonecodinavi
+package com.example.codinavi
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.capstonecodinavi.databinding.ActivityCodiBinding
+import com.example.codinavi.databinding.ActivityGuideBinding
 
-class CodiActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityCodiBinding
+class GuideActivity : AppCompatActivity() {
+    lateinit var binding: ActivityGuideBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityCodiBinding.inflate(layoutInflater)
+        binding = ActivityGuideBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         action()
     }
 
@@ -23,6 +22,11 @@ class CodiActivity : AppCompatActivity() {
 
         binding.profileBtn.setOnClickListener {
             val intent = Intent(this, UserActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.introduceCameraBtn.setOnClickListener {
+            val intent = Intent(this, IntroduceCameraBtn::class.java)
             startActivity(intent)
         }
     }

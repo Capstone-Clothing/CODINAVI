@@ -1,4 +1,4 @@
-package com.example.capstonecodinavi
+package com.example.codinavi
 
 import android.Manifest
 import android.content.Intent
@@ -8,11 +8,9 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import com.example.capstonecodinavi.databinding.ActivityCameraBinding
-import com.example.capstonecodinavi.databinding.ActivityMainBinding
+import com.example.codinavi.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

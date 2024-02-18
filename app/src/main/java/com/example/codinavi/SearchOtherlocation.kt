@@ -1,6 +1,5 @@
-package com.example.capstonecodinavi
+package com.example.codinavi
 
-import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
@@ -8,7 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
-import com.example.capstonecodinavi.databinding.ActivitySearchOtherlocationBinding
+import com.example.codinavi.databinding.ActivitySearchOtherlocationBinding
 import org.json.JSONException
 import org.json.JSONObject
 import java.math.RoundingMode
