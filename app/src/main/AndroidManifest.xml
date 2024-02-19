@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.codinavi">
+    package="com.example.codinavi2">
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -25,37 +25,37 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name="com.example.codinavi.SearchOtherlocation"
+            android:name="com.example.codinavi2.SearchOtherlocation"
             android:exported="false" />
         <activity
-            android:name="com.example.codinavi.IntroduceCameraBtn"
+            android:name="com.example.codinavi2.IntroduceCameraBtn"
             android:exported="false" />
         <activity
-            android:name="com.example.codinavi.ConfirmActivity"
+            android:name="com.example.codinavi2.ConfirmActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.codinavi.ColorActivity"
+            android:name="com.example.codinavi2.ColorActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.codinavi.CodiActivity"
+            android:name="com.example.codinavi2.CodiActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.codinavi.GuideActivity"
+            android:name="com.example.codinavi2.GuideActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.codinavi.LoginActivity"
+            android:name="com.example.codinavi2.MainActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.codinavi.WeatherActivity"
+            android:name="com.example.codinavi2.WeatherActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.codinavi.UserActivity"
+            android:name="com.example.codinavi2.UserActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.codinavi.CameraActivity"
+            android:name="com.example.codinavi2.CameraActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.codinavi.MainActivity"
+            android:name="com.example.codinavi2.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

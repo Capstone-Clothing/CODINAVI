@@ -13,6 +13,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "CODINAVI"
+rootProject.name = "CODINAVI2"
 include(":app")
  

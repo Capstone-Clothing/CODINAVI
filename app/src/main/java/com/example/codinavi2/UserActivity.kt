@@ -1,9 +1,9 @@
-package com.example.codinavi
+package com.example.codinavi2
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.codinavi.databinding.ActivityUserBinding
+import com.example.codinavi2.databinding.ActivityUserBinding
 
 class UserActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUserBinding

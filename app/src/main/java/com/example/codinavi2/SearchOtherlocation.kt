@@ -1,4 +1,4 @@
-package com.example.codinavi
+package com.example.codinavi2
 
 import android.location.Geocoder
 import android.location.Location
@@ -7,7 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
-import com.example.codinavi.databinding.ActivitySearchOtherlocationBinding
+import com.example.codinavi2.databinding.ActivitySearchOtherlocationBinding
 import org.json.JSONException
 import org.json.JSONObject
 import java.math.RoundingMode

@@ -1,9 +1,9 @@
-package com.example.codinavi
+package com.example.codinavi2
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.codinavi.databinding.ActivityWeatherBinding
+import com.example.codinavi2.databinding.ActivityWeatherBinding
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager

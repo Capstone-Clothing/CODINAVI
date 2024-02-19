@@ -1,4 +1,4 @@
-package com.example.codinavi
+package com.example.codinavi2
 
 import org.junit.Test
 
