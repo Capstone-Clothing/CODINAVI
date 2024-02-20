@@ -7,24 +7,40 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:105784290024:android:52a63f3a68b593e859375d",
+        "mobilesdk_app_id": "1:105784290024:android:2dedb7f54469a87f59375d",
         "android_client_info": {
-          "package_name": "com.example.codinavi2"
+          "package_name": "com.example.codinavi"
         }
       },
       "oauth_client": [
         {
-          "client_id": "105784290024-9n2nsu8iaju9ec044rl9thm4j35gduv7.apps.googleusercontent.com",
+          "client_id": "105784290024-2ngck91eglomhjm0bgv33v2spaoj2ki2.apps.googleusercontent.com",
           "client_type": 3,
           "android_info": {
-            "package_name": "com.example.codinavi2",
-            "certificate_hash": "91e682bcca312af4b49090d1f93798f3c51e2fc0"
+            "package_name": "com.example.codinavi",
+            "certificate_hash": "17041cc3d30da7045f769ab9c737065de066e5d3"
+          }
+        },
+        {
+          "client_id": "105784290024-f16vhqb1nbhi5b32mothruus23pdfs5s.apps.googleusercontent.com",
+          "client_type": 3,
+          "android_info": {
+            "package_name": "com.example.codinavi",
+            "certificate_hash": "8305c4b4673f7ccb7cef997dadb744f19ce25bb0"
+          }
+        },
+        {
+          "client_id": "105784290024-g8h3rlssh20d5s10vgima3dhfjfbqo1s.apps.googleusercontent.com",
+          "client_type": 3,
+          "android_info": {
+            "package_name": "com.example.codinavi",
+            "certificate_hash": "d12770999e92b9c7771f4e349e4fc28be404a7df"
           }
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB2cqYoNCJ4p5Sk7B0ZK4l_H3r_wUHO0lA"
+          "current_key": "AIzaSyCbN-2-Gqe2Z0_CD0oq8SdCjm_K7-otpLA"
         }
       ],
       "services": {
