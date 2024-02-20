@@ -70,8 +70,13 @@ class WeatherActivity : AppCompatActivity() {
             val intent = Intent(this, UserActivity::class.java)
             startActivity(intent)
         }
+
+        binding.searchOtherLocationBtn.setOnClickListener {
+            val intent = Intent(this, SearchOtherlocation::class.java)
+            startActivity(intent)
+        }
     }
-    private fun getCurrentLocation() {
+    fun getCurrentLocation() {
         if (!checkPermissionForLocation(this)) return
         val fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
@@ -88,13 +93,13 @@ class WeatherActivity : AppCompatActivity() {
                     lon = location.longitude
 //                    lat = 37.3401906
 //                    lon = 126.7335293
-                    getAddress(lat!!, lon!!)
-                    getCurrentWeather()
+                    getCurrentAddress(lat!!, lon!!)
+                    getCurrentWeather(lat!!, lon!!)
                     getCurrentSeason()
                 }
             }
     }
-    private fun getAddress(lat: Double, lng: Double) {
+    fun getCurrentAddress(lat: Double, lng: Double) {
         var address: Address
         val geocoder = Geocoder(this, Locale.getDefault())
         try {
@@ -113,10 +118,14 @@ class WeatherActivity : AppCompatActivity() {
                     }
                 }
                 address?.let {
-                    if (locality != null) {
-                        binding.instructionTv2.text = "현재 위치는 ${adminArea} ${locality} ${thoroughfare} 입니다."
+                    if (locality != null && adminArea != null && thoroughfare != null) {
+                        binding.currentLocationTv.text = "현재 위치는 ${adminArea} ${locality} ${thoroughfare} 입니다."
+                    } else if (locality == null) {
+                        binding.currentLocationTv.text = "현재 위치는 ${adminArea} ${thoroughfare} 입니다."
+                    } else if (adminArea == null) {
+                        binding.currentLocationTv.text = "현재 위치는 ${locality} ${thoroughfare} 입니다."
                     } else {
-                        binding.instructionTv2.text = "현재 위치는 ${adminArea} ${thoroughfare} 입니다."
+                        binding.currentLocationTv.text = "현재 위치는 ${adminArea} ${locality} 입니다."
                     }
                 }
             }
@@ -126,7 +135,8 @@ class WeatherActivity : AppCompatActivity() {
         }
 
     }
-    private fun getCurrentWeather() {
+    fun getCurrentWeather(lat: Double, lon: Double): String? {
+        var weatherStr: String? = null
         val url = "https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=2d360c1fe9d2bade8fc08a1679683e24"
         val request = object :
             StringRequest(
@@ -139,7 +149,6 @@ class WeatherActivity : AppCompatActivity() {
                         val weather = jsonObject.getJSONArray("weather").getJSONObject(0).getString("main")
                         val kelvin = jsonObject.getJSONObject("main").getString("temp").toDouble()
                         val celsius = changeKelvinToCelsius(kelvin)
-                        var weatherStr: String
 
                         //날씨
                         if (weather.contains("Rain")) {
@@ -152,18 +161,18 @@ class WeatherActivity : AppCompatActivity() {
                             weatherStr = "맑음"
                         }
 
-                        binding.instructionTv.text = "계절은 ${season}이고 날씨는 ${weatherStr}이며 기온은 ${celsius}도 입니다."
+                        binding.currentWeatherTv.text = "계절은 ${season}, 날씨는 ${weatherStr}, 기온은 ${celsius}도 입니다."
                     } catch (e: JSONException) {
                         e.printStackTrace()
                     }
                 },
                 Response.ErrorListener { }
             ) { }
-
         request.setShouldCache(false) // 이전 결과가 있어도 새 요청하여 결과 보여주기
         requestQueue!!.add(request)
+        return weatherStr
     }
-    private fun getCurrentSeason() {
+    fun getCurrentSeason() {
         val now = System.currentTimeMillis()
         val date = Date(now)
         val simpleDateFormatDay = SimpleDateFormat("MM")
@@ -176,7 +185,7 @@ class WeatherActivity : AppCompatActivity() {
         else if (getMonth == "06" || getMonth == "07" || getMonth == "08") season = "여름"
         else season = "가을"
     }
-    private fun changeKelvinToCelsius(temp: Double): String {
+    fun changeKelvinToCelsius(temp: Double): String {
         val changedTemp = (temp - 273.15)
         val df = DecimalFormat("#.#")
         df.roundingMode = RoundingMode.DOWN
@@ -197,7 +206,7 @@ class WeatherActivity : AppCompatActivity() {
             }
         }
     }
-    private fun checkPermissionForLocation(context: Context): Boolean {
+    fun checkPermissionForLocation(context: Context): Boolean {
         if (context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             return true
         } else {
