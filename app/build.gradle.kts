@@ -57,4 +57,7 @@ dependencies {
 
     //현재 위치
     implementation ("com.google.android.gms:play-services-location:21.0.1")
+
+    // 로그인
+    implementation ("com.google.android.gms:play-services-auth:21.0.0")
 }
