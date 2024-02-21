@@ -1,8 +1,10 @@
 package com.example.capstonecodinavi
 
+import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+
 import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
@@ -18,7 +20,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var mGoogleSignInClient: GoogleSignInClient
     private lateinit var sharedPreferences: SharedPreferences
-    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -66,5 +68,6 @@ class LoginActivity : AppCompatActivity() {
 
     companion object {
         const val RC_SIGN_IN = 10
+
     }
 }

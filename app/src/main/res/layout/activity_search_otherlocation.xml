@@ -78,5 +78,13 @@
         android:textSize="18sp"
         android:background="@drawable/view_border"
         android:text="" />
+    <TextView
+        android:id="@+id/recommendClothTv"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_margin="16dp"
+        android:textSize="18sp"
+        android:background="@drawable/view_border"
+        android:text="" />
 
 </LinearLayout>
