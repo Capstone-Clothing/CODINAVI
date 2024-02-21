@@ -1,4 +1,4 @@
-package com.example.codinavi
+package com.example.capstonecodinavi
 
 import org.junit.Test
 

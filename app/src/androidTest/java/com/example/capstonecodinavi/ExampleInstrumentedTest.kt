@@ -1,4 +1,4 @@
-package com.example.codinavi
+package com.example.capstonecodinavi
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

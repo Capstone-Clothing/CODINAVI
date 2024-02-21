@@ -1,4 +1,4 @@
-package com.example.codinavi
+package com.example.capstonecodinavi
 
 import android.Manifest
 import android.content.Intent
@@ -10,7 +10,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import com.example.codinavi.databinding.ActivityMainBinding
+import com.example.capstonecodinavi.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

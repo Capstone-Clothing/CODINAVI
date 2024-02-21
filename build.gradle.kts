@@ -7,8 +7,6 @@ plugins {
 buildscript {
     repositories {
         google()
-        mavenCentral()
-        gradlePluginPortal()
     }
     dependencies {
         classpath("com.google.gms:google-services:4.3.15")

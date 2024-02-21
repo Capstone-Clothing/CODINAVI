@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.codinavi"
+    namespace = "com.example.capstonecodinavi"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.codinavi"
+        applicationId = "com.example.capstonecodinavi"
         minSdk = 33
         targetSdk = 34
         versionCode = 1
@@ -58,7 +58,7 @@ dependencies {
     implementation("com.google.android.gms:play-services-location:21.0.1")
 
     implementation("com.google.gms:google-services:4.3.15")
-    implementation(platform("com.google.firebase:firebase-bom:31.5.0"))
+    implementation(platform("com.google.firebase:firebase-bom:32.7.2"))
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.android.gms:play-services-auth:20.5.0")
     implementation("com.google.firebase:firebase-analytics-ktx")

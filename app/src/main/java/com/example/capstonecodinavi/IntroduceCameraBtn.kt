@@ -1,15 +1,15 @@
-package com.example.codinavi
+package com.example.capstonecodinavi
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.codinavi.databinding.ActivityColorBinding
+import com.example.capstonecodinavi.databinding.ActivityIntroduceCameraBtnBinding
 
-class ColorActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityColorBinding
+class IntroduceCameraBtn : AppCompatActivity() {
+    private lateinit var binding: ActivityIntroduceCameraBtnBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityColorBinding.inflate(layoutInflater)
+        binding = ActivityIntroduceCameraBtnBinding.inflate(layoutInflater)
         setContentView(binding.root)
         action()
     }

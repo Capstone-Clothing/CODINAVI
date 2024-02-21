@@ -1,15 +1,15 @@
-package com.example.codinavi
+package com.example.capstonecodinavi
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.codinavi.databinding.ActivityConfirmBinding
+import com.example.capstonecodinavi.databinding.ActivityColorBinding
 
-class ConfirmActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityConfirmBinding
+class ColorActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityColorBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityConfirmBinding.inflate(layoutInflater)
+        binding = ActivityColorBinding.inflate(layoutInflater)
         setContentView(binding.root)
         action()
     }

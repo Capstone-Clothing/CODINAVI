@@ -1,9 +1,9 @@
-package com.example.codinavi
+package com.example.capstonecodinavi
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.codinavi.databinding.ActivityCameraBinding
+import com.example.capstonecodinavi.databinding.ActivityCameraBinding
 
 class CameraActivity : AppCompatActivity() {
     lateinit var binding: ActivityCameraBinding
