@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.capstonecodinavi.databinding.ActivityUserBinding
+import kotlin.math.log
 
 class UserActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUserBinding
@@ -38,8 +39,9 @@ class UserActivity : AppCompatActivity() {
 //          //관리자 문의 화면으로 이동
 //        }
 
-//        binding.logoutBtn.setOnClickListener {
-//          //로그아웃
-//        }
+        binding.logoutBtn.setOnClickListener {
+            val logOut = LoginActivity()
+            logOut.signOut()
+        }
     }
 }
