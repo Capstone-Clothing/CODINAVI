@@ -26,6 +26,15 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // SharedPreferences 초기화
+        sharedPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE)
+
+        // 사용자가 이미 로그인 한 경우 MainActivity로 이동
+        if(isLoggedIn()) {
+            moveToMainScreen()
+            return
+        }
+
         // 구글 로그인 옵션 설정
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()     // 이메일 요청
@@ -61,14 +70,32 @@ class LoginActivity : AppCompatActivity() {
             try {
                 val account = task.getResult(ApiException::class.java)
                 // 로그인이 성공한 경우 MainActivity로 이동
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-                finish() // 현재 Activity 종료
+                saveLoginStatus(true)   // 로그인 상태 저장
+                moveToMainScreen()
             } catch (e: ApiException) {
                 // Google Sign In 실패 처리
                 Log.e("LoginActivity", "Google sign in failed: ${e.statusCode}")
             }
         }
+    }
+
+    // MainActivity로 이동
+    private fun moveToMainScreen() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish() // 현재 Activity 종료
+    }
+
+    // 로그인 상태 저장
+    private fun saveLoginStatus(isLoggedIn: Boolean) {
+        val editor = sharedPreferences.edit()
+        editor.putBoolean("isLoggedIn", isLoggedIn)
+        editor.apply()
+    }
+
+    // 로그인 상태 가져오기
+    private fun isLoggedIn(): Boolean {
+        return sharedPreferences.getBoolean("isLoggedIn", false)
     }
 
     companion object {
