@@ -18,7 +18,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/rectangle_3"
-            android:elevation="10dp"
             android:orientation="horizontal">
 
             <ImageButton
