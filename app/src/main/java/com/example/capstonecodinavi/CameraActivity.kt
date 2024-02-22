@@ -20,8 +20,7 @@ class CameraActivity : AppCompatActivity() {
     }
     private fun action() {
         binding.homeBtn.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            finish()
         }
 
         binding.profileBtn.setOnClickListener {

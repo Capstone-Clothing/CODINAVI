@@ -39,7 +39,7 @@ class LoginActivity : AppCompatActivity() {
         googleSignInClient = GoogleSignIn.getClient(this, gso)
         auth = Firebase.auth
 
-        binding.loginBtn.setOnClickListener {
+        binding.googleLoginBtn.setOnClickListener {
             signIn()
         }
     }

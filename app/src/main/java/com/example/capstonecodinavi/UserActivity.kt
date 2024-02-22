@@ -41,7 +41,9 @@ class UserActivity : AppCompatActivity() {
 
         binding.logoutBtn.setOnClickListener {
             val logOut = LoginActivity()
-            logOut.signOut()
+//            logOut.signOut()
+//            val intent = Intent(this, LoginActivity::class.java)
+//            startActivity(intent)
         }
     }
 }
