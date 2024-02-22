@@ -98,8 +98,12 @@ class LoginActivity : AppCompatActivity() {
         return sharedPreferences.getBoolean("isLoggedIn", false)
     }
 
+    override fun onBackPressed() {
+        // 뒤로가기를 누르면 앱을 종료함
+        finishAffinity()
+    }
+
     companion object {
         const val RC_SIGN_IN = 123
-
     }
 }
