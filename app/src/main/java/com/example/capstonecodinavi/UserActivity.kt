@@ -15,11 +15,20 @@ class UserActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityUserBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        action()
 
         // 초기화
         sharedPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE)
 
+        // 저장된 사용자 이름 가져오기
+        val username = sharedPreferences.getString("username", "")
+
+        // 사용자 이름이 비어있는 경우 "Unknown"을 사용
+        val displayedName = if (username.isNullOrEmpty()) "Unknown" else username
+
+        // TextView에 사용자 이름 설정
+        binding.username.text = displayedName
+
+        action()
     }
 
     private fun action() {

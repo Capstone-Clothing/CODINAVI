@@ -69,9 +69,10 @@ class LoginActivity : AppCompatActivity() {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 val account = task.getResult(ApiException::class.java)
-                // 로그인이 성공한 경우 MainActivity로 이동
+                val username = account?.displayName
+                saveUsername(username ?: "Unknown") // 사용자 이름이 없을 경우
                 saveLoginStatus(true)   // 로그인 상태 저장
-                moveToMainScreen()
+                moveToMainScreen()  // MainActivity로 이동
             } catch (e: ApiException) {
                 // Google Sign In 실패 처리
                 Log.e("LoginActivity", "Google sign in failed: ${e.statusCode}")
@@ -99,8 +100,15 @@ class LoginActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        // 뒤로가기를 누르면 앱을 종료함
+        // 뒤로가기 누르면 앱 종료
         finishAffinity()
+    }
+
+    // 사용자 이름 저장
+    private fun saveUsername(username: String) {
+        val editor = sharedPreferences.edit()
+        editor.putString("username", username)
+        editor.apply()
     }
 
     companion object {
