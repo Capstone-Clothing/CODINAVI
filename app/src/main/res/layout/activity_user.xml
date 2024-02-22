@@ -29,7 +29,7 @@
                 android:background="@android:color/transparent"/>
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/codinavi"
                 android:layout_width="158dp"
                 android:layout_height="53dp"
                 android:layout_weight="1"
