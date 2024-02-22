@@ -26,18 +26,22 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // 구글 로그인 옵션 설정
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestEmail()
+            .requestEmail()     // 이메일 요청
             .build()
 
+        // 구글 로그인 클라이언트 설정
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
 
+        // 구글 로그인 버튼 설정
         val googleLoginButton = findViewById<SignInButton>(R.id.googleLoginBtn)
         googleLoginButton.setOnClickListener {
             signIn()
         }
     }
 
+    // 구글 로그인 요청 시작
     private fun signIn() {
         val signInIntent = mGoogleSignInClient.signInIntent
         try {
@@ -48,6 +52,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    // 구글 로그인 결과 처리
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -67,7 +72,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val RC_SIGN_IN = 10
+        const val RC_SIGN_IN = 123
 
     }
 }
