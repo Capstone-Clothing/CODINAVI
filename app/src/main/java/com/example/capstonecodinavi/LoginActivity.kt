@@ -85,17 +85,10 @@ class LoginActivity : AppCompatActivity() {
     fun signOut() {
         auth.signOut()
 
-        googleSignInClient.signOut().addOnCompleteListener(this) {
+        googleSignInClient.signOut().addOnSuccessListener(this) {
             updateUI(null)
-//            val intent = Intent(this, LoginActivity::class.java)
-//            startActivity(intent)
-        }
-    }
-    private fun revokeAccess() {
-        auth.signOut()
-
-        googleSignInClient.signOut().addOnCompleteListener(this) {
-            updateUI(null)
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
         }
     }
     private fun updateUI(user: FirebaseUser?) {
@@ -116,16 +109,4 @@ class LoginActivity : AppCompatActivity() {
         private const val RC_SIGN_IN = 9001
     }
 
-//    private val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-//        if (result.resultCode == RC_SIGN_IN) {
-//            val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
-//            try {
-//                val account = task.getResult(ApiException::class.java)
-//                firebaseAuthWithGoogle(account.idToken!!)
-//            } catch (e: ApiException) {
-//                Toast.makeText(this, "Google sign in failed: ${e.message}", Toast.LENGTH_SHORT).show()
-//            }
-//        }
-//
-//    }
 }

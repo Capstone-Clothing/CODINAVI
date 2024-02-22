@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.capstonecodinavi.databinding.ActivityUserBinding
 import kotlin.math.log
+import kotlin.math.sign
 
 class UserActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUserBinding
@@ -40,10 +41,8 @@ class UserActivity : AppCompatActivity() {
 //        }
 
         binding.logoutBtn.setOnClickListener {
-            val logOut = LoginActivity()
-//            logOut.signOut()
-//            val intent = Intent(this, LoginActivity::class.java)
-//            startActivity(intent)
+            val signOut = LoginActivity()
+            signOut.signOut()
         }
     }
 }
