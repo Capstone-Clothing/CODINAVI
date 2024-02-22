@@ -18,7 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/rectangle_3"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:elevation="10dp" >
 
             <ImageButton
                 android:id="@+id/homeBtn"
@@ -75,7 +76,7 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <Button
+            <android.widget.Button
                 android:id="@+id/genderBtn"
                 android:layout_width="270dp"
                 android:layout_height="90dp"
@@ -83,10 +84,10 @@
                 android:fontFamily="@font/locus_sangsang"
                 android:gravity="center"
                 android:text="성별"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/white"
                 android:textSize="45sp" />
 
-            <Button
+            <android.widget.Button
                 android:id="@+id/guideBtn"
                 android:layout_width="270dp"
                 android:layout_height="90dp"
@@ -95,10 +96,10 @@
                 android:fontFamily="@font/locus_sangsang"
                 android:gravity="center"
                 android:text="사용설명서"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/white"
                 android:textSize="45sp" />
 
-            <Button
+            <android.widget.Button
                 android:id="@+id/administratorBtn"
                 android:layout_width="270dp"
                 android:layout_height="90dp"
@@ -107,10 +108,10 @@
                 android:fontFamily="@font/locus_sangsang"
                 android:gravity="center"
                 android:text="관리자 문의"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/white"
                 android:textSize="45sp" />
 
-            <Button
+            <android.widget.Button
                 android:id="@+id/logoutBtn"
                 android:layout_width="270dp"
                 android:layout_height="90dp"
@@ -119,7 +120,7 @@
                 android:fontFamily="@font/locus_sangsang"
                 android:gravity="center"
                 android:text="로그아웃"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/white"
                 android:textSize="45sp" />
         </LinearLayout>
 

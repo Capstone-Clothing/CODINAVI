@@ -5,73 +5,89 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/background"
     tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="16dp"
-        android:gravity="center"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/view_border"
-            android:orientation="horizontal">
+            android:background="@drawable/rectangle_3"
+            android:orientation="horizontal"
+            android:elevation="10dp">
 
             <ImageButton
                 android:id="@+id/homeBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/home" />
+                android:src="@drawable/home"
+                android:background="@android:color/transparent"/>
 
             <TextView
                 android:id="@+id/textView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="158dp"
+                android:layout_height="53dp"
                 android:layout_weight="1"
-                android:textSize="24sp"
-                android:textColor="@color/black"
+                android:layout_marginTop="19dp"
                 android:gravity="center"
-                android:background="@drawable/view_border"
-                android:text="CODINAVI" />
+                android:text="CODINAVI"
+                android:textColor="#2D0F51"
+                android:textSize="35sp"
+                android:fontFamily="@font/bakbakone_regular" />
 
             <ImageButton
                 android:id="@+id/profileBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/profile" />
+                android:src="@drawable/profile"
+                android:background="@android:color/transparent" />
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical" >
 
-            <Button
+            <android.widget.Button
                 android:id="@+id/guideBtn"
-                android:layout_width="200dp"
-                android:layout_height="100dp"
-                android:textSize="30sp"
-                android:text="사용설명서" />
+                android:background="@drawable/mainbtn"
+                android:backgroundTint="#746DC4"
+                android:layout_width="250dp"
+                android:layout_height="120dp"
+                android:textSize="50sp"
+                android:text="사용설명서"
+                android:fontFamily="@font/locus_sangsang"
+                android:textColor="@color/white" />
 
-            <Button
+            <android.widget.Button
                 android:id="@+id/cameraBtn"
-                android:layout_width="200dp"
-                android:layout_height="100dp"
+                android:background="@drawable/mainbtn"
+                android:layout_width="250dp"
+                android:layout_height="120dp"
                 android:layout_marginTop="50dp"
-                android:textSize="30sp"
-                android:text="카메라" />
+                android:textSize="50sp"
+                android:text="카메라"
+                android:fontFamily="@font/locus_sangsang"
+                android:textColor="@color/white" />
 
-            <Button
+            <android.widget.Button
                 android:id="@+id/weatherBtn"
-                android:layout_width="200dp"
-                android:layout_height="100dp"
+                android:background="@drawable/mainbtn"
+                android:layout_width="250dp"
+                android:layout_height="120dp"
                 android:layout_marginTop="50dp"
-                android:textSize="30sp"
-                android:text="날씨" />
+                android:textSize="50sp"
+                android:text="날씨"
+                android:fontFamily="@font/locus_sangsang"
+                android:textColor="@color/white" />
+
         </LinearLayout>
 
     </LinearLayout>
