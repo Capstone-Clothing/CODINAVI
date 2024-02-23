@@ -39,7 +39,7 @@ class LoginActivity : AppCompatActivity() {
         googleSignInClient = GoogleSignIn.getClient(this, gso)
         auth = Firebase.auth
 
-        binding.googleLoginBtn.setOnClickListener {
+        binding.button.setOnClickListener {
             signIn()
         }
     }
@@ -85,10 +85,10 @@ class LoginActivity : AppCompatActivity() {
     fun signOut() {
         auth.signOut()
 
-        googleSignInClient.signOut().addOnSuccessListener(this) {
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        googleSignInClient.signOut().addOnCompleteListener(this) {
             updateUI(null)
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
         }
     }
     private fun updateUI(user: FirebaseUser?) {
@@ -97,10 +97,12 @@ class LoginActivity : AppCompatActivity() {
             uEmail = user.email.toString()
             uname = user.displayName.toString()
 
-            val intent = Intent(this, MainActivity::class.java)
+            var intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
         } else {
+            intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
             Log.d(TAG, "user data load fail")
         }
     }
