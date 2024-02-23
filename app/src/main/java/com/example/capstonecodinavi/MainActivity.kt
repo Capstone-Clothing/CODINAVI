@@ -22,7 +22,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         action()
     }
     private fun action() {
@@ -86,7 +85,6 @@ class MainActivity : AppCompatActivity() {
         if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             imageBitmap = data?.extras?.get("data") as Bitmap
             val intent = Intent(this, CameraActivity::class.java)
-
             startActivity(intent)
         }
     }

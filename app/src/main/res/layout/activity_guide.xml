@@ -4,72 +4,105 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     android:orientation="vertical"
     tools:context=".GuideActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:background="@drawable/view_border"
-        android:orientation="horizontal">
-
-        <ImageButton
-            android:id="@+id/homeBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/home" />
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:textSize="24sp"
-            android:textColor="@color/black"
-            android:gravity="center"
-            android:background="@drawable/view_border"
-            android:text="CODINAVI" />
-
-        <ImageButton
-            android:id="@+id/profileBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/profile" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_margin="16dp"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/introduceCodinaviTv"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:gravity="center_vertical"
-            android:background="@drawable/view_border"
-            android:textSize="20sp"
-            android:text="코디나비는 시각장애인을 위한 코디 추천 서비스 어플입니다. 카메라를 통해 옷의 정보를 제공하고 그에 맞는 코디를 추천해주며 날씨에 맞는 옷차림을 소개해줍니다." />
+            android:layout_height="wrap_content"
+            android:background="@drawable/rectangle_3"
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/introduceCameraBtn"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_marginTop="80dp"
-            android:textSize="25sp"
-            android:text="카메라 버튼 기능 설명 (버튼)" />
+            <ImageButton
+                android:id="@+id/homeBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:src="@drawable/home" />
 
-        <TextView
-            android:id="@+id/introduceWeatherTv"
+            <TextView
+                android:id="@+id/codinavi"
+                android:layout_width="158dp"
+                android:layout_height="53dp"
+                android:layout_marginTop="19dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/bakbakone_regular"
+                android:gravity="center"
+                android:text="CODINAVI"
+                android:textColor="#2D0F51"
+                android:textSize="35sp" />
+
+            <ImageButton
+                android:id="@+id/profileBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:src="@drawable/profile" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_marginTop="80dp"
-            android:gravity="center_vertical"
-            android:background="@drawable/view_border"
-            android:textSize="20sp"
-            android:text="날씨 버튼은 사용자가 현재 위치나 원하는 위치를 입력하면 날씨 정보를 제공하고 그 날씨에 맞는 옷차림을 추천합니다." />
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <View
+                    android:id="@+id/introduceCodinaviV"
+                    android:layout_width="328dp"
+                    android:layout_height="295dp"
+                    android:background="@drawable/rectangle_1"
+                    android:layout_marginTop="20dp"/>
+
+                <TextView
+                    android:id="@+id/introduceCodinaviTv"
+                    android:layout_width="292dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="18dp"
+                    android:fontFamily="@font/locus_sangsang"
+                    android:gravity="center_vertical"
+                    android:lineSpacingExtra="10dp"
+                    android:paddingTop="40dp"
+                    android:text="코디나비는 시각장애인을 위한 코디 추천 서비스 어플입니다.\n\n카메라를 통해 옷의 정보를 제공하고, 그에 맞는 코디를 추천해주며, 날씨에 맞는 옷차림을 소개해줍니다."
+                    android:textSize="22sp" />
+            </RelativeLayout>
+
+            <android.widget.Button
+                android:id="@+id/introduceCameraBtn"
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/guidbtn"
+                android:fontFamily="@font/locus_sangsang"
+                android:text="카메라 기능 소개"
+                android:textColor="@color/white"
+                android:textSize="40sp" />
+
+            <android.widget.Button
+                android:id="@+id/introduceWeatherBtn"
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/guidbtn"
+                android:fontFamily="@font/locus_sangsang"
+                android:text="날씨 기능 소개"
+                android:textColor="@color/white"
+                android:textSize="40sp" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>

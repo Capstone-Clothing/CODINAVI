@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 첫 번째 도형 -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#FFFFFF" />
+            <corners
+                android:bottomLeftRadius="30dp"
+                android:bottomRightRadius="30dp" />
+        </shape>
+    </item>
+
+    <!-- 두 번째 도형 (첫 번째 도형 위에 위치) -->
+    <item android:width="160dp" android:height="3dp" android:gravity="center" android:top="70dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#000000" />
+            <corners
+                android:radius="20dp" />
+        </shape>
+    </item>
+
+</layer-list>
