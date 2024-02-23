@@ -93,7 +93,7 @@ class LoginActivity : AppCompatActivity() {
 //    }
 
     //질문 => 여기에서 signOut() 함수를 만들고 UserActivity에서 LoginActivity의 객체를 만들어서 signOut()함수를 실행하면 안되나?
-    fun updateUI(user: FirebaseUser?) {
+    private fun updateUI(user: FirebaseUser?) {
         if (user != null) {
             uid = user.uid
             uEmail = user.email.toString()
@@ -103,8 +103,6 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         } else {
-            intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
             Log.d(TAG, "user data load fail")
         }
     }
