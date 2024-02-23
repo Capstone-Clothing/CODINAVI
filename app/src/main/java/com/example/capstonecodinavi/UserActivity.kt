@@ -58,10 +58,10 @@ class UserActivity : AppCompatActivity() {
 
         val googleSignInClient = GoogleSignIn.getClient(this, gso)
         val auth = Firebase.auth
-        auth.signOut()
 
         googleSignInClient.signOut().addOnSuccessListener(this) {
-            logIn.updateUI(null)
+            //logIn.updateUI(null)
+            auth.signOut()
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
