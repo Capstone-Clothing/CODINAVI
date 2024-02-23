@@ -20,9 +20,9 @@ import com.google.firebase.auth.auth
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
-    private lateinit var googleSignInClient: GoogleSignInClient
+    lateinit var googleSignInClient: GoogleSignInClient
     private val RC_SIGN_IN = 9001
-    private lateinit var auth: FirebaseAuth
+    lateinit var auth: FirebaseAuth
     private lateinit var uid: String
     private lateinit var uEmail: String
     private lateinit var uname: String
@@ -82,16 +82,18 @@ class LoginActivity : AppCompatActivity() {
         val signInIntent = googleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
-    fun signOut() {
-        auth.signOut()
+//    fun signOut() {
+//        auth.signOut()
+//
+//        googleSignInClient.signOut().addOnSuccessListener(this) {
+//            updateUI(null)
+//            val intent = Intent(this, LoginActivity::class.java)
+//            startActivity(intent)
+//        }
+//    }
 
-        val intent = Intent(this, LoginActivity::class.java)
-        startActivity(intent)
-        googleSignInClient.signOut().addOnCompleteListener(this) {
-            updateUI(null)
-        }
-    }
-    private fun updateUI(user: FirebaseUser?) {
+    //질문 => 여기에서 signOut() 함수를 만들고 UserActivity에서 LoginActivity의 객체를 만들어서 signOut()함수를 실행하면 안되나?
+    fun updateUI(user: FirebaseUser?) {
         if (user != null) {
             uid = user.uid
             uEmail = user.email.toString()

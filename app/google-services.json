@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "1071573088333-te6lslemc8j2cu6su9va1jpfodmt8n8q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.capstonecodinavi",
+            "certificate_hash": "17041cc3d30da7045f769ab9c737065de066e5d3"
+          }
+        },
+        {
           "client_id": "1071573088333-mmveri0gque978pmnb4m6v0lffku3m5f.apps.googleusercontent.com",
           "client_type": 3
         }
