@@ -64,6 +64,7 @@ class UserActivity : AppCompatActivity() {
             logIn.updateUI(null)
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
+            finish()
         }
     }
 }

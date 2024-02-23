@@ -103,8 +103,6 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         } else {
-            intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
             Log.d(TAG, "user data load fail")
         }
     }
