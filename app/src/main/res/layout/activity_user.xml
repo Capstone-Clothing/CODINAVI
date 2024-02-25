@@ -11,7 +11,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="16dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -55,7 +54,7 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/username"
                 android:layout_width="136dp"
                 android:layout_height="68dp"
                 android:layout_marginLeft="10dp"
@@ -68,59 +67,66 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="328dp"
-            android:layout_height="535dp"
-            android:layout_marginLeft="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:background="@drawable/rectangle_2"
-            android:gravity="center"
+            android:gravity="center|bottom"
+            android:layout_gravity="center"
             android:orientation="vertical">
 
-            <android.widget.Button
-                android:id="@+id/genderBtn"
-                android:layout_width="270dp"
-                android:layout_height="90dp"
-                android:background="@drawable/userbtn"
-                android:fontFamily="@font/locus_sangsang"
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="성별"
-                android:textColor="@color/white"
-                android:textSize="45sp" />
+                android:orientation="vertical">
 
-            <android.widget.Button
-                android:id="@+id/guideBtn"
-                android:layout_width="270dp"
-                android:layout_height="90dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/userbtn"
-                android:fontFamily="@font/locus_sangsang"
-                android:gravity="center"
-                android:text="사용설명서"
-                android:textColor="@color/white"
-                android:textSize="45sp" />
+                <android.widget.Button
+                    android:id="@+id/genderBtn"
+                    android:layout_width="270dp"
+                    android:layout_height="90dp"
+                    android:background="@drawable/userbtn"
+                    android:fontFamily="@font/locus_sangsang"
+                    android:gravity="center"
+                    android:text="성별"
+                    android:textColor="@color/white"
+                    android:textSize="45sp" />
 
-            <android.widget.Button
-                android:id="@+id/administratorBtn"
-                android:layout_width="270dp"
-                android:layout_height="90dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/userbtn"
-                android:fontFamily="@font/locus_sangsang"
-                android:gravity="center"
-                android:text="관리자 문의"
-                android:textColor="@color/white"
-                android:textSize="45sp" />
+                <android.widget.Button
+                    android:id="@+id/guideBtn"
+                    android:layout_width="270dp"
+                    android:layout_height="90dp"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/userbtn"
+                    android:fontFamily="@font/locus_sangsang"
+                    android:gravity="center"
+                    android:text="사용설명서"
+                    android:textColor="@color/white"
+                    android:textSize="45sp" />
 
-            <android.widget.Button
-                android:id="@+id/logoutBtn"
-                android:layout_width="270dp"
-                android:layout_height="90dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/userbtn"
-                android:fontFamily="@font/locus_sangsang"
-                android:gravity="center"
-                android:text="로그아웃"
-                android:textColor="@color/white"
-                android:textSize="45sp" />
+                <android.widget.Button
+                    android:id="@+id/administratorBtn"
+                    android:layout_width="270dp"
+                    android:layout_height="90dp"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/userbtn"
+                    android:fontFamily="@font/locus_sangsang"
+                    android:gravity="center"
+                    android:text="관리자 문의"
+                    android:textColor="@color/white"
+                    android:textSize="45sp" />
+
+                <android.widget.Button
+                    android:id="@+id/logoutBtn"
+                    android:layout_width="270dp"
+                    android:layout_height="90dp"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/userbtn"
+                    android:fontFamily="@font/locus_sangsang"
+                    android:gravity="center"
+                    android:text="로그아웃"
+                    android:textColor="@color/white"
+                    android:textSize="45sp" />
+            </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>

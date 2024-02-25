@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -46,15 +47,28 @@ dependencies {
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
-    //날씨
-    implementation ("com.loopj.android:android-async-http:1.4.11")
-    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation ("com.android.volley:volley:1.2.1")
+    implementation("com.loopj.android:android-async-http:1.4.11")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.android.volley:volley:1.2.1")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
+
     //현재 위치
     implementation ("com.google.android.gms:play-services-location:21.0.1")
+
+    // 로그인
+    implementation ("com.google.android.gms:play-services-auth:21.0.0")
+
+    implementation("com.google.android.gms:play-services-location:21.0.1")
+
+    implementation("com.google.gms:google-services:4.3.15")
+    implementation(platform("com.google.firebase:firebase-bom:32.7.2"))
+    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.android.gms:play-services-auth:20.5.0")
+    implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation("com.google.firebase:firebase-storage-ktx:20.0.1")
+
 }
