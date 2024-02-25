@@ -68,3 +68,6 @@ class UserActivity : AppCompatActivity() {
         }
     }
 }
+
+//질문 => MainActivity에서 UserActivity로 가서 로그아웃을 했을 때 LoginActivity로 넘어가는데 LoginActivity에서 뒤로가기를 누르면 MainActivity가 나옴.
+//아마도 finish() 함수를 써야 할 것 같은데 어디서 써야될지를 모르겠음
