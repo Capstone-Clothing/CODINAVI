@@ -15,7 +15,7 @@ import com.example.capstonecodinavi.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     val REQUEST_IMAGE_CAPTURE = 1
-    //var mainActivity: MainActivity? = null   //클래스 변수 말고 전역 변수는 왜 안될까?
+    var mainActivity: MainActivity? = null   //클래스 변수 말고 전역 변수는 왜 안될까?
     companion object {
         var imageBitmap: Bitmap? = null
         var mainActivity: MainActivity? = null
@@ -95,5 +95,5 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // onActivity, onActivityResult() 등등 어떤 함수고 언제 왜 실행될까? 콜백함수이고 상속으로 인해 override된 인건 알겠는데 정확히 언제 실행되는 지 모르겠다.
+    // onActivity, onActivityResult() 등등 어떤 함수고 언제 왜 실행될까? 콜백함수이고 상속으로 인해 override된 함수 인건 알겠는데 정확히 언제 실행되는 지 모르겠다.
 }
