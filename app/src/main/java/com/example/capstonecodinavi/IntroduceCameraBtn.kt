@@ -11,6 +11,7 @@ class IntroduceCameraBtn : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityIntroduceCameraBtnBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setTitle(" ")
         action()
     }
 

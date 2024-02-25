@@ -48,6 +48,7 @@ class WeatherActivity : AppCompatActivity() {
         initData()
         action()
         getCurrentLocation()
+        setTitle(" ")
     }
     private fun initData() {
         LocationRequest.create().apply {

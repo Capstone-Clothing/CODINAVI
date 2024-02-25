@@ -11,6 +11,7 @@ class ConfirmActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityConfirmBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setTitle(" ")
         action()
     }
 
