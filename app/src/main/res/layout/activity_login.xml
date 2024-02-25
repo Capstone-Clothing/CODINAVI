@@ -29,7 +29,8 @@
         android:gravity="center_horizontal"
         android:text="CODINAVI"
         android:textSize="50sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:importantForAccessibility="no" />
 
     </LinearLayout>
 

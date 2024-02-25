@@ -25,7 +25,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        setTitle(" ")
         // SharedPreferences 초기화
         sharedPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE)
 

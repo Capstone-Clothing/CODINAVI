@@ -9,4 +9,12 @@
         android:fontWeight="400"
         android:font="@font/bakbakone_regular" />
 
+    <font android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/soyo_maple_regular" />
+
+    <font android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/soyo_maple_bold" />
+
 </font-family>

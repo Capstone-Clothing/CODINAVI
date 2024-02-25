@@ -26,7 +26,7 @@ class SearchOtherlocation : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySearchOtherlocationBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        setTitle(" ")
         action()
     }
     private fun action() {

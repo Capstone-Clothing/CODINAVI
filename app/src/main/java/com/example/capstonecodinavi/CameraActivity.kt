@@ -12,6 +12,7 @@ class CameraActivity : AppCompatActivity() {
         binding = ActivityCameraBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setClothImage()
+        setTitle(" ")
         action()
     }
 

@@ -67,7 +67,7 @@
                 android:layout_marginTop="18dp"
                 android:layout_marginEnd="18dp"
                 android:layout_marginBottom="18dp"
-                android:fontFamily="@font/locus_sangsang"
+                android:fontFamily="@font/soyo_maple_regular"
                 android:gravity="center_vertical"
                 android:lineSpacingExtra="10dp"
                 android:paddingTop="50dp"

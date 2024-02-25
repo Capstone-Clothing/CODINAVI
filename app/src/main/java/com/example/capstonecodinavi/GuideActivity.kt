@@ -11,6 +11,7 @@ class GuideActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityGuideBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setTitle(" ")
         action()
     }
 

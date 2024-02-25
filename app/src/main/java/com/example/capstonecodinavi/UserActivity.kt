@@ -28,6 +28,7 @@ class UserActivity : AppCompatActivity() {
         // TextView에 사용자 이름 설정
         binding.username.text = displayedName
 
+        setTitle(" ")
         action()
     }
 
