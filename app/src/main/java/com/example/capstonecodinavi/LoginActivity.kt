@@ -39,7 +39,7 @@ class LoginActivity : AppCompatActivity() {
         googleSignInClient = GoogleSignIn.getClient(this, gso)
         auth = Firebase.auth
 
-        binding.button.setOnClickListener {
+        binding.googleLoginBtn.setOnClickListener {
             signIn()
         }
     }
@@ -106,9 +106,4 @@ class LoginActivity : AppCompatActivity() {
             Log.d(TAG, "user data load fail")
         }
     }
-    companion object {
-        private const val TAG = "GoogleActivity"
-        private const val RC_SIGN_IN = 9001
-    }
-
 }

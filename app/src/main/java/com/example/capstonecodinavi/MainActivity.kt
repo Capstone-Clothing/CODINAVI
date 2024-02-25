@@ -47,6 +47,7 @@ class MainActivity : AppCompatActivity() {
                     startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
                 }
             }
+            // 카메라 권한 동의 창이 앱이 튕기고 밖에서 보여짐. 어떻게 고쳐야 할까
         }
 
         binding.guideBtn.setOnClickListener {
@@ -93,4 +94,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
+    // onActivity, onActivityResult() 등등 어떤 함수고 언제 왜 실행될까? 콜백함수이고 상속으로 인해 override된 인건 알겠는데 정확히 언제 실행되는 지 모르겠다.
 }
