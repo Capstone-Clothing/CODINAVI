@@ -15,19 +15,24 @@ import com.example.capstonecodinavi.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     val REQUEST_IMAGE_CAPTURE = 1
+    //var mainActivity: MainActivity? = null   //클래스 변수 말고 전역 변수는 왜 안될까?
     companion object {
         var imageBitmap: Bitmap? = null
+        var mainActivity: MainActivity? = null
+        // 질문 => 왜 꼭 클래스 변수여야만 되는 건가
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        mainActivity = this
         action()
     }
     private fun action() {
         binding.homeBtn.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
         binding.profileBtn.setOnClickListener {

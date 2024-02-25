@@ -13,7 +13,7 @@ import kotlin.math.sign
 
 class UserActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUserBinding
-    private val logIn = LoginActivity()
+    private val mainActivity = MainActivity.mainActivity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityUserBinding.inflate(layoutInflater)
@@ -25,11 +25,13 @@ class UserActivity : AppCompatActivity() {
         binding.homeBtn.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
         binding.profileBtn.setOnClickListener {
             val intent = Intent(this, UserActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
 //        binding.genderBtn.setOnClickListener {
@@ -47,6 +49,7 @@ class UserActivity : AppCompatActivity() {
 
         binding.logoutBtn.setOnClickListener {
             signOut()
+            mainActivity!!.finish()
         }
     }
 
@@ -71,3 +74,4 @@ class UserActivity : AppCompatActivity() {
 
 //질문 => MainActivity에서 UserActivity로 가서 로그아웃을 했을 때 LoginActivity로 넘어가는데 LoginActivity에서 뒤로가기를 누르면 MainActivity가 나옴.
 //아마도 finish() 함수를 써야 할 것 같은데 어디서 써야될지를 모르겠음
+//signout() 함수를 여기 말고 LoginActivity에 작성하고 UserActivity에서 LoginActivity 객체를 만들어서 사용할 수 없나? 해봤는데 안됨.
