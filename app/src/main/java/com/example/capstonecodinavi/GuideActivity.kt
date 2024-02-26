@@ -30,5 +30,10 @@ class GuideActivity : AppCompatActivity() {
             val intent = Intent(this, IntroduceCameraBtn::class.java)
             startActivity(intent)
         }
+
+        binding.introduceWeatherBtn.setOnClickListener {
+            val intent = Intent(this, IntroduceWeatherBtn::class.java)
+            startActivity(intent)
+        }
     }
 }

@@ -57,6 +57,9 @@
             android:name="com.example.capstonecodinavi.CameraActivity"
             android:exported="false" />
         <activity
+            android:name="com.example.capstonecodinavi.IntroduceWeatherBtn"
+            android:exported="false" />
+        <activity
             android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
