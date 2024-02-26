@@ -1,5 +1,6 @@
 package com.example.capstonecodinavi
 
+import android.content.Intent
 import android.location.Geocoder
 import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
@@ -30,6 +31,16 @@ class SearchOtherlocation : AppCompatActivity() {
         action()
     }
     private fun action() {
+        binding.homeBtn.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.profileBtn.setOnClickListener {
+            val intent = Intent(this, UserActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.searchBtn.setOnClickListener {
             searchText = binding.searchEt.text.toString()
             getLatLng(searchText!!)
