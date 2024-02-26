@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background"
     android:orientation="vertical"
-    tools:context=".IntroduceCameraBtn">
+    tools:context=".IntroduceWeatherBtn">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -55,22 +55,22 @@
             android:gravity="center">
 
             <View
-                android:id="@+id/introduceCameraV"
+                android:id="@+id/introduceWeatherV"
                 android:layout_width="328dp"
-                android:layout_height="540dp"
+                android:layout_height="322dp"
                 android:background="@drawable/rectangle_1"
                 android:layout_marginTop="40dp" />
 
             <TextView
-                android:id="@+id/introduceCameraTv"
+                android:id="@+id/introduceWeatherTv"
                 android:layout_width="291dp"
-                android:layout_height="503dp"
+                android:layout_height="285dp"
                 android:layout_marginStart="18dp"
                 android:layout_marginTop="55dp"
                 android:fontFamily="@font/soyo_maple_regular"
                 android:gravity="center_vertical"
                 android:lineSpacingExtra="10dp"
-                android:text="사용자가 선택한 옷을 카메라로 인식하면 그 옷에 대한 설명과 어울리는 코디를 추천받을 수 있습니다.\n카메라로 인식된 옷은 데이터에 저장됩니다. \n\n추천 기능에는 코디 추천과 색상 추천이 있습니다. \n\n코디 추천은 저장된 옷들 중에 인식된 옷과 가장 어울리는 옷을 추천합니다. \n\n색상 추천은 인식된 옷과 어울리는 색상을 추천합니다."
+                android:text="사용자의 현재 위치를 기반으로 날씨 정보를 제공하고, 날씨에 맞은 옷차림을 추천합니다.\n\n또한, 사용자가 원하는 지역을 입력하여 다른 지역의 날씨와 그에 따른 옷차림을 추천받을 수 있습니다."
                 android:textSize="22sp" />
         </RelativeLayout>
     </LinearLayout>
