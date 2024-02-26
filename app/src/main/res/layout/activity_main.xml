@@ -61,9 +61,10 @@
                 android:backgroundTint="#746DC4"
                 android:layout_width="250dp"
                 android:layout_height="120dp"
-                android:textSize="50sp"
+                android:textSize="45sp"
                 android:text="사용설명서"
-                android:fontFamily="@font/locus_sangsang"
+                android:fontFamily="@font/soyo_maple_regular"
+                android:textStyle="bold"
                 android:textColor="@color/white" />
 
             <android.widget.Button
@@ -74,7 +75,8 @@
                 android:layout_marginTop="50dp"
                 android:textSize="50sp"
                 android:text="카메라"
-                android:fontFamily="@font/locus_sangsang"
+                android:fontFamily="@font/soyo_maple_regular"
+                android:textStyle="bold"
                 android:textColor="@color/white" />
 
             <android.widget.Button
@@ -85,7 +87,8 @@
                 android:layout_marginTop="50dp"
                 android:textSize="50sp"
                 android:text="날씨"
-                android:fontFamily="@font/locus_sangsang"
+                android:fontFamily="@font/soyo_maple_regular"
+                android:textStyle="bold"
                 android:textColor="@color/white" />
 
         </LinearLayout>

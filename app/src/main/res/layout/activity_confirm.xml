@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/background"
     tools:context=".ConfirmActivity">
 
     <LinearLayout
@@ -47,5 +48,24 @@
                 android:contentDescription="마이페이지"
                 android:background="@android:color/transparent" />
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/clothIv"
+            android:layout_width="350dp"
+            android:layout_height="400dp"
+            android:layout_marginTop="16dp"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:id="@+id/view"
+            android:layout_width="350dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:background="@color/white"
+            android:fontFamily="@font/soyo_maple_bold"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:text="옷 정보 설명"/>
     </LinearLayout>
 </LinearLayout>
