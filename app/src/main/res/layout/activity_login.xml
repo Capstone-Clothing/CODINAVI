@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/background"
     tools:context=".LoginActivity">
 
     <LinearLayout
@@ -28,8 +29,9 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:text="CODINAVI"
+        android:fontFamily="@font/bakbakone_regular"
         android:textSize="50sp"
-        android:textStyle="bold"
+        android:textColor="@color/black"
         android:importantForAccessibility="no" />
 
     </LinearLayout>
