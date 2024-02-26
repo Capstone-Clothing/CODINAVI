@@ -17,7 +17,8 @@ class IntroduceWeatherBtn : AppCompatActivity() {
 
     private fun action() {
         binding.homeBtn.setOnClickListener {
-            finish()
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
         }
 
         binding.profileBtn.setOnClickListener {
