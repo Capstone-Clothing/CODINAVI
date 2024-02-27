@@ -38,7 +38,6 @@ class LoginActivity : AppCompatActivity() {
         // 구글 로그인 옵션 설정
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()     // 이메일 요청
-            .requestProfile()   // 프로필 정보 요청
             .build()
 
         // 구글 로그인 클라이언트 설정
@@ -71,7 +70,6 @@ class LoginActivity : AppCompatActivity() {
             try {
                 val account = task.getResult(ApiException::class.java)
                 val username = account?.displayName
-
                 saveUsername(username ?: "Unknown") // 사용자 이름이 없을 경우
                 saveLoginStatus(true)   // 로그인 상태 저장
                 moveToMainScreen()  // MainActivity로 이동
