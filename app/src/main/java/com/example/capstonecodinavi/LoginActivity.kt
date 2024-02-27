@@ -26,6 +26,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var uid: String
     private lateinit var uEmail: String
     private lateinit var uname: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -63,7 +64,6 @@ class LoginActivity : AppCompatActivity() {
                 updateUI(null)
             }
         }
-
     }
     private fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
@@ -82,6 +82,7 @@ class LoginActivity : AppCompatActivity() {
         val signInIntent = googleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
+
 //    fun signOut() {
 //        auth.signOut()
 //

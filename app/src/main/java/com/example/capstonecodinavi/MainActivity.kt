@@ -18,14 +18,11 @@ class MainActivity : AppCompatActivity() {
     //var mainActivity: MainActivity? = null   //클래스 변수 말고 전역 변수는 왜 안될까?
     companion object {
         var imageBitmap: Bitmap? = null
-        var mainActivity: MainActivity? = null
-        // 질문 => 왜 꼭 클래스 변수여야만 되는 건가
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        mainActivity = this
         action()
     }
     private fun action() {
@@ -48,7 +45,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             // 카메라 권한 동의 창이 앱이 튕기고 밖에서 보여짐. 어떻게 고쳐야 할까
-
         }
 
         binding.guideBtn.setOnClickListener {
@@ -89,7 +85,7 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             imageBitmap = data?.extras?.get("data") as Bitmap
             val intent = Intent(this, CameraActivity::class.java)
             startActivity(intent)

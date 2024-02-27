@@ -13,7 +13,7 @@ import kotlin.math.sign
 
 class UserActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUserBinding
-    private val mainActivity = MainActivity.mainActivity
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityUserBinding.inflate(layoutInflater)
@@ -49,10 +49,8 @@ class UserActivity : AppCompatActivity() {
 
         binding.logoutBtn.setOnClickListener {
             signOut()
-            mainActivity!!.finish()
         }
     }
-
     private fun signOut() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
@@ -65,9 +63,10 @@ class UserActivity : AppCompatActivity() {
         googleSignInClient.signOut().addOnSuccessListener(this) {
             //logIn.updateUI(null)
             auth.signOut()
+            finishAffinity()
+
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
-            finish()
         }
     }
 }
