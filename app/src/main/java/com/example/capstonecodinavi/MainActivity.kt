@@ -1,6 +1,7 @@
 package com.example.capstonecodinavi
 
 import android.Manifest
+import android.Manifest.permission.CAMERA
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -9,13 +10,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.capstonecodinavi.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     val REQUEST_IMAGE_CAPTURE = 1
-    //var mainActivity: MainActivity? = null   //클래스 변수 말고 전역 변수는 왜 안될까?
+    val CAMERA = arrayOf(Manifest.permission.CAMERA)
+    val CAMERA_CODE = 98
     companion object {
         var imageBitmap: Bitmap? = null
     }
@@ -38,15 +41,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.cameraBtn.setOnClickListener {
-            checkPermission()
-            Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
-                takePictureIntent.resolveActivity(packageManager)?.also {
-                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
-                }
-            }
+            callCamera()
             // 카메라 권한 동의 창이 앱이 튕기고 밖에서 보여짐. 어떻게 고쳐야 할까
         }
-
         binding.guideBtn.setOnClickListener {
             val intent = Intent(this, GuideActivity::class.java)
             startActivity(intent)
@@ -57,38 +54,54 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
-    private fun checkPermission() {
-        var permission = mutableMapOf<String, String>()
-        permission["camera"] = Manifest.permission.CAMERA
-
-        var denied = permission.count { ContextCompat.checkSelfPermission(this, it.value) == PackageManager.PERMISSION_DENIED}
-
-        if(denied > 0 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(permission.values.toTypedArray(), REQUEST_IMAGE_CAPTURE)
-        }
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
+    override fun onRequestPermissionsResult(requestCode: Int,
+                                            permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if(requestCode == REQUEST_IMAGE_CAPTURE) {
-            var count = grantResults.count { it == PackageManager.PERMISSION_DENIED }
 
-            if(count!=0) {
-                Toast.makeText(applicationContext, "권한을 동의해주세요", Toast.LENGTH_SHORT).show()
-                finish()
+        when(requestCode){
+            CAMERA_CODE -> {
+                for (grant in grantResults){
+                    if(grant != PackageManager.PERMISSION_GRANTED){
+                        Toast.makeText(this, "카메라 권한을 승인해 주세요", Toast.LENGTH_LONG).show()
+                    }
+                }
             }
         }
     }
+
+    // 다른 권한등도 확인이 가능하도록
+    fun checkPermission(permissions: Array<out String>, type:Int):Boolean{
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            for (permission in permissions){
+                if(ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED){
+                    ActivityCompat.requestPermissions(this, permissions, type)
+                    return false
+                }
+            }
+        }
+        return true
+    }
+
+    // 카메라 촬영 - 권한 처리
+    fun callCamera(){
+        if(checkPermission(CAMERA, CAMERA_CODE)){
+            val itt = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            startActivityForResult(itt, CAMERA_CODE)
+        }
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            imageBitmap = data?.extras?.get("data") as Bitmap
-            val intent = Intent(this, CameraActivity::class.java)
-            startActivity(intent)
+        if(resultCode == RESULT_OK) {
+            when(requestCode){
+                CAMERA_CODE -> {
+                    if(data?.extras?.get("data") != null){
+                        imageBitmap = data?.extras?.get("data") as Bitmap
+                        val intent = Intent(this, CameraActivity::class.java)
+                        startActivity(intent)
+                    }
+                }
+            }
         }
     }
 
