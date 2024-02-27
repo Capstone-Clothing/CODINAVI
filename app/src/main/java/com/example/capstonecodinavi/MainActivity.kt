@@ -16,11 +16,11 @@ import com.example.capstonecodinavi.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    val REQUEST_IMAGE_CAPTURE = 1
     val CAMERA = arrayOf(Manifest.permission.CAMERA)
     val CAMERA_CODE = 98
+    var imageBitmap: Bitmap? = null
     companion object {
-        var imageBitmap: Bitmap? = null
+        //var imageBitmap: Bitmap? = null
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,12 +96,11 @@ class MainActivity : AppCompatActivity() {
                     if(data?.extras?.get("data") != null){
                         imageBitmap = data?.extras?.get("data") as Bitmap
                         val intent = Intent(this, CameraActivity::class.java)
+                        intent.putExtra("imageBitmap", imageBitmap)
                         startActivity(intent)
                     }
                 }
             }
         }
     }
-
-    // onActivity, onActivityResult() 등등 어떤 함수고 언제 왜 실행될까? 콜백함수이고 상속으로 인해 override된 함수 인건 알겠는데 정확히 언제 실행되는 지 모르겠다.
 }

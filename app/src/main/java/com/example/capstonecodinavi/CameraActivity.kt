@@ -1,6 +1,7 @@
 package com.example.capstonecodinavi
 
 import android.content.Intent
+import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.capstonecodinavi.databinding.ActivityCameraBinding
@@ -16,7 +17,8 @@ class CameraActivity : AppCompatActivity() {
     }
 
     private fun setClothImage() {
-        binding.clothIv.setImageBitmap(MainActivity.imageBitmap)
+        var imageBitmap = intent.getParcelableExtra<Bitmap>("imageBitmap")
+        binding.clothIv.setImageBitmap(imageBitmap)
     }
     private fun action() {
         binding.homeBtn.setOnClickListener {

@@ -88,8 +88,7 @@ class WeatherActivity : AppCompatActivity() {
                 success?.let { location ->
                     lat = location.latitude
                     lon = location.longitude
-//                    lat = 35.2070205
-//                    lon = 129.1025573
+                    Log.d("checklocation1111","$lat, $lon")
                     getCurrentAddress(lat!!, lon!!)
                     getCurrentSeason()
                     getCurrentWeather(lat!!, lon!!)
