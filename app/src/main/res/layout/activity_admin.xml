@@ -4,9 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/background"
-    tools:context=".UserActivity">
+    tools:context=".AdminActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -61,7 +60,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="68dp"
                 android:gravity="center|bottom"
-                android:text="User"
+                android:text="Admin"
                 android:textColor="@color/black"
                 android:textSize="45sp"
                 android:fontFamily="@font/soyo_maple_bold" />
@@ -83,7 +82,7 @@
                 android:orientation="vertical">
 
                 <android.widget.Button
-                    android:id="@+id/genderBtn"
+                    android:id="@+id/managementBtn"
                     android:layout_width="270dp"
                     android:layout_height="90dp"
                     android:background="@drawable/guidbtn"
@@ -95,7 +94,7 @@
                     android:textSize="45sp" />
 
                 <android.widget.Button
-                    android:id="@+id/guideBtn"
+                    android:id="@+id/guideReviseBtn"
                     android:layout_width="270dp"
                     android:layout_height="90dp"
                     android:layout_marginTop="30dp"
@@ -108,7 +107,7 @@
                     android:textSize="45sp" />
 
                 <android.widget.Button
-                    android:id="@+id/administratorInquiryBtn"
+                    android:id="@+id/administratorAnswerBtn"
                     android:layout_width="270dp"
                     android:layout_height="90dp"
                     android:layout_marginTop="30dp"
