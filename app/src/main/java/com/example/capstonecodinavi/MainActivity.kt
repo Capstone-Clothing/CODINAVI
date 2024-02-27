@@ -18,8 +18,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     val CAMERA = arrayOf(Manifest.permission.CAMERA)
     val CAMERA_CODE = 98
+    var imageBitmap: Bitmap? = null
     companion object {
-        var imageBitmap: Bitmap? = null
+        //var imageBitmap: Bitmap? = null
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -97,6 +98,7 @@ class MainActivity : AppCompatActivity() {
                     if(data?.extras?.get("data") != null){
                         imageBitmap = data?.extras?.get("data") as Bitmap
                         val intent = Intent(this, CameraActivity::class.java)
+                        intent.putExtra("imageBitmap", imageBitmap)
                         startActivity(intent)
                     }
                 }
