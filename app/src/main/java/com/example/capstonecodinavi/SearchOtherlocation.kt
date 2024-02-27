@@ -7,10 +7,6 @@ import com.example.capstonecodinavi.databinding.ActivitySearchOtherlocationBindi
 
 class SearchOtherlocation : AppCompatActivity() {
     lateinit var binding: ActivitySearchOtherlocationBinding
-    private var lat : Double? = null
-    private var lng : Double? = null
-    private var season: String? = null
-    private var searchText: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySearchOtherlocationBinding.inflate(layoutInflater)
