@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:textSize="18sp"
-            android:background="@drawable/view_border"
+            android:background="@drawable/rectangle_1"
             android:text="" />
 
         <TextView
@@ -64,7 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:textSize="18sp"
-            android:background="@drawable/view_border"
+            android:background="@drawable/rectangle_1"
             android:text="" />
 
         <TextView
@@ -73,7 +73,7 @@
             android:layout_height="150dp"
             android:layout_margin="16dp"
             android:textSize="18sp"
-            android:background="@drawable/view_border"
+            android:background="@drawable/rectangle_1"
             android:text="" />
 
         <TextView
@@ -82,7 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:textSize="18sp"
-            android:background="@drawable/view_border"
+            android:background="@drawable/rectangle_1"
             android:text="다른 지역의 날씨가 궁금하시다면 맨 아래 버튼을 눌러주세요." />
 
     </LinearLayout>

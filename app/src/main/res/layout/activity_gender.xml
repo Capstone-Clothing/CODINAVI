@@ -75,7 +75,7 @@
             android:background="@drawable/rectangle_1"
             />
 
-        <CheckBox
+        <RadioButton
             android:id="@+id/male"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -87,7 +87,7 @@
             android:text=" 남성"
             android:textSize="30dp" />
 
-        <CheckBox
+        <RadioButton
             android:id="@+id/female"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
