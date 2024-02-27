@@ -60,10 +60,10 @@
                 android:id="@+id/username"
                 android:layout_width="wrap_content"
                 android:layout_height="68dp"
-                android:gravity="center|bottom"
+                android:gravity="center"
                 android:text="User"
                 android:textColor="@color/black"
-                android:textSize="45sp"
+                android:textSize="30sp"
                 android:fontFamily="@font/soyo_maple_bold" />
 
         </LinearLayout>

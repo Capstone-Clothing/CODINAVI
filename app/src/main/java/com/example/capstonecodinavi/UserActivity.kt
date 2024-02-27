@@ -43,9 +43,10 @@ class UserActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-//        binding.genderBtn.setOnClickListener {
-//          //성별 바꾸는 화면으로 이동
-//        }
+        binding.genderBtn.setOnClickListener {
+            val intent = Intent(this, GenderActivity::class.java)
+            startActivity(intent)
+        }
 
         binding.guideBtn.setOnClickListener {
             val intent = Intent(this, GuideActivity::class.java)
