@@ -83,17 +83,6 @@ class LoginActivity : AppCompatActivity() {
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
 
-//    fun signOut() {
-//        auth.signOut()
-//
-//        googleSignInClient.signOut().addOnSuccessListener(this) {
-//            updateUI(null)
-//            val intent = Intent(this, LoginActivity::class.java)
-//            startActivity(intent)
-//        }
-//    }
-
-    //질문 => 여기에서 signOut() 함수를 만들고 UserActivity에서 LoginActivity의 객체를 만들어서 signOut()함수를 실행하면 안되나?
     fun updateUI(user: FirebaseUser?) {
         if (user != null) {
             uid = user.uid
