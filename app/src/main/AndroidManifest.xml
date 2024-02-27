@@ -25,39 +25,42 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name="com.example.capstonecodinavi.SearchOtherlocation"
+            android:name=".SplashActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.capstonecodinavi.IntroduceCameraBtn"
+            android:name=".SearchOtherlocation"
             android:exported="false" />
         <activity
-            android:name="com.example.capstonecodinavi.ConfirmActivity"
+            android:name=".IntroduceCameraBtn"
             android:exported="false" />
         <activity
-            android:name="com.example.capstonecodinavi.ColorActivity"
+            android:name=".ConfirmActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.capstonecodinavi.CodiActivity"
+            android:name=".ColorActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.capstonecodinavi.GuideActivity"
+            android:name=".CodiActivity"
+            android:exported="false" />
+        <activity
+            android:name=".GuideActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:launchMode="singleTask"
+            android:exported="false"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".WeatherActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.capstonecodinavi.WeatherActivity"
+            android:name=".UserActivity"
+            android:exported="false"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".CameraActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.capstonecodinavi.UserActivity"
-            android:launchMode="singleTop"
-            android:exported="false" />
-        <activity
-            android:name="com.example.capstonecodinavi.CameraActivity"
-            android:exported="false" />
-        <activity
-            android:name="com.example.capstonecodinavi.IntroduceWeatherBtn"
+            android:name=".IntroduceWeatherBtn"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
