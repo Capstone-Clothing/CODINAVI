@@ -15,7 +15,7 @@ import com.example.capstonecodinavi.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     val REQUEST_IMAGE_CAPTURE = 1
-    var mainActivity: MainActivity? = null   //클래스 변수 말고 전역 변수는 왜 안될까?
+    //var mainActivity: MainActivity? = null   //클래스 변수 말고 전역 변수는 왜 안될까?
     companion object {
         var imageBitmap: Bitmap? = null
         var mainActivity: MainActivity? = null
@@ -48,6 +48,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             // 카메라 권한 동의 창이 앱이 튕기고 밖에서 보여짐. 어떻게 고쳐야 할까
+
         }
 
         binding.guideBtn.setOnClickListener {
