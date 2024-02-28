@@ -19,9 +19,6 @@ class MainActivity : AppCompatActivity() {
     val CAMERA = arrayOf(Manifest.permission.CAMERA)
     val CAMERA_CODE = 98
     var imageBitmap: Bitmap? = null
-    companion object {
-        //var imageBitmap: Bitmap? = null
-    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
