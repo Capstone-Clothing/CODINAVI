@@ -102,7 +102,6 @@ class WeatherActivity : AppCompatActivity() {
             var address: List<Address>
             val geocoder = Geocoder(this, Locale.getDefault())
             address = geocoder.getFromLocation(lat, lng, 7) as List<Address>
-            Log.d("checkthisssss","$address")
             for (addr in address) {
                 if (addr.adminArea != null && adminArea == null) {
                     adminArea = addr.adminArea
@@ -162,7 +161,6 @@ class WeatherActivity : AppCompatActivity() {
     }
     fun getCurrentWeather(lat: Double, lon: Double) {
         val url = "https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=2d360c1fe9d2bade8fc08a1679683e24"
-        Log.d("check12345","$lat, $lon")
         val request = object :
             StringRequest(
                 Method.GET,
@@ -251,7 +249,6 @@ class WeatherActivity : AppCompatActivity() {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 getCurrentLocation()
             } else {
-                Log.d("ttt", "onRequestPermissionResult() _ 권한 허용 거부")
                 Toast.makeText(this, "권한이 없어 해당 기능을 실행할 수 없습니다", Toast.LENGTH_SHORT).show()
             }
         }
