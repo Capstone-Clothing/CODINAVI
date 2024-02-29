@@ -16,40 +16,47 @@ import com.example.capstonecodinavi.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    val CAMERA = arrayOf(Manifest.permission.CAMERA)
-    val CAMERA_CODE = 98
-    var imageBitmap: Bitmap? = null
+
+    private lateinit var mainFragment: MainFragment
+    private lateinit var userFragment: UserFragment
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setTitle(" ")
+        initUI()
         action()
     }
+
+    private fun initUI() {
+        mainFragment = MainFragment()
+        userFragment = UserFragment()
+
+        supportFragmentManager.beginTransaction().add(binding.mainFl.id, mainFragment).commit()
+    }
+
     private fun action() {
         binding.homeBtn.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
+            supportFragmentManager.beginTransaction().replace(binding.mainFl.id, mainFragment).commit()
         }
 
         binding.profileBtn.setOnClickListener {
-            val intent = Intent(this, UserActivity::class.java)
-            startActivity(intent)
+            supportFragmentManager.beginTransaction().replace(binding.mainFl.id, userFragment).commit()
         }
 
-        binding.cameraBtn.setOnClickListener {
-            val intent = Intent(this, CameraActivity::class.java)
-            startActivity(intent)
-        }
-        binding.guideBtn.setOnClickListener {
-            val intent = Intent(this, GuideActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.weatherBtn.setOnClickListener {
-            val intent = Intent(this, WeatherActivity::class.java)
-            startActivity(intent)
-        }
+//        binding.cameraBtn.setOnClickListener {
+//            val intent = Intent(this, CameraActivity::class.java)
+//            startActivity(intent)
+//        }
+//        binding.guideBtn.setOnClickListener {
+//            val intent = Intent(this, GuideActivity::class.java)
+//            startActivity(intent)
+//        }
+//
+//        binding.weatherBtn.setOnClickListener {
+//            val intent = Intent(this, WeatherActivity::class.java)
+//            startActivity(intent)
+//        }
     }
 }

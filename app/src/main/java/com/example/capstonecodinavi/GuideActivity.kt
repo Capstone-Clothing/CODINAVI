@@ -20,11 +20,6 @@ class GuideActivity : AppCompatActivity() {
             finish()
         }
 
-        binding.profileBtn.setOnClickListener {
-            val intent = Intent(this, UserActivity::class.java)
-            startActivity(intent)
-        }
-
         binding.introduceCameraBtn.setOnClickListener {
             val intent = Intent(this, IntroduceCameraBtn::class.java)
             startActivity(intent)

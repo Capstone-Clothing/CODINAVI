@@ -33,18 +33,6 @@ class UserActivity : AppCompatActivity() {
     }
 
     private fun action() {
-        binding.homeBtn.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-
-        binding.profileBtn.setOnClickListener {
-            val intent = Intent(this, UserActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-
         binding.genderBtn.setOnClickListener {
             val intent = Intent(this, GenderActivity::class.java)
             startActivity(intent)

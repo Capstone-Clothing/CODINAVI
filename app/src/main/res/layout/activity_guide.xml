@@ -16,7 +16,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/rectangle_3"
             android:orientation="horizontal" >
 
             <ImageButton
@@ -26,27 +25,6 @@
                 android:src="@drawable/home"
                 android:contentDescription="홈"
                 android:background="@android:color/transparent"/>
-
-            <TextView
-                android:id="@+id/codinavi"
-                android:layout_width="158dp"
-                android:layout_height="53dp"
-                android:layout_weight="1"
-                android:layout_marginTop="19dp"
-                android:gravity="center"
-                android:importantForAccessibility="no"
-                android:text="CODINAVI"
-                android:textColor="#2D0F51"
-                android:textSize="35sp"
-                android:fontFamily="@font/bakbakone_regular" />
-
-            <ImageButton
-                android:id="@+id/profileBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/profile"
-                android:contentDescription="마이페이지"
-                android:background="@android:color/transparent" />
         </LinearLayout>
 
         <LinearLayout
