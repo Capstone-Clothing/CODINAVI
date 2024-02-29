@@ -29,6 +29,7 @@ class OtherlocationActivity : AppCompatActivity() {
         setContentView(binding.root)
         setTitle(" ")
         action()
+        getLatLng()
     }
     private fun action() {
         binding.homeBtn.setOnClickListener {
