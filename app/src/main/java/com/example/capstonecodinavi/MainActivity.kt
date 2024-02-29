@@ -37,12 +37,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.cameraBtn.setOnClickListener {
-            checkPermission()
-            Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
-                takePictureIntent.resolveActivity(packageManager)?.also {
-                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
-                }
-            }
+            val intent = Intent(this, CameraActivity::class.java)
+            startActivity(intent)
         }
 
         binding.guideBtn.setOnClickListener {
@@ -52,40 +48,6 @@ class MainActivity : AppCompatActivity() {
 
         binding.weatherBtn.setOnClickListener {
             val intent = Intent(this, WeatherActivity::class.java)
-            startActivity(intent)
-        }
-    }
-    private fun checkPermission() {
-        var permission = mutableMapOf<String, String>()
-        permission["camera"] = Manifest.permission.CAMERA
-
-        var denied = permission.count { ContextCompat.checkSelfPermission(this, it.value) == PackageManager.PERMISSION_DENIED}
-
-        if(denied > 0 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(permission.values.toTypedArray(), REQUEST_IMAGE_CAPTURE)
-        }
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if(requestCode == REQUEST_IMAGE_CAPTURE) {
-            var count = grantResults.count { it == PackageManager.PERMISSION_DENIED }
-
-            if(count!=0) {
-                Toast.makeText(applicationContext, "권한을 동의해주세요", Toast.LENGTH_SHORT).show()
-                finish()
-            }
-        }
-    }
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            imageBitmap = data?.extras?.get("data") as Bitmap
-            val intent = Intent(this, CameraActivity::class.java)
             startActivity(intent)
         }
     }
