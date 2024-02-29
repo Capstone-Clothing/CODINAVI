@@ -29,6 +29,7 @@ class OtherlocationActivity : AppCompatActivity() {
         setContentView(binding.root)
         setTitle(" ")
         action()
+        intent.getStringExtra("address")?.let { getLatLng(it) }
     }
     private fun action() {
         binding.homeBtn.setOnClickListener {
@@ -85,7 +86,7 @@ class OtherlocationActivity : AppCompatActivity() {
                             weatherStr = "맑음"
                         }
 
-                        binding.currentWeatherTv.text = "${searchText}의 계절은 ${season}, 날씨는 ${weatherStr}, 기온은 ${celsius}도 입니다."
+                        binding.currentWeatherTv.text = "${intent.getStringExtra("address")}의 계절은 ${season}, 날씨는 ${weatherStr}, 기온은 ${celsius}도 입니다."
                         recommendCodi(celsius.toDouble())
                     } catch (e: JSONException) {
                         e.printStackTrace()

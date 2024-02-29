@@ -28,6 +28,7 @@ class SearchOtherlocation : AppCompatActivity() {
 
         binding.searchBtn.setOnClickListener {
             val intent = Intent(this, OtherlocationActivity::class.java)
+            intent.putExtra("address",binding.searchEt.text.toString())
             startActivity(intent)
         }
     }
