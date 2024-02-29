@@ -19,6 +19,7 @@ class CodiActivity : AppCompatActivity() {
         binding.homeBtn.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+            //ddd
         }
 
         binding.profileBtn.setOnClickListener {
