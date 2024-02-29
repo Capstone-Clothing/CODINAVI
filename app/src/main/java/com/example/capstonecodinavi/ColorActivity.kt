@@ -11,6 +11,7 @@ class ColorActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityColorBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setTitle(" ")
         action()
     }
 

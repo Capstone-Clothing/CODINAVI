@@ -11,6 +11,7 @@ class GuideActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityGuideBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setTitle(" ")
         action()
     }
 
@@ -26,6 +27,11 @@ class GuideActivity : AppCompatActivity() {
 
         binding.introduceCameraBtn.setOnClickListener {
             val intent = Intent(this, IntroduceCameraBtn::class.java)
+            startActivity(intent)
+        }
+
+        binding.introduceWeatherBtn.setOnClickListener {
+            val intent = Intent(this, IntroduceWeatherBtn::class.java)
             startActivity(intent)
         }
     }

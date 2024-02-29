@@ -3,13 +3,13 @@ package com.example.capstonecodinavi
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.capstonecodinavi.databinding.ActivitySearchOtherlocationBinding
+import com.example.capstonecodinavi.databinding.ActivityGenderBinding
 
-class SearchOtherlocation : AppCompatActivity() {
-    lateinit var binding: ActivitySearchOtherlocationBinding
+class GenderActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityGenderBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySearchOtherlocationBinding.inflate(layoutInflater)
+        binding = ActivityGenderBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setTitle(" ")
         action()
@@ -26,10 +26,8 @@ class SearchOtherlocation : AppCompatActivity() {
             startActivity(intent)
         }
 
-        binding.searchBtn.setOnClickListener {
-            val intent = Intent(this, OtherlocationActivity::class.java)
-            intent.putExtra("address",binding.searchEt.text.toString())
-            startActivity(intent)
+        binding.genderChangeBtn.setOnClickListener {
+
         }
     }
 }

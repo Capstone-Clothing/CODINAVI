@@ -55,6 +55,13 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
+
+    //현재 위치
+    implementation ("com.google.android.gms:play-services-location:21.0.1")
+
+    // 로그인
+    implementation ("com.google.android.gms:play-services-auth:21.0.0")
+
     implementation("com.google.android.gms:play-services-location:21.0.1")
 
     implementation("com.google.gms:google-services:4.3.15")
@@ -63,4 +70,12 @@ dependencies {
     implementation("com.google.android.gms:play-services-auth:20.5.0")
     implementation("com.google.firebase:firebase-analytics-ktx")
     implementation("com.google.firebase:firebase-storage-ktx:20.0.1")
+
+    implementation("androidx.camera:camera-core:1.3.1")
+    implementation("androidx.camera:camera-camera2:1.3.1")
+    implementation("androidx.camera:camera-lifecycle:1.3.1")
+    implementation("androidx.camera:camera-video:1.3.1")
+    implementation("androidx.camera:camera-view:1.3.1")
+    implementation("androidx.camera:camera-extensions:1.3.1")
+
 }

@@ -11,7 +11,7 @@ class CodiActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCodiBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        setTitle(" ")
         action()
     }
 

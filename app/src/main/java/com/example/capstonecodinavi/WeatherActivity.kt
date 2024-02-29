@@ -10,6 +10,7 @@ import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
+import android.os.Build
 import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -48,6 +49,7 @@ class WeatherActivity : AppCompatActivity() {
         initData()
         action()
         getCurrentLocation()
+        setTitle(" ")
     }
     private fun initData() {
         LocationRequest.create().apply {
@@ -60,7 +62,8 @@ class WeatherActivity : AppCompatActivity() {
     }
     private fun action() {
         binding.homeBtn.setOnClickListener {
-            finish()
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
         }
 
         binding.profileBtn.setOnClickListener {
@@ -88,7 +91,6 @@ class WeatherActivity : AppCompatActivity() {
                 success?.let { location ->
                     lat = location.latitude
                     lon = location.longitude
-                    Log.d("checklocation1111","$lat, $lon")
                     getCurrentAddress(lat!!, lon!!)
                     getCurrentSeason()
                     getCurrentWeather(lat!!, lon!!)
@@ -96,44 +98,69 @@ class WeatherActivity : AppCompatActivity() {
             }
     }
     fun getCurrentAddress(lat: Double, lng: Double) {
-        var address: Address
-        val geocoder = Geocoder(this, Locale.getDefault())
-        try {
-            val geocodeListener = Geocoder.GeocodeListener { addresses ->
-                address = addresses[5]
-                Log.d("check123", "$addresses")
-                for (addr in addresses) {
-                    if (addr.adminArea != null && adminArea == null) {
-                        adminArea = addr.adminArea
-                    }
-                    if (addr.locality != null && locality == null) {
-                        locality = addr.locality
-                    }
-                    if (addr.thoroughfare != null && thoroughfare == null) {
-                        thoroughfare = addr.thoroughfare
-                    }
+        if (Build.VERSION.SDK_INT < 33) {
+            var address: List<Address>
+            val geocoder = Geocoder(this, Locale.getDefault())
+            address = geocoder.getFromLocation(lat, lng, 7) as List<Address>
+            for (addr in address) {
+                if (addr.adminArea != null && adminArea == null) {
+                    adminArea = addr.adminArea
                 }
-                address?.let {
-                    if (locality != null && adminArea != null && thoroughfare != null) {
-                        binding.currentLocationTv.text = "현재 위치는 ${adminArea} ${locality} ${thoroughfare} 입니다."
-                    } else if (locality == null) {
-                        binding.currentLocationTv.text = "현재 위치는 ${adminArea} ${thoroughfare} 입니다."
-                    } else if (adminArea == null) {
-                        binding.currentLocationTv.text = "현재 위치는 ${locality} ${thoroughfare} 입니다."
-                    } else {
-                        binding.currentLocationTv.text = "현재 위치는 ${adminArea} ${locality} 입니다."
-                    }
+                if (addr.locality != null && locality == null) {
+                    locality = addr.locality
+                }
+                if (addr.thoroughfare != null && thoroughfare == null) {
+                    thoroughfare = addr.thoroughfare
                 }
             }
-            geocoder.getFromLocation(lat, lng, 7, geocodeListener)
-        } catch (e: IOException) {
-            Toast.makeText(this, "주소를 가져올 수 없습니다", Toast.LENGTH_SHORT).show()
+            address?.let {
+                if (locality != null && adminArea != null && thoroughfare != null) {
+                    binding.currentLocationTv.text = "현재 위치는 ${adminArea} ${locality} ${thoroughfare} 입니다."
+                } else if (locality == null) {
+                    binding.currentLocationTv.text = "현재 위치는 ${adminArea} ${thoroughfare} 입니다."
+                } else if (adminArea == null) {
+                    binding.currentLocationTv.text = "현재 위치는 ${locality} ${thoroughfare} 입니다."
+                } else {
+                    binding.currentLocationTv.text = "현재 위치는 ${adminArea} ${locality} 입니다."
+                }
+            }
+        } else {
+            var address: Address
+            val geocoder = Geocoder(this, Locale.getDefault())
+            try {
+                val geocodeListener = Geocoder.GeocodeListener { addresses ->
+                    address = addresses[5]
+                    for (addr in addresses) {
+                        if (addr.adminArea != null && adminArea == null) {
+                            adminArea = addr.adminArea
+                        }
+                        if (addr.locality != null && locality == null) {
+                            locality = addr.locality
+                        }
+                        if (addr.thoroughfare != null && thoroughfare == null) {
+                            thoroughfare = addr.thoroughfare
+                        }
+                    }
+                    address?.let {
+                        if (locality != null && adminArea != null && thoroughfare != null) {
+                            binding.currentLocationTv.text = "현재 위치는 ${adminArea} ${locality} ${thoroughfare} 입니다."
+                        } else if (locality == null) {
+                            binding.currentLocationTv.text = "현재 위치는 ${adminArea} ${thoroughfare} 입니다."
+                        } else if (adminArea == null) {
+                            binding.currentLocationTv.text = "현재 위치는 ${locality} ${thoroughfare} 입니다."
+                        } else {
+                            binding.currentLocationTv.text = "현재 위치는 ${adminArea} ${locality} 입니다."
+                        }
+                    }
+                }
+                geocoder.getFromLocation(lat, lng, 7, geocodeListener)
+            } catch (e: IOException) {
+                Toast.makeText(this, "주소를 가져올 수 없습니다", Toast.LENGTH_SHORT).show()
+            }
         }
-
     }
     fun getCurrentWeather(lat: Double, lon: Double) {
         val url = "https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=2d360c1fe9d2bade8fc08a1679683e24"
-        Log.d("check12345","$lat, $lon")
         val request = object :
             StringRequest(
                 Method.GET,
@@ -222,18 +249,22 @@ class WeatherActivity : AppCompatActivity() {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 getCurrentLocation()
             } else {
-                Log.d("ttt", "onRequestPermissionResult() _ 권한 허용 거부")
                 Toast.makeText(this, "권한이 없어 해당 기능을 실행할 수 없습니다", Toast.LENGTH_SHORT).show()
             }
         }
     }
     fun checkPermissionForLocation(context: Context): Boolean {
-        if (context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            return true
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                return true
+            } else {
+                // 권한이 없으므로 권한 요청 알림 보내기
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_PERMISSION_LOCATION
+                )
+                return false
+            }
         } else {
-            // 권한이 없으므로 권한 요청 알림 보내기
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_PERMISSION_LOCATION)
-            return false
+            true
         }
     }
 }

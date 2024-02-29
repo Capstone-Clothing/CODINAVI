@@ -4,7 +4,7 @@
     package="com.example.capstonecodinavi">
 
     <uses-feature
-        android:name="android.hardware.camera"
+        android:name="android.hardware.camera.any"
         android:required="true" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -12,7 +12,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
@@ -27,37 +27,54 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name="com.example.capstonecodinavi.SearchOtherlocation"
+            android:name=".GenderActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.capstonecodinavi.IntroduceCameraBtn"
+            android:name=".OtherlocationActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.capstonecodinavi.ConfirmActivity"
+            android:name=".AdminActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.capstonecodinavi.ColorActivity"
+            android:name=".SearchOtherlocation"
             android:exported="false" />
         <activity
-            android:name="com.example.capstonecodinavi.CodiActivity"
+            android:name=".IntroduceCameraBtn"
             android:exported="false" />
         <activity
-            android:name="com.example.capstonecodinavi.GuideActivity"
+            android:name=".ConfirmActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.capstonecodinavi.MainActivity"
-            android:exported="true" />
-        <activity
-            android:name="com.example.capstonecodinavi.WeatherActivity"
+            android:name=".ColorActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.capstonecodinavi.UserActivity"
+            android:name=".CodiActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.capstonecodinavi.CameraActivity"
-            android:exported="true" />
+            android:name=".GuideActivity"
+            android:exported="false" />
         <activity
-            android:name="com.example.capstonecodinavi.LoginActivity"
+            android:name=".MainActivity"
+            android:exported="false"
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".WeatherActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UserActivity"
+            android:exported="false"
+            android:launchMode="singleTop" />
+        <activity
+            android:name=".CameraActivity"
+            android:exported="false" />
+        <activity
+            android:name=".IntroduceWeatherBtn"
+            android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
