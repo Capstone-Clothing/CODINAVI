@@ -50,6 +50,7 @@ class CameraActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         viewBinding = ActivityCameraBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
+        setTitle(" ")
 
         // Request camera permissions
         if (allPermissionsGranted()) {
@@ -59,9 +60,7 @@ class CameraActivity : AppCompatActivity() {
                 this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
         }
 
-        // Set up the listeners for take photo and video capture buttons
-        viewBinding.imageCaptureButton.setOnClickListener { takePhoto() }
-        viewBinding.videoCaptureButton.setOnClickListener { captureVideo() }
+
 
         cameraExecutor = Executors.newSingleThreadExecutor()
     }
