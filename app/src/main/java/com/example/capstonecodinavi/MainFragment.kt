@@ -18,6 +18,19 @@ class MainFragment : Fragment() {
             val intent = Intent(requireActivity(), GuideActivity::class.java)
             requireActivity().startActivity(intent)
         }
+        binding.cameraBtn.setOnClickListener {
+            val intent = Intent(requireActivity(), CameraActivity::class.java)
+            requireActivity().startActivity(intent)
+        }
+        binding.guideBtn.setOnClickListener {
+            val intent = Intent(requireActivity(), GuideActivity::class.java)
+            requireActivity().startActivity(intent)
+        }
+
+        binding.weatherBtn.setOnClickListener {
+            val intent = Intent(requireActivity(), WeatherActivity::class.java)
+            requireActivity().startActivity(intent)
+        }
 
         return binding.root
     }

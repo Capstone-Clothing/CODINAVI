@@ -167,6 +167,7 @@ class WeatherActivity : AppCompatActivity() {
                 url,
                 Response.Listener { response ->
                     try {
+                        Log.d("weathercheck","${response}")
                         val jsonObject = JSONObject(response)
                         val weather = jsonObject.getJSONArray("weather").getJSONObject(0).getString("main")
                         val kelvin = jsonObject.getJSONObject("main").getString("temp").toDouble()

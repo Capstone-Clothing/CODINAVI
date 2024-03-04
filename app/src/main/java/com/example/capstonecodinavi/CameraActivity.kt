@@ -1,12 +1,10 @@
 package com.example.capstonecodinavi
 
 import android.Manifest
-import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.ImageCapture
 import androidx.camera.video.Recorder
@@ -25,7 +23,7 @@ import com.example.capstonecodinavi.databinding.ActivityCameraBinding
 typealias LumaListener = (luma: Double) -> Unit
 
 class CameraActivity : AppCompatActivity() {
-    private lateinit var viewBinding: ActivityCameraBinding
+    private lateinit var binding: ActivityCameraBinding
 
     private var imageCapture: ImageCapture? = null
 
@@ -36,8 +34,8 @@ class CameraActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewBinding = ActivityCameraBinding.inflate(layoutInflater)
-        setContentView(viewBinding.root)
+        binding = ActivityCameraBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setTitle(" ")
         action()
 
@@ -53,22 +51,22 @@ class CameraActivity : AppCompatActivity() {
 
 
     private fun action() {
-        viewBinding.homeBtn.setOnClickListener {
+        binding.homeBtn.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
 
-        viewBinding.profileBtn.setOnClickListener {
+        binding.profileBtn.setOnClickListener {
             val intent = Intent(this, UserActivity::class.java)
             startActivity(intent)
         }
 
-        viewBinding.codiBtn.setOnClickListener {
+        binding.codiBtn.setOnClickListener {
             val intent = Intent(this, CodiActivity::class.java)
             startActivity(intent)
         }
 
-        viewBinding.colorBtn.setOnClickListener {
+        binding.colorBtn.setOnClickListener {
             val intent = Intent(this, ColorActivity::class.java)
             startActivity(intent)
         }
@@ -84,7 +82,7 @@ class CameraActivity : AppCompatActivity() {
             val preview = Preview.Builder()
                 .build()
                 .also {
-                    it.setSurfaceProvider(viewBinding.previewView.surfaceProvider)
+                    it.setSurfaceProvider(binding.previewView.surfaceProvider)
                 }
 
             // Select back camera as a default

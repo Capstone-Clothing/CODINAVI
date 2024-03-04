@@ -44,19 +44,5 @@ class MainActivity : AppCompatActivity() {
         binding.profileBtn.setOnClickListener {
             supportFragmentManager.beginTransaction().replace(binding.mainFl.id, userFragment).commit()
         }
-
-//        binding.cameraBtn.setOnClickListener {
-//            val intent = Intent(this, CameraActivity::class.java)
-//            startActivity(intent)
-//        }
-//        binding.guideBtn.setOnClickListener {
-//            val intent = Intent(this, GuideActivity::class.java)
-//            startActivity(intent)
-//        }
-//
-//        binding.weatherBtn.setOnClickListener {
-//            val intent = Intent(this, WeatherActivity::class.java)
-//            startActivity(intent)
-//        }
     }
 }
