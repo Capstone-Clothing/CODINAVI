@@ -51,9 +51,23 @@
 
         <View
             android:layout_width="330dp"
-            android:layout_height="500dp"
+            android:layout_height="400dp"
             android:layout_marginTop="50dp"
             android:layout_gravity="center"
             android:background="@drawable/rectangle_1" />
+
+        <android.widget.Button
+            android:id="@+id/confirmBtn"
+            android:layout_width="310dp"
+            android:layout_height="90dp"
+            android:layout_marginTop="45dp"
+            android:layout_gravity="center"
+            android:text="확인하기"
+            android:textSize="40sp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/soyo_maple_regular"
+            android:textStyle="bold"
+            android:background="@drawable/mainbtn" />
+
     </LinearLayout>
 </LinearLayout>
