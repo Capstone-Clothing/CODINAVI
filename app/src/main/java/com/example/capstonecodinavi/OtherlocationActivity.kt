@@ -86,7 +86,9 @@ class OtherlocationActivity : AppCompatActivity() {
                             weatherStr = "맑음"
                         }
 
-                        binding.currentWeatherTv.text = "${intent.getStringExtra("address")}의 계절은 ${season}, 날씨는 ${weatherStr}, 기온은 ${celsius}도 입니다."
+                        binding.currentLocationTv.text = "${intent.getStringExtra("address")}"
+                        binding.currentWeatherTv1.text = "계절 : ${season}        날씨 : ${weatherStr}"
+                        binding.currentWeatherTv2.text = "기온 : ${celsius}"
                         recommendCodi(celsius.toDouble())
                     } catch (e: JSONException) {
                         e.printStackTrace()

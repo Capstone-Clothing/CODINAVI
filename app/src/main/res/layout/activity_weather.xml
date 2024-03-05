@@ -44,73 +44,74 @@
             android:background="@android:color/transparent" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="328dp"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:background="@drawable/rectangle_1"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp" >
 
-        <RelativeLayout
-            android:layout_width="328dp"
+        <ImageView
+            android:id="@+id/placeIv"
+            android:src="@drawable/place_marker"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:background="@drawable/rectangle_1" >
+            android:layout_alignBottom="@id/currentLocationTv"
+            android:layout_alignTop="@id/currentLocationTv"
+            android:layout_alignLeft="@id/currentLocationTv"
+            android:layout_centerVertical="true" />
 
-            <TextView
-                android:id="@+id/currentLocationTv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
-                android:gravity="center_horizontal"
-                android:text=""
-                android:textColor="@color/black"
-                android:textSize="22sp" />
+        <TextView
+            android:id="@+id/currentLocationTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:gravity="center_horizontal"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="22sp" />
 
-            <TextView
-                android:id="@+id/currentWeatherTv1"
-                android:layout_below="@+id/currentLocationTv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:gravity="center_horizontal"
-                android:textSize="22sp"
-                android:textColor="@color/black"
-                android:text="" />
+        <TextView
+            android:id="@+id/currentWeatherTv1"
+            android:layout_below="@+id/currentLocationTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:gravity="center_horizontal"
+            android:textSize="22sp"
+            android:textColor="@color/black"
+            android:text="" />
 
+        <TextView
+            android:id="@+id/currentWeatherTv2"
+            android:layout_below="@+id/currentWeatherTv1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:gravity="center_horizontal"
+            android:textSize="22sp"
+            android:textColor="@color/black"
+            android:text="" />
 
-            <TextView
-                android:id="@+id/currentWeatherTv2"
-                android:layout_below="@+id/currentWeatherTv1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:gravity="center_horizontal"
-                android:textSize="22sp"
-                android:textColor="@color/black"
-                android:text="" />
+        <TextView
+            android:id="@+id/recommendClothTv"
+            android:layout_below="@+id/currentWeatherTv2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:gravity="center_horizontal"
+            android:lineSpacingExtra="10dp"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="22sp" />
 
-            <TextView
-                android:id="@+id/recommendClothTv"
-                android:layout_below="@+id/currentWeatherTv2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
-                android:gravity="center_horizontal"
-                android:lineSpacingExtra="10dp"
-                android:text=""
-                android:textColor="@color/black"
-                android:textSize="22sp" />
-
-        </RelativeLayout>
-
-    </LinearLayout>
-
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
