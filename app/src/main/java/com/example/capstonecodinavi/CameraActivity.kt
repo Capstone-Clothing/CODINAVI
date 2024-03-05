@@ -29,9 +29,10 @@ import java.nio.ByteBuffer
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-typealias LumaListener = (luma: Double) -> Unit
+/*typealias LumaListener = (luma: Double) -> Unit*/
 
 class CameraActivity : AppCompatActivity() {
+    class LumaListener(val listener: (luma: Double) -> Unit)
     private lateinit var viewBinding: ActivityCameraBinding
 
     private var imageCapture: ImageCapture? = null
