@@ -25,5 +25,10 @@ class ColorActivity : AppCompatActivity() {
             val intent = Intent(this, UserActivity::class.java)
             startActivity(intent)
         }
+
+        binding.confirmBtn.setOnClickListener {
+            val intent = Intent(this, ConfirmActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

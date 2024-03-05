@@ -68,6 +68,5 @@
             android:fontFamily="@font/soyo_maple_regular"
             android:textStyle="bold"
             android:background="@drawable/mainbtn" />
-
     </LinearLayout>
 </LinearLayout>
