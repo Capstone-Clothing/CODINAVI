@@ -115,13 +115,13 @@ class WeatherActivity : AppCompatActivity() {
             }
             address?.let {
                 if (locality != null && adminArea != null && thoroughfare != null) {
-                    binding.currentLocationTv.text = "현재 위치는 ${adminArea} ${locality} ${thoroughfare} 입니다."
+                    binding.currentLocationTv.text = "${adminArea} ${locality} ${thoroughfare}"
                 } else if (locality == null) {
-                    binding.currentLocationTv.text = "현재 위치는 ${adminArea} ${thoroughfare} 입니다."
+                    binding.currentLocationTv.text = "${adminArea} ${thoroughfare}"
                 } else if (adminArea == null) {
-                    binding.currentLocationTv.text = "현재 위치는 ${locality} ${thoroughfare} 입니다."
+                    binding.currentLocationTv.text = "${locality} ${thoroughfare}"
                 } else {
-                    binding.currentLocationTv.text = "현재 위치는 ${adminArea} ${locality} 입니다."
+                    binding.currentLocationTv.text = "${adminArea} ${locality}"
                 }
             }
         } else {
@@ -143,13 +143,13 @@ class WeatherActivity : AppCompatActivity() {
                     }
                     address?.let {
                         if (locality != null && adminArea != null && thoroughfare != null) {
-                            binding.currentLocationTv.text = "현재 위치는 ${adminArea} ${locality} ${thoroughfare} 입니다."
+                            binding.currentLocationTv.text = "${adminArea} ${locality} ${thoroughfare}"
                         } else if (locality == null) {
-                            binding.currentLocationTv.text = "현재 위치는 ${adminArea} ${thoroughfare} 입니다."
+                            binding.currentLocationTv.text = "${adminArea} ${thoroughfare}"
                         } else if (adminArea == null) {
-                            binding.currentLocationTv.text = "현재 위치는 ${locality} ${thoroughfare} 입니다."
+                            binding.currentLocationTv.text = "${locality} ${thoroughfare}"
                         } else {
-                            binding.currentLocationTv.text = "현재 위치는 ${adminArea} ${locality} 입니다."
+                            binding.currentLocationTv.text = "${adminArea} ${locality}"
                         }
                     }
                 }
@@ -183,7 +183,8 @@ class WeatherActivity : AppCompatActivity() {
                             weatherStr = "맑음"
                         }
 
-                        binding.currentWeatherTv.text = "계절은 ${season}, 날씨는 ${weatherStr}, 기온은 ${celsius}도 입니다."
+                        binding.currentWeatherTv1.text = "계절 : ${season}        날씨 : ${weatherStr}"
+                        binding.currentWeatherTv2.text = "기온 : ${celsius}º"
                         recommendCodi(celsius.toDouble())
                     } catch (e: JSONException) {
                         e.printStackTrace()
