@@ -23,11 +23,6 @@ import androidx.camera.core.CameraSelector
 import android.util.Log
 import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.ImageProxy
-import androidx.camera.video.FallbackStrategy
-import androidx.camera.video.MediaStoreOutputOptions
-import androidx.camera.video.Quality
-import androidx.camera.video.QualitySelector
-import androidx.camera.video.VideoRecordEvent
 import androidx.core.content.PermissionChecker
 import com.example.capstonecodinavi.databinding.ActivityCameraBinding
 import java.nio.ByteBuffer
@@ -153,5 +148,4 @@ class CameraActivity : AppCompatActivity() {
                 }
             }.toTypedArray()
     }
-    //ddd
 }
