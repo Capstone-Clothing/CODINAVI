@@ -12,12 +12,12 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:layout_marginTop="150dp" >
+        android:layout_marginTop="70dp" >
 
         <ImageView
             android:id="@+id/appLogo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="350dp"
+            android:layout_height="320dp"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/codinavi_logo" />
 
@@ -25,20 +25,18 @@
             android:id="@+id/appName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="CODINAVI"
             android:fontFamily="@font/bakbakone_regular"
-            android:textSize="50sp"
+            android:gravity="center_horizontal"
+            android:importantForAccessibility="no"
+            android:text="CODINAVI"
             android:textColor="@color/black"
-            android:importantForAccessibility="no" />
-
-
+            android:textSize="50sp" />
     </LinearLayout>
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="444dp"
-        android:layout_marginTop="280dp"
+        android:layout_marginTop="330dp"
         android:background="@drawable/splash" />
 
 </RelativeLayout>
