@@ -81,4 +81,6 @@ dependencies {
     implementation("androidx.camera:camera-view:1.3.1")
     implementation("androidx.camera:camera-extensions:1.3.1")
 
+    implementation("org.tensorflow:tensorflow-lite-task-vision:0.3.1")
+
 }
