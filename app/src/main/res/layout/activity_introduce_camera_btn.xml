@@ -71,7 +71,7 @@
                 android:gravity="center_vertical"
                 android:lineSpacingExtra="10dp"
                 android:textColor="@color/black"
-                android:text="사용자가 선택한 옷을 카메라로 인식하면 그 옷에 대한 설명과 어울리는 코디를 추천받을 수 있습니다.\n카메라로 인식된 옷은 데이터에 저장됩니다. \n\n추천 기능에는 코디 추천과 색상 추천이 있습니다. \n\n코디 추천은 저장된 옷들 중에 인식된 옷과 가장 어울리는 옷을 추천합니다. \n\n색상 추천은 인식된 옷과 어울리는 색상을 추천합니다."
+                android:text="사용자가 선택한 옷을 카메라로 인식하면 그 옷에 대한 설명과 어울리는 코디를 추천받을 수 있습니다.\n카메라로 인식된 옷은 데이터에 저장됩니다.\n\n추천 기능에는 코디 추천과 색상 추천이 있습니다. \n\n코디 추천은 상의, 하의, 겉옷으로 나뉘며 인식된 옷과 어울리는 조합의 옷을 추천합니다. \n\n색상 추천은 인식된 옷과 어울리는 색상을 추천합니다."
                 android:textSize="22sp" />
         </RelativeLayout>
     </LinearLayout>
