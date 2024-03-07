@@ -35,7 +35,6 @@ class WeatherActivity : AppCompatActivity() {
     private val REQUEST_PERMISSION_LOCATION = 10
     private var lat: Double? = null
     private var lon: Double? = null
-    private var season: String? = null
     private var adminArea: String? = null
     private var locality: String? = null
     private var thoroughfare: String? = null
@@ -92,7 +91,6 @@ class WeatherActivity : AppCompatActivity() {
                     lat = location.latitude
                     lon = location.longitude
                     getCurrentAddress(lat!!, lon!!)
-                    getCurrentSeason()
                     getCurrentWeather(lat!!, lon!!)
                 }
             }
@@ -183,7 +181,7 @@ class WeatherActivity : AppCompatActivity() {
                             weatherStr = "맑음"
                         }
 
-                        binding.currentWeatherTv1.text = "계절 : ${season}        날씨 : ${weatherStr}"
+                        binding.currentWeatherTv1.text = "날씨 : ${weatherStr}"
                         binding.currentWeatherTv2.text = "기온 : ${celsius}º"
                         recommendCodi(celsius.toDouble())
                     } catch (e: JSONException) {
@@ -195,19 +193,7 @@ class WeatherActivity : AppCompatActivity() {
         request.setShouldCache(false) // 이전 결과가 있어도 새 요청하여 결과 보여주기
         requestQueue!!.add(request)
     }
-    fun getCurrentSeason() {
-        val now = System.currentTimeMillis()
-        val date = Date(now)
-        val simpleDateFormatDay = SimpleDateFormat("MM")
-        val getMonth = simpleDateFormatDay.format(date)
-        val getDate = """
-             $getMonth
-            """.trimIndent()
-        if (getMonth == "12" || getMonth == "01" || getMonth == "02") season = "겨울"
-        else if (getMonth == "03" || getMonth == "04" || getMonth == "05") season = "봄"
-        else if (getMonth == "06" || getMonth == "07" || getMonth == "08") season = "여름"
-        else season = "가을"
-    }
+
     fun changeKelvinToCelsius(temp: Double): String {
         val changedTemp = (temp - 273.15)
         val df = DecimalFormat("#.#")

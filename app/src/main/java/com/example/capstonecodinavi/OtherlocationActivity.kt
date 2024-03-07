@@ -21,7 +21,6 @@ class OtherlocationActivity : AppCompatActivity() {
     lateinit var binding: ActivityOtherlocationBinding
     private var lat : Double? = null
     private var lng : Double? = null
-    private var season: String? = null
     private var searchText: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +50,6 @@ class OtherlocationActivity : AppCompatActivity() {
                     Log.d("check1000","$it")
                     lat = it[0].latitude
                     lng = it[0].longitude
-                    getCurrentSeason()
                     getCurrentWeather(lat!!, lng!!)
                 }
             }
@@ -87,8 +85,8 @@ class OtherlocationActivity : AppCompatActivity() {
                         }
 
                         binding.currentLocationTv.text = "${intent.getStringExtra("address")}"
-                        binding.currentWeatherTv1.text = "계절 : ${season}        날씨 : ${weatherStr}"
-                        binding.currentWeatherTv2.text = "기온 : ${celsius}"
+                        binding.currentWeatherTv1.text = "날씨 : ${weatherStr}"
+                        binding.currentWeatherTv2.text = "기온 : ${celsius}º"
                         recommendCodi(celsius.toDouble())
                     } catch (e: JSONException) {
                         e.printStackTrace()
@@ -105,19 +103,6 @@ class OtherlocationActivity : AppCompatActivity() {
         val df = DecimalFormat("#.#")
         df.roundingMode = RoundingMode.DOWN
         return df.format(changedTemp)
-    }
-    fun getCurrentSeason() {
-        val now = System.currentTimeMillis()
-        val date = Date(now)
-        val simpleDateFormatDay = SimpleDateFormat("MM")
-        val getMonth = simpleDateFormatDay.format(date)
-        val getDate = """
-             $getMonth
-            """.trimIndent()
-        if (getMonth == "12" || getMonth == "01" || getMonth == "02") season = "겨울"
-        else if (getMonth == "03" || getMonth == "04" || getMonth == "05") season = "봄"
-        else if (getMonth == "06" || getMonth == "07" || getMonth == "08") season = "여름"
-        else season = "가을"
     }
 
     private fun recommendCodi(temp: Double) {
