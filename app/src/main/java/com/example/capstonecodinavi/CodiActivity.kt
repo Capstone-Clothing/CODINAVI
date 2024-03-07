@@ -42,7 +42,7 @@ class CodiActivity : AppCompatActivity() {
     }
 
     fun testApi() {
-        val url = "http://1.231.55.229:8080/clothInfo?name=123123123123123123"
+        val url = "http://1.231.55.226:8081/clothInfo?name=abcabacacasdc"
         val request = object :
             StringRequest(
                 Method.GET,
@@ -58,7 +58,9 @@ class CodiActivity : AppCompatActivity() {
                         e.printStackTrace()
                     }
                 },
-                Response.ErrorListener { }
+                Response.ErrorListener {
+                    Log.d("errorcheck","qwer")
+                }
             ) { }
         request.setShouldCache(false) // 이전 결과가 있어도 새 요청하여 결과 보여주기
         requestQueue!!.add(request)
