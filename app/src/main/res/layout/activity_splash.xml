@@ -35,7 +35,7 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="444dp"
+        android:layout_height="464dp"
         android:layout_marginTop="330dp"
         android:background="@drawable/splash" />
 
