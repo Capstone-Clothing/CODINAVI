@@ -42,7 +42,7 @@ class CodiActivity : AppCompatActivity() {
     }
 
     fun testApi() {
-        val url = "http://1.231.55.226:8081/clothInfo?name=abcabacacasdc"
+        val url = "http://1.231.55.226:8081/clothInfo?name=123123123123123123"
         val request = object :
             StringRequest(
                 Method.GET,
