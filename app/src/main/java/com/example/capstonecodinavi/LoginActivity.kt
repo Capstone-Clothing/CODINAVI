@@ -100,6 +100,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
+        super.onBackPressed()
         // 뒤로가기 누르면 앱 종료
         finishAffinity()
     }
