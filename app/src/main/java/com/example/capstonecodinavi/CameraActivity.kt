@@ -30,6 +30,7 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 /*typealias LumaListener = (luma: Double) -> Unit*/
+typealias LumaListener = (luma: Double) -> Unit
 
 class CameraActivity : AppCompatActivity() {
     class LumaListener(val listener: (luma: Double) -> Unit)
