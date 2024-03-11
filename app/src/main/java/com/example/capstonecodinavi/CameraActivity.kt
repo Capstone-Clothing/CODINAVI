@@ -1,144 +1,198 @@
 package com.example.capstonecodinavi
 
-import android.Manifest
-import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Build
-import android.os.Bundle
+import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
-import androidx.camera.core.ImageCapture
-import androidx.camera.video.Recorder
-import androidx.camera.video.Recording
-import androidx.camera.video.VideoCapture
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
+import android.os.Bundle
+import android.os.Handler
+import android.os.HandlerThread
+import android.view.WindowManager
 import android.widget.Toast
-import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.camera.core.Preview
-import androidx.camera.core.CameraSelector
-import android.util.Log
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import com.example.capstonecodinavi.databinding.ActivityCameraBinding
-typealias LumaListener = (luma: Double) -> Unit
+import java.io.IOException
+import android.Manifest
+import android.content.Context
+import android.hardware.camera2.CameraAccessException
+import android.hardware.camera2.CameraCharacteristics
+import android.hardware.camera2.CameraManager
+import android.media.ImageReader
+import android.os.Build
+import android.os.SystemClock
+import android.util.Size
+import android.view.Surface
+import java.util.Locale
 
 class CameraActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityCameraBinding
-
-    private var imageCapture: ImageCapture? = null
-
-    private var videoCapture: VideoCapture<Recorder>? = null
-    private var recording: Recording? = null
-
-    private lateinit var cameraExecutor: ExecutorService
+    private val binding by lazy { ActivityCameraBinding.inflate(layoutInflater,null,false) }
+    private lateinit var classifier: Classifier
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+            if (isGranted) {
+                setFragment()
+            } else {
+                Toast.makeText(
+                    this,
+                    "permission denied",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    private var previewWidth = 0
+    private var previewHeight = 0
+    private var sensorOrientation = 0
+    private var rgbFrameBitmap: Bitmap? = null
+    private var isProcessingFrame = false
+    private var handlerThread: HandlerThread? = null
+    private var handler: Handler? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityCameraBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setTitle(" ")
-        action()
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        initClassifier()
+        checkPermission()
+    }
+    override fun onResume() {
+        super.onResume()
 
-        // Request camera permissions
-        if (allPermissionsGranted()) {
-            startCamera()
-        } else {
-            ActivityCompat.requestPermissions(
-                this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
-        }
-        cameraExecutor = Executors.newSingleThreadExecutor()
+        handlerThread = HandlerThread("InferenceThread")
+        handlerThread?.start()
+        handler = Handler(handlerThread!!.looper)
     }
 
-
-    private fun action() {
-        binding.homeBtn.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+    override fun onPause() {
+        handlerThread?.quitSafely()
+        try {
+            handlerThread?.join()
+            handlerThread = null
+            handler = null
+        } catch (e: InterruptedException) {
+            Toast.makeText(this, "activity onPause InterruptedException", Toast.LENGTH_SHORT).show()
         }
-
-        binding.profileBtn.setOnClickListener {
-            val intent = Intent(this, UserActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.codiBtn.setOnClickListener {
-            val intent = Intent(this, CodiActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.colorBtn.setOnClickListener {
-            val intent = Intent(this, ColorActivity::class.java)
-            startActivity(intent)
-        }
-    }
-    private fun startCamera() {
-        val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
-
-        cameraProviderFuture.addListener({
-            // Used to bind the lifecycle of cameras to the lifecycle owner
-            val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
-
-            // Preview
-            val preview = Preview.Builder()
-                .build()
-                .also {
-                    it.setSurfaceProvider(binding.previewView.surfaceProvider)
-                }
-
-            // Select back camera as a default
-            val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
-
-            try {
-                // Unbind use cases before rebinding
-                cameraProvider.unbindAll()
-
-                // Bind use cases to camera
-                cameraProvider.bindToLifecycle(this, cameraSelector, preview)
-
-            } catch(exc: Exception) {
-                Log.e(TAG, "Use case binding failed", exc)
-            }
-
-        }, ContextCompat.getMainExecutor(this))
-    }
-
-    private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
-        ContextCompat.checkSelfPermission(baseContext, it) == PackageManager.PERMISSION_GRANTED
+        super.onPause()
     }
 
     override fun onDestroy() {
+        classifier.finish()
         super.onDestroy()
-        cameraExecutor.shutdown()
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<String>, grantResults:
-        IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == REQUEST_CODE_PERMISSIONS) {
-            if (allPermissionsGranted()) {
-                startCamera()
-            } else {
-                Toast.makeText(this,
-                    "Permissions not granted by the user.",
-                    Toast.LENGTH_SHORT).show()
-                finish()
-            }
+    private fun initClassifier() {
+        classifier = Classifier(this, Classifier.IMAGENET_CLASSIFY_MODEL)
+        try {
+            classifier.init()
+        } catch (exception: IOException) {
+            Toast.makeText(this, "Can not init Classifier!!", Toast.LENGTH_SHORT).show()
         }
     }
-    companion object {
-        private const val TAG = "CameraXApp"
-        private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
-        private const val REQUEST_CODE_PERMISSIONS = 10
-        private val REQUIRED_PERMISSIONS =
-            mutableListOf (
-                Manifest.permission.CAMERA,
-                Manifest.permission.RECORD_AUDIO
-            ).apply {
-                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
-                    add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                }
-            }.toTypedArray()
+
+    private fun checkPermission() {
+        when {
+            ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.CAMERA
+            ) == PackageManager.PERMISSION_GRANTED -> {
+                setFragment()
+            }
+            shouldShowRequestPermissionRationale(Manifest.permission.CAMERA) -> {
+                Toast.makeText(
+                    this,
+                    "This app need camera permission to classify realtime camera image",
+                    Toast.LENGTH_SHORT
+                ).show()
+                requestPermissionLauncher.launch(Manifest.permission.CAMERA)
+            }
+            else -> requestPermissionLauncher.launch(Manifest.permission.CAMERA)
+        }
     }
-    //ddd
+
+    private fun setFragment() {
+        val inputSize = classifier.getModelInputSize()
+        val cameraId = chooseCamera()
+        if (inputSize.width > 0 && inputSize.height > 0 && cameraId != null) {
+            val fragment = CameraFragment.newInstance(object : ConnectionCallback {
+                override fun onPreviewSizeChosen(size: Size, cameraRotation: Int) {
+                    previewWidth = size.width
+                    previewHeight = size.height
+                    sensorOrientation = cameraRotation - getScreenOrientation()
+                }
+            }, {
+                processImage(it)
+            },
+                inputSize,
+                cameraId
+            )
+            supportFragmentManager.beginTransaction().replace(R.id.frame_camera, fragment).commit()
+        } else {
+            Toast.makeText(this, "Can not find camera", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun chooseCamera(): String? {
+        val manager = getSystemService(Context.CAMERA_SERVICE) as CameraManager
+        try {
+            manager.cameraIdList.forEach { cameraId ->
+                val characteristics = manager.getCameraCharacteristics(cameraId)
+                val facing = characteristics.get(CameraCharacteristics.LENS_FACING)
+                if (facing != null && facing == CameraCharacteristics.LENS_FACING_BACK) {
+                    return cameraId
+                }
+            }
+        } catch (e: CameraAccessException) {
+            Toast.makeText(this, "CameraAccessException", Toast.LENGTH_SHORT).show()
+        }
+        return null
+    }
+
+    private fun getScreenOrientation(): Int {
+        val display = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            this.display
+        } else {
+            windowManager.defaultDisplay
+        } ?: return 0
+        return when (display.rotation) {
+            Surface.ROTATION_270 -> 270
+            Surface.ROTATION_180 -> 180
+            Surface.ROTATION_90 -> 90
+            else -> 0
+        }
+    }
+
+    private fun processImage(reader: ImageReader) {
+        if (previewWidth == 0 || previewHeight == 0) return
+        if (rgbFrameBitmap == null) {
+            rgbFrameBitmap = Bitmap.createBitmap(previewWidth, previewHeight, Bitmap.Config.ARGB_8888)
+        }
+        if (isProcessingFrame) return
+        isProcessingFrame = true
+        val image = reader.acquireLatestImage()
+        if (image == null) {
+            isProcessingFrame = false
+            return
+        }
+
+        YuvToRgbConverter.yuvToRgb(this, image, rgbFrameBitmap!!)
+
+        handler?.post {
+            if (::classifier.isInitialized && classifier.isInitialized()) {
+                val startTime = SystemClock.uptimeMillis()
+                val output = classifier.classify(rgbFrameBitmap!!, sensorOrientation)
+                val elapsedTime = SystemClock.uptimeMillis() - startTime
+                runOnUiThread {
+                    binding.textResult.text =
+                        String.format(
+                            Locale.ENGLISH,
+                            "class : %s\nprob : %.2f%%\ntime : %dms",
+                            output.first,
+                            output.second * 100,
+                            elapsedTime
+                        )
+                }
+            }
+            image.close()
+            isProcessingFrame = false
+        }
+    }
 }
