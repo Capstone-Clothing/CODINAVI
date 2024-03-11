@@ -42,7 +42,7 @@ class CodiActivity : AppCompatActivity() {
     }
 
     fun testApi() {
-        val url = "http://3.34.34.170:8080/clothInfo?name=baekseungduck"
+        val url = "http://3.34.34.170:8080/clothInfo?name=TESTTEST"
         val request = object :
             StringRequest(
                 Method.GET,
