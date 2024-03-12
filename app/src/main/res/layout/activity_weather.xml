@@ -140,7 +140,7 @@
             android:id="@+id/searchOtherLocationBtn"
             android:layout_width="310dp"
             android:layout_height="90dp"
-            android:text="지역 검색하기"
+            android:text="지역 변경하기"
             android:textSize="40sp"
             android:textColor="@color/white"
             android:fontFamily="@font/soyo_maple_regular"

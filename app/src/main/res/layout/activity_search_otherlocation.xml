@@ -83,7 +83,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="300dp"
         android:fontFamily="@font/soyo_maple_regular"
-        android:text="지역 조회하기"
+        android:text="지역 검색하기"
         android:textColor="@color/white"
         android:textSize="40sp"
         android:textStyle="bold" />
