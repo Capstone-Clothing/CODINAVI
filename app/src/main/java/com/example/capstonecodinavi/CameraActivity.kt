@@ -76,7 +76,6 @@ class CameraActivity : AppCompatActivity() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
 
         cameraProviderFuture.addListener({
-            // Used to bind the lifecycle of cameras to the lifecycle owner
             val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
 
             // Preview
@@ -85,15 +84,10 @@ class CameraActivity : AppCompatActivity() {
                 .also {
                     it.setSurfaceProvider(viewBinding.previewView.surfaceProvider)
                 }
-
-            // Select back camera as a default
             val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
             try {
-                // Unbind use cases before rebinding
                 cameraProvider.unbindAll()
-
-                // Bind use cases to camera
                 cameraProvider.bindToLifecycle(this, cameraSelector, preview)
 
             } catch(exc: Exception) {
