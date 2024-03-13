@@ -53,21 +53,22 @@
     <TextView
         android:id="@+id/username"
         android:layout_width="wrap_content"
-        android:layout_height="68dp"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/soyo_maple_bold"
         android:text="User"
         android:textColor="@color/black"
         android:textSize="45sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.17" />
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+        app:layout_constraintBottom_toTopOf="@+id/rectangle2"
+/>
 
     <ImageView
         android:id="@+id/rectangle2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="96dp"
         android:background="@drawable/rectangle_2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -80,8 +81,7 @@
         android:background="@drawable/rectangle_4"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/rectangle2"
         app:layout_constraintVertical_bias="0.263" />
 
     <android.widget.Button
