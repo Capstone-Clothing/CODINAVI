@@ -76,7 +76,7 @@ class WeatherActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
-    fun getCurrentLocation() {
+    private fun getCurrentLocation() {
         if (!checkPermissionForLocation(this)) return
         val fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
@@ -97,7 +97,7 @@ class WeatherActivity : AppCompatActivity() {
                 }
             }
     }
-    fun getCurrentAddress(lat: Double, lng: Double) {
+    private fun getCurrentAddress(lat: Double, lng: Double) {
         if (Build.VERSION.SDK_INT < 33) {
             var address: List<Address>
             val geocoder = Geocoder(this, Locale.getDefault())
@@ -159,7 +159,7 @@ class WeatherActivity : AppCompatActivity() {
             }
         }
     }
-    fun getCurrentWeather(lat: Double, lon: Double) {
+    private fun getCurrentWeather(lat: Double, lon: Double) {
         val url = "https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=2d360c1fe9d2bade8fc08a1679683e24"
         val request = object :
             StringRequest(
@@ -195,7 +195,7 @@ class WeatherActivity : AppCompatActivity() {
         request.setShouldCache(false) // 이전 결과가 있어도 새 요청하여 결과 보여주기
         requestQueue!!.add(request)
     }
-    fun getCurrentSeason() {
+    private fun getCurrentSeason() {
         val now = System.currentTimeMillis()
         val date = Date(now)
         val simpleDateFormatDay = SimpleDateFormat("MM")
@@ -208,7 +208,7 @@ class WeatherActivity : AppCompatActivity() {
         else if (getMonth == "06" || getMonth == "07" || getMonth == "08") season = "여름"
         else season = "가을"
     }
-    fun changeKelvinToCelsius(temp: Double): String {
+    private fun changeKelvinToCelsius(temp: Double): String {
         val changedTemp = (temp - 273.15)
         val df = DecimalFormat("#.#")
         df.roundingMode = RoundingMode.DOWN
