@@ -53,33 +53,32 @@
     <TextView
         android:id="@+id/gender"
         android:layout_width="wrap_content"
-        android:layout_height="68dp"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/soyo_maple_bold"
         android:text="현재 성별 : Gender"
         android:textColor="@color/black"
         android:textSize="30sp"
+        android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.17" />
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+        app:layout_constraintBottom_toTopOf="@+id/genderback" />
 
     <ImageView
         android:id="@+id/genderback"
         android:layout_width="328dp"
         android:layout_height="200dp"
         android:background="@drawable/rectangle_1"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.37" />
+        app:layout_constraintTop_toBottomOf="@+id/gender" />
 
     <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@+id/genderback"
-        tools:ignore="MissingConstraints">
+        app:layout_constraintTop_toTopOf="@+id/genderback" >
 
         <RadioButton
             android:id="@+id/male"
