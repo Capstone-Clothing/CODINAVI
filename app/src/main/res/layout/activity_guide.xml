@@ -64,7 +64,7 @@
     <TextView
         android:id="@+id/introduceCodinaviTv"
         android:layout_width="291dp"
-        android:layout_height="258dp"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/soyo_maple_regular"
         android:lineSpacingExtra="10dp"
         android:text="코디나비는 시각장애인을 위한 코디 추천 서비스 어플입니다.\n\n카메라를 통해 옷의 정보를 제공하고, 그에 맞는 코디를 추천해주며, 날씨에 맞는 옷차림을 소개해줍니다."
