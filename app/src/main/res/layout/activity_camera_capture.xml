@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".CameraCaptureActivity">
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangle_3"
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints">
+
+        <ImageButton
+            android:id="@+id/homeBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:contentDescription="홈"
+            android:src="@drawable/home" />
+
+        <TextView
+            android:id="@+id/codinavi"
+            android:layout_width="158dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="19dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/bakbakone_regular"
+            android:gravity="center"
+            android:importantForAccessibility="no"
+            android:text="CODINAVI"
+            android:textColor="#2D0F51"
+            android:textSize="35sp" />
+
+        <ImageButton
+            android:id="@+id/profileBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:contentDescription="마이페이지"
+            android:src="@drawable/profile" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+
+        <FrameLayout
+            android:id="@+id/cameraFl"
+            android:layout_width="341dp"
+            android:layout_height="433dp">
+
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/captureIV"
+            android:layout_width="341dp"
+            android:layout_height="433dp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="340dp"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:fontFamily="@font/soyo_maple_regular"
+            android:gravity="center"
+            android:text="옷 정보 설명"
+            android:textColor="@color/black"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/captureBtn"
+            android:layout_gravity="center"
+            android:layout_marginTop="24dp"
+            android:layout_width="170dp"
+            android:layout_height="60dp"
+            android:text="촬영" />
+
+        <LinearLayout
+            android:id="@+id/aiLl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="24dp"
+            android:visibility="gone">
+
+            <android.widget.Button
+                android:id="@+id/codiBtn"
+                android:layout_width="170dp"
+                android:layout_height="100dp"
+                android:background="@drawable/mainbtn"
+                android:fontFamily="@font/soyo_maple_regular"
+                android:text="코디 추천"
+                android:textColor="@color/white"
+                android:textSize="35dp"
+                android:textStyle="bold" />
+
+            <android.widget.Button
+                android:id="@+id/colorBtn"
+                android:layout_width="170dp"
+                android:layout_height="100dp"
+                android:background="@drawable/mainbtn"
+                android:fontFamily="@font/soyo_maple_regular"
+                android:text="색상 추천"
+                android:textColor="@color/white"
+                android:textSize="35dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

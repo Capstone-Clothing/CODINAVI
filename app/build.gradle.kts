@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
     id("com.google.gms.google-services")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -40,6 +41,9 @@ android {
     }
 }
 
+
+
+//apply(from = "download_models.gradle")
 dependencies {
 
     implementation("com.squareup.retrofit2:retrofit:2.4.0")
@@ -53,6 +57,8 @@ dependencies {
     implementation("com.loopj.android:android-async-http:1.4.11")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.android.volley:volley:1.2.1")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
@@ -81,8 +87,13 @@ dependencies {
     implementation("androidx.camera:camera-view:1.3.1")
     implementation("androidx.camera:camera-extensions:1.3.1")
 
-    implementation("org.tensorflow:tensorflow-lite:2.4.0")
-    implementation("org.tensorflow:tensorflow-lite-support:0.1.0")
-    implementation ("org.tensorflow:tensorflow-lite-gpu:2.4.0")
+    implementation("org.tensorflow:tensorflow-lite-task-vision:0.4.0")
+    implementation ("org.tensorflow:tensorflow-lite-gpu:2.9.0")
+    implementation("org.tensorflow:tensorflow-lite-gpu-delegate-plugin:0.4.0")
 
+    implementation("com.github.bumptech.glide:glide:4.13.2")
+
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
+    implementation("androidx.navigation:navigation-runtime-ktx:2.7.7")
 }

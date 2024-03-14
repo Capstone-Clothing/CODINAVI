@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.capstonecodinavi" >
+    package="com.example.capstonecodinavi">
 
     <uses-feature
         android:name="android.hardware.camera.any"
@@ -25,9 +25,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CapstoneCODINAVI"
         android:usesCleartextTraffic="true"
-        tools:targetApi="31" >
+        tools:targetApi="31">
         <activity
-            android:name=".CameraActivity"
+            android:name=".NewCamera"
+            android:exported="false" />
+        <activity
+            android:name=".CameraCaptureActivity"
             android:exported="false" />
         <activity
             android:name=".GenderActivity"
@@ -75,7 +78,7 @@
             android:exported="false" />
         <activity
             android:name=".SplashActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
