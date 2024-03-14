@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,11 +9,14 @@
     android:background="@drawable/background"
     tools:context=".OtherlocationActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/rectangle_3"
-        android:orientation="horizontal" >
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" >
 
         <ImageButton
             android:id="@+id/homeBtn"
@@ -20,20 +24,20 @@
             android:layout_height="wrap_content"
             android:src="@drawable/home"
             android:contentDescription="홈"
-            android:background="@android:color/transparent"/>
+            android:background="@android:color/transparent"
+            android:layout_gravity="left" />
 
         <TextView
             android:id="@+id/codinavi"
-            android:layout_width="158dp"
+            android:layout_width="wrap_content"
             android:layout_height="53dp"
-            android:layout_weight="1"
-            android:layout_marginTop="19dp"
+            android:fontFamily="@font/bakbakone_regular"
             android:gravity="center"
             android:importantForAccessibility="no"
             android:text="CODINAVI"
             android:textColor="#2D0F51"
             android:textSize="35sp"
-            android:fontFamily="@font/bakbakone_regular" />
+            android:layout_gravity="center" />
 
         <ImageButton
             android:id="@+id/profileBtn"
@@ -41,77 +45,95 @@
             android:layout_height="wrap_content"
             android:src="@drawable/profile"
             android:contentDescription="마이페이지"
-            android:background="@android:color/transparent" />
-    </LinearLayout>
+            android:background="@android:color/transparent"
+            android:layout_gravity="right" />
 
+    </FrameLayout>
 
-    <RelativeLayout
+    <ImageView
+        android:id="@+id/weatherback"
         android:layout_width="328dp"
-        android:layout_height="wrap_content"
+        android:layout_height="400dp"
         android:background="@drawable/rectangle_1"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40dp" >
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+        android:layout_marginBottom="40dp"
+        android:layout_marginTop="40dp" />
 
-        <ImageView
-            android:id="@+id/placeIv"
-            android:src="@drawable/place_marker"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/currentLocationTv"
-            android:layout_alignTop="@id/currentLocationTv"
-            android:layout_alignLeft="@id/currentLocationTv"
-            android:layout_centerVertical="true" />
+    <ImageView
+        android:id="@+id/placeIv"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/place_marker"
+        android:layout_marginLeft="20dp"
+        app:layout_constraintStart_toStartOf="@+id/weatherback"
+        app:layout_constraintTop_toTopOf="@+id/currentLocationTv"
+        app:layout_constraintBottom_toBottomOf="@+id/currentLocationTv" />
 
-        <TextView
-            android:id="@+id/currentLocationTv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:gravity="center_horizontal"
-            android:text=""
-            android:textColor="@color/black"
-            android:textSize="22sp" />
+    <TextView
+        android:id="@+id/currentLocationTv"
+        android:layout_width="291dp"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/weatherback"
+        app:layout_constraintBottom_toTopOf="@+id/currentWeatherTv1" />
 
-        <TextView
-            android:id="@+id/currentWeatherTv1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/currentLocationTv"
-            android:layout_margin="16dp"
-            android:gravity="center_horizontal"
-            android:text=""
-            android:textColor="@color/black"
-            android:textSize="22sp" />
+    <ImageView
+        android:id="@+id/weatherIV"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="40dp"
+        app:layout_constraintStart_toStartOf="@+id/currentLocationTv"
+        app:layout_constraintTop_toTopOf="@+id/currentWeatherTv1"
+        app:layout_constraintBottom_toBottomOf="@+id/currentWeatherTv2"
+        />
 
-        <TextView
-            android:id="@+id/currentWeatherTv2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/currentWeatherTv1"
-            android:layout_margin="16dp"
-            android:gravity="center_horizontal"
-            android:text=""
-            android:textColor="@color/black"
-            android:textSize="22sp" />
+    <TextView
+        android:id="@+id/currentWeatherTv1"
+        android:layout_width="291dp"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        android:gravity="right"
+        android:layout_marginRight="60dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/currentLocationTv"
+        app:layout_constraintBottom_toTopOf="@+id/currentWeatherTv2" />
 
-        <TextView
-            android:id="@+id/recommendClothTv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/currentWeatherTv2"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:gravity="center_horizontal"
-            android:lineSpacingExtra="10dp"
-            android:text=""
-            android:textColor="@color/black"
-            android:textSize="22sp" />
+    <TextView
+        android:id="@+id/currentWeatherTv2"
+        android:layout_width="291dp"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        android:gravity="right"
+        android:layout_marginRight="60dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/currentWeatherTv1"
+        app:layout_constraintBottom_toTopOf="@+id/recommendClothTv" />
 
-        </RelativeLayout>
+    <TextView
+        android:id="@+id/recommendClothTv"
+        android:layout_width="291dp"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="10dp"
+        android:text=""
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/currentWeatherTv2"
+        app:layout_constraintBottom_toBottomOf="@+id/weatherback" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

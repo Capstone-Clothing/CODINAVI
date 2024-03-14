@@ -74,6 +74,13 @@ class OtherlocationActivity : AppCompatActivity() {
                         val kelvin = jsonObject.getJSONObject("main").getString("temp").toDouble()
                         var celsius = changeKelvinToCelsius(kelvin)
 
+                        val weatherIconId = when {
+                            weather.contains("Rain") -> R.drawable.rainy
+                            weather.contains("Snow") -> R.drawable.snowy
+                            weather.contains("Clouds") -> R.drawable.cloudy
+                            else -> R.drawable.sunny
+                        }
+
                         if (weather.contains("Rain")) {
                             weatherStr = "비"
                         } else if (weather.contains("Snow")) {
@@ -84,6 +91,7 @@ class OtherlocationActivity : AppCompatActivity() {
                             weatherStr = "맑음"
                         }
 
+                        binding.weatherIV.setImageResource(weatherIconId)
                         binding.currentLocationTv.text = "${intent.getStringExtra("address")}"
                         binding.currentWeatherTv1.text = "날씨 : ${weatherStr}"
                         binding.currentWeatherTv2.text = "기온 : ${celsius}º"

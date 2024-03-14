@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,36 +8,36 @@
     android:background="@drawable/splash_background"
     tools:context=".SplashActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:layout_marginTop="70dp" >
-
-        <ImageView
-            android:id="@+id/appLogo"
-            android:layout_width="350dp"
-            android:layout_height="320dp"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/codinavi_logo" />
-
-        <TextView
-            android:id="@+id/appName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/bakbakone_regular"
-            android:gravity="center_horizontal"
-            android:importantForAccessibility="no"
-            android:text="CODINAVI"
-            android:textColor="@color/black"
-            android:textSize="50sp" />
-    </LinearLayout>
+    <ImageView
+        android:id="@+id/appLogo"
+        android:layout_width="350dp"
+        android:layout_height="320dp"
+        android:src="@drawable/codinavi_logo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.17"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="464dp"
-        android:layout_marginTop="330dp"
-        android:background="@drawable/splash" />
+        android:layout_height="470dp"
+        android:background="@drawable/splash"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
-</RelativeLayout>
+    <TextView
+        android:id="@+id/appName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/bakbakone_regular"
+        android:importantForAccessibility="no"
+        android:text="CODINAVI"
+        android:textColor="@color/black"
+        android:textSize="50sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.53"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

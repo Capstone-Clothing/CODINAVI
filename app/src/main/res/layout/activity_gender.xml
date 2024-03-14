@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,11 +8,15 @@
     android:background="@drawable/background"
     tools:context=".GenderActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/rectangle_3"
-        android:orientation="horizontal" >
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
 
         <ImageButton
             android:id="@+id/homeBtn"
@@ -20,20 +24,20 @@
             android:layout_height="wrap_content"
             android:src="@drawable/home"
             android:contentDescription="홈"
-            android:background="@android:color/transparent"/>
+            android:background="@android:color/transparent"
+            android:layout_gravity="left" />
 
         <TextView
             android:id="@+id/codinavi"
-            android:layout_width="158dp"
+            android:layout_width="wrap_content"
             android:layout_height="53dp"
-            android:layout_weight="1"
-            android:layout_marginTop="19dp"
+            android:fontFamily="@font/bakbakone_regular"
             android:gravity="center"
             android:importantForAccessibility="no"
             android:text="CODINAVI"
             android:textColor="#2D0F51"
             android:textSize="35sp"
-            android:fontFamily="@font/bakbakone_regular" />
+            android:layout_gravity="center" />
 
         <ImageButton
             android:id="@+id/profileBtn"
@@ -41,86 +45,79 @@
             android:layout_height="wrap_content"
             android:src="@drawable/profile"
             android:contentDescription="마이페이지"
-            android:background="@android:color/transparent" />
-    </LinearLayout>
+            android:background="@android:color/transparent"
+            android:layout_gravity="right" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/gender"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:fontFamily="@font/soyo_maple_bold"
+        android:text="현재 성별 : Gender"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+        app:layout_constraintBottom_toTopOf="@+id/genderback" />
 
-        <TextView
-            android:id="@+id/gender"
+    <ImageView
+        android:id="@+id/genderback"
+        android:layout_width="328dp"
+        android:layout_height="200dp"
+        android:background="@drawable/rectangle_1"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gender" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/genderback"
+        app:layout_constraintTop_toTopOf="@+id/genderback" >
+
+        <RadioButton
+            android:id="@+id/male"
             android:layout_width="wrap_content"
-            android:layout_height="68dp"
-            android:gravity="center"
-            android:text="현재 성별 : Gender"
-            android:textColor="@color/black"
-            android:textSize="30sp"
-            android:fontFamily="@font/soyo_maple_bold" />
-    </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <View
-            android:layout_width="328dp"
-            android:layout_height="200dp"
-            android:background="@drawable/rectangle_1"
-            />
-
-        <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-
-            <RadioButton
-                android:id="@+id/male"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="40dp"
-                android:layout_marginEnd="30dp"
-                android:layout_marginBottom="30dp"
-                android:fontFamily="@font/soyo_maple_regular"
-                android:text=" 남성"
-                android:textSize="30dp" />
-
-            <RadioButton
-                android:id="@+id/female"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"
-                android:layout_marginBottom="30dp"
-                android:fontFamily="@font/soyo_maple_regular"
-                android:text=" 여성"
-                android:textSize="30dp" />
-        </RadioGroup>
-    </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:layout_marginTop="150dp">
-
-        <android.widget.Button
-            android:id="@+id/genderChangeBtn"
-            android:layout_width="310dp"
-            android:layout_height="90dp"
-            android:text="변경하기"
-            android:textSize="40sp"
-            android:textColor="@color/white"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="30dp"
             android:fontFamily="@font/soyo_maple_regular"
-            android:textStyle="bold"
-            android:background="@drawable/mainbtn" />
-    </LinearLayout>
+            android:text=" 남성"
+            android:textSize="30dp" />
 
-</LinearLayout>
+        <RadioButton
+            android:id="@+id/female"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="30dp"
+            android:fontFamily="@font/soyo_maple_regular"
+            android:text=" 여성"
+            android:textSize="30dp" />
+    </RadioGroup>
+
+    <android.widget.Button
+        android:id="@+id/genderChangeBtn"
+        android:layout_width="310dp"
+        android:layout_height="90dp"
+        android:background="@drawable/mainbtn"
+        android:fontFamily="@font/soyo_maple_regular"
+        android:text="변경하기"
+        android:textColor="@color/white"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.9" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

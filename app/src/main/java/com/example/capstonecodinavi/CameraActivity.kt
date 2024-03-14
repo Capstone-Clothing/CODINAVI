@@ -29,6 +29,8 @@ import java.nio.ByteBuffer
 import java.text.SimpleDateFormat
 import java.util.Locale
 
+/*typealias LumaListener = (luma: Double) -> Unit*/
+
 typealias LumaListener = (luma: Double) -> Unit
 
 class CameraActivity : AppCompatActivity() {

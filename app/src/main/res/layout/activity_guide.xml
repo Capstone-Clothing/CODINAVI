@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,105 +9,98 @@
     android:orientation="vertical"
     tools:context=".GuideActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangle_3"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <ImageButton
+            android:id="@+id/homeBtn"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/rectangle_3"
-            android:orientation="horizontal" >
+            android:src="@drawable/home"
+            android:contentDescription="홈"
+            android:background="@android:color/transparent"
+            android:layout_gravity="left" />
 
-            <ImageButton
-                android:id="@+id/homeBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/home"
-                android:contentDescription="홈"
-                android:background="@android:color/transparent"/>
-
-            <TextView
-                android:id="@+id/codinavi"
-                android:layout_width="158dp"
-                android:layout_height="53dp"
-                android:layout_weight="1"
-                android:layout_marginTop="19dp"
-                android:gravity="center"
-                android:importantForAccessibility="no"
-                android:text="CODINAVI"
-                android:textColor="#2D0F51"
-                android:textSize="35sp"
-                android:fontFamily="@font/bakbakone_regular" />
-
-            <ImageButton
-                android:id="@+id/profileBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/profile"
-                android:contentDescription="마이페이지"
-                android:background="@android:color/transparent" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+        <TextView
+            android:id="@+id/codinavi"
+            android:layout_width="wrap_content"
+            android:layout_height="53dp"
+            android:fontFamily="@font/bakbakone_regular"
             android:gravity="center"
-            android:orientation="vertical">
+            android:importantForAccessibility="no"
+            android:text="CODINAVI"
+            android:textColor="#2D0F51"
+            android:textSize="35sp"
+            android:layout_gravity="center" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center">
+        <ImageButton
+            android:id="@+id/profileBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/profile"
+            android:contentDescription="마이페이지"
+            android:background="@android:color/transparent"
+            android:layout_gravity="right" />
 
-                <View
-                    android:id="@+id/introduceCodinaviV"
-                    android:layout_width="328dp"
-                    android:layout_height="295dp"
-                    android:background="@drawable/rectangle_1"
-                    android:layout_marginTop="20dp"/>
+    </FrameLayout>
 
-                <TextView
-                    android:id="@+id/introduceCodinaviTv"
-                    android:layout_width="292dp"
-                    android:layout_height="259dp"
-                    android:layout_marginStart="18dp"
-                    android:layout_marginTop="38dp"
-                    android:fontFamily="@font/soyo_maple_regular"
-                    android:gravity="center_vertical"
-                    android:lineSpacingExtra="10dp"
-                    android:text="코디나비는 시각장애인을 위한 코디 추천 서비스 어플입니다.\n\n카메라를 통해 옷의 정보를 제공하고, 그에 맞는 코디를 추천해주며, 날씨에 맞는 옷차림을 소개해줍니다."
-                    android:textSize="22sp" />
-            </RelativeLayout>
+    <ImageView
+        android:id="@+id/introduceCodinaviV"
+        android:layout_width="328dp"
+        android:layout_height="295dp"
+        android:background="@drawable/rectangle_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+        app:layout_constraintBottom_toTopOf="@+id/introduceCameraBtn" />
 
-            <android.widget.Button
-                android:id="@+id/introduceCameraBtn"
-                android:layout_width="match_parent"
-                android:layout_height="90dp"
-                android:layout_marginTop="50dp"
-                android:background="@drawable/guidbtn"
-                android:fontFamily="@font/soyo_maple_regular"
-                android:textStyle="bold"
-                android:text="카메라 기능 소개"
-                android:textColor="@color/white"
-                android:textSize="40sp" />
+    <TextView
+        android:id="@+id/introduceCodinaviTv"
+        android:layout_width="291dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/soyo_maple_regular"
+        android:lineSpacingExtra="10dp"
+        android:text="코디나비는 시각장애인을 위한 코디 추천 서비스 어플입니다.\n\n카메라를 통해 옷의 정보를 제공하고, 그에 맞는 코디를 추천해주며, 날씨에 맞는 옷차림을 소개해줍니다."
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+        app:layout_constraintBottom_toTopOf="@+id/introduceCameraBtn" />
 
-            <android.widget.Button
-                android:id="@+id/introduceWeatherBtn"
-                android:layout_width="match_parent"
-                android:layout_height="90dp"
-                android:layout_marginTop="25dp"
-                android:background="@drawable/guidbtn"
-                android:fontFamily="@font/soyo_maple_regular"
-                android:textStyle="bold"
-                android:text="날씨 기능 소개"
-                android:textColor="@color/white"
-                android:textSize="40sp" />
+    <android.widget.Button
+        android:id="@+id/introduceCameraBtn"
+        android:layout_width="310dp"
+        android:layout_height="90dp"
+        android:background="@drawable/guidbtn"
+        android:fontFamily="@font/soyo_maple_regular"
+        android:text="카메라 기능 소개"
+        android:textColor="@color/white"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/introduceCodinaviV"
+        app:layout_constraintBottom_toTopOf="@+id/introduceWeatherBtn"/>
 
-        </LinearLayout>
-
-    </LinearLayout>
-
-</LinearLayout>
+    <android.widget.Button
+        android:id="@+id/introduceWeatherBtn"
+        android:layout_width="310dp"
+        android:layout_height="90dp"
+        android:background="@drawable/guidbtn"
+        android:fontFamily="@font/soyo_maple_regular"
+        android:text="날씨 기능 소개"
+        android:textColor="@color/white"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/introduceCameraBtn"
+        app:layout_constraintBottom_toBottomOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

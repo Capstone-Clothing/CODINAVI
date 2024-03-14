@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,71 +9,68 @@
     android:orientation="vertical"
     tools:context=".IntroduceCameraBtn">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangle_3"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" >
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <ImageButton
+            android:id="@+id/homeBtn"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/rectangle_3"
-            android:orientation="horizontal" >
+            android:src="@drawable/home"
+            android:contentDescription="홈"
+            android:background="@android:color/transparent"
+            android:layout_gravity="left" />
 
-            <ImageButton
-                android:id="@+id/homeBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/home"
-                android:contentDescription="홈"
-                android:background="@android:color/transparent"/>
+        <TextView
+            android:id="@+id/codinavi"
+            android:layout_width="wrap_content"
+            android:layout_height="53dp"
+            android:fontFamily="@font/bakbakone_regular"
+            android:gravity="center"
+            android:importantForAccessibility="no"
+            android:text="CODINAVI"
+            android:textColor="#2D0F51"
+            android:textSize="35sp"
+            android:layout_gravity="center" />
 
-            <TextView
-                android:id="@+id/codinavi"
-                android:layout_width="158dp"
-                android:layout_height="53dp"
-                android:layout_weight="1"
-                android:layout_marginTop="19dp"
-                android:gravity="center"
-                android:importantForAccessibility="no"
-                android:text="CODINAVI"
-                android:textColor="#2D0F51"
-                android:textSize="35sp"
-                android:fontFamily="@font/bakbakone_regular" />
-
-            <ImageButton
-                android:id="@+id/profileBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/profile"
-                android:contentDescription="마이페이지"
-                android:background="@android:color/transparent" />
-        </LinearLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
+        <ImageButton
+            android:id="@+id/profileBtn"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center">
+            android:src="@drawable/profile"
+            android:contentDescription="마이페이지"
+            android:background="@android:color/transparent"
+            android:layout_gravity="right" />
+    </FrameLayout>
 
-            <View
-                android:id="@+id/introduceCameraV"
-                android:layout_width="328dp"
-                android:layout_height="540dp"
-                android:background="@drawable/rectangle_1"
-                android:layout_marginTop="40dp" />
 
-            <TextView
-                android:id="@+id/introduceCameraTv"
-                android:layout_width="291dp"
-                android:layout_height="503dp"
-                android:layout_marginStart="18dp"
-                android:layout_marginTop="55dp"
-                android:fontFamily="@font/soyo_maple_regular"
-                android:gravity="center_vertical"
-                android:lineSpacingExtra="10dp"
-                android:textColor="@color/black"
-                android:text="사용자가 선택한 옷을 카메라로 인식하면 그 옷에 대한 설명과 어울리는 코디를 추천받을 수 있습니다.\n카메라로 인식된 옷은 데이터에 저장됩니다.\n\n추천 기능에는 코디 추천과 색상 추천이 있습니다. \n\n코디 추천은 상의, 하의, 겉옷으로 나뉘며 인식된 옷과 어울리는 조합의 옷을 추천합니다. \n\n색상 추천은 인식된 옷과 어울리는 색상을 추천합니다."
-                android:textSize="22sp" />
-        </RelativeLayout>
-    </LinearLayout>
-</LinearLayout>
+    <ImageView
+        android:id="@+id/introduceCameraV"
+        android:layout_width="328dp"
+        android:layout_height="540dp"
+        android:background="@drawable/rectangle_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <TextView
+        android:id="@+id/introduceCameraTv"
+        android:layout_width="291dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/soyo_maple_regular"
+        android:lineSpacingExtra="10dp"
+        android:text="사용자가 선택한 옷을 카메라로 인식하면 그 옷에 대한 설명과 어울리는 코디를 추천받을 수 있습니다.\n카메라로 인식된 옷은 데이터에 저장됩니다.\n\n추천 기능에는 코디 추천과 색상 추천이 있습니다. \n\n코디 추천은 상의, 하의, 겉옷으로 나뉘며 인식된 옷과 어울리는 조합의 옷을 추천합니다. \n\n색상 추천은 인식된 옷과 어울리는 색상을 추천합니다."
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+        app:layout_constraintBottom_toBottomOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
