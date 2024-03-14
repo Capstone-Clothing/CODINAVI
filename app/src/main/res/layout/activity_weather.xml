@@ -59,66 +59,83 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout"
-        android:layout_marginBottom="40dp"/>
+        android:layout_marginBottom="40dp"
+        android:layout_marginTop="40dp" />
 
     <ImageView
         android:id="@+id/placeIv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:src="@drawable/place_marker"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="@+id/weatherback"
-        app:layout_constraintTop_toTopOf="@+id/weatherback" />
+        app:layout_constraintTop_toTopOf="@+id/currentLocationTv"
+        app:layout_constraintBottom_toBottomOf="@+id/currentLocationTv" />
 
     <TextView
         android:id="@+id/currentLocationTv"
-        android:layout_width="match_parent"
+        android:layout_width="291dp"
         android:layout_height="wrap_content"
         android:text=""
         android:textColor="@color/black"
         android:textSize="22sp"
-        app:layout_constraintStart_toEndOf="@+id/placeIv"
-        app:layout_constraintEnd_toEndOf="@+id/weatherback"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/weatherback"
-        app:layout_constraintBottom_toBottomOf="@+id/weatherback" />
+        app:layout_constraintBottom_toTopOf="@+id/currentWeatherTv1" />
+
+    <ImageView
+        android:id="@+id/weatherIV"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="40dp"
+        app:layout_constraintStart_toStartOf="@+id/currentLocationTv"
+        app:layout_constraintTop_toTopOf="@+id/currentWeatherTv1"
+        app:layout_constraintBottom_toBottomOf="@+id/currentWeatherTv2"
+         />
 
     <TextView
         android:id="@+id/currentWeatherTv1"
-        android:layout_width="match_parent"
+        android:layout_width="291dp"
         android:layout_height="wrap_content"
         android:text=""
         android:textColor="@color/black"
         android:textSize="22sp"
-        app:layout_constraintStart_toStartOf="@+id/weatherback"
-        app:layout_constraintEnd_toEndOf="@+id/weatherback"
+        android:gravity="right"
+        android:layout_marginRight="60dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/currentLocationTv"
-        app:layout_constraintBottom_toBottomOf="@+id/currentWeatherTv2" />
+        app:layout_constraintBottom_toTopOf="@+id/currentWeatherTv2" />
 
     <TextView
         android:id="@+id/currentWeatherTv2"
-        android:layout_width="match_parent"
+        android:layout_width="291dp"
         android:layout_height="wrap_content"
         android:text=""
         android:textColor="@color/black"
         android:textSize="22sp"
-        app:layout_constraintStart_toStartOf="@+id/weatherback"
-        app:layout_constraintEnd_toEndOf="@+id/weatherback"
+        android:gravity="right"
+        android:layout_marginRight="60dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/currentWeatherTv1"
-        app:layout_constraintBottom_toBottomOf="@+id/recommendClothTv" />/>
+        app:layout_constraintBottom_toTopOf="@+id/recommendClothTv" />
 
     <TextView
         android:id="@+id/recommendClothTv"
-        android:layout_width="match_parent"
+        android:layout_width="291dp"
         android:layout_height="wrap_content"
         android:lineSpacingExtra="10dp"
         android:text=""
         android:textColor="@color/black"
         android:textSize="22sp"
-        app:layout_constraintStart_toStartOf="@+id/weatherback"
-        app:layout_constraintEnd_toEndOf="@+id/weatherback"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/currentWeatherTv2"
-        app:layout_constraintBottom_toBottomOf="@+id/otherLocationTv" />/>
+        app:layout_constraintBottom_toBottomOf="@+id/weatherback" />
 
     <TextView
         android:id="@+id/otherLocationTv"
