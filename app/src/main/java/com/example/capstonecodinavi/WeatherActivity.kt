@@ -171,6 +171,13 @@ class WeatherActivity : AppCompatActivity() {
                         var celsius = changeKelvinToCelsius(kelvin)
                         var weatherStr: String
 
+                        val weatherIconId = when {
+                            weather.contains("Rain") -> R.drawable.rainy
+                            weather.contains("Snow") -> R.drawable.snowy
+                            weather.contains("Clouds") -> R.drawable.cloudy
+                            else -> R.drawable.sunny
+                        }
+
                         if (weather.contains("Rain")) {
                             weatherStr = "비"
                         } else if (weather.contains("Snow")) {
@@ -181,6 +188,7 @@ class WeatherActivity : AppCompatActivity() {
                             weatherStr = "맑음"
                         }
 
+                        binding.weatherIV.setImageResource(weatherIconId)
                         binding.currentWeatherTv1.text = "날씨 : ${weatherStr}"
                         binding.currentWeatherTv2.text = "기온 : ${celsius}º"
                         recommendCodi(celsius.toDouble())
