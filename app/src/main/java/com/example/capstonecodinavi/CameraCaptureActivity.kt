@@ -33,17 +33,14 @@ class CameraCaptureActivity : AppCompatActivity() {
     private lateinit var cameraExecutor: ExecutorService
     private var imageCapture: ImageCapture? = null
     private lateinit var photoFile: File
-
-    private lateinit var cameraFragment: CameraFragment
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCameraCaptureBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        initUI()
         action()
 
         if (allPermissionsGranted()) {
-            supportFragmentManager.beginTransaction().replace(binding.cameraFl.id, cameraFragment).commit()
+            startCamera()
         } else {
             ActivityCompat.requestPermissions(
                 this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
@@ -54,11 +51,6 @@ class CameraCaptureActivity : AppCompatActivity() {
             applicationContext.cacheDir,
             "newImage.jpg"
         )
-    }
-    private fun initUI() {
-        cameraFragment = CameraFragment()
-
-        supportFragmentManager.beginTransaction().add(binding.cameraFl.id,cameraFragment).commit()
     }
 
     private fun action() {
@@ -106,7 +98,7 @@ class CameraCaptureActivity : AppCompatActivity() {
                         )
                         .into(binding.captureIV)
 
-                    binding.cameraFl.visibility = View.GONE
+                    binding.previewView.visibility = View.GONE
                     binding.captureIV.visibility = View.VISIBLE
                     binding.aiLl.visibility = View.VISIBLE
                     binding.captureBtn.visibility = View.GONE
@@ -127,7 +119,7 @@ class CameraCaptureActivity : AppCompatActivity() {
             // Preview
             val preview = Preview.Builder()
                 .setTargetAspectRatio(AspectRatio.RATIO_4_3)
-                .setTargetRotation(binding.cameraFl.display.rotation)
+                .setTargetRotation(binding.previewView.display.rotation)
                 .build()
 
             val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
@@ -135,7 +127,7 @@ class CameraCaptureActivity : AppCompatActivity() {
             imageCapture = ImageCapture.Builder().build()
 
             try {
-                preview?.setSurfaceProvider(binding.cameraFl.surfaceProvider)
+                preview?.setSurfaceProvider(binding.previewView.surfaceProvider)
                 cameraProvider.unbindAll()
                 cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageCapture)
 
@@ -161,7 +153,7 @@ class CameraCaptureActivity : AppCompatActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
             if (allPermissionsGranted()) {
-                supportFragmentManager.beginTransaction().replace(binding.cameraFl.id, cameraFragment).commit()
+                startCamera()
             } else {
                 Toast.makeText(this,
                     "Permissions not granted by the user.",

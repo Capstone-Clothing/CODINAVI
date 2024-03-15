@@ -19,7 +19,7 @@ class MainFragment : Fragment() {
             requireActivity().startActivity(intent)
         }
         binding.cameraBtn.setOnClickListener {
-            val intent = Intent(requireActivity(), CameraCaptureActivity::class.java)
+            val intent = Intent(requireActivity(), NewCamera::class.java)
             requireActivity().startActivity(intent)
         }
         binding.guideBtn.setOnClickListener {

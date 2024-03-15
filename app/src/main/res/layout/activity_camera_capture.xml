@@ -54,12 +54,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
-        <FrameLayout
-            android:id="@+id/cameraFl"
+        <androidx.camera.view.PreviewView
+            android:id="@+id/previewView"
             android:layout_width="341dp"
-            android:layout_height="433dp">
-
-        </FrameLayout>
+            android:layout_height="433dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.35">
+        </androidx.camera.view.PreviewView>
 
         <ImageView
             android:id="@+id/captureIV"

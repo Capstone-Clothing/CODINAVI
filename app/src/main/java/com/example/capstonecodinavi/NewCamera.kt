@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
 import androidx.core.content.ContextCompat
+import androidx.core.view.get
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
@@ -21,6 +22,7 @@ class NewCamera : AppCompatActivity() {
     private lateinit var cameraExecutor: ExecutorService
     private var imageCapture: ImageCapture? = null
     private lateinit var photoFile: File
+    private lateinit var objectDetectorHelper: ObjectDetectorHelper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNewCameraBinding.inflate(layoutInflater)

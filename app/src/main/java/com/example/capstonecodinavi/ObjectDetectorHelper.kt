@@ -2,8 +2,10 @@ package com.example.capstonecodinavi
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.os.Handler
 import android.os.SystemClock
 import android.util.Log
+import android.widget.Toast
 import org.tensorflow.lite.gpu.CompatibilityList
 import org.tensorflow.lite.support.image.ImageProcessor
 import org.tensorflow.lite.support.image.TensorImage
@@ -15,7 +17,7 @@ import org.tensorflow.lite.task.vision.detector.ObjectDetector
 class ObjectDetectorHelper(
     var threshold: Float = 0.5f,
     var numThreads: Int = 2,
-    var maxResults: Int = 3,
+    var maxResults: Int = 1,
     var currentDelegate: Int = 0,
     var currentModel: Int = 0,
     val context: Context,
@@ -109,11 +111,21 @@ class ObjectDetectorHelper(
 
         val results = objectDetector?.detect(tensorImage)
         inferenceTime = SystemClock.uptimeMillis() - inferenceTime
-        objectDetectorListener?.onResults(
-            results,
-            inferenceTime,
-            tensorImage.height,
-            tensorImage.width)
+        objectDetectorListener?.onResults( results, inferenceTime, tensorImage.height, tensorImage.width)
+            .let {
+                val isOutOfBound = results?.all { detection ->
+                    val boundingBox = detection.boundingBox
+                    boundingBox.left >= 0 && boundingBox.right <= image.width && boundingBox.top >= 0 && boundingBox.bottom <= image.height
+                } ?: false
+
+                if (isOutOfBound) {
+                    Handler(context.mainLooper).post {
+                        Log.d("checkcheck", "찍어")
+                        Toast.makeText(context, "찍어", Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+
     }
 
     interface DetectorListener {
