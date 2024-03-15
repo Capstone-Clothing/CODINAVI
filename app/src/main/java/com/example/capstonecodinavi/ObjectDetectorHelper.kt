@@ -120,8 +120,13 @@ class ObjectDetectorHelper(
 
                 if (isOutOfBound) {
                     Handler(context.mainLooper).post {
+                        Log.d("checkcheck", "떨어져")
+                        Toast.makeText(context, "떨어져", Toast.LENGTH_LONG+15).show()
+                    }
+                } else {
+                    Handler(context.mainLooper).post {
                         Log.d("checkcheck", "찍어")
-                        Toast.makeText(context, "찍어", Toast.LENGTH_LONG).show()
+                        Toast.makeText(context, "찍어", Toast.LENGTH_LONG+15).show()
                     }
                 }
             }
