@@ -19,6 +19,7 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.capstonecodinavi.Main.MainActivity
+import com.example.capstonecodinavi.R
 import com.example.capstonecodinavi.User.UserActivity
 import com.google.android.gms.location.*
 import com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
@@ -27,8 +28,6 @@ import org.json.JSONObject
 import java.io.IOException
 import java.math.RoundingMode
 import java.text.DecimalFormat
-import java.text.SimpleDateFormat
-import java.util.Date
 import java.util.Locale
 
 class WeatherActivity : AppCompatActivity() {
@@ -37,7 +36,6 @@ class WeatherActivity : AppCompatActivity() {
     private val REQUEST_PERMISSION_LOCATION = 10
     private var lat: Double? = null
     private var lon: Double? = null
-    private var season: String? = null
     private var adminArea: String? = null
     private var locality: String? = null
     private var thoroughfare: String? = null
@@ -94,7 +92,6 @@ class WeatherActivity : AppCompatActivity() {
                     lat = location.latitude
                     lon = location.longitude
                     getCurrentAddress(lat!!, lon!!)
-                    getCurrentSeason()
                     getCurrentWeather(lat!!, lon!!)
                 }
             }
@@ -117,13 +114,13 @@ class WeatherActivity : AppCompatActivity() {
             }
             address?.let {
                 if (locality != null && adminArea != null && thoroughfare != null) {
-                    binding.currentLocationTv.text = "현재 위치는 ${adminArea} ${locality} ${thoroughfare} 입니다."
+                    binding.currentLocationTv.text = "${adminArea} ${locality} ${thoroughfare}"
                 } else if (locality == null) {
-                    binding.currentLocationTv.text = "현재 위치는 ${adminArea} ${thoroughfare} 입니다."
+                    binding.currentLocationTv.text = "${adminArea} ${thoroughfare}"
                 } else if (adminArea == null) {
-                    binding.currentLocationTv.text = "현재 위치는 ${locality} ${thoroughfare} 입니다."
+                    binding.currentLocationTv.text = "${locality} ${thoroughfare}"
                 } else {
-                    binding.currentLocationTv.text = "현재 위치는 ${adminArea} ${locality} 입니다."
+                    binding.currentLocationTv.text = "${adminArea} ${locality}"
                 }
             }
         } else {
@@ -145,13 +142,13 @@ class WeatherActivity : AppCompatActivity() {
                     }
                     address?.let {
                         if (locality != null && adminArea != null && thoroughfare != null) {
-                            binding.currentLocationTv.text = "현재 위치는 ${adminArea} ${locality} ${thoroughfare} 입니다."
+                            binding.currentLocationTv.text = "${adminArea} ${locality} ${thoroughfare}"
                         } else if (locality == null) {
-                            binding.currentLocationTv.text = "현재 위치는 ${adminArea} ${thoroughfare} 입니다."
+                            binding.currentLocationTv.text = "${adminArea} ${thoroughfare}"
                         } else if (adminArea == null) {
-                            binding.currentLocationTv.text = "현재 위치는 ${locality} ${thoroughfare} 입니다."
+                            binding.currentLocationTv.text = "${locality} ${thoroughfare}"
                         } else {
-                            binding.currentLocationTv.text = "현재 위치는 ${adminArea} ${locality} 입니다."
+                            binding.currentLocationTv.text = "${adminArea} ${locality}"
                         }
                     }
                 }
@@ -176,6 +173,13 @@ class WeatherActivity : AppCompatActivity() {
                         var celsius = changeKelvinToCelsius(kelvin)
                         var weatherStr: String
 
+                        val weatherIconId = when {
+                            weather.contains("Rain") -> R.drawable.rainy
+                            weather.contains("Snow") -> R.drawable.snowy
+                            weather.contains("Clouds") -> R.drawable.cloudy
+                            else -> R.drawable.sunny
+                        }
+
                         if (weather.contains("Rain")) {
                             weatherStr = "비"
                         } else if (weather.contains("Snow")) {
@@ -186,7 +190,9 @@ class WeatherActivity : AppCompatActivity() {
                             weatherStr = "맑음"
                         }
 
-                        binding.currentWeatherTv.text = "계절은 ${season}, 날씨는 ${weatherStr}, 기온은 ${celsius}도 입니다."
+                        binding.weatherIV.setImageResource(weatherIconId)
+                        binding.currentWeatherTv1.text = "날씨 : ${weatherStr}"
+                        binding.currentWeatherTv2.text = "기온 : ${celsius}º"
                         recommendCodi(celsius.toDouble())
                     } catch (e: JSONException) {
                         e.printStackTrace()
@@ -197,20 +203,8 @@ class WeatherActivity : AppCompatActivity() {
         request.setShouldCache(false) // 이전 결과가 있어도 새 요청하여 결과 보여주기
         requestQueue!!.add(request)
     }
-    private fun getCurrentSeason() {
-        val now = System.currentTimeMillis()
-        val date = Date(now)
-        val simpleDateFormatDay = SimpleDateFormat("MM")
-        val getMonth = simpleDateFormatDay.format(date)
-        val getDate = """
-             $getMonth
-            """.trimIndent()
-        if (getMonth == "12" || getMonth == "01" || getMonth == "02") season = "겨울"
-        else if (getMonth == "03" || getMonth == "04" || getMonth == "05") season = "봄"
-        else if (getMonth == "06" || getMonth == "07" || getMonth == "08") season = "여름"
-        else season = "가을"
-    }
-    private fun changeKelvinToCelsius(temp: Double): String {
+
+    fun changeKelvinToCelsius(temp: Double): String {
         val changedTemp = (temp - 273.15)
         val df = DecimalFormat("#.#")
         df.roundingMode = RoundingMode.DOWN

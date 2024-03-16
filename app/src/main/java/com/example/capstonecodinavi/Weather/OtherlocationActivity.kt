@@ -9,21 +9,19 @@ import android.util.Log
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.example.capstonecodinavi.Main.MainActivity
+import com.example.capstonecodinavi.R
 import com.example.capstonecodinavi.User.UserActivity
 import com.example.capstonecodinavi.databinding.ActivityOtherlocationBinding
 import org.json.JSONException
 import org.json.JSONObject
 import java.math.RoundingMode
 import java.text.DecimalFormat
-import java.text.SimpleDateFormat
-import java.util.Date
 import java.util.Locale
 
 class OtherlocationActivity : AppCompatActivity() {
     lateinit var binding: ActivityOtherlocationBinding
     private var lat : Double? = null
     private var lng : Double? = null
-    private var season: String? = null
     private var searchText: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +51,6 @@ class OtherlocationActivity : AppCompatActivity() {
                     Log.d("check1000","$it")
                     lat = it[0].latitude
                     lng = it[0].longitude
-                    getCurrentSeason()
                     getCurrentWeather(lat!!, lng!!)
                 }
             }
@@ -78,6 +75,13 @@ class OtherlocationActivity : AppCompatActivity() {
                         val kelvin = jsonObject.getJSONObject("main").getString("temp").toDouble()
                         var celsius = changeKelvinToCelsius(kelvin)
 
+                        val weatherIconId = when {
+                            weather.contains("Rain") -> R.drawable.rainy
+                            weather.contains("Snow") -> R.drawable.snowy
+                            weather.contains("Clouds") -> R.drawable.cloudy
+                            else -> R.drawable.sunny
+                        }
+
                         if (weather.contains("Rain")) {
                             weatherStr = "비"
                         } else if (weather.contains("Snow")) {
@@ -88,7 +92,10 @@ class OtherlocationActivity : AppCompatActivity() {
                             weatherStr = "맑음"
                         }
 
-                        binding.currentWeatherTv.text = "${intent.getStringExtra("address")}의 계절은 ${season}, 날씨는 ${weatherStr}, 기온은 ${celsius}도 입니다."
+                        binding.weatherIV.setImageResource(weatherIconId)
+                        binding.currentLocationTv.text = "${intent.getStringExtra("address")}"
+                        binding.currentWeatherTv1.text = "날씨 : ${weatherStr}"
+                        binding.currentWeatherTv2.text = "기온 : ${celsius}º"
                         recommendCodi(celsius.toDouble())
                     } catch (e: JSONException) {
                         e.printStackTrace()
@@ -105,19 +112,6 @@ class OtherlocationActivity : AppCompatActivity() {
         val df = DecimalFormat("#.#")
         df.roundingMode = RoundingMode.DOWN
         return df.format(changedTemp)
-    }
-    fun getCurrentSeason() {
-        val now = System.currentTimeMillis()
-        val date = Date(now)
-        val simpleDateFormatDay = SimpleDateFormat("MM")
-        val getMonth = simpleDateFormatDay.format(date)
-        val getDate = """
-             $getMonth
-            """.trimIndent()
-        if (getMonth == "12" || getMonth == "01" || getMonth == "02") season = "겨울"
-        else if (getMonth == "03" || getMonth == "04" || getMonth == "05") season = "봄"
-        else if (getMonth == "06" || getMonth == "07" || getMonth == "08") season = "여름"
-        else season = "가을"
     }
 
     private fun recommendCodi(temp: Double) {

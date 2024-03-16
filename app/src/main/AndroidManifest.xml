@@ -27,9 +27,6 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".Camera.NewCameraActivity"
-            android:exported="false" />
-        <activity
             android:name=".User.GenderActivity"
             android:exported="false" />
         <activity
@@ -67,6 +64,9 @@
             android:name=".User.UserActivity"
             android:exported="false"
             android:launchMode="singleTop" />
+        <activity
+            android:name=".Camera.CameraActivity"
+            android:exported="false" />
         <activity
             android:name=".Guide.IntroduceWeatherBtn"
             android:exported="false" />

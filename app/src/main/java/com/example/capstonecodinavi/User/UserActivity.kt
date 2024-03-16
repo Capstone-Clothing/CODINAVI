@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.capstonecodinavi.Guide.GuideActivity
 import com.example.capstonecodinavi.Login.LoginActivity
+import com.example.capstonecodinavi.Main.MainActivity
 import com.example.capstonecodinavi.databinding.ActivityUserBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions

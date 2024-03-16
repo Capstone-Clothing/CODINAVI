@@ -1,10 +1,9 @@
 package com.example.capstonecodinavi.Login
 
-import android.content.ContentValues.TAG
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.capstonecodinavi.Main.MainActivity
 import com.example.capstonecodinavi.R
@@ -12,87 +11,105 @@ import com.example.capstonecodinavi.databinding.ActivityLoginBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
-import com.google.firebase.Firebase
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.auth.auth
+
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
-    lateinit var googleSignInClient: GoogleSignInClient
-    private val RC_SIGN_IN = 9001
-    lateinit var auth: FirebaseAuth
-    private lateinit var uid: String
-    private lateinit var uEmail: String
-    private lateinit var uname: String
-
+    private lateinit var mGoogleSignInClient: GoogleSignInClient
+    private lateinit var sharedPreferences: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setTitle(" ")
+        // SharedPreferences 초기화
+        sharedPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE)
+
+        // 사용자가 이미 로그인 한 경우 MainActivity로 이동
+        if(isLoggedIn()) {
+            moveToMainScreen()
+            return
+        }
+
+        // 구글 로그인 옵션 설정
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
+            .requestEmail()     // 이메일 요청
             .build()
 
-        googleSignInClient = GoogleSignIn.getClient(this, gso)
-        auth = Firebase.auth
+        // 구글 로그인 클라이언트 설정
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
 
-        binding.googleLoginBtn.setOnClickListener {
+        // 구글 로그인 버튼 설정
+        val googleLoginButton = findViewById<SignInButton>(R.id.googleLoginBtn)
+        googleLoginButton.setOnClickListener {
             signIn()
         }
     }
-    override fun onStart() {
-        super.onStart()
-        val currentUser = auth.currentUser
-        updateUI(currentUser)
+
+    // 구글 로그인 요청 시작
+    private fun signIn() {
+        val signInIntent = mGoogleSignInClient.signInIntent
+        try {
+            startActivityForResult(signInIntent, RC_SIGN_IN)
+        } catch (e: Exception) {
+            // 예외 처리 코드 추가
+            Log.e("LoginActivity", "Error starting sign-in activity: ${e.message}", e)
+        }
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == RC_SIGN_IN) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
-                val account = task.getResult(ApiException::class.java)!!
-                Log.d(TAG, "firebaseAuthWithGoogle:" + account.id)
-                firebaseAuthWithGoogle(account.idToken!!)
+                val account = task.getResult(ApiException::class.java)
+                val username = account?.displayName
+                saveUsername(username ?: "Unknown") // 사용자 이름이 없을 경우
+                saveLoginStatus(true)   // 로그인 상태 저장
+                moveToMainScreen()  // MainActivity로 이동
             } catch (e: ApiException) {
-                Toast.makeText(this, "Google sign in failed: ${e.message}", Toast.LENGTH_SHORT).show()
-                updateUI(null)
+                // Google Sign In 실패 처리
+                Log.e("LoginActivity", "Google sign in failed: ${e.statusCode}")
             }
         }
     }
-    private fun firebaseAuthWithGoogle(idToken: String) {
-        val credential = GoogleAuthProvider.getCredential(idToken, null)
-        auth.signInWithCredential(credential)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    val user = auth.currentUser
-                    updateUI(user)
-                } else {
-                    Toast.makeText(this, "Authentication failed", Toast.LENGTH_SHORT).show()
-                    updateUI(null)
-                }
-            }
-    }
-    private fun signIn() {
-        val signInIntent = googleSignInClient.signInIntent
-        startActivityForResult(signInIntent, RC_SIGN_IN)
+
+    // MainActivity로 이동
+    private fun moveToMainScreen() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish() // 현재 Activity 종료
     }
 
-    fun updateUI(user: FirebaseUser?) {
-        if (user != null) {
-            uid = user.uid
-            uEmail = user.email.toString()
-            uname = user.displayName.toString()
+    // 로그인 상태 저장
+    private fun saveLoginStatus(isLoggedIn: Boolean) {
+        val editor = sharedPreferences.edit()
+        editor.putBoolean("isLoggedIn", isLoggedIn)
+        editor.apply()
+    }
 
-            var intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
-        } else {
-            Log.d(TAG, "user data load fail")
-        }
+    // 로그인 상태 가져오기
+    private fun isLoggedIn(): Boolean {
+        return sharedPreferences.getBoolean("isLoggedIn", false)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        // 뒤로가기 누르면 앱 종료
+        finishAffinity()
+    }
+
+    // 사용자 이름 저장
+    private fun saveUsername(username: String) {
+        val editor = sharedPreferences.edit()
+        editor.putString("username", username)
+        editor.apply()
+    }
+
+    companion object {
+        const val RC_SIGN_IN = 123
     }
 }
