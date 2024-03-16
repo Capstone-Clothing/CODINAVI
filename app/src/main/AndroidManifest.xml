@@ -45,10 +45,10 @@
             android:name=".ConfirmActivity"
             android:exported="false" />
         <activity
-            android:name=".ColorActivity"
+            android:name=".ColorRecommendActivity"
             android:exported="false" />
         <activity
-            android:name=".CodiActivity"
+            android:name=".CodiRecommendActivity"
             android:exported="false" />
         <activity
             android:name=".GuideActivity"

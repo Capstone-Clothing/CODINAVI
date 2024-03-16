@@ -1,148 +1,113 @@
 package com.example.capstonecodinavi
 
-import android.Manifest
-import android.content.ContentValues
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Build
-import android.os.Bundle
-import android.provider.MediaStore
 import androidx.appcompat.app.AppCompatActivity
-import androidx.camera.core.ImageCapture
-import androidx.camera.video.Recorder
-import androidx.camera.video.Recording
-import androidx.camera.video.VideoCapture
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
-import android.widget.Toast
-import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.camera.core.Preview
-import androidx.camera.core.CameraSelector
+import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.Toast
+import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
-import androidx.camera.core.ImageProxy
-import androidx.core.content.PermissionChecker
+import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.NavHostFragment
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
+import com.example.capstonecodinavi.CodiRecommendActivity
+import com.example.capstonecodinavi.ColorRecommendActivity
+import com.example.capstonecodinavi.MainActivity
+import com.example.capstonecodinavi.UserActivity
 import com.example.capstonecodinavi.databinding.ActivityCameraBinding
-import java.nio.ByteBuffer
-import java.text.SimpleDateFormat
-import java.util.Locale
-
-/*typealias LumaListener = (luma: Double) -> Unit*/
+import java.io.File
+import java.util.concurrent.ExecutorService
 
 typealias LumaListener = (luma: Double) -> Unit
 
 class CameraActivity : AppCompatActivity() {
-    class LumaListener(val listener: (luma: Double) -> Unit)
-    private lateinit var viewBinding: ActivityCameraBinding
-
-    private var imageCapture: ImageCapture? = null
-
-    private var videoCapture: VideoCapture<Recorder>? = null
-    private var recording: Recording? = null
-
+    private lateinit var binding: ActivityCameraBinding
     private lateinit var cameraExecutor: ExecutorService
-
+    private var imageCapture: ImageCapture? = null
+    private lateinit var photoFile: File
+    private lateinit var objectDetectorHelper: ObjectDetectorHelper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewBinding = ActivityCameraBinding.inflate(layoutInflater)
-        setContentView(viewBinding.root)
-        setTitle(" ")
+        binding = ActivityCameraBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         action()
 
-        // Request camera permissions
-        if (allPermissionsGranted()) {
-            startCamera()
-        } else {
-            ActivityCompat.requestPermissions(
-                this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
-        }
-        cameraExecutor = Executors.newSingleThreadExecutor()
     }
 
     private fun action() {
-        viewBinding.homeBtn.setOnClickListener {
+        binding.homeBtn.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
 
-        viewBinding.profileBtn.setOnClickListener {
+        binding.profileBtn.setOnClickListener {
             val intent = Intent(this, UserActivity::class.java)
             startActivity(intent)
         }
 
-        viewBinding.codiBtn.setOnClickListener {
-            val intent = Intent(this, CodiActivity::class.java)
+        binding.captureBtn.setOnClickListener {
+            val navFragment: NavHostFragment = binding.fragmentContainer.getFragment()
+            val cameraFragment: CameraFragment = navFragment.childFragmentManager.fragments[0] as CameraFragment
+            imageCapture = cameraFragment.imageCapture
+            photoFile = File(
+                applicationContext.cacheDir,
+                "newImage.jpg"
+            )
+            takePhoto()
+            Log.d("check test", "$imageCapture")
+        }
+
+        binding.codiBtn.setOnClickListener {
+            val intent = Intent(this, CodiRecommendActivity::class.java)
             startActivity(intent)
         }
 
-        viewBinding.colorBtn.setOnClickListener {
-            val intent = Intent(this, ColorActivity::class.java)
+        binding.colorBtn.setOnClickListener {
+            val intent = Intent(this, ColorRecommendActivity::class.java)
             startActivity(intent)
         }
     }
-    private fun startCamera() {
-        val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
 
-        cameraProviderFuture.addListener({
-            val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
+    private fun takePhoto() {
+        val mImageCapture = imageCapture ?:return
 
-            // Preview
-            val preview = Preview.Builder()
-                .build()
-                .also {
-                    it.setSurfaceProvider(viewBinding.previewView.surfaceProvider)
+        val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
+
+        mImageCapture.takePicture(
+            outputOptions,
+            ContextCompat.getMainExecutor(this),
+            object : ImageCapture.OnImageSavedCallback {
+                override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+                    Glide.with(this@CameraActivity)
+                        .load(outputFileResults.savedUri)
+                        .apply(
+                            RequestOptions()
+                                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                                .skipMemoryCache(true)
+                        )
+                        .into(binding.captureIV)
+
+                    binding.fragmentContainer.visibility = View.GONE
+                    binding.captureIV.visibility = View.VISIBLE
+                    binding.aiLl.visibility = View.VISIBLE
+                    binding.captureBtn.visibility = View.GONE
                 }
-            val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
-            try {
-                cameraProvider.unbindAll()
-                cameraProvider.bindToLifecycle(this, cameraSelector, preview)
-
-            } catch(exc: Exception) {
-                Log.e(TAG, "Use case binding failed", exc)
+                override fun onError(exception: ImageCaptureException) {
+                    Toast.makeText(applicationContext, "실패", Toast.LENGTH_SHORT).show()
+                }
             }
-
-        }, ContextCompat.getMainExecutor(this))
+        )
     }
-
-    private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
-        ContextCompat.checkSelfPermission(baseContext, it) == PackageManager.PERMISSION_GRANTED
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        cameraExecutor.shutdown()
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<String>, grantResults:
-        IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == REQUEST_CODE_PERMISSIONS) {
-            if (allPermissionsGranted()) {
-                startCamera()
-            } else {
-                Toast.makeText(this,
-                    "Permissions not granted by the user.",
-                    Toast.LENGTH_SHORT).show()
-                finish()
-            }
+    override fun onBackPressed() {
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
+            finishAfterTransition()
+        } else {
+            super.onBackPressed()
         }
-    }
-    companion object {
-        private const val TAG = "CameraXApp"
-        private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
-        private const val REQUEST_CODE_PERMISSIONS = 10
-        private val REQUIRED_PERMISSIONS =
-            mutableListOf (
-                Manifest.permission.CAMERA,
-                Manifest.permission.RECORD_AUDIO
-            ).apply {
-                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
-                    add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                }
-            }.toTypedArray()
     }
 }
