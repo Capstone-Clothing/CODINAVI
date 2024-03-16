@@ -1,19 +1,19 @@
-package com.example.capstonecodinavi
+package com.example.capstonecodinavi.Recommend
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.example.capstonecodinavi.User.UserActivity
 import com.example.capstonecodinavi.databinding.ActivityCodiBinding
 import org.json.JSONException
 import org.json.JSONObject
 
-class CodiActivity : AppCompatActivity() {
+class CodiRecommendActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCodiBinding
     companion object {
         var requestQueue: RequestQueue? = null

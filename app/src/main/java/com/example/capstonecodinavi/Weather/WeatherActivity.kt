@@ -1,4 +1,4 @@
-package com.example.capstonecodinavi
+package com.example.capstonecodinavi.Weather
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +18,8 @@ import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.example.capstonecodinavi.Main.MainActivity
+import com.example.capstonecodinavi.User.UserActivity
 import com.google.android.gms.location.*
 import com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
 import org.json.JSONException

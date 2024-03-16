@@ -1,4 +1,4 @@
-package com.example.capstonecodinavi
+package com.example.capstonecodinavi.Camera
 
 
 import android.annotation.SuppressLint
@@ -9,7 +9,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.Toast
 import androidx.camera.core.AspectRatio
 import androidx.camera.core.Camera
@@ -23,6 +22,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import com.example.capstonecodinavi.R
 import com.example.capstonecodinavi.databinding.FragmentCameraBinding
 import java.util.LinkedList
 import java.util.concurrent.ExecutorService
@@ -32,7 +32,7 @@ import org.tensorflow.lite.task.vision.detector.Detection
 
 class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
 
-    private var imageCapture: ImageCapture? = null
+    var imageCapture: ImageCapture? = null
     private val TAG = "ObjectDetection"
 
     private var _fragmentCameraBinding: FragmentCameraBinding? = null
@@ -47,13 +47,10 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
     private var camera: Camera? = null
     private var cameraProvider: ProcessCameraProvider? = null
 
-    /** Blocking camera operations are performed using this executor */
     private lateinit var cameraExecutor: ExecutorService
 
     override fun onResume() {
         super.onResume()
-        // Make sure that all permissions are still present, since the
-        // user could have removed them while the app was in paused state.
         if (!PermissionsFragment.hasPermissions(requireContext())) {
             Navigation.findNavController(requireActivity(), R.id.fragment_container)
                 .navigate(CameraFragmentDirections.actionCameraToPermissions())
@@ -63,7 +60,6 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
     override fun onDestroyView() {
         _fragmentCameraBinding = null
         super.onDestroyView()
-
         cameraExecutor.shutdown()
     }
 
@@ -140,11 +136,12 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
                         detectObjects(image)
                     }
                 }
-        cameraProvider.unbindAll()
+        // Must unbind the use-cases before rebinding them
 
         try {
-            camera = cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageAnalyzer, imageCapture)
             preview?.setSurfaceProvider(fragmentCameraBinding.viewFinder.surfaceProvider)
+            cameraProvider.unbindAll()
+            cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageAnalyzer, imageCapture)
         } catch (exc: Exception) {
             Log.e(TAG, "Use case binding failed", exc)
         }
@@ -175,7 +172,14 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
                 imageWidth
             )
 
-            // Force a redraw
+            if (results?.size == 0) {
+                // TODO: Toast 메세지의 빈번도 줄이기
+                Toast.makeText(context, "옷을 정확히 인식시켜주세요", Toast.LENGTH_SHORT).show()
+            } else {
+                // TODO: 객체(Detection)가 인식됐을 때 카테고리가 cloth일 때만 처리
+                Log.d("check results", "$results")
+            }
+
             fragmentCameraBinding.overlay.invalidate()
         }
     }
