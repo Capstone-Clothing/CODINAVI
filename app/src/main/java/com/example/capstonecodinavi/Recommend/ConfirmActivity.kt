@@ -1,12 +1,10 @@
-package com.example.capstonecodinavi
+package com.example.capstonecodinavi.Recommend
 
 import android.Manifest
-import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.ImageCapture
 import androidx.camera.video.Recorder
@@ -21,13 +19,9 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.core.Preview
 import androidx.camera.core.CameraSelector
 import android.util.Log
-import androidx.camera.core.ImageCaptureException
-import androidx.camera.core.ImageProxy
-import androidx.core.content.PermissionChecker
+import com.example.capstonecodinavi.Main.MainActivity
+import com.example.capstonecodinavi.User.UserActivity
 import com.example.capstonecodinavi.databinding.ActivityConfirmBinding
-import java.nio.ByteBuffer
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 /*
 typealias LumaListener = (luma: Double) -> Unit
@@ -56,7 +50,8 @@ class ConfirmActivity : AppCompatActivity() {
             startCamera()
         } else {
             ActivityCompat.requestPermissions(
-                this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS)
+                this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS
+            )
         }
         cameraExecutor = Executors.newSingleThreadExecutor()
     }

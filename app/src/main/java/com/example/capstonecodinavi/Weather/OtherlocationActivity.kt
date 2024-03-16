@@ -1,4 +1,4 @@
-package com.example.capstonecodinavi
+package com.example.capstonecodinavi.Weather
 
 import android.content.Intent
 import android.location.Geocoder
@@ -8,13 +8,14 @@ import android.os.Bundle
 import android.util.Log
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
+import com.example.capstonecodinavi.Main.MainActivity
+import com.example.capstonecodinavi.R
+import com.example.capstonecodinavi.User.UserActivity
 import com.example.capstonecodinavi.databinding.ActivityOtherlocationBinding
 import org.json.JSONException
 import org.json.JSONObject
 import java.math.RoundingMode
 import java.text.DecimalFormat
-import java.text.SimpleDateFormat
-import java.util.Date
 import java.util.Locale
 
 class OtherlocationActivity : AppCompatActivity() {

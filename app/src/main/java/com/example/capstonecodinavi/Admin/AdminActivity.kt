@@ -1,19 +1,21 @@
-package com.example.capstonecodinavi
+package com.example.capstonecodinavi.Admin
+
 
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.capstonecodinavi.databinding.ActivityUserBinding
+import com.example.capstonecodinavi.Login.LoginActivity
+import com.example.capstonecodinavi.databinding.ActivityAdminBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 
-class UserActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityUserBinding
+class AdminActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityAdminBinding
     private lateinit var sharedPreferences: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityUserBinding.inflate(layoutInflater)
+        binding = ActivityAdminBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         // 초기화
@@ -33,30 +35,6 @@ class UserActivity : AppCompatActivity() {
     }
 
     private fun action() {
-        binding.homeBtn.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.profileBtn.setOnClickListener {
-            val intent = Intent(this, UserActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.genderBtn.setOnClickListener {
-            val intent = Intent(this, GenderActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.guideBtn.setOnClickListener {
-            val intent = Intent(this, GuideActivity::class.java)
-            startActivity(intent)
-        }
-
-//        binding.administratorBtn.setOnClickListener {
-//          //관리자 문의 화면으로 이동
-//        }
-
         binding.logoutBtn.setOnClickListener {
             logout()
         }

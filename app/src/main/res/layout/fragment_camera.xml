@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         app:scaleType="fillStart"/>
 
-    <com.example.capstonecodinavi.OverlayView
+    <com.example.capstonecodinavi.Camera.OverlayView
         android:id="@+id/overlay"
         android:layout_height="match_parent"
         android:layout_width="match_parent" />

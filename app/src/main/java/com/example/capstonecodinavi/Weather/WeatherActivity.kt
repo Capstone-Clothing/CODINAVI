@@ -1,4 +1,4 @@
-package com.example.capstonecodinavi
+package com.example.capstonecodinavi.Weather
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -11,13 +11,15 @@ import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.os.Build
-import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.example.capstonecodinavi.Main.MainActivity
+import com.example.capstonecodinavi.R
+import com.example.capstonecodinavi.User.UserActivity
 import com.google.android.gms.location.*
 import com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
 import org.json.JSONException
@@ -25,8 +27,6 @@ import org.json.JSONObject
 import java.io.IOException
 import java.math.RoundingMode
 import java.text.DecimalFormat
-import java.text.SimpleDateFormat
-import java.util.Date
 import java.util.Locale
 
 class WeatherActivity : AppCompatActivity() {

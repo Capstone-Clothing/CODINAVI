@@ -1,12 +1,12 @@
-package com.example.capstonecodinavi
+package com.example.capstonecodinavi.Camera
 
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
 import androidx.core.content.ContextCompat
@@ -14,15 +14,13 @@ import androidx.navigation.fragment.NavHostFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
-import com.example.capstonecodinavi.CodiRecommendActivity
-import com.example.capstonecodinavi.ColorRecommendActivity
-import com.example.capstonecodinavi.MainActivity
-import com.example.capstonecodinavi.UserActivity
+import com.example.capstonecodinavi.Recommend.CodiRecommendActivity
+import com.example.capstonecodinavi.Recommend.ColorRecommendActivity
+import com.example.capstonecodinavi.Main.MainActivity
+import com.example.capstonecodinavi.User.UserActivity
 import com.example.capstonecodinavi.databinding.ActivityCameraBinding
 import java.io.File
 import java.util.concurrent.ExecutorService
-
-typealias LumaListener = (luma: Double) -> Unit
 
 class CameraActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCameraBinding

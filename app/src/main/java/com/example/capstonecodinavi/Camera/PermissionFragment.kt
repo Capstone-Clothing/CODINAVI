@@ -1,4 +1,4 @@
-package com.example.capstonecodinavi
+package com.example.capstonecodinavi.Camera
 
 import android.Manifest
 import android.content.Context
@@ -10,7 +10,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
-import androidx.navigation.*
 import com.example.capstonecodinavi.R
 
 private val PERMISSIONS_REQUIRED = arrayOf(Manifest.permission.CAMERA)
