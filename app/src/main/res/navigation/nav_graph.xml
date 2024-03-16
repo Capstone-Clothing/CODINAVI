@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/permissions_fragment"
-        android:name="com.example.capstonecodinavi.PermissionsFragment"
+        android:name="com.example.capstonecodinavi.Camera.PermissionsFragment"
         android:label="PermissionsFragment" >
 
         <action
@@ -21,7 +21,7 @@
 
     <fragment
         android:id="@+id/camera_fragment"
-        android:name="com.example.capstonecodinavi.CameraFragment"
+        android:name="com.example.capstonecodinavi.Camera.CameraFragment"
         android:label="CameraFragment" >
 
 

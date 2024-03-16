@@ -1,11 +1,9 @@
-package com.example.capstonecodinavi
+package com.example.capstonecodinavi.Camera
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.os.Handler
 import android.os.SystemClock
 import android.util.Log
-import android.widget.Toast
 import org.tensorflow.lite.gpu.CompatibilityList
 import org.tensorflow.lite.support.image.ImageProcessor
 import org.tensorflow.lite.support.image.TensorImage

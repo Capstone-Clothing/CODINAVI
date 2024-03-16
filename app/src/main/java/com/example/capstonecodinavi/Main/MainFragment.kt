@@ -1,4 +1,4 @@
-package com.example.capstonecodinavi
+package com.example.capstonecodinavi.Main
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,6 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.capstonecodinavi.Camera.NewCameraActivity
+import com.example.capstonecodinavi.Guide.GuideActivity
+import com.example.capstonecodinavi.Weather.WeatherActivity
 import com.example.capstonecodinavi.databinding.FragmentMainBinding
 
 class MainFragment : Fragment() {

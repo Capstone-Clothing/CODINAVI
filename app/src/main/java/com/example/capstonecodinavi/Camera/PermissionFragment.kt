@@ -1,4 +1,4 @@
-package com.example.capstonecodinavi
+package com.example.capstonecodinavi.Camera
 
 import android.Manifest
 import android.content.Context

@@ -71,7 +71,7 @@
                 android:keepScreenOn="true"
                 app:defaultNavHost="true"
                 app:navGraph="@navigation/nav_graph"
-                tools:context=".NewCameraActivity"/>
+                tools:context=".Camera.NewCameraActivity"/>
 
             <ImageView
                 android:id="@+id/captureIV"
