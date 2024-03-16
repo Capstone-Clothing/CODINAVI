@@ -62,11 +62,9 @@ class OverlayView(context: Context?, attrs: AttributeSet?) : View(context, attrs
             val left = boundingBox.left * scaleFactor
             val right = boundingBox.right * scaleFactor
 
-            // Draw bounding box around detected objects
             val drawableRect = RectF(left, top, right, bottom)
             canvas.drawRect(drawableRect, boxPaint)
 
-            // Create text to display alongside detected objects
             val drawableText =
                 result.categories[0].label + " " +
                         String.format("%.2f", result.categories[0].score)
@@ -92,9 +90,6 @@ class OverlayView(context: Context?, attrs: AttributeSet?) : View(context, attrs
         imageWidth: Int,
     ) {
         results = detectionResults
-
-        // PreviewView is in FILL_START mode. So we need to scale up the bounding box to match with
-        // the size that the captured images will be displayed.
         scaleFactor = max(width * 1f / imageWidth, height * 1f / imageHeight)
     }
 
