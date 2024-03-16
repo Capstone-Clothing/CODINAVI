@@ -31,7 +31,7 @@ import java.io.File
 class CameraCaptureActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCameraCaptureBinding
     private lateinit var cameraExecutor: ExecutorService
-    private var imageCapture: ImageCapture? = null
+    private lateinit var imageCapture: ImageCapture
     private lateinit var photoFile: File
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,12 +79,35 @@ class CameraCaptureActivity : AppCompatActivity() {
         }
     }
 
-    private fun takePhoto() {
-        val mImageCapture = imageCapture ?:return
+    private fun startCamera() {
+        val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
 
+        cameraProviderFuture.addListener({
+            val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
+            val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+
+            // Preview
+            val preview = Preview.Builder()
+                .setTargetAspectRatio(AspectRatio.RATIO_4_3)
+                .setTargetRotation(binding.previewView.display.rotation)
+                .build()
+
+            imageCapture = ImageCapture.Builder().build()
+
+            try {
+                preview?.setSurfaceProvider(binding.previewView.surfaceProvider)
+                cameraProvider.unbindAll()
+                cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageCapture)
+            } catch(exc: Exception) {
+                Log.e(TAG, "Use case binding failed", exc)
+            }
+        }, ContextCompat.getMainExecutor(this))
+    }
+
+    private fun takePhoto() {
         val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
 
-        mImageCapture.takePicture(
+        imageCapture.takePicture(
             outputOptions,
             ContextCompat.getMainExecutor(this),
             object : ImageCapture.OnImageSavedCallback {
@@ -110,34 +133,6 @@ class CameraCaptureActivity : AppCompatActivity() {
             }
         )
     }
-    private fun startCamera() {
-        val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
-
-        cameraProviderFuture.addListener({
-            val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
-
-            // Preview
-            val preview = Preview.Builder()
-                .setTargetAspectRatio(AspectRatio.RATIO_4_3)
-                .setTargetRotation(binding.previewView.display.rotation)
-                .build()
-
-            val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
-
-            imageCapture = ImageCapture.Builder().build()
-
-            try {
-                preview?.setSurfaceProvider(binding.previewView.surfaceProvider)
-                cameraProvider.unbindAll()
-                cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageCapture)
-
-            } catch(exc: Exception) {
-                Log.e(TAG, "Use case binding failed", exc)
-            }
-
-        }, ContextCompat.getMainExecutor(this))
-    }
-
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
         ContextCompat.checkSelfPermission(baseContext, it) == PackageManager.PERMISSION_GRANTED
     }

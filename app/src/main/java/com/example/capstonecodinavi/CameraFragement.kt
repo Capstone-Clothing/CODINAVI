@@ -32,7 +32,7 @@ import org.tensorflow.lite.task.vision.detector.Detection
 
 class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
 
-    private var imageCapture: ImageCapture? = null
+    var imageCapture: ImageCapture? = null
     private val TAG = "ObjectDetection"
 
     private var _fragmentCameraBinding: FragmentCameraBinding? = null
@@ -47,13 +47,10 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
     private var camera: Camera? = null
     private var cameraProvider: ProcessCameraProvider? = null
 
-    /** Blocking camera operations are performed using this executor */
     private lateinit var cameraExecutor: ExecutorService
 
     override fun onResume() {
         super.onResume()
-        // Make sure that all permissions are still present, since the
-        // user could have removed them while the app was in paused state.
         if (!PermissionsFragment.hasPermissions(requireContext())) {
             Navigation.findNavController(requireActivity(), R.id.fragment_container)
                 .navigate(CameraFragmentDirections.actionCameraToPermissions())
@@ -63,8 +60,6 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
     override fun onDestroyView() {
         _fragmentCameraBinding = null
         super.onDestroyView()
-
-        // Shut down our background executor
         cameraExecutor.shutdown()
     }
 
@@ -117,11 +112,9 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
     @SuppressLint("UnsafeOptInUsageError")
     private fun bindCameraUseCases() {
 
-        // CameraProvider
         val cameraProvider =
             cameraProvider ?: throw IllegalStateException("Camera initialization failed.")
 
-        // CameraSelector - makes assumption that we're only using the back camera
         val cameraSelector =
             CameraSelector.Builder().requireLensFacing(CameraSelector.LENS_FACING_BACK).build()
 
@@ -158,15 +151,11 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
                 }
 
         // Must unbind the use-cases before rebinding them
-        cameraProvider.unbindAll()
 
         try {
-            // A variable number of use-cases can be passed here -
-            // camera provides access to CameraControl & CameraInfo
-            camera = cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageAnalyzer, imageCapture)
-
-            // Attach the viewfinder's surface provider to preview use case
             preview?.setSurfaceProvider(fragmentCameraBinding.viewFinder.surfaceProvider)
+            cameraProvider.unbindAll()
+            cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageAnalyzer, imageCapture)
         } catch (exc: Exception) {
             Log.e(TAG, "Use case binding failed", exc)
         }
@@ -202,7 +191,14 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
                 imageWidth
             )
 
-            // Force a redraw
+            if (results?.size == 0) {
+                // TODO: Toast 메세지의 빈번도 줄이기
+                Toast.makeText(context, "옷을 정확히 인식시켜주세요", Toast.LENGTH_SHORT).show()
+            } else {
+                // TODO: 객체(Detection)가 인식됐을 때 카테고리가 cloth일 때만 처리
+                Log.d("check results", "$results")
+            }
+
             fragmentCameraBinding.overlay.invalidate()
         }
     }

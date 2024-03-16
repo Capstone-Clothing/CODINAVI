@@ -4,12 +4,14 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
 import androidx.core.content.ContextCompat
-import androidx.core.view.get
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
@@ -17,7 +19,7 @@ import com.example.capstonecodinavi.databinding.ActivityNewCameraBinding
 import java.io.File
 import java.util.concurrent.ExecutorService
 
-class NewCamera : AppCompatActivity() {
+class NewCameraActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNewCameraBinding
     private lateinit var cameraExecutor: ExecutorService
     private var imageCapture: ImageCapture? = null
@@ -28,6 +30,7 @@ class NewCamera : AppCompatActivity() {
         binding = ActivityNewCameraBinding.inflate(layoutInflater)
         setContentView(binding.root)
         action()
+
     }
 
     private fun action() {
@@ -42,7 +45,15 @@ class NewCamera : AppCompatActivity() {
         }
 
         binding.captureBtn.setOnClickListener {
+            val navFragment: NavHostFragment = binding.fragmentContainer.getFragment()
+            val cameraFragment: CameraFragment = navFragment.childFragmentManager.fragments[0] as CameraFragment
+            imageCapture = cameraFragment.imageCapture
+            photoFile = File(
+                applicationContext.cacheDir,
+                "newImage.jpg"
+            )
             takePhoto()
+            Log.d("check test", "$imageCapture")
         }
 
         binding.codiBtn.setOnClickListener {
@@ -66,7 +77,7 @@ class NewCamera : AppCompatActivity() {
             ContextCompat.getMainExecutor(this),
             object : ImageCapture.OnImageSavedCallback {
                 override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                    Glide.with(this@NewCamera)
+                    Glide.with(this@NewCameraActivity)
                         .load(outputFileResults.savedUri)
                         .apply(
                             RequestOptions()

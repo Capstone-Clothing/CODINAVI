@@ -112,24 +112,24 @@ class ObjectDetectorHelper(
         val results = objectDetector?.detect(tensorImage)
         inferenceTime = SystemClock.uptimeMillis() - inferenceTime
         objectDetectorListener?.onResults( results, inferenceTime, tensorImage.height, tensorImage.width)
-            .let {
-                val isOutOfBound = results?.all { detection ->
-                    val boundingBox = detection.boundingBox
-                    boundingBox.left >= 0 && boundingBox.right <= image.width && boundingBox.top >= 0 && boundingBox.bottom <= image.height
-                } ?: false
-
-                if (isOutOfBound) {
-                    Handler(context.mainLooper).post {
-                        Log.d("checkcheck", "떨어져")
-                        Toast.makeText(context, "떨어져", Toast.LENGTH_LONG+15).show()
-                    }
-                } else {
-                    Handler(context.mainLooper).post {
-                        Log.d("checkcheck", "찍어")
-                        Toast.makeText(context, "찍어", Toast.LENGTH_LONG+15).show()
-                    }
-                }
-            }
+//            .let {
+//                val isOutOfBound = results?.all { detection ->
+//                    val boundingBox = detection.boundingBox
+//                    boundingBox.left >= 0 && boundingBox.right <= image.width && boundingBox.top >= 0 && boundingBox.bottom <= image.height
+//                } ?: false
+//
+//                if (isOutOfBound) {
+//                    Handler(context.mainLooper).post {
+//                        Log.d("checkcheck", "떨어져")
+//                        Toast.makeText(context, "떨어져", Toast.LENGTH_LONG+15).show()
+//                    }
+//                } else {
+//                    Handler(context.mainLooper).post {
+//                        Log.d("checkcheck", "찍어")
+//                        Toast.makeText(context, "찍어", Toast.LENGTH_LONG+15).show()
+//                    }
+//                }
+//            }
 
     }
 
