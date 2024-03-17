@@ -49,7 +49,7 @@
             android:layout_gravity="right" />
     </FrameLayout>
 
-    <View
+    <ImageView
         android:id="@+id/codiV"
         android:layout_width="330dp"
         android:layout_height="400dp"
