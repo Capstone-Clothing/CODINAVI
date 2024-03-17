@@ -61,18 +61,28 @@
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragment_container"
             android:name="androidx.navigation.fragment.NavHostFragment"
-            android:layout_width="341dp"
-            android:layout_height="433dp"
+            android:layout_width="340dp"
+            android:layout_height="470dp"
             android:background="@android:color/transparent"
             android:keepScreenOn="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.35"
             app:defaultNavHost="true"
             app:navGraph="@navigation/nav_graph"
-            tools:context=".Camera.NewCameraActivity"/>
+            tools:context=".Camera.NewCameraActivity" />
 
         <ImageView
             android:id="@+id/captureIV"
-            android:layout_width="341dp"
-            android:layout_height="433dp"
+            android:layout_width="340dp"
+            android:layout_height="470dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.35"
             android:visibility="gone" />
 
         <TextView
@@ -82,49 +92,73 @@
             android:background="@color/white"
             android:fontFamily="@font/soyo_maple_regular"
             android:gravity="center"
-            android:text="옷 정보 설명"
+            android:text="맑고 시원한 하늘색 셔츠"
             android:textColor="@color/black"
-            android:textSize="25dp"
-            android:textStyle="bold" />
+            android:textSize="22dp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/captureIV"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone" />
 
-        <Button
+        <android.widget.Button
             android:id="@+id/captureBtn"
-            android:layout_gravity="center"
-            android:layout_marginTop="24dp"
-            android:layout_width="170dp"
-            android:layout_height="60dp"
-            android:text="촬영" />
+            android:layout_width="330dp"
+            android:layout_height="90dp"
+            android:background="@drawable/mainbtn"
+            android:fontFamily="@font/soyo_maple_regular"
+            android:text="촬영하기"
+            android:textColor="@color/white"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.9" />
 
-        <LinearLayout
-            android:id="@+id/aiLl"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:layout_marginTop="24dp"
-            android:visibility="gone">
+        <android.widget.Button
+            android:id="@+id/codiBtn"
+            android:layout_width="160dp"
+            android:layout_height="90dp"
+            android:text="코디 추천"
+            android:textColor="@color/white"
+            android:fontFamily="@font/soyo_maple_regular"
+            android:textStyle="bold"
+            android:textSize="35dp"
+            android:background="@drawable/mainbtn"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.9"
+            app:layout_constraintRight_toLeftOf="@+id/vertical_centerline"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            android:visibility="gone" />
 
-            <android.widget.Button
-                android:id="@+id/codiBtn"
-                android:layout_width="170dp"
-                android:layout_height="100dp"
-                android:background="@drawable/mainbtn"
-                android:fontFamily="@font/soyo_maple_regular"
-                android:text="코디 추천"
-                android:textColor="@color/white"
-                android:textSize="35dp"
-                android:textStyle="bold" />
+        <android.widget.Button
+            android:id="@+id/colorBtn"
+            android:layout_width="160dp"
+            android:layout_height="90dp"
+            android:text="색상 추천"
+            android:textColor="@color/white"
+            android:fontFamily="@font/soyo_maple_regular"
+            android:textStyle="bold"
+            android:textSize="35dp"
+            android:background="@drawable/mainbtn"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.9"
+            app:layout_constraintLeft_toRightOf="@+id/vertical_centerline"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            android:visibility="gone" />
 
-            <android.widget.Button
-                android:id="@+id/colorBtn"
-                android:layout_width="170dp"
-                android:layout_height="100dp"
-                android:background="@drawable/mainbtn"
-                android:fontFamily="@font/soyo_maple_regular"
-                android:text="색상 추천"
-                android:textColor="@color/white"
-                android:textSize="35dp"
-                android:textStyle="bold" />
-        </LinearLayout>
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/vertical_centerline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent=".50" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

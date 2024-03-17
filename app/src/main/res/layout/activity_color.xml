@@ -71,7 +71,7 @@
     <TextView
         android:id="@+id/colorTv"
         android:layout_width="293dp"
-        android:layout_height="263dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
         android:fontFamily="@font/soyo_maple_regular"
         android:lineSpacingExtra="10dp"
