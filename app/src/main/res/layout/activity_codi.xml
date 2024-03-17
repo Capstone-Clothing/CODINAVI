@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,82 +9,83 @@
     android:background="@drawable/background"
     tools:context=".Recommend.CodiRecommendActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical" >
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangle_3"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/rectangle_3"
-            android:orientation="horizontal" >
-
-            <ImageButton
-                android:id="@+id/homeBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/home"
-                android:contentDescription="홈"
-                android:background="@android:color/transparent" />
-
-            <TextView
-                android:id="@+id/codinavi"
-                android:layout_width="158dp"
-                android:layout_height="53dp"
-                android:layout_weight="1"
-                android:layout_marginTop="19dp"
-                android:gravity="center"
-                android:importantForAccessibility="no"
-                android:text="CODINAVI"
-                android:textColor="#2D0F51"
-                android:textSize="35sp"
-                android:fontFamily="@font/bakbakone_regular" />
-
-            <ImageButton
-                android:id="@+id/profileBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/profile"
-                android:contentDescription="마이페이지"
-                android:background="@android:color/transparent" />
-        </LinearLayout>
-
-        <RelativeLayout
+        <ImageButton
+            android:id="@+id/homeBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center" >
-            <View
-                android:layout_width="330dp"
-                android:layout_height="400dp"
-                android:layout_marginTop="50dp"
-                android:layout_gravity="center"
-                android:background="@drawable/rectangle_1" />
+            android:src="@drawable/home"
+            android:contentDescription="홈"
+            android:background="@android:color/transparent"
+            android:layout_gravity="left" />
 
-            <TextView
-                android:id="@+id/codiTv"
-                android:layout_width="330dp"
-                android:layout_height="400dp"
-                android:layout_marginTop="50dp"
-                android:fontFamily="@font/soyo_maple_regular"
-                android:gravity="center_vertical"
-                android:lineSpacingExtra="10dp"
-                android:textColor="@color/black"
-                android:text="맑고 시원한 하늘색 셔츠와 어울리는 코디를 추천해드립니다.\n\n하의는 어둡고 고요한 검정색 슬랙스와 청바지\n\n겉옷은 어둡고 고요한 검정색 정장 자켓과 차분하고 진중한 남색 가디건을 추천드립니다."
-                android:textSize="22sp" />
-        </RelativeLayout>
+        <TextView
+            android:id="@+id/codinavi"
+            android:layout_width="wrap_content"
+            android:layout_height="53dp"
+            android:fontFamily="@font/bakbakone_regular"
+            android:gravity="center"
+            android:importantForAccessibility="no"
+            android:text="CODINAVI"
+            android:textColor="#2D0F51"
+            android:textSize="35sp"
+            android:layout_gravity="center" />
 
-        <android.widget.Button
-            android:id="@+id/confirmBtn"
-            android:layout_width="330dp"
-            android:layout_height="90dp"
-            android:layout_marginTop="45dp"
-            android:layout_gravity="center"
-            android:text="확인하기"
-            android:textSize="40sp"
-            android:textColor="@color/white"
-            android:fontFamily="@font/soyo_maple_regular"
-            android:textStyle="bold"
-            android:background="@drawable/mainbtn" />
-    </LinearLayout>
-</LinearLayout>
+        <ImageButton
+            android:id="@+id/profileBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/profile"
+            android:contentDescription="마이페이지"
+            android:background="@android:color/transparent"
+            android:layout_gravity="right" />
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/codiV"
+        android:layout_width="330dp"
+        android:layout_height="400dp"
+        android:background="@drawable/rectangle_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+        app:layout_constraintBottom_toTopOf="@+id/confirmBtn"/>
+
+    <TextView
+        android:id="@+id/codiTv"
+        android:layout_width="293dp"
+        android:layout_height="363dp"
+        android:fontFamily="@font/soyo_maple_regular"
+        android:lineSpacingExtra="10dp"
+        android:text="맑고 시원한 하늘색 셔츠와 어울리는 코디를 추천해드립니다.\n\n하의는 어둡고 고요한 검정색 슬랙스와 청바지\n\n겉옷은 어둡고 고요한 검정색 정장 자켓과 차분하고 진중한 남색 가디건을 추천드립니다."
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+        app:layout_constraintBottom_toTopOf="@+id/confirmBtn" />
+
+    <android.widget.Button
+        android:id="@+id/confirmBtn"
+        android:layout_width="330dp"
+        android:layout_height="90dp"
+        android:background="@drawable/mainbtn"
+        android:fontFamily="@font/soyo_maple_regular"
+        android:text="확인하기"
+        android:textColor="@color/white"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.9" />
+</androidx.constraintlayout.widget.ConstraintLayout>
