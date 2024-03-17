@@ -27,54 +27,54 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".GenderActivity"
+            android:name=".User.GenderActivity"
             android:exported="false" />
         <activity
-            android:name=".OtherlocationActivity"
+            android:name=".Weather.OtherlocationActivity"
             android:exported="false" />
         <activity
-            android:name=".AdminActivity"
+            android:name=".Admin.AdminActivity"
             android:exported="false" />
         <activity
-            android:name=".SearchOtherlocation"
+            android:name=".Weather.SearchOtherlocation"
             android:exported="false" />
         <activity
-            android:name=".IntroduceCameraBtn"
+            android:name=".Guide.IntroduceCameraBtn"
             android:exported="false" />
         <activity
-            android:name=".ConfirmActivity"
+            android:name=".Recommend.ConfirmActivity"
             android:exported="false" />
         <activity
-            android:name=".ColorActivity"
+            android:name=".Recommend.ColorRecommendActivity"
             android:exported="false" />
         <activity
-            android:name=".CodiActivity"
+            android:name=".Recommend.CodiRecommendActivity"
             android:exported="false" />
         <activity
-            android:name=".GuideActivity"
+            android:name=".Guide.GuideActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Main.MainActivity"
             android:exported="false"
             android:launchMode="singleTask" />
         <activity
-            android:name=".WeatherActivity"
+            android:name=".Weather.WeatherActivity"
             android:exported="false" />
         <activity
-            android:name=".UserActivity"
+            android:name=".User.UserActivity"
             android:exported="false"
             android:launchMode="singleTop" />
         <activity
-            android:name=".CameraActivity"
+            android:name=".Camera.CameraActivity"
             android:exported="false" />
         <activity
-            android:name=".IntroduceWeatherBtn"
+            android:name=".Guide.IntroduceWeatherBtn"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".Login.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".SplashActivity"
+            android:name=".Login.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
