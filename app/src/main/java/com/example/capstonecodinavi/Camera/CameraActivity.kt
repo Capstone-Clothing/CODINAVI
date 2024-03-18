@@ -91,7 +91,9 @@ class CameraActivity : AppCompatActivity() {
 
                     binding.fragmentContainer.visibility = View.GONE
                     binding.captureIV.visibility = View.VISIBLE
-                    binding.aiLl.visibility = View.VISIBLE
+                    binding.textView2.visibility = View.VISIBLE
+                    binding.codiBtn.visibility = View.VISIBLE
+                    binding.colorBtn.visibility = View.VISIBLE
                     binding.captureBtn.visibility = View.GONE
                 }
 
