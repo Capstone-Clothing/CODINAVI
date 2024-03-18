@@ -32,8 +32,8 @@ class CameraActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCameraBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setTitle(" ")
         action()
-
     }
 
     private fun action() {
