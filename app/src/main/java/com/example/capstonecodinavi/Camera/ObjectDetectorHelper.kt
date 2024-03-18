@@ -21,9 +21,6 @@ class ObjectDetectorHelper(
     val context: Context,
     val objectDetectorListener: DetectorListener?
 ) {
-
-    // For this example this needs to be a var so it can be reset on changes. If the ObjectDetector
-    // will not change, a lazy val would be preferable.
     private var objectDetector: ObjectDetector? = null
 
     init {
