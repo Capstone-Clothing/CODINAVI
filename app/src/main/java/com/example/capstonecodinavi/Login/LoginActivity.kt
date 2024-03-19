@@ -24,31 +24,24 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setTitle(" ")
-        // SharedPreferences 초기화
         sharedPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE)
 
-        // 사용자가 이미 로그인 한 경우 MainActivity로 이동
         if(isLoggedIn()) {
             moveToMainScreen()
             return
         }
 
-        // 구글 로그인 옵션 설정
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()     // 이메일 요청
             .build()
 
-        // 구글 로그인 클라이언트 설정
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
 
-        // 구글 로그인 버튼 설정
         val googleLoginButton = findViewById<SignInButton>(R.id.googleLoginBtn)
         googleLoginButton.setOnClickListener {
             signIn()
         }
     }
-
-    // 구글 로그인 요청 시작
     private fun signIn() {
         val signInIntent = mGoogleSignInClient.signInIntent
         try {
@@ -76,22 +69,16 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
-
-    // MainActivity로 이동
     private fun moveToMainScreen() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish() // 현재 Activity 종료
     }
-
-    // 로그인 상태 저장
     private fun saveLoginStatus(isLoggedIn: Boolean) {
         val editor = sharedPreferences.edit()
         editor.putBoolean("isLoggedIn", isLoggedIn)
         editor.apply()
     }
-
-    // 로그인 상태 가져오기
     private fun isLoggedIn(): Boolean {
         return sharedPreferences.getBoolean("isLoggedIn", false)
     }
@@ -101,8 +88,6 @@ class LoginActivity : AppCompatActivity() {
         // 뒤로가기 누르면 앱 종료
         finishAffinity()
     }
-
-    // 사용자 이름 저장
     private fun saveUsername(username: String) {
         val editor = sharedPreferences.edit()
         editor.putString("username", username)
