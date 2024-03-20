@@ -1,139 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    tools:context=".AdminActivity">
+    tools:context=".Admin.AdminActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangle_3"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        >
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/rectangle_3"
-            android:orientation="horizontal" >
-
-            <ImageButton
-                android:id="@+id/homeBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/home"
-                android:contentDescription="홈"
-                android:background="@android:color/transparent"/>
-
-            <TextView
-                android:id="@+id/codinavi"
-                android:layout_width="158dp"
-                android:layout_height="53dp"
-                android:layout_weight="1"
-                android:layout_marginTop="19dp"
-                android:gravity="center"
-                android:importantForAccessibility="no"
-                android:text="CODINAVI"
-                android:textColor="#2D0F51"
-                android:textSize="35sp"
-                android:fontFamily="@font/bakbakone_regular" />
-
-            <ImageButton
-                android:id="@+id/profileBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/profile"
-                android:contentDescription="마이페이지"
-                android:background="@android:color/transparent" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/username"
-                android:layout_width="wrap_content"
-                android:layout_height="68dp"
-                android:gravity="center|bottom"
-                android:text="Admin"
-                android:textColor="@color/black"
-                android:textSize="45sp"
-                android:fontFamily="@font/soyo_maple_bold" />
-
-        </LinearLayout>
-
-        <LinearLayout
+        <ImageButton
+            android:id="@+id/homeBtn"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@drawable/rectangle_2"
-            android:gravity="center|bottom"
-            android:layout_gravity="center"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:src="@drawable/home"
+            android:contentDescription="홈"
+            android:background="@android:color/transparent"
+            android:layout_gravity="left" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="vertical">
+        <TextView
+            android:id="@+id/codinavi"
+            android:layout_width="wrap_content"
+            android:layout_height="53dp"
+            android:fontFamily="@font/bakbakone_regular"
+            android:gravity="center"
+            android:importantForAccessibility="no"
+            android:text="CODINAVI"
+            android:textColor="#2D0F51"
+            android:textSize="35sp"
+            android:layout_gravity="center" />
 
-                <android.widget.Button
-                    android:id="@+id/managementBtn"
-                    android:layout_width="270dp"
-                    android:layout_height="90dp"
-                    android:background="@drawable/guidbtn"
-                    android:fontFamily="@font/soyo_maple_regular"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:text="성별"
-                    android:textColor="@color/white"
-                    android:textSize="45sp" />
+        <ImageButton
+            android:id="@+id/profileBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/profile"
+            android:contentDescription="마이페이지"
+            android:background="@android:color/transparent"
+            android:layout_gravity="right" />
 
-                <android.widget.Button
-                    android:id="@+id/guideReviseBtn"
-                    android:layout_width="270dp"
-                    android:layout_height="90dp"
-                    android:layout_marginTop="30dp"
-                    android:background="@drawable/guidbtn"
-                    android:fontFamily="@font/soyo_maple_regular"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:text="사용설명서"
-                    android:textColor="@color/white"
-                    android:textSize="45sp" />
+    </FrameLayout>
 
-                <android.widget.Button
-                    android:id="@+id/administratorAnswerBtn"
-                    android:layout_width="270dp"
-                    android:layout_height="90dp"
-                    android:layout_marginTop="30dp"
-                    android:background="@drawable/guidbtn"
-                    android:fontFamily="@font/soyo_maple_regular"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:text="관리자 문의"
-                    android:textColor="@color/white"
-                    android:textSize="45sp" />
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/soyo_maple_bold"
+        android:text="Admin"
+        android:textColor="@color/black"
+        android:textSize="45sp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/rectangle2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
 
-                <android.widget.Button
-                    android:id="@+id/logoutBtn"
-                    android:layout_width="270dp"
-                    android:layout_height="90dp"
-                    android:layout_marginTop="30dp"
-                    android:background="@drawable/guidbtn"
-                    android:fontFamily="@font/soyo_maple_regular"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:text="로그아웃"
-                    android:textColor="@color/white"
-                    android:textSize="45sp" />
-            </LinearLayout>
-        </LinearLayout>
+    <ImageView
+        android:id="@+id/rectangle2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangle_2"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/username" />
 
-    </LinearLayout>
+    <ImageView
+        android:id="@+id/rectangle4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangle_4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/rectangle2"
+        android:layout_marginTop="13dp"/>
 
-</LinearLayout>
+    <android.widget.Button
+        android:id="@+id/managementBtn"
+        android:layout_width="270dp"
+        android:layout_height="90dp"
+        android:background="@drawable/guidbtn"
+        android:fontFamily="@font/soyo_maple_regular"
+        android:text="회원 관리"
+        android:textColor="@color/white"
+        android:textSize="45sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rectangle4"
+        app:layout_constraintBottom_toTopOf="@+id/guideReviseBtn" />
+
+    <android.widget.Button
+        android:id="@+id/guideReviseBtn"
+        android:layout_width="270dp"
+        android:layout_height="90dp"
+        android:background="@drawable/guidbtn"
+        android:fontFamily="@font/soyo_maple_regular"
+        android:text="사용설명서"
+        android:textColor="@color/white"
+        android:textSize="45sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/managementBtn"
+        app:layout_constraintBottom_toTopOf="@+id/administratorAnswerBtn" />
+
+    <android.widget.Button
+        android:id="@+id/administratorAnswerBtn"
+        android:layout_width="270dp"
+        android:layout_height="90dp"
+        android:background="@drawable/guidbtn"
+        android:fontFamily="@font/soyo_maple_regular"
+        android:text="문의 답변"
+        android:textColor="@color/white"
+        android:textSize="45sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/guideReviseBtn"
+        app:layout_constraintBottom_toTopOf="@+id/logoutBtn" />
+
+    <android.widget.Button
+        android:id="@+id/logoutBtn"
+        android:layout_width="270dp"
+        android:layout_height="90dp"
+        android:background="@drawable/guidbtn"
+        android:fontFamily="@font/soyo_maple_regular"
+        android:text="로그아웃"
+        android:textColor="@color/white"
+        android:textSize="45sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/administratorAnswerBtn"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
