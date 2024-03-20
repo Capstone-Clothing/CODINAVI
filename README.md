@@ -14,7 +14,7 @@
 ![시스템 시나리오](https://github.com/Capstone-Clothing/CODINAVI/assets/151013952/d5dd331d-7ae6-4f30-93f3-626058c4f9dd)
 
 ## 📱 UI 설계
-![Group 28](https://github.com/Capstone-Clothing/CODINAVI/assets/151013952/d18d6b5c-4ca4-4d43-b218-385d8362adcc)
+![Group 28](https://github.com/Capstone-Clothing/CODINAVI/assets/151013952/4fb28fa5-a62c-44d0-b88c-42fd172bf00f)
 
 ## 📄 Reference
 - [모바일 앱 접근성 지침](https://www.nld.go.kr/ableFront/new_standard_guide/accessibility.jsp)
