@@ -124,11 +124,9 @@ class WeatherActivity : AppCompatActivity() {
                 }
             }
         } else {
-            var address: Address
             val geocoder = Geocoder(this, Locale.getDefault())
             try {
                 val geocodeListener = Geocoder.GeocodeListener { addresses ->
-                    address = addresses[5]
                     for (addr in addresses) {
                         if (addr.adminArea != null && adminArea == null) {
                             adminArea = addr.adminArea
@@ -140,7 +138,7 @@ class WeatherActivity : AppCompatActivity() {
                             thoroughfare = addr.thoroughfare
                         }
                     }
-                    address?.let {
+                    addresses?.let {
                         if (locality != null && adminArea != null && thoroughfare != null) {
                             binding.currentLocationTv.text = "${adminArea} ${locality} ${thoroughfare}"
                         } else if (locality == null) {
