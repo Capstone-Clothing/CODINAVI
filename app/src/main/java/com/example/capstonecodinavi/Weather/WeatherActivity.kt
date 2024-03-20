@@ -11,6 +11,7 @@ import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.os.Build
+import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.android.volley.RequestQueue
@@ -97,9 +98,11 @@ class WeatherActivity : AppCompatActivity() {
     }
     fun getCurrentAddress(lat: Double, lng: Double) {
         if (Build.VERSION.SDK_INT < 33) {
+
             var address: List<Address>
             val geocoder = Geocoder(this, Locale.getDefault())
             address = geocoder.getFromLocation(lat, lng, 7) as List<Address>
+            Log.d("checkget","$address")
             for (addr in address) {
                 if (addr.adminArea != null && adminArea == null) {
                     adminArea = addr.adminArea
@@ -128,6 +131,7 @@ class WeatherActivity : AppCompatActivity() {
             try {
                 val geocodeListener = Geocoder.GeocodeListener { addresses ->
                     address = addresses[5]
+                    Log.d("checkget2","$address")
                     for (addr in addresses) {
                         if (addr.adminArea != null && adminArea == null) {
                             adminArea = addr.adminArea
