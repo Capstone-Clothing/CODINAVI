@@ -1,55 +1,14 @@
 {
-  "project_info": {
-    "project_number": "1071573088333",
-    "project_id": "codinavi-7d293",
-    "storage_bucket": "codinavi-7d293.appspot.com"
+  "installed":{
+    "client_id":"385497159165-5253716jbdjb12btt1semuds0l0h90la.apps.googleusercontent.com",
+    "project_id":"codinavi-414913",
+    "auth_uri":"https://accounts.google.com/o/oauth2/auth",
+    "token_uri":"https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs"
   },
-  "client": [
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:1071573088333:android:42fcc4799b10814ed60404",
-        "android_client_info": {
-          "package_name": "com.example.capstonecodinavi"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "1071573088333-255c3k8e50c3m94pkac1oiusqokru41f.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.capstonecodinavi",
-            "certificate_hash": "91e682bcca312af4b49090d1f93798f3c51e2fc0"
-          }
-        },
-        {
-          "client_id": "1071573088333-te6lslemc8j2cu6su9va1jpfodmt8n8q.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.capstonecodinavi",
-            "certificate_hash": "17041cc3d30da7045f769ab9c737065de066e5d3"
-          }
-        },
-        {
-          "client_id": "1071573088333-mmveri0gque978pmnb4m6v0lffku3m5f.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDwZycAKgObqt4W9Ti26tkqKgqRV7bg3n0"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "1071573088333-mmveri0gque978pmnb4m6v0lffku3m5f.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    }
-  ],
-  "configuration_version": "1"
+  "project_info": {
+    "project_number": "385497159165",
+    "project_id": "codinavi-414913",
+    "package_name": "com.example.capstonecodinavi"
+  }
 }

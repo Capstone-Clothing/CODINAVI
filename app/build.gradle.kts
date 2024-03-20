@@ -67,11 +67,6 @@ dependencies {
     implementation("com.google.android.gms:play-services-location:21.0.1")
 
     implementation("com.google.gms:google-services:4.3.15")
-    implementation(platform("com.google.firebase:firebase-bom:32.7.2"))
-    implementation("com.google.firebase:firebase-auth-ktx")
-    implementation("com.google.android.gms:play-services-auth:20.5.0")
-    implementation("com.google.firebase:firebase-analytics-ktx")
-    implementation("com.google.firebase:firebase-storage-ktx:20.0.1")
 
     implementation("androidx.camera:camera-core:1.3.1")
     implementation("androidx.camera:camera-camera2:1.3.1")
