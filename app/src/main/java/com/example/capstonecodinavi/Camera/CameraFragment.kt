@@ -167,20 +167,21 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
                 imageWidth
             )
 
-            if (results?.size == 0) {
-                // TODO: Toast 메세지의 빈번도 줄이기
-                updateTextViewInActivity("옷을 정확히 인식시켜주세요")
+            val message = if (results?.size == 0) {
+                "옷을 정확히 인식시켜주세요"
             } else {
-                // TODO: 객체(Detection)가 인식됐을 때 카테고리가 cloth일 때만 처리
-                Log.d("check results", "$results")
-                updateTextViewInActivity("촬영해주세요")
+                "촬영해주세요"
             }
+            updateTextViewInActivity(message)
+
+            // TalkBack을 위한 코드 추가
+            activity?.window?.decorView?.announceForAccessibility(message)
 
             fragmentCameraBinding.overlay.invalidate()
         }
     }
     private fun updateTextViewInActivity(message: String) {
-        (activity as? CameraActivity)?.updateTextView2(message)
+        (activity as? CameraActivity)?.updateTextView(message)
     }
 
     override fun onError(error: String) {
