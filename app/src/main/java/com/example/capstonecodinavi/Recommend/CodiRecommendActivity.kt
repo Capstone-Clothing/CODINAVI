@@ -30,6 +30,7 @@ class CodiRecommendActivity : AppCompatActivity() {
 
         binding.confirmBtn.setOnClickListener {
             val intent = Intent(this, ConfirmActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             startActivity(intent)
         }
     }
