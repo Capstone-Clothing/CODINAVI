@@ -174,11 +174,11 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
                 "촬영해주세요"
             }
 
-            // 새 메시지가 마지막 메시지와 다른 경우에만 업데이트
+
             if (newMessage != lastMessage) {
                 updateTextViewInActivity(newMessage)
                 activity?.window?.decorView?.announceForAccessibility(newMessage)
-                lastMessage = newMessage // 마지막 메시지 업데이트
+                lastMessage = newMessage
             }
 
             fragmentCameraBinding.overlay.invalidate()
