@@ -103,6 +103,9 @@ class CameraActivity : AppCompatActivity() {
             }
         )
     }
+    fun updateTextView2(message: String) {
+        binding.recogtext.text=message
+    }
     override fun onBackPressed() {
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.M) {
             finish()
