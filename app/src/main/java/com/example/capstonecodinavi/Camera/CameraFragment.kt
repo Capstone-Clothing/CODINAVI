@@ -174,7 +174,7 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
             }
             updateTextViewInActivity(message)
 
-            // TalkBack을 위한 코드 추가
+
             activity?.window?.decorView?.announceForAccessibility(message)
 
             fragmentCameraBinding.overlay.invalidate()
