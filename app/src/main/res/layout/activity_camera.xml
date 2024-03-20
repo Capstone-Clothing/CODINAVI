@@ -72,6 +72,7 @@
             app:layout_constraintVertical_bias="0.35"
             app:navGraph="@navigation/nav_graph"
             tools:context=".Camera.NewCameraActivity" />
+
         <TextView
             android:id="@+id/recogtext"
             android:layout_width="340dp"
