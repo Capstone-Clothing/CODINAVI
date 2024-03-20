@@ -64,8 +64,6 @@ dependencies {
     // 로그인
     implementation ("com.google.android.gms:play-services-auth:21.0.0")
 
-    implementation("com.google.android.gms:play-services-location:21.0.1")
-
     implementation("com.google.gms:google-services:4.3.15")
     implementation(platform("com.google.firebase:firebase-bom:32.7.2"))
     implementation("com.google.firebase:firebase-auth-ktx")
