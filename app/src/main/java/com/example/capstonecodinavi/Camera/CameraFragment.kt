@@ -22,6 +22,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.example.capstonecodinavi.R
+import com.example.capstonecodinavi.Recommend.ConfirmActivity
 import com.example.capstonecodinavi.databinding.FragmentCameraBinding
 import java.util.LinkedList
 import java.util.concurrent.ExecutorService
