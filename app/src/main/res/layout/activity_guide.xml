@@ -74,6 +74,7 @@
                     android:layout_height="259dp"
                     android:layout_marginStart="18dp"
                     android:layout_marginTop="38dp"
+                    android:textColor="@color/black"
                     android:fontFamily="@font/soyo_maple_regular"
                     android:gravity="center_vertical"
                     android:lineSpacingExtra="10dp"

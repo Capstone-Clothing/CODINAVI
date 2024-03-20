@@ -71,6 +71,7 @@
                 android:paddingHorizontal="16dp"
                 android:ems="10"
                 android:hint="지역을 입력해주세요."
+                android:textColor="@color/black"
                 android:inputType="text" />
         </androidx.cardview.widget.CardView>
     </LinearLayout>
