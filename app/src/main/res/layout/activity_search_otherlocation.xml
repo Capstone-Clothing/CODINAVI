@@ -66,6 +66,7 @@
         <EditText
             android:id="@+id/searchEt"
             android:layout_width="wrap_content"
+<<<<<<< HEAD
             android:layout_height="50dp"
             android:layout_weight="1"
             android:background="@color/white"
@@ -74,6 +75,30 @@
             android:hint="지역을 입력해주세요."
             android:inputType="text" />
     </androidx.cardview.widget.CardView>
+=======
+            android:layout_height="wrap_content"
+            android:background="@drawable/search" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="30dp"
+            app:cardElevation="0dp" >
+
+            <EditText
+                android:id="@+id/searchEt"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:paddingHorizontal="16dp"
+                android:ems="10"
+                android:hint="지역을 입력해주세요."
+                android:textColor="@color/black"
+                android:inputType="text" />
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+>>>>>>> 563f9412439d3a5b5b96735a815b7d154f789401
 
     <android.widget.Button
         android:id="@+id/searchBtn"

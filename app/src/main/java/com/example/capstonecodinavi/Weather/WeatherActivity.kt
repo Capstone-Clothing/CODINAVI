@@ -11,6 +11,7 @@ import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.os.Build
+import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.android.volley.RequestQueue
@@ -21,7 +22,6 @@ import com.example.capstonecodinavi.Main.MainActivity
 import com.example.capstonecodinavi.R
 import com.example.capstonecodinavi.User.UserActivity
 import com.google.android.gms.location.*
-import com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
@@ -38,6 +38,7 @@ class WeatherActivity : AppCompatActivity() {
     private var adminArea: String? = null
     private var locality: String? = null
     private var thoroughfare: String? = null
+    private var timeInterval: Long = 3
     companion object {
         var requestQueue: RequestQueue? = null
     }
@@ -51,10 +52,13 @@ class WeatherActivity : AppCompatActivity() {
         setTitle(" ")
     }
     private fun initData() {
-        LocationRequest.create().apply {
-            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-        }
+//        LocationRequest.create().apply {
+//            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+//        }
 
+        LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, timeInterval).apply {
+
+        }.build()
         if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(applicationContext)
         }
@@ -85,11 +89,12 @@ class WeatherActivity : AppCompatActivity() {
         }
 
         fusedLocationProviderClient
-            .getCurrentLocation(PRIORITY_HIGH_ACCURACY, null)
+            .getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, null)
             .addOnSuccessListener { success: Location? ->
                 success?.let { location ->
                     lat = location.latitude
                     lon = location.longitude
+                    Log.d("www","$lat, $lon")
                     getCurrentAddress(lat!!, lon!!)
                     getCurrentWeather(lat!!, lon!!)
                 }
@@ -123,11 +128,9 @@ class WeatherActivity : AppCompatActivity() {
                 }
             }
         } else {
-            var address: Address
             val geocoder = Geocoder(this, Locale.getDefault())
             try {
                 val geocodeListener = Geocoder.GeocodeListener { addresses ->
-                    address = addresses[5]
                     for (addr in addresses) {
                         if (addr.adminArea != null && adminArea == null) {
                             adminArea = addr.adminArea
@@ -139,7 +142,7 @@ class WeatherActivity : AppCompatActivity() {
                             thoroughfare = addr.thoroughfare
                         }
                     }
-                    address?.let {
+                    addresses?.let {
                         if (locality != null && adminArea != null && thoroughfare != null) {
                             binding.currentLocationTv.text = "${adminArea} ${locality} ${thoroughfare}"
                         } else if (locality == null) {

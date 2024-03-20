@@ -53,7 +53,7 @@
     <ImageView
         android:id="@+id/introduceCameraV"
         android:layout_width="328dp"
-        android:layout_height="540dp"
+        android:layout_height="550dp"
         android:background="@drawable/rectangle_1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
