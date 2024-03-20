@@ -1,14 +1,9 @@
-{
-  "installed":{
+{"installed":
+  {
     "client_id":"385497159165-5253716jbdjb12btt1semuds0l0h90la.apps.googleusercontent.com",
     "project_id":"codinavi-414913",
     "auth_uri":"https://accounts.google.com/o/oauth2/auth",
     "token_uri":"https://oauth2.googleapis.com/token",
     "auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs"
-  },
-  "project_info": {
-    "project_number": "385497159165",
-    "project_id": "codinavi-414913",
-    "package_name": "com.example.capstonecodinavi"
   }
 }

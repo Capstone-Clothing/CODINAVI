@@ -2,7 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
-    id("com.google.gms.google-services")
+    // id("com.google.gms.google-services")
     id("androidx.navigation.safeargs.kotlin")
 }
 
@@ -65,8 +65,6 @@ dependencies {
     implementation ("com.google.android.gms:play-services-auth:21.0.0")
 
     implementation("com.google.android.gms:play-services-location:21.0.1")
-
-    implementation("com.google.gms:google-services:4.3.15")
 
     implementation("androidx.camera:camera-core:1.3.1")
     implementation("androidx.camera:camera-camera2:1.3.1")
