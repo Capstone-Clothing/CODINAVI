@@ -1,5 +1,5 @@
 # S5-9
-
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FCapstone-Clothing%2FCODINAVI&count_bg=%23746DC4&title_bg=%23B695D0&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 ## CODINAVI
 ![CODINAVI](https://github.com/Capstone-Clothing/CODINAVI/assets/151013952/51c82030-a6a8-4a04-98a8-5eb274891076)   
 ### 시각장애인을 위한 코디 추천 서비스 애플리케이션
@@ -23,4 +23,6 @@
 ## 👫🏻 팀원소개
 |김주환|장민준|정윤진|최아로인|
 |:---:|:---:|:---:|:---:|
+|![image](https://github.com/Capstone-Clothing/CODINAVI/assets/151013952/5b0c2869-9af6-4622-ad56-a6966412ca03)|![image](https://github.com/Capstone-Clothing/CODINAVI/assets/151013952/5b0c2869-9af6-4622-ad56-a6966412ca03)|![image](https://github.com/Capstone-Clothing/CODINAVI/assets/151013952/2ebaae4c-b371-4933-a116-2c20ff049f68)|![image](https://github.com/Capstone-Clothing/CODINAVI/assets/151013952/8427506a-f31d-435a-99b4-15357e5d6c6d)|
 |[@OrangeKim98](https://github.com/OrangeKim98)|[@JMJ123-SG](https://github.com/JMJ123-SG)|[@yoonjin301](https://github.com/yoonjin301)|[@roin0917](https://github.com/roin0917)|
+
