@@ -154,6 +154,7 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
         super.onConfigurationChanged(newConfig)
         imageAnalyzer?.targetRotation = fragmentCameraBinding.viewFinder.display.rotation
     }
+    private var lastMessage = ""
     override fun onResults(
         results: MutableList<Detection>?,
         inferenceTime: Long,
@@ -167,15 +168,18 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
                 imageWidth
             )
 
-            val message = if (results?.size == 0) {
+            val newMessage = if (results?.size == 0) {
                 "옷을 정확히 인식시켜주세요"
             } else {
                 "촬영해주세요"
             }
-            updateTextViewInActivity(message)
 
-
-            activity?.window?.decorView?.announceForAccessibility(message)
+            // 새 메시지가 마지막 메시지와 다른 경우에만 업데이트
+            if (newMessage != lastMessage) {
+                updateTextViewInActivity(newMessage)
+                activity?.window?.decorView?.announceForAccessibility(newMessage)
+                lastMessage = newMessage // 마지막 메시지 업데이트
+            }
 
             fragmentCameraBinding.overlay.invalidate()
         }
