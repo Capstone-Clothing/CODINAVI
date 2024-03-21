@@ -28,6 +28,6 @@
 ## 👫🏻 팀원소개
 |김주환|장민준|정윤진|최아로인|
 |:---:|:---:|:---:|:---:|
-|![image](https://github.com/Capstone-Clothing/CODINAVI/assets/132319686/812fc6af-6677-49e7-971a-afab7fcd81f5)|![image](https://github.com/Capstone-Clothing/CODINAVI/assets/151013952/5b0c2869-9af6-4622-ad56-a6966412ca03)|![image](https://github.com/Capstone-Clothing/CODINAVI/assets/151013952/2ebaae4c-b371-4933-a116-2c20ff049f68)|![image](https://github.com/Capstone-Clothing/CODINAVI/assets/151013952/8427506a-f31d-435a-99b4-15357e5d6c6d)|
+|![image](https://github.com/Capstone-Clothing/CODINAVI/assets/132319686/54969d5e-335a-4f85-ad8c-5143e921789b)|![image](https://github.com/Capstone-Clothing/CODINAVI/assets/151013952/5b0c2869-9af6-4622-ad56-a6966412ca03)|![image](https://github.com/Capstone-Clothing/CODINAVI/assets/151013952/2ebaae4c-b371-4933-a116-2c20ff049f68)|![image](https://github.com/Capstone-Clothing/CODINAVI/assets/151013952/8427506a-f31d-435a-99b4-15357e5d6c6d)|
 |[@OrangeKim98](https://github.com/OrangeKim98)|[@JMJ123-SG](https://github.com/JMJ123-SG)|[@yoonjin301](https://github.com/yoonjin301)|[@roin0917](https://github.com/roin0917)|
 
