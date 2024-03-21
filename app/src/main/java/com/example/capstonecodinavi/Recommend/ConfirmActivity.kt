@@ -84,15 +84,4 @@ class ConfirmActivity : AppCompatActivity() {
             }
         )
     }
-
-
-    override fun onBackPressed() {
-        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.M) {
-            finish()
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-        } else {
-            super.onBackPressed()
-        }
-    }
 }
