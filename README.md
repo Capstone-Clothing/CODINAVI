@@ -13,7 +13,7 @@
    
 
 ## 📂 시스템 시나리오
-![시스템 시나리오](https://github.com/Capstone-Clothing/CODINAVI/assets/132319686/19a1d1ce-4dae-4f6e-a61b-8bacb10a0f1e)
+![시스템 시나리오](https://github.com/Capstone-Clothing/CODINAVI/assets/132319686/f00ad6ec-60c6-408c-8b95-4f2c5d2cfa8a)
    
 
 ## 📱 UI 설계
