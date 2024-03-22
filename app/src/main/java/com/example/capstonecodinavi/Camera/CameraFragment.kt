@@ -58,7 +58,7 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
     }
 
     override fun onDestroyView() {
-        _fragmentCameraBinding = null
+        //_fragmentCameraBinding = null
         super.onDestroyView()
         cameraExecutor.shutdown()
     }
@@ -163,11 +163,13 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
         imageWidth: Int
     ) {
         activity?.runOnUiThread {
-            fragmentCameraBinding.overlay.setResults(
-                results ?: LinkedList<Detection>(),
-                imageHeight,
-                imageWidth
-            )
+            fragmentCameraBinding?.let { binding ->
+                binding.overlay.setResults(
+                    results ?: LinkedList<Detection>(),
+                    imageHeight,
+                    imageWidth
+                )
+            }
 
             val newMessage = if (results?.size == 0) {
                 "옷을 정확히 인식시켜주세요"
