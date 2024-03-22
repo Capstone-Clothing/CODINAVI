@@ -32,8 +32,8 @@ class CameraActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCameraBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setTitle(" ")
         action()
-
     }
 
     private fun action() {
@@ -90,11 +90,13 @@ class CameraActivity : AppCompatActivity() {
                         .into(binding.captureIV)
 
                     binding.fragmentContainer.visibility = View.GONE
+                    binding.recogtext.visibility = View.GONE
                     binding.captureIV.visibility = View.VISIBLE
                     binding.textView2.visibility = View.VISIBLE
                     binding.codiBtn.visibility = View.VISIBLE
                     binding.colorBtn.visibility = View.VISIBLE
                     binding.captureBtn.visibility = View.GONE
+                    binding.recogtext.visibility = View.GONE
                 }
 
                 override fun onError(exception: ImageCaptureException) {
@@ -103,11 +105,7 @@ class CameraActivity : AppCompatActivity() {
             }
         )
     }
-    override fun onBackPressed() {
-        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
-            finishAfterTransition()
-        } else {
-            super.onBackPressed()
-        }
+    fun updateTextView(message: String) {
+        binding.recogtext.text=message
     }
 }
