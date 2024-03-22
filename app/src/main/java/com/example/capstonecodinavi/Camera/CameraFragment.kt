@@ -58,7 +58,7 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
     }
 
     override fun onDestroyView() {
-        _fragmentCameraBinding = null
+        //_fragmentCameraBinding = null
         super.onDestroyView()
         cameraExecutor.shutdown()
     }
