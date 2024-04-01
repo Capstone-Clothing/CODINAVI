@@ -4,96 +4,85 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
     tools:context=".Main.MainActivity">
 
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/rectangle_3"
+        android:background="#2D0F51"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        >
-
-        <ImageButton
-            android:id="@+id/homeBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/home"
-            android:contentDescription="홈"
-            android:background="@android:color/transparent"
-            android:layout_gravity="left" />
+        app:layout_constraintEnd_toEndOf="parent" >
 
         <TextView
             android:id="@+id/codinavi"
             android:layout_width="wrap_content"
             android:layout_height="53dp"
             android:fontFamily="@font/bakbakone_regular"
-            android:gravity="center"
             android:importantForAccessibility="no"
+            android:layout_gravity="center"
             android:text="CODINAVI"
-            android:textColor="#2D0F51"
-            android:textSize="35sp"
-            android:layout_gravity="center" />
-
-        <ImageButton
-            android:id="@+id/profileBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/profile"
-            android:contentDescription="마이페이지"
-            android:background="@android:color/transparent"
-            android:layout_gravity="right" />
+            android:textColor="#FFFFFF"
+            android:textSize="35sp" />
 
     </FrameLayout>
-
-    <android.widget.Button
-        android:id="@+id/guideBtn"
-        android:layout_width="270dp"
-        android:layout_height="120dp"
-        android:background="@drawable/mainbtn"
-        android:backgroundTint="#746DC4"
-        android:fontFamily="@font/soyo_maple_regular"
-        android:text="사용설명서"
-        android:textColor="@color/white"
-        android:textSize="50sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
-        app:layout_constraintBottom_toTopOf="@+id/cameraBtn" />
 
     <android.widget.Button
         android:id="@+id/cameraBtn"
         android:background="@drawable/mainbtn"
         android:layout_width="270dp"
-        android:layout_height="120dp"
-        android:textSize="50sp"
-        android:text="카메라"
+        android:layout_height="176dp"
+        android:textSize="42sp"
+        android:text="의류\n촬영하기"
+        android:gravity="start|bottom"
+        android:padding="15dp"
         android:fontFamily="@font/soyo_maple_regular"
         android:textStyle="bold"
         android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guideBtn"
-        app:layout_constraintBottom_toTopOf="@+id/weatherBtn"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+        app:layout_constraintBottom_toTopOf="@+id/weatherBtn" />
 
     <android.widget.Button
         android:id="@+id/weatherBtn"
         android:background="@drawable/mainbtn"
         android:layout_width="270dp"
-        android:layout_height="120dp"
-        android:textSize="50sp"
-        android:text="날씨"
+        android:layout_height="176dp"
+        android:textSize="42sp"
+        android:text="날씨\n알아보기"
         android:fontFamily="@font/soyo_maple_regular"
         android:textStyle="bold"
         android:textColor="@color/white"
+        android:gravity="bottom|start"
+        android:padding="15dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cameraBtn"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/menuBottomNav" />
+
+    <FrameLayout
+        android:id="@+id/containers"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/menuBottomNav"
+        app:layout_constraintEnd_toEndOf="@+id/menuBottomNav"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/menuBottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:background="@drawable/rectangle_3"
+        app:itemIconSize="90dp"
+        app:itemIconTint="@drawable/menu_item_color"
+        app:itemTextColor="@drawable/menu_item_color"
+        app:labelVisibilityMode="unlabeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/menu_bottom" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

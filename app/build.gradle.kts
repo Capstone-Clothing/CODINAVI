@@ -82,4 +82,7 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
     implementation("androidx.navigation:navigation-runtime-ktx:2.7.7")
 
+    // 하단바(BottomNavigationView)
+    implementation("com.google.android.material:material:1.11.0")
+
 }
