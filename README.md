@@ -9,11 +9,12 @@
 
 
 ## 📂 시스템 구성도
-![시스템 구성도](https://github.com/Capstone-Clothing/CODINAVI/assets/132319686/1a29826e-db4e-4edf-93b3-6040da29f0ef)     <br><br>
+![시스템 구성도](https://github.com/Capstone-Clothing/CODINAVI/assets/132319686/1a29826e-db4e-4edf-93b3-6040da29f0ef)     
    
 
 ## 📂 시스템 시나리오
-![시스템 시나리오](https://github.com/Capstone-Clothing/CODINAVI/assets/132319686/f00ad6ec-60c6-408c-8b95-4f2c5d2cfa8a)
+![UI](https://github.com/Capstone-Clothing/CODINAVI/assets/151013952/e8daa27e-8278-4877-ac6d-34f8366852c1)   
+
    
 
 ## 📱 UI 설계
