@@ -22,6 +22,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.example.capstonecodinavi.R
+import com.example.capstonecodinavi.Recommend.ConfirmActivity
 import com.example.capstonecodinavi.databinding.FragmentCameraBinding
 import java.util.LinkedList
 import java.util.concurrent.ExecutorService
@@ -57,7 +58,7 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
     }
 
     override fun onDestroyView() {
-        _fragmentCameraBinding = null
+        //_fragmentCameraBinding = null
         super.onDestroyView()
         cameraExecutor.shutdown()
     }
@@ -154,6 +155,7 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
         super.onConfigurationChanged(newConfig)
         imageAnalyzer?.targetRotation = fragmentCameraBinding.viewFinder.display.rotation
     }
+    private var lastMessage = ""
     override fun onResults(
         results: MutableList<Detection>?,
         inferenceTime: Long,
@@ -167,16 +169,24 @@ class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
                 imageWidth
             )
 
-            if (results?.size == 0) {
-                // TODO: Toast 메세지의 빈번도 줄이기
-                Toast.makeText(context, "옷을 정확히 인식시켜주세요", Toast.LENGTH_SHORT).show()
+            val newMessage = if (results?.size == 0) {
+                "옷을 정확히 인식시켜주세요"
             } else {
-                // TODO: 객체(Detection)가 인식됐을 때 카테고리가 cloth일 때만 처리
-                Log.d("check results", "$results")
+                "촬영해주세요"
+            }
+
+
+            if (newMessage != lastMessage) {
+                updateTextViewInActivity(newMessage)
+                activity?.window?.decorView?.announceForAccessibility(newMessage)
+                lastMessage = newMessage
             }
 
             fragmentCameraBinding.overlay.invalidate()
         }
+    }
+    private fun updateTextViewInActivity(message: String) {
+        (activity as? CameraActivity)?.updateTextView(message)
     }
 
     override fun onError(error: String) {
