@@ -17,6 +17,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.capstonecodinavi.Recommend.CodiRecommendActivity
 import com.example.capstonecodinavi.Recommend.ColorRecommendActivity
 import com.example.capstonecodinavi.Main.MainActivity
+import com.example.capstonecodinavi.R
 import com.example.capstonecodinavi.User.UserActivity
 import com.example.capstonecodinavi.databinding.ActivityCameraBinding
 import java.io.File
@@ -37,16 +38,6 @@ class CameraActivity : AppCompatActivity() {
     }
 
     private fun action() {
-        binding.homeBtn.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.profileBtn.setOnClickListener {
-            val intent = Intent(this, UserActivity::class.java)
-            startActivity(intent)
-        }
-
         binding.captureBtn.setOnClickListener {
             val navFragment: NavHostFragment = binding.fragmentContainer.getFragment()
             val cameraFragment: CameraFragment = navFragment.childFragmentManager.fragments[0] as CameraFragment
@@ -67,6 +58,23 @@ class CameraActivity : AppCompatActivity() {
         binding.colorBtn.setOnClickListener {
             val intent = Intent(this, ColorRecommendActivity::class.java)
             startActivity(intent)
+        }
+
+        binding.menuBottomNav.setOnItemSelectedListener { menuItem->
+            when(menuItem.itemId) {
+                R.id.menu_home -> {
+                    // 홈 버튼 클릭 시 MainActivity로 이동
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                R.id.menu_user -> {
+                    val intent = Intent(this, UserActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                else -> false
+            }
         }
     }
 
