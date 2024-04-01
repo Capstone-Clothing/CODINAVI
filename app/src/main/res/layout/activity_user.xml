@@ -128,7 +128,7 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/menuBottomNav"
         android:layout_width="match_parent"
-        android:layout_height="90dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/rectangle_3"
         app:itemActiveIndicatorStyle="@android:color/transparent"
         app:itemIconSize="90dp"
