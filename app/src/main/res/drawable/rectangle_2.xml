@@ -2,9 +2,9 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
 <!-- 첫 번째 도형 -->
-<item android:width="328dp" android:height="850dp" >
+<item android:width="328dp" android:height="700dp" >
     <shape android:shape="rectangle">
-        <solid android:color="#FFFFFF" />
+        <solid android:color="#CDC6D6" />
         <corners
             android:topLeftRadius="30dp"
             android:topRightRadius="30dp" />

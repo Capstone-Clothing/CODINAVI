@@ -7,6 +7,7 @@ import android.os.Bundle
 import com.example.capstonecodinavi.Guide.GuideActivity
 import com.example.capstonecodinavi.Login.LoginActivity
 import com.example.capstonecodinavi.Main.MainActivity
+import com.example.capstonecodinavi.R
 import com.example.capstonecodinavi.databinding.ActivityUserBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -36,16 +37,6 @@ class UserActivity : AppCompatActivity() {
     }
 
     private fun action() {
-        binding.homeBtn.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.profileBtn.setOnClickListener {
-            val intent = Intent(this, UserActivity::class.java)
-            startActivity(intent)
-        }
-
         binding.genderBtn.setOnClickListener {
             val intent = Intent(this, GenderActivity::class.java)
             startActivity(intent)
@@ -62,6 +53,21 @@ class UserActivity : AppCompatActivity() {
 
         binding.logoutBtn.setOnClickListener {
             logout()
+        }
+
+        binding.menuBottomNav.setOnItemSelectedListener { menuItem->
+            when(menuItem.itemId) {
+                R.id.menu_home -> {
+                    // 홈 버튼 클릭 시 MainActivity로 이동
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                R.id.menu_user -> {
+                    true
+                }
+                else -> false
+            }
         }
     }
 

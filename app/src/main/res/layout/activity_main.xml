@@ -76,9 +76,9 @@
         android:layout_width="match_parent"
         android:layout_height="90dp"
         android:background="@drawable/rectangle_3"
+        app:itemActiveIndicatorStyle="@android:color/transparent"
         app:itemIconSize="90dp"
-        app:itemIconTint="@drawable/menu_item_color"
-        app:itemTextColor="@drawable/menu_item_color"
+        app:itemIconTint="@color/white"
         app:labelVisibilityMode="unlabeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/menu_bottom" />
