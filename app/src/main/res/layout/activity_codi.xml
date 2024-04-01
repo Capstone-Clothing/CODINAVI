@@ -47,13 +47,13 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/soyo_maple_regular"
         android:lineSpacingExtra="10dp"
-        android:text="맑고 시원한 하늘색 셔츠와 어울리는 코디를 추천해드립니다.\n\n하의는 어둡고 고요한 검정색 슬랙스와 청바지\n\n겉옷은 어둡고 고요한 검정색 정장 자켓과 차분하고 진중한 남색 가디건을 추천드립니다."
+        android:text="시원한 하늘색 셔츠와 어울리는 코디를 추천해드립니다.\n\n하의는 어두운 검정색 슬랙스와 청바지\n\n겉옷은 어두운 검정색 정장 자켓과 차분한 남색 가디건을 추천드립니다."
         android:textColor="@color/black"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
-        app:layout_constraintBottom_toTopOf="@+id/confirmBtn" />
+        app:layout_constraintTop_toTopOf="@+id/codiV"
+        app:layout_constraintBottom_toBottomOf="@+id/codiV" />
 
     <android.widget.Button
         android:id="@+id/confirmBtn"
