@@ -63,15 +63,6 @@
         app:layout_constraintTop_toBottomOf="@+id/cameraBtn"
         app:layout_constraintBottom_toTopOf="@+id/menuBottomNav" />
 
-    <FrameLayout
-        android:id="@+id/containers"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/menuBottomNav"
-        app:layout_constraintEnd_toEndOf="@+id/menuBottomNav"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/menuBottomNav"
         android:layout_width="match_parent"

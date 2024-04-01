@@ -64,19 +64,26 @@ class WeatherActivity : AppCompatActivity() {
         }
     }
     private fun action() {
-        binding.homeBtn.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.profileBtn.setOnClickListener {
-            val intent = Intent(this, UserActivity::class.java)
-            startActivity(intent)
-        }
-
         binding.searchOtherLocationBtn.setOnClickListener {
             val intent = Intent(this, SearchOtherlocation::class.java)
             startActivity(intent)
+        }
+
+        binding.menuBottomNav.setOnItemSelectedListener { menuItem->
+            when(menuItem.itemId) {
+                R.id.menu_home -> {
+                    // 홈 버튼 클릭 시 MainActivity로 이동
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                R.id.menu_user -> {
+                    val intent = Intent(this, UserActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                else -> false
+            }
         }
     }
     fun getCurrentLocation() {
