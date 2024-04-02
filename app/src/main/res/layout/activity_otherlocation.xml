@@ -31,7 +31,7 @@
 
     </FrameLayout>
 
-    <ImageView
+    <View
         android:id="@+id/weatherback"
         android:layout_width="330dp"
         android:layout_height="400dp"
