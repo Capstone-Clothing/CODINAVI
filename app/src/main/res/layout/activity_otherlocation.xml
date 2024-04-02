@@ -33,7 +33,7 @@
 
     <ImageView
         android:id="@+id/weatherback"
-        android:layout_width="328dp"
+        android:layout_width="330dp"
         android:layout_height="400dp"
         android:background="@drawable/rectangle_1"
         app:layout_constraintEnd_toEndOf="parent"
