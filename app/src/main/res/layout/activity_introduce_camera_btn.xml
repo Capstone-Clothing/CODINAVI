@@ -31,25 +31,17 @@
 
     </FrameLayout>
 
-    <ImageView
-        android:id="@+id/introduceCameraV"
-        android:layout_width="328dp"
-        android:layout_height="550dp"
-        android:background="@drawable/rectangle_1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
-        app:layout_constraintBottom_toTopOf="@+id/menuBottomNav" />
-
     <TextView
-        android:id="@+id/introduceCameraTv"
-        android:layout_width="291dp"
+        android:id="@+id/introduceCameraTV"
+        android:layout_width="330dp"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/soyo_maple_regular"
-        android:lineSpacingExtra="10dp"
+        android:background="@drawable/rectangle_1"
         android:text="사용자가 선택한 옷을 카메라로 촬영하면 그 옷에 대한 설명과 어울리는 코디를 추천받을 수 있습니다.\n카메라로 촬영된 옷은 데이터에 저장됩니다.\n\n추천 기능에는 코디 추천과 색상 추천이 있습니다. \n\n코디 추천은 상의, 하의, 겉옷으로 나뉘며 인식된 옷과 어울리는 조합의 옷을 추천합니다. \n\n색상 추천은 인식된 옷과 어울리는 색상을 추천합니다."
-        android:textColor="@color/black"
+        android:fontFamily="@font/soyo_maple_regular"
         android:textSize="22sp"
+        android:textColor="@color/black"
+        android:lineSpacingExtra="10dp"
+        android:padding="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout"
