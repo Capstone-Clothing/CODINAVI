@@ -31,25 +31,17 @@
 
     </FrameLayout>
 
-    <ImageView
-        android:id="@+id/introduceCodinaviV"
-        android:layout_width="328dp"
-        android:layout_height="400dp"
-        android:background="@drawable/rectangle_1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
-        app:layout_constraintBottom_toTopOf="@+id/introduceCameraBtn" />
-
     <TextView
-        android:id="@+id/introduceCodinaviTv"
-        android:layout_width="291dp"
+        android:id="@+id/introduceCodinaviV"
+        android:layout_width="330dp"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/soyo_maple_regular"
-        android:lineSpacingExtra="10dp"
+        android:background="@drawable/rectangle_1"
         android:text="코디나비는 시각장애인을 위한 코디 추천 서비스 어플입니다.\n\n카메라를 통해 옷의 정보를 제공하고, 그에 맞는 코디를 추천해주며, 날씨에 맞는 옷차림을 소개해줍니다.\n\n본 앱은 한국패션산업연구원이 검수한 데이터를 활용하여 정확한 옷 인식 및 자연스러운 코디 추천을 제공합니다."
+        android:fontFamily="@font/soyo_maple_regular"
         android:textSize="22sp"
         android:textColor="@color/black"
+        android:lineSpacingExtra="10dp"
+        android:padding="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout"
@@ -83,5 +75,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/introduceCameraBtn"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/menuBottomNav" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/menuBottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangle_3"
+        app:itemActiveIndicatorStyle="@android:color/transparent"
+        app:itemIconSize="90dp"
+        app:itemIconTint="@color/white"
+        app:labelVisibilityMode="unlabeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/menu_bottom" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
