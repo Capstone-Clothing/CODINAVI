@@ -7,7 +7,7 @@ from torch.utils.data import DataLoader
 from load_data_c import *
 
 def load_dataset(train=True, batch_size=32, data_root='../data', num_classes=21):
-    attribute = 'category'
+    attribute = 'print'
     phase = 'test'
     transform = transforms.Compose([
         transforms.Resize((224, 224)),
@@ -80,4 +80,4 @@ if __name__ == '__main__':
 
     train_model(model, train_loader, val_loader, epochs, learning_rate)
 
-    torch.save(model.state_dict(), 'fashion_classifier_model.pth')
+    torch.save(model.state_dict(), 'fashion_classifier_model_p.pth')
