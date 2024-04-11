@@ -64,14 +64,13 @@
         app:layout_constraintTop_toTopOf="@+id/rectangle2"
         android:layout_marginTop="13dp"/>
 
-
     <android.widget.Button
         android:id="@+id/genderBtn"
         android:layout_width="270dp"
         android:layout_height="90dp"
         android:background="@drawable/mainbtn"
         android:fontFamily="@font/soyo_maple_regular"
-        android:text="성별"
+        android:text="성별 변경"
         android:textColor="@color/white"
         android:textSize="45sp"
         android:textStyle="bold"
