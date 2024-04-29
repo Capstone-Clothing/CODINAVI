@@ -31,7 +31,7 @@
     </FrameLayout>
 
     <TextView
-        android:id="@+id/introduceCodinaviTv1"
+        android:id="@+id/introduceGuideTv1"
         android:layout_width="330dp"
         android:layout_height="wrap_content"
         android:text="코디나비를\n이용해주셔서 감사합니다."
@@ -44,10 +44,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout"
-        app:layout_constraintBottom_toTopOf="@+id/introduceCodinaviTv2" />
+        app:layout_constraintBottom_toTopOf="@+id/introduceGuideTv2" />
 
     <TextView
-        android:id="@+id/introduceCodinaviTv2"
+        android:id="@+id/introduceGuideTv2"
         android:layout_width="330dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/soyo_maple_regular"
@@ -60,7 +60,7 @@
         app:layout_constraintBottom_toTopOf="@+id/introduceAppBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/introduceCodinaviTv1" />
+        app:layout_constraintTop_toBottomOf="@+id/introduceGuideTv1" />
 
     <android.widget.Button
         android:id="@+id/introduceAppBtn"
@@ -74,7 +74,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/introduceCodinaviTv2"
+        app:layout_constraintTop_toBottomOf="@+id/introduceGuideTv2"
         app:layout_constraintBottom_toTopOf="@+id/introduceCameraBtn"/>
 
     <android.widget.Button
