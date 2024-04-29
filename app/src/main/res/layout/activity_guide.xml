@@ -28,24 +28,54 @@
             android:text="CODINAVI"
             android:textColor="#FFFFFF"
             android:textSize="35sp" />
-
     </FrameLayout>
 
     <TextView
-        android:id="@+id/introduceCodinaviV"
+        android:id="@+id/introduceCodinaviTv1"
         android:layout_width="330dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/rectangle_1"
-        android:text="코디나비는 시각장애인을 위한 코디 추천 서비스 어플입니다.\n\n카메라를 통해 옷의 정보를 제공하고, 그에 맞는 코디를 추천해주며, 날씨에 맞는 옷차림을 소개해줍니다.\n\n본 앱은 한국패션산업연구원이 검수한 데이터를 활용하여 정확한 옷 인식 및 자연스러운 코디 추천을 제공합니다."
+        android:text="코디나비를\n이용해주셔서 감사합니다."
         android:fontFamily="@font/soyo_maple_regular"
-        android:textSize="22sp"
+        android:textSize="25sp"
+        android:textStyle="bold"
         android:textColor="@color/black"
         android:lineSpacingExtra="10dp"
         android:padding="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout"
-        app:layout_constraintBottom_toTopOf="@+id/introduceCameraBtn" />
+        app:layout_constraintBottom_toTopOf="@+id/introduceCodinaviTv2" />
+
+    <TextView
+        android:id="@+id/introduceCodinaviTv2"
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/soyo_maple_regular"
+        android:lineSpacingExtra="10dp"
+        android:padding="5dp"
+        android:text="아래 버튼을 통해 앱 이용 방법을 소개해드릴게요."
+        android:textColor="@color/black"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/introduceAppBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/introduceCodinaviTv1" />
+
+    <android.widget.Button
+        android:id="@+id/introduceAppBtn"
+        android:layout_width="310dp"
+        android:layout_height="90dp"
+        android:background="@drawable/mainbtn"
+        android:fontFamily="@font/soyo_maple_regular"
+        android:text="앱 구성 소개"
+        android:textColor="@color/white"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/introduceCodinaviTv2"
+        app:layout_constraintBottom_toTopOf="@+id/introduceCameraBtn"/>
 
     <android.widget.Button
         android:id="@+id/introduceCameraBtn"
@@ -59,7 +89,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/introduceCodinaviV"
+        app:layout_constraintTop_toBottomOf="@+id/introduceAppBtn"
         app:layout_constraintBottom_toTopOf="@+id/introduceWeatherBtn"/>
 
     <android.widget.Button
