@@ -37,7 +37,7 @@ class LoginActivity : AppCompatActivity() {
         sharedPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE)
 
         // Kakao SDK 초기화
-        KakaoSdk.init(this, "{82c289fb5e3440fc8db9f4947eec1eae}")
+        KakaoSdk.init(this, "")
 
         // 사용자가 이미 로그인 한 경우 MainActivity로 이동
         if(isLoggedIn()) {
@@ -176,6 +176,7 @@ class LoginActivity : AppCompatActivity() {
                         Log.d("[카카오로그인]", "앱이 요청 권한이 없음")
                     }
                     else -> { // Unknown
+                        Log.d("[카카오로그인]",error.toString())
                         Log.d("[카카오로그인]", "기타 에러")
                     }
                 }
