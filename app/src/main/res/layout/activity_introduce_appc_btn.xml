@@ -32,7 +32,7 @@
     </FrameLayout>
 
     <View
-        android:id="@+id/introduceAppback"
+        android:id="@+id/introduceAppcback"
         android:layout_width="330dp"
         android:layout_height="530dp"
         android:layout_marginTop="30dp"
@@ -52,7 +52,7 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/introduceAppback"
+        app:layout_constraintTop_toTopOf="@+id/introduceAppcback"
         app:layout_constraintBottom_toTopOf="@+id/introduceAppcTv2"/>
 
     <TextView
@@ -80,7 +80,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/introduceAppcTv2"
-        app:layout_constraintBottom_toBottomOf="@+id/introduceAppback"/>
+        app:layout_constraintBottom_toBottomOf="@+id/introduceAppcback"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/menuBottomNav"
