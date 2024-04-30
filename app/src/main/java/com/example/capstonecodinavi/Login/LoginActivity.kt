@@ -1,9 +1,12 @@
 package com.example.capstonecodinavi.Login
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import com.example.capstonecodinavi.Main.MainActivity
 import com.example.capstonecodinavi.R
@@ -13,6 +16,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
+import com.kakao.sdk.auth.model.OAuthToken
+import com.kakao.sdk.common.KakaoSdk
+import com.kakao.sdk.common.model.AuthErrorCause
+import com.kakao.sdk.user.UserApiClient
+import com.kakao.sdk.user.model.User
 
 
 class LoginActivity : AppCompatActivity() {
@@ -27,6 +35,9 @@ class LoginActivity : AppCompatActivity() {
         setTitle(" ")
         // SharedPreferences 초기화
         sharedPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE)
+
+        // Kakao SDK 초기화
+        KakaoSdk.init(this, "{82c289fb5e3440fc8db9f4947eec1eae}")
 
         // 사용자가 이미 로그인 한 경우 MainActivity로 이동
         if(isLoggedIn()) {
@@ -47,6 +58,16 @@ class LoginActivity : AppCompatActivity() {
         googleLoginButton.setOnClickListener {
             signIn()
         }
+
+        // 카카오 로그인 버튼 설정
+        val kakaoLoginButton = findViewById<Button>(R.id.kakaoLoginBtn)
+        kakaoLoginButton.setOnClickListener {
+            btnKakaoLogin()
+        }
+
+        // KakaoCallback 설정
+        setKakaoCallback()
+
     }
 
     // 구글 로그인 요청 시작
@@ -113,5 +134,73 @@ class LoginActivity : AppCompatActivity() {
 
     companion object {
         const val RC_SIGN_IN = 123
+    }
+
+    lateinit var kakaoCallback: (OAuthToken?, Throwable?) -> Unit
+
+    private fun btnKakaoLogin() {
+        // 카카오톡이 설치되어 있으면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
+        if (UserApiClient.instance.isKakaoTalkLoginAvailable(this)) {
+            UserApiClient.instance.loginWithKakaoTalk(this, callback = kakaoCallback)
+        } else {
+            UserApiClient.instance.loginWithKakaoAccount(this, callback = kakaoCallback)
+        }
+    }
+
+    private fun setKakaoCallback() {
+        kakaoCallback = { token, error ->
+            if (error != null) {
+                when {
+                    error.toString() == AuthErrorCause.AccessDenied.toString() -> {
+                        Log.d("[카카오로그인]", "접근이 거부됨(동의 취소)")
+                    }
+                    error.toString() == AuthErrorCause.InvalidClient.toString() -> {
+                        Log.d("[카카오로그인]", "유효하지 않은 앱")
+                    }
+                    error.toString() == AuthErrorCause.InvalidGrant.toString() -> {
+                        Log.d("[카카오로그인]", "인증 수단이 유효하지 않아 인증할 수 없는 상태")
+                    }
+                    error.toString() == AuthErrorCause.InvalidRequest.toString() -> {
+                        Log.d("[카카오로그인]", "요청 파라미터 오류")
+                    }
+                    error.toString() == AuthErrorCause.InvalidScope.toString() -> {
+                        Log.d("[카카오로그인]", "유효하지 않은 scope ID")
+                    }
+                    error.toString() == AuthErrorCause.Misconfigured.toString() -> {
+                        Log.d("[카카오로그인]", "설정이 올바르지 않음(android key hash)")
+                    }
+                    error.toString() == AuthErrorCause.ServerError.toString() -> {
+                        Log.d("[카카오로그인]", "서버 내부 에러")
+                    }
+                    error.toString() == AuthErrorCause.Unauthorized.toString() -> {
+                        Log.d("[카카오로그인]", "앱이 요청 권한이 없음")
+                    }
+                    else -> { // Unknown
+                        Log.d("[카카오로그인]", "기타 에러")
+                    }
+                }
+            } else if (token != null){
+                // 카카오 로그인 성공 시 처리
+                Log.d("[카카오로그인]", "로그인에 성공하였습니다.\n${token.accessToken}")
+                getUserInfo() // 사용자 정보 가져오기
+            } else {
+                Log.d("카카오 로그인", "토큰 == null error == null")
+            }
+        }
+    }
+
+    // 카카오 로그인 후 사용자 정보 가져오기
+    private fun getUserInfo() {
+        // 사용자 정보 요청
+        UserApiClient.instance.me { user: User?, error: Throwable? ->
+            if (error != null) {
+                Log.e(TAG, "사용자 정보 요청 실패", error)
+            } else if (user != null) {
+                // 사용자 정보 가져오기 성공
+                val userId = user.id.toString()
+                val userName = user.kakaoAccount?.profile?.nickname ?: "Unknown"
+                Log.i(TAG, "사용자 정보 : ID = $userId, 이름 = $userName")
+            }
+        }
     }
 }

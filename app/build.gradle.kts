@@ -56,11 +56,13 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
-
     //현재 위치
     implementation ("com.google.android.gms:play-services-location:21.0.1")
 
-    // 로그인
+    // 카카오 로그인
+    implementation("com.kakao.sdk:v2-user:2.8.6")
+
+    // 구글 로그인
     implementation ("com.google.android.gms:play-services-auth:21.0.0")
 
     implementation("com.google.android.gms:play-services-location:21.0.1")
