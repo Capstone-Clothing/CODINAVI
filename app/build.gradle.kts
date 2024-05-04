@@ -1,3 +1,7 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -5,9 +9,17 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
 }
 
+// 선언 및 키값 불러오기
+val properties = Properties()
+properties.load(FileInputStream(rootProject.file("local.properties")))
+
 android {
     namespace = "com.example.capstonecodinavi"
     compileSdk = 34
+
+    buildFeatures {
+        buildConfig = true
+    }
 
     defaultConfig {
         applicationId = "com.example.capstonecodinavi"
@@ -18,7 +30,11 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
+        // 타입 - 키 - 값
+        buildConfigField ("String", "KAKAO_NATIVE_APP_KEY", getApiKey("KAKAO_NATIVE_APP_KEY"))
 
+        // 매니페스트에서 사용
+        manifestPlaceholders["KAKAO_NATIVE_APP_KEY"] = "\"${properties["KAKAO_NATIVE_APP_KEY"]}\""
     }
 
     buildTypes {
@@ -40,6 +56,11 @@ android {
     viewBinding {
         enable = true
     }
+}
+
+// local.properties 내부에서 key 값을 가져오는 함수
+fun getApiKey(propertyKey: String): String {
+    return gradleLocalProperties(rootDir).getProperty(propertyKey)
 }
 
 dependencies {

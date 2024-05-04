@@ -8,8 +8,10 @@ import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
+import com.example.capstonecodinavi.BuildConfig
 import com.example.capstonecodinavi.Main.MainActivity
 import com.example.capstonecodinavi.R
+import com.example.capstonecodinavi.User.UserActivity
 import com.example.capstonecodinavi.databinding.ActivityLoginBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -33,11 +35,12 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setTitle(" ")
+
         // SharedPreferences 초기화
         sharedPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE)
 
         // Kakao SDK 초기화
-        KakaoSdk.init(this, "")
+        KakaoSdk.init(this, BuildConfig.KAKAO_NATIVE_APP_KEY)
 
         // 사용자가 이미 로그인 한 경우 MainActivity로 이동
         if(isLoggedIn()) {
@@ -90,14 +93,26 @@ class LoginActivity : AppCompatActivity() {
             try {
                 val account = task.getResult(ApiException::class.java)
                 val username = account?.displayName
+
                 saveUsername(username ?: "Unknown") // 사용자 이름이 없을 경우
                 saveLoginStatus(true)   // 로그인 상태 저장
+
+                val loginMethod = "google" // 구글 로그인 방법 저장
+                saveLoginMethod(loginMethod) // SharedPreferences에 저장
+
                 moveToMainScreen()  // MainActivity로 이동
             } catch (e: ApiException) {
                 // Google Sign In 실패 처리
                 Log.e("LoginActivity", "Google sign in failed: ${e.statusCode}")
             }
         }
+    }
+
+    // 로그인 방법 저장
+    private fun saveLoginMethod(loginMethod: String) {
+        val editor = sharedPreferences.edit()
+        editor.putString("loginMethod", loginMethod)
+        editor.apply()
     }
 
     // MainActivity로 이동
@@ -134,8 +149,11 @@ class LoginActivity : AppCompatActivity() {
 
     companion object {
         const val RC_SIGN_IN = 123
+        // SharedPreferences에 사용자의 로그인 방법을 저장하는 키
+        private const val LOGIN_METHOD_KEY = "loginMethod"
     }
 
+    // 카카오 SDK에서 사용되는 로그인 결과 처리를 위한 콜백 함수를 저장하는 변수
     lateinit var kakaoCallback: (OAuthToken?, Throwable?) -> Unit
 
     private fun btnKakaoLogin() {
@@ -184,6 +202,11 @@ class LoginActivity : AppCompatActivity() {
                 // 카카오 로그인 성공 시 처리
                 Log.d("[카카오로그인]", "로그인에 성공하였습니다.\n${token.accessToken}")
                 getUserInfo() // 사용자 정보 가져오기
+
+                saveLoginStatus(true)   // 로그인 상태 저장
+                saveLoginMethod("kakao")   // 카카오 로그인 방법 저장
+
+                moveToMainScreen()  // MainActivity로 이동
             } else {
                 Log.d("카카오 로그인", "토큰 == null error == null")
             }
