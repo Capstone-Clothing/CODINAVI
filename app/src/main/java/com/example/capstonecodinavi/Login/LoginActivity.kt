@@ -14,6 +14,7 @@ import com.example.capstonecodinavi.R
 import com.example.capstonecodinavi.User.UserActivity
 import com.example.capstonecodinavi.databinding.ActivityLoginBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.SignInButton
@@ -108,51 +109,6 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    // 로그인 방법 저장
-    private fun saveLoginMethod(loginMethod: String) {
-        val editor = sharedPreferences.edit()
-        editor.putString("loginMethod", loginMethod)
-        editor.apply()
-    }
-
-    // MainActivity로 이동
-    private fun moveToMainScreen() {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-        finish() // 현재 Activity 종료
-    }
-
-    // 로그인 상태 저장
-    private fun saveLoginStatus(isLoggedIn: Boolean) {
-        val editor = sharedPreferences.edit()
-        editor.putBoolean("isLoggedIn", isLoggedIn)
-        editor.apply()
-    }
-
-    // 로그인 상태 가져오기
-    private fun isLoggedIn(): Boolean {
-        return sharedPreferences.getBoolean("isLoggedIn", false)
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        // 뒤로가기 누르면 앱 종료
-        finishAffinity()
-    }
-
-    // 사용자 이름 저장
-    private fun saveUsername(username: String) {
-        val editor = sharedPreferences.edit()
-        editor.putString("username", username)
-        editor.apply()
-    }
-
-    companion object {
-        const val RC_SIGN_IN = 123
-        // SharedPreferences에 사용자의 로그인 방법을 저장하는 키
-        private const val LOGIN_METHOD_KEY = "loginMethod"
-    }
-
     // 카카오 SDK에서 사용되는 로그인 결과 처리를 위한 콜백 함수를 저장하는 변수
     lateinit var kakaoCallback: (OAuthToken?, Throwable?) -> Unit
 
@@ -223,8 +179,52 @@ class LoginActivity : AppCompatActivity() {
                 // 사용자 정보 가져오기 성공
                 val userId = user.id.toString()
                 val userName = user.kakaoAccount?.profile?.nickname ?: "Unknown"
-                Log.i(TAG, "사용자 정보 : ID = $userId, 이름 = $userName")
+                Log.i("[카카오 로그인]", "사용자 정보 : ID = $userId, 이름 = $userName")
+                saveUsername(userName)  // 사용자 이름 저장
             }
         }
+    }
+
+    // 로그인 방법 저장
+    private fun saveLoginMethod(loginMethod: String) {
+        val editor = sharedPreferences.edit()
+        editor.putString("loginMethod", loginMethod)
+        editor.apply()
+    }
+
+    // MainActivity로 이동
+    private fun moveToMainScreen() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish() // 현재 Activity 종료
+    }
+
+    // 로그인 상태 저장
+    private fun saveLoginStatus(isLoggedIn: Boolean) {
+        val editor = sharedPreferences.edit()
+        editor.putBoolean("isLoggedIn", isLoggedIn)
+        editor.apply()
+    }
+
+    // 로그인 상태 가져오기
+    private fun isLoggedIn(): Boolean {
+        return sharedPreferences.getBoolean("isLoggedIn", false)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        // 뒤로가기 누르면 앱 종료
+        finishAffinity()
+    }
+
+    // 사용자 이름 저장
+    private fun saveUsername(username: String) {
+        val editor = sharedPreferences.edit()
+        editor.putString("username", username)
+        editor.apply()
+    }
+
+    companion object {
+        const val RC_SIGN_IN = 123
     }
 }
