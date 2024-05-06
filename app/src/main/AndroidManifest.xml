@@ -71,6 +71,12 @@
             android:name=".Guide.IntroduceWeatherBtn"
             android:exported="false" />
         <activity
+            android:name=".Guide.IntroduceAppBtn"
+            android:exported="false" />
+        <activity
+            android:name=".Guide.IntroduceAppcBtn"
+            android:exported="false" />
+        <activity
             android:name=".Login.LoginActivity"
             android:exported="false" />
         <activity

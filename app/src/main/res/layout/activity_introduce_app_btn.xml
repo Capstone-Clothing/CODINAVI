@@ -29,6 +29,15 @@
             android:textColor="#FFFFFF"
             android:textSize="35sp" />
 
+        <ImageButton
+            android:id="@+id/back_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="170dp"
+            android:background="@drawable/back_btn"
+            android:contentDescription="뒤로가기" />
+
     </FrameLayout>
 
     <View
