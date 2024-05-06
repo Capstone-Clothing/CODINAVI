@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".Guide.IntroduceAppcBtn">
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#2D0F51"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" >
+
+        <TextView
+            android:id="@+id/codinavi"
+            android:layout_width="wrap_content"
+            android:layout_height="53dp"
+            android:fontFamily="@font/bakbakone_regular"
+            android:importantForAccessibility="no"
+            android:layout_gravity="center"
+            android:text="CODINAVI"
+            android:textColor="#FFFFFF"
+            android:textSize="35sp" />
+
+    </FrameLayout>
+
+    <View
+        android:id="@+id/introduceAppcback"
+        android:layout_width="330dp"
+        android:layout_height="530dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/rectangle_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
+
+    <TextView
+        android:id="@+id/introduceAppcTv1"
+        android:layout_width="291dp"
+        android:layout_height="wrap_content"
+        android:text="앱 구성 소개"
+        android:fontFamily="@font/soyo_maple_regular"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/introduceAppcback"
+        app:layout_constraintBottom_toTopOf="@+id/introduceAppcTv2"/>
+
+    <TextView
+        android:id="@+id/introduceAppcTv2"
+        android:layout_width="291dp"
+        android:layout_height="wrap_content"
+        android:text="총 2페이지 중 2페이지"
+        android:fontFamily="@font/soyo_maple_regular"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/introduceAppcTv1"
+        app:layout_constraintBottom_toTopOf="@+id/introduceAppcTv3"/>
+
+    <TextView
+        android:id="@+id/introduceAppcTv3"
+        android:layout_width="291dp"
+        android:layout_height="wrap_content"
+        android:text="앱 화면 왼쪽 상단에는 뒤로가기 버튼이 있습니다.\n앱 화면 하단에는 총 2개의 탭이 있습니다. 왼쪽부터 홈, 마이페이지 버튼입니다.\n\n1. 홈: 위에서부터 '의류 촬영하기', '날씨 알아보기' 버튼이 있습니다.\n\n 2. 마이페이지 : 위에서부터 '성별 변경', '사용설명서', '관리자 문의', '로그아웃' 버튼이 있습니다."
+        android:fontFamily="@font/soyo_maple_regular"
+        android:textColor="@color/black"
+        android:lineSpacingExtra="10dp"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/introduceAppcTv2"
+        app:layout_constraintBottom_toBottomOf="@+id/introduceAppcback"/>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/menuBottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangle_3"
+        app:itemActiveIndicatorStyle="@android:color/transparent"
+        app:itemIconSize="90dp"
+        app:itemIconTint="@color/white"
+        app:labelVisibilityMode="unlabeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/menu_bottom" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

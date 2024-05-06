@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".Guide.IntroduceAppBtn">
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#2D0F51"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" >
+
+        <TextView
+            android:id="@+id/codinavi"
+            android:layout_width="wrap_content"
+            android:layout_height="53dp"
+            android:fontFamily="@font/bakbakone_regular"
+            android:importantForAccessibility="no"
+            android:layout_gravity="center"
+            android:text="CODINAVI"
+            android:textColor="#FFFFFF"
+            android:textSize="35sp" />
+
+    </FrameLayout>
+
+    <View
+        android:id="@+id/introduceAppback"
+        android:layout_width="330dp"
+        android:layout_height="530dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/rectangle_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
+
+    <TextView
+        android:id="@+id/introduceAppTv1"
+        android:layout_width="291dp"
+        android:layout_height="wrap_content"
+        android:text="앱 소개"
+        android:fontFamily="@font/soyo_maple_regular"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/introduceAppback"
+        app:layout_constraintBottom_toTopOf="@+id/introduceAppTv2"/>
+
+    <TextView
+        android:id="@+id/introduceAppTv2"
+        android:layout_width="291dp"
+        android:layout_height="wrap_content"
+        android:text="총 2페이지 중 1페이지"
+        android:fontFamily="@font/soyo_maple_regular"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/introduceAppTv1"
+        app:layout_constraintBottom_toTopOf="@+id/introduceAppTv3"/>
+
+    <TextView
+        android:id="@+id/introduceAppTv3"
+        android:layout_width="291dp"
+        android:layout_height="wrap_content"
+        android:text="코디나비는 시각장애인을 위한\n코디 추천 서비스 어플입니다.\n\n카메라를 통해 옷의 정보를 제\n공하고 그에 맞는 코디를 추천\n해주며 날씨에 맞는 옷차림을\n 소개해줍니다.\n\n본 앱은 한국패션산업연구원이\n검수한 데이터를 활용하여 정확\n한 옷 인식 및 자연스러운 코디\n추천을 제공합니다."
+        android:fontFamily="@font/soyo_maple_regular"
+        android:textColor="@color/black"
+        android:lineSpacingExtra="10dp"
+        android:textSize="22sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/introduceAppTv2"
+        app:layout_constraintBottom_toBottomOf="@+id/introduceAppback"/>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/menuBottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangle_3"
+        app:itemActiveIndicatorStyle="@android:color/transparent"
+        app:itemIconSize="90dp"
+        app:itemIconTint="@color/white"
+        app:labelVisibilityMode="unlabeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/menu_bottom" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
