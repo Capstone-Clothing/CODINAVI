@@ -9,16 +9,16 @@
 
 
 ## 📂 시스템 구성도
-![시스템 구성도](https://github.com/Capstone-Clothing/CODINAVI/assets/132319686/1a29826e-db4e-4edf-93b3-6040da29f0ef)     <br><br>
+![시스템 구성도](https://github.com/Capstone-Clothing/CODINAVI/assets/132319686/1a29826e-db4e-4edf-93b3-6040da29f0ef)     
    
 
 ## 📂 시스템 시나리오
 ![시스템 시나리오](https://github.com/Capstone-Clothing/CODINAVI/assets/132319686/f00ad6ec-60c6-408c-8b95-4f2c5d2cfa8a)
-   
+
 
 ## 📱 UI 설계
-![Group 28](https://github.com/Capstone-Clothing/CODINAVI/assets/151013952/4fb28fa5-a62c-44d0-b88c-42fd172bf00f)
-   
+![UI](https://github.com/Capstone-Clothing/CODINAVI/assets/151013952/513f2ee6-ce17-4593-9951-29745aaa81cb)
+
 
 ## 📄 Reference
 - [모바일 앱 접근성 지침](https://www.nld.go.kr/ableFront/new_standard_guide/accessibility.jsp)

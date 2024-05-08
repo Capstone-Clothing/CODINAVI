@@ -4,10 +4,18 @@ import torch.optim as optim
 import torch.nn.functional as F
 from torchvision import transforms, datasets
 from torch.utils.data import DataLoader
-from dataset import load_data,KFashionDataset
+from load_data_c import *
 
+def load_dataset(train=True, batch_size=32, data_root='../data', num_classes=21):
+    attribute = 'category'
+    phase = 'test'
+    transform = transforms.Compose([
+        transforms.Resize((224, 224)),
+        transforms.ToTensor(),
+    ])
+    dataset = load_data(attribute, phase, num_classes=num_classes, transform=transform)
+    return DataLoader(dataset, batch_size=batch_size, shuffle=train)
 
-# 모델 정의
 class CNNModel(nn.Module):
     def __init__(self, num_classes):
         super(CNNModel, self).__init__()
@@ -17,7 +25,7 @@ class CNNModel(nn.Module):
         self.conv3 = nn.Conv2d(64, 128, kernel_size=3)
         self.conv4 = nn.Conv2d(128, 128, kernel_size=3)
         self.flatten = nn.Flatten()
-        self.fc1 = nn.Linear(128 * 6 * 6, 512)
+        self.fc1 = nn.Linear(18432, 512)
         self.fc2 = nn.Linear(512, num_classes)
 
     def forward(self, x):
@@ -31,42 +39,45 @@ class CNNModel(nn.Module):
         return x
 
 
-
-
-# 모델 학습
 def train_model(model, train_loader, val_loader, epochs, learning_rate):
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 
     for epoch in range(epochs):
         model.train()
-        for inputs, labels, indices in train_loader:
+        running_loss = 0.0
+        correct = 0
+        total = 0
+        for i, ((inputs, _), labels) in enumerate(train_loader):
             optimizer.zero_grad()
             outputs = model(inputs)
             loss = criterion(outputs, labels)
             loss.backward()
             optimizer.step()
+            running_loss += loss.item()
 
-        # 검증 단계는 여기에 추가합니다
+            _, predicted = torch.max(outputs.data, 1)
+            total += labels.size(0)
+            correct += (predicted == labels).sum().item()
 
-# 파라미터 설정
+            if (i + 1) % 10 == 0:
+                print(f'Epoch [{epoch + 1}/{epochs}], Step [{i + 1}/{len(train_loader)}], Loss: {running_loss / 10:.4f}, Accuracy: {100 * correct / total:.2f}%')
+                running_loss = 0.0
+
+    print('Training complete')
+
 if __name__ == '__main__':
-    # 파라미터 설정
-    num_classes = 10  # 분류할 클래스의 수
+    num_classes = 21
     batch_size = 32
     epochs = 10
     learning_rate = 0.001
-    data_dir = './data'  # 데이터셋이 있는 폴더 경로
+    data_dir = '../data'
 
-    # 데이터 로드
-    train_loader = load_data(train=True, batch_size=batch_size, data_root=data_dir)
-    val_loader = load_data(train=False, batch_size=batch_size, data_root=data_dir)
+    train_loader = load_dataset(train=True, batch_size=batch_size, data_root=data_dir)
+    val_loader = load_dataset(train=False, batch_size=batch_size, data_root=data_dir)
 
-    # 모델 생성
     model = CNNModel(num_classes)
 
-    # 모델 학습
     train_model(model, train_loader, val_loader, epochs, learning_rate)
 
-    # 모델 저장
     torch.save(model.state_dict(), 'fashion_classifier_model.pth')

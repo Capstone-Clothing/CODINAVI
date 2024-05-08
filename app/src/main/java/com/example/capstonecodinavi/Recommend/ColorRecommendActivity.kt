@@ -43,3 +43,5 @@ class ColorRecommendActivity : AppCompatActivity() {
         }
     }
 }
+
+//test
