@@ -6,47 +6,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/background"
+    android:background="@color/white"
     tools:context=".Recommend.CodiRecommendActivity">
 
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/rectangle_3"
+        android:background="#2D0F51"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" >
-
-        <ImageButton
-            android:id="@+id/homeBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/home"
-            android:contentDescription="홈"
-            android:background="@android:color/transparent"
-            android:layout_gravity="left" />
 
         <TextView
             android:id="@+id/codinavi"
             android:layout_width="wrap_content"
             android:layout_height="53dp"
             android:fontFamily="@font/bakbakone_regular"
-            android:gravity="center"
             android:importantForAccessibility="no"
+            android:layout_gravity="center"
             android:text="CODINAVI"
-            android:textColor="#2D0F51"
-            android:textSize="35sp"
-            android:layout_gravity="center" />
+            android:textColor="#FFFFFF"
+            android:textSize="35sp" />
 
         <ImageButton
-            android:id="@+id/profileBtn"
+            android:id="@+id/back_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/profile"
-            android:contentDescription="마이페이지"
-            android:background="@android:color/transparent"
-            android:layout_gravity="right" />
+            android:layout_gravity="center"
+            android:layout_marginRight="170dp"
+            android:background="@drawable/back_btn"
+            android:contentDescription="뒤로가기" />
+
     </FrameLayout>
 
     <ImageView
@@ -65,13 +56,13 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/soyo_maple_regular"
         android:lineSpacingExtra="10dp"
-        android:text="맑고 시원한 하늘색 셔츠와 어울리는 코디를 추천해드립니다.\n\n하의는 어둡고 고요한 검정색 슬랙스와 청바지\n\n겉옷은 어둡고 고요한 검정색 정장 자켓과 차분하고 진중한 남색 가디건을 추천드립니다."
+        android:text="시원한 하늘색 셔츠와 어울리는 코디를 추천해드립니다.\n\n하의는 어두운 검정색 슬랙스와 청바지\n\n겉옷은 어두운 검정색 정장 자켓과 차분한 남색 가디건을 추천드립니다."
         android:textColor="@color/black"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
-        app:layout_constraintBottom_toTopOf="@+id/confirmBtn" />
+        app:layout_constraintTop_toTopOf="@+id/codiV"
+        app:layout_constraintBottom_toBottomOf="@+id/codiV" />
 
     <android.widget.Button
         android:id="@+id/confirmBtn"
@@ -86,6 +77,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/menuBottomNav"
+        app:layout_constraintVertical_bias="0.95" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/menuBottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangle_3"
+        app:itemActiveIndicatorStyle="@android:color/transparent"
+        app:itemIconSize="90dp"
+        app:itemIconTint="@color/white"
+        app:labelVisibilityMode="unlabeled"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.9" />
+        app:menu="@menu/menu_bottom" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

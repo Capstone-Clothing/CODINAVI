@@ -4,19 +4,10 @@
     <!-- 첫 번째 도형 -->
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="#FFFFFF" />
+            <solid android:color="#2D0F51" />
             <corners
-                android:bottomLeftRadius="30dp"
-                android:bottomRightRadius="30dp" />
-        </shape>
-    </item>
-
-    <!-- 두 번째 도형 (첫 번째 도형 위에 위치) -->
-    <item android:width="160dp" android:height="3dp" android:gravity="center" android:top="70dp">
-        <shape android:shape="rectangle">
-            <solid android:color="#000000" />
-            <corners
-                android:radius="20dp" />
+                android:topLeftRadius="30dp"
+                android:topRightRadius="30dp" />
         </shape>
     </item>
 

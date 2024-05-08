@@ -19,6 +19,7 @@ import com.example.capstonecodinavi.databinding.ActivityConfirmBinding
 import java.io.File
 import java.util.concurrent.ExecutorService
 import com.example.capstonecodinavi.Camera.ObjectDetectorHelper
+import com.example.capstonecodinavi.R
 
 class ConfirmActivity : AppCompatActivity() {
     private lateinit var binding: ActivityConfirmBinding
@@ -41,47 +42,21 @@ class ConfirmActivity : AppCompatActivity() {
     }
 
     private fun action() {
-        binding.homeBtn.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.profileBtn.setOnClickListener {
-            val intent = Intent(this, UserActivity::class.java)
-            startActivity(intent)
-        }
-
-    }
-
-    private fun takePhoto() {
-        val mImageCapture = imageCapture ?:return
-
-        val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
-
-        mImageCapture.takePicture(
-            outputOptions,
-            ContextCompat.getMainExecutor(this),
-            object : ImageCapture.OnImageSavedCallback {
-                override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                    Glide.with(this@ConfirmActivity)
-                        .load(outputFileResults.savedUri)
-                        .apply(
-                            RequestOptions()
-                                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                                .skipMemoryCache(true)
-                        )
-                        .into(binding.captureIV)
-
-                    binding.fragmentContainer.visibility = View.GONE
-                    binding.recogtext.visibility = View.GONE
-                    binding.captureIV.visibility = View.VISIBLE
-                    binding.textView2.visibility = View.VISIBLE
+        binding.menuBottomNav.setOnItemSelectedListener { menuItem->
+            when(menuItem.itemId) {
+                R.id.menu_home -> {
+                    // 홈 버튼 클릭 시 MainActivity로 이동
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    true
                 }
-
-                override fun onError(exception: ImageCaptureException) {
-                    Toast.makeText(applicationContext, "실패", Toast.LENGTH_SHORT).show()
+                R.id.menu_user -> {
+                    val intent = Intent(this, UserActivity::class.java)
+                    startActivity(intent)
+                    true
                 }
+                else -> false
             }
-        )
+        }
     }
 }

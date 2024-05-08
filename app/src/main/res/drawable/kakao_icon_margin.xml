@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 아이콘 이미지 -->
+    <item
+        android:drawable="@drawable/kakao_icon"
+        android:left="10dp" /> <!-- 아이콘의 왼쪽 마진 -->
+</layer-list>

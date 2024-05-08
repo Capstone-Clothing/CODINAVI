@@ -13,47 +13,37 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background"
+        android:background="@color/white"
         tools:context=".CameraCaptureActivity">
 
         <FrameLayout
             android:id="@+id/frameLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/rectangle_3"
+            android:background="#2D0F51"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" >
-
-            <ImageButton
-                android:id="@+id/homeBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/home"
-                android:contentDescription="홈"
-                android:background="@android:color/transparent"
-                android:layout_gravity="left" />
 
             <TextView
                 android:id="@+id/codinavi"
                 android:layout_width="wrap_content"
                 android:layout_height="53dp"
                 android:fontFamily="@font/bakbakone_regular"
-                android:gravity="center"
                 android:importantForAccessibility="no"
+                android:layout_gravity="center"
                 android:text="CODINAVI"
-                android:textColor="#2D0F51"
-                android:textSize="35sp"
-                android:layout_gravity="center" />
+                android:textColor="#FFFFFF"
+                android:textSize="35sp" />
 
             <ImageButton
-                android:id="@+id/profileBtn"
+                android:id="@+id/back_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/profile"
-                android:contentDescription="마이페이지"
-                android:background="@android:color/transparent"
-                android:layout_gravity="right" />
+                android:layout_gravity="center"
+                android:layout_marginRight="170dp"
+                android:background="@drawable/back_btn"
+                android:contentDescription="뒤로가기" />
 
         </FrameLayout>
 
@@ -65,11 +55,11 @@
             android:background="@android:color/transparent"
             android:keepScreenOn="true"
             app:defaultNavHost="true"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/menuBottomNav"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.35"
+            app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+            app:layout_constraintVertical_bias="0.1"
             app:navGraph="@navigation/nav_graph"
             tools:context=".Camera.NewCameraActivity" />
 
@@ -78,7 +68,7 @@
             android:layout_width="340dp"
             android:layout_height="wrap_content"
             android:text="옷 정보 설명"
-            android:background="@color/white"
+            android:background="#CDC6D6"
             android:fontFamily="@font/soyo_maple_regular"
             android:textColor="@color/black"
             android:gravity="center"
@@ -88,85 +78,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
 
-        <ImageView
-            android:id="@+id/captureIV"
-            android:layout_width="340dp"
-            android:layout_height="470dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.35"
-            android:visibility="gone"
-            />
-
-        <LinearLayout
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/menuBottomNav"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="340dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="561dp"
-                android:layout_gravity="center"
-                android:background="@color/white"
-                android:fontFamily="@font/soyo_maple_regular"
-                android:gravity="center"
-                android:text=""
-                android:textColor="@color/black"
-                android:textSize="22dp"
-                android:textStyle="bold"
-                android:visibility="gone"/>
-        </LinearLayout>
-
-
-
-        <android.widget.Button
-            android:id="@+id/codiBtn"
-            android:layout_width="160dp"
-            android:layout_height="90dp"
-            android:text="코디 추천"
-            android:textColor="@color/white"
-            android:fontFamily="@font/soyo_maple_regular"
-            android:textStyle="bold"
-            android:textSize="35dp"
-            android:background="@drawable/mainbtn"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.9"
-            app:layout_constraintRight_toLeftOf="@+id/vertical_centerline"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            android:visibility="gone"
-            />
-
-        <android.widget.Button
-            android:id="@+id/colorBtn"
-            android:layout_width="160dp"
-            android:layout_height="90dp"
-            android:text="색상 추천"
-            android:textColor="@color/white"
-            android:fontFamily="@font/soyo_maple_regular"
-            android:textStyle="bold"
-            android:textSize="35dp"
-            android:background="@drawable/mainbtn"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="0.9"
-            app:layout_constraintLeft_toRightOf="@+id/vertical_centerline"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            android:visibility="gone"
-            />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/vertical_centerline"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent=".50" />
+            android:background="@drawable/rectangle_3"
+            app:itemActiveIndicatorStyle="@android:color/transparent"
+            app:itemIconSize="90dp"
+            app:itemIconTint="@color/white"
+            app:labelVisibilityMode="unlabeled"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:menu="@menu/menu_bottom" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

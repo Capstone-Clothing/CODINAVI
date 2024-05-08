@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    tools:context=".Guide.GuideActivity">
+    tools:context=".Guide.IntroduceAppcBtn">
 
     <FrameLayout
         android:id="@+id/frameLayout"
@@ -40,80 +40,56 @@
 
     </FrameLayout>
 
-    <TextView
-        android:id="@+id/introduceGuideTv1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="코디나비를\n이용해주셔서 감사합니다."
-        android:fontFamily="@font/soyo_maple_regular"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:lineSpacingExtra="10dp"
-        app:layout_constraintStart_toStartOf="@+id/introduceGuideTv2"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
-        app:layout_constraintBottom_toTopOf="@+id/introduceAppBtn" />
+    <View
+        android:id="@+id/introduceAppcback"
+        android:layout_width="330dp"
+        android:layout_height="530dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/rectangle_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
 
     <TextView
-        android:id="@+id/introduceGuideTv2"
-        android:layout_width="wrap_content"
+        android:id="@+id/introduceAppcTv1"
+        android:layout_width="291dp"
         android:layout_height="wrap_content"
+        android:text="앱 구성 소개"
         android:fontFamily="@font/soyo_maple_regular"
-        android:lineSpacingExtra="10dp"
-        android:layout_marginTop="20dp"
-        android:text="아래 버튼을 통해 앱 이용 방법을 소개해드릴게요."
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/introduceAppcback"
+        app:layout_constraintBottom_toTopOf="@+id/introduceAppcTv2"/>
+
+    <TextView
+        android:id="@+id/introduceAppcTv2"
+        android:layout_width="291dp"
+        android:layout_height="wrap_content"
+        android:text="총 2페이지 중 2페이지"
+        android:fontFamily="@font/soyo_maple_regular"
         android:textColor="@color/black"
         android:textSize="15sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/introduceGuideTv1"
-        />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/introduceAppcTv1"
+        app:layout_constraintBottom_toTopOf="@+id/introduceAppcTv3"/>
 
-    <android.widget.Button
-        android:id="@+id/introduceAppBtn"
-        android:layout_width="310dp"
-        android:layout_height="90dp"
-        android:background="@drawable/mainbtn"
+    <TextView
+        android:id="@+id/introduceAppcTv3"
+        android:layout_width="291dp"
+        android:layout_height="wrap_content"
+        android:text="앱 화면 왼쪽 상단에는 뒤로가기 버튼이 있습니다.\n앱 화면 하단에는 총 2개의 탭이 있습니다. 왼쪽부터 홈, 마이페이지 버튼입니다.\n\n1. 홈: 위에서부터 '의류 촬영하기', '날씨 알아보기' 버튼이 있습니다.\n\n 2. 마이페이지 : 위에서부터 '성별 변경', '사용설명서', '관리자 문의', '로그아웃' 버튼이 있습니다."
         android:fontFamily="@font/soyo_maple_regular"
-        android:text="앱 구성 소개"
-        android:textColor="@color/white"
-        android:textSize="35sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="@color/black"
+        android:lineSpacingExtra="10dp"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/introduceGuideTv2"
-        app:layout_constraintBottom_toTopOf="@+id/introduceCameraBtn"/>
-
-    <android.widget.Button
-        android:id="@+id/introduceCameraBtn"
-        android:layout_width="310dp"
-        android:layout_height="90dp"
-        android:background="@drawable/mainbtn"
-        android:fontFamily="@font/soyo_maple_regular"
-        android:text="의류 촬영 기능 소개"
-        android:textColor="@color/white"
-        android:textSize="35sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/introduceAppBtn"
-        app:layout_constraintBottom_toTopOf="@+id/introduceWeatherBtn"/>
-
-    <android.widget.Button
-        android:id="@+id/introduceWeatherBtn"
-        android:layout_width="310dp"
-        android:layout_height="90dp"
-        android:background="@drawable/mainbtn"
-        android:fontFamily="@font/soyo_maple_regular"
-        android:text="날씨 기능 소개"
-        android:textColor="@color/white"
-        android:textSize="35sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/introduceCameraBtn"
-        app:layout_constraintBottom_toTopOf="@+id/menuBottomNav" />
+        app:layout_constraintTop_toBottomOf="@+id/introduceAppcTv2"
+        app:layout_constraintBottom_toBottomOf="@+id/introduceAppcback"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/menuBottomNav"
