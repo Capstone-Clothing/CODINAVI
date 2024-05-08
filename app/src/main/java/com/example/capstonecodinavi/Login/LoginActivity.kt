@@ -92,6 +92,7 @@ class LoginActivity : AppCompatActivity() {
         if (requestCode == RC_SIGN_IN) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
+                Log.d("[구글 로그인]","로그인에 성공하였습니다.")
                 val account = task.getResult(ApiException::class.java)
                 val username = account?.displayName
 
@@ -104,7 +105,7 @@ class LoginActivity : AppCompatActivity() {
                 moveToMainScreen()  // MainActivity로 이동
             } catch (e: ApiException) {
                 // Google Sign In 실패 처리
-                Log.e("LoginActivity", "Google sign in failed: ${e.statusCode}")
+                Log.e("[구글 로그인]", "로그인에 실패하였습니다 : ${e.statusCode}")
             }
         }
     }
@@ -126,37 +127,37 @@ class LoginActivity : AppCompatActivity() {
             if (error != null) {
                 when {
                     error.toString() == AuthErrorCause.AccessDenied.toString() -> {
-                        Log.d("[카카오로그인]", "접근이 거부됨(동의 취소)")
+                        Log.d("[카카오 로그인]", "접근이 거부됨(동의 취소)")
                     }
                     error.toString() == AuthErrorCause.InvalidClient.toString() -> {
-                        Log.d("[카카오로그인]", "유효하지 않은 앱")
+                        Log.d("[카카오 로그인]", "유효하지 않은 앱")
                     }
                     error.toString() == AuthErrorCause.InvalidGrant.toString() -> {
-                        Log.d("[카카오로그인]", "인증 수단이 유효하지 않아 인증할 수 없는 상태")
+                        Log.d("[카카오 로그인]", "인증 수단이 유효하지 않아 인증할 수 없는 상태")
                     }
                     error.toString() == AuthErrorCause.InvalidRequest.toString() -> {
-                        Log.d("[카카오로그인]", "요청 파라미터 오류")
+                        Log.d("[카카오 로그인]", "요청 파라미터 오류")
                     }
                     error.toString() == AuthErrorCause.InvalidScope.toString() -> {
-                        Log.d("[카카오로그인]", "유효하지 않은 scope ID")
+                        Log.d("[카카오 로그인]", "유효하지 않은 scope ID")
                     }
                     error.toString() == AuthErrorCause.Misconfigured.toString() -> {
-                        Log.d("[카카오로그인]", "설정이 올바르지 않음(android key hash)")
+                        Log.d("[카카오 로그인]", "설정이 올바르지 않음(android key hash)")
                     }
                     error.toString() == AuthErrorCause.ServerError.toString() -> {
-                        Log.d("[카카오로그인]", "서버 내부 에러")
+                        Log.d("[카카오 로그인]", "서버 내부 에러")
                     }
                     error.toString() == AuthErrorCause.Unauthorized.toString() -> {
-                        Log.d("[카카오로그인]", "앱이 요청 권한이 없음")
+                        Log.d("[카카오 로그인]", "앱이 요청 권한이 없음")
                     }
                     else -> { // Unknown
-                        Log.d("[카카오로그인]",error.toString())
-                        Log.d("[카카오로그인]", "기타 에러")
+                        Log.d("[카카오 로그인]",error.toString())
+                        Log.d("[카카오 로그인]", "기타 에러")
                     }
                 }
             } else if (token != null){
                 // 카카오 로그인 성공 시 처리
-                Log.d("[카카오로그인]", "로그인에 성공하였습니다.\n${token.accessToken}")
+                Log.d("[카카오 로그인]", "로그인에 성공하였습니다.\n${token.accessToken}")
                 getUserInfo() // 사용자 정보 가져오기
 
                 saveLoginStatus(true)   // 로그인 상태 저장
@@ -164,7 +165,7 @@ class LoginActivity : AppCompatActivity() {
 
                 moveToMainScreen()  // MainActivity로 이동
             } else {
-                Log.d("카카오 로그인", "토큰 == null error == null")
+                Log.d("[카카오 로그인]", "토큰 == null error == null")
             }
         }
     }
