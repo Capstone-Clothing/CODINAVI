@@ -91,6 +91,19 @@
         app:layout_constraintTop_toBottomOf="@+id/introduceAppTv2"
         app:layout_constraintBottom_toBottomOf="@+id/introduceAppback"/>
 
+    <ImageButton
+        android:id="@+id/next_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/next_btn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/introduceAppback"
+        android:layout_marginLeft="200dp"
+        android:contentDescription="다음 페이지로 이동"
+        />
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/menuBottomNav"
         android:layout_width="match_parent"

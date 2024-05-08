@@ -19,6 +19,11 @@ class IntroduceAppBtn : AppCompatActivity() {
     }
 
     private fun action() {
+        binding.nextBtn.setOnClickListener {
+            val intent = Intent( this, IntroduceAppcBtn::class.java)
+            startActivity(intent)
+        }
+
         binding.menuBottomNav.setOnItemSelectedListener { menuItem ->
             when(menuItem.itemId) {
                 R.id.menu_home -> {
