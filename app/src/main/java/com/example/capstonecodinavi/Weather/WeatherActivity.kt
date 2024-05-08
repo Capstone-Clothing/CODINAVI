@@ -215,22 +215,22 @@ class WeatherActivity : AppCompatActivity() {
         if (temp >= 28) {
             binding.recommendClothTv.text = "상의는 민소매, 반팔을 추천해드리며 하의는 짧은 치마, 린넨 옷, 반바지를 추천드립니다."
         }
-        else if (temp in 23.0..27.0) {
+        else if (temp in 23.0..27.9) {
             binding.recommendClothTv.text = "상의는 얇은 셔츠, 반팔을 추천해드리며 하의는 반바지, 면바지를 추천드립니다."
         }
-        else if (temp in 20.0..22.0) {
+        else if (temp in 20.0..22.9) {
             binding.recommendClothTv.text = "상의는 블라우스, 긴팔티를 추천해드리며 하의는 면바지, 슬랙스를 추천드립니다."
         }
-        else if (temp in 17.0..19.0) {
+        else if (temp in 17.0..19.9) {
             binding.recommendClothTv.text = "상의는 얇은 가디건, 니트, 맨투맨, 후드를 추천해드리며 하의는 긴 바지를 추천드립니다."
         }
-        else if (temp in 12.0..16.0) {
+        else if (temp in 12.0..16.9) {
             binding.recommendClothTv.text = "상의는 자켓 또는 청자켓, 가디건, 니트를 추천해드리며 하의는 스타킹, 청바지를 추천드립니다."
         }
-        else if (temp in 9.0..11.0) {
+        else if (temp in 9.0..11.9) {
             binding.recommendClothTv.text = "상의는 트렌치 코트, 야상, 점퍼를 추천해드리며 하의는 스타킹, 기모바지를 추천드립니다."
         }
-        else if (temp in 5.0..8.0) {
+        else if (temp in 5.0..8.9) {
             binding.recommendClothTv.text = "상의는 울 코트 또는 가죽 옷과 히트텍을 추천해드리며 하의 또한 기모가 들어간 바지를 추천드립니다."
         }
         else {
