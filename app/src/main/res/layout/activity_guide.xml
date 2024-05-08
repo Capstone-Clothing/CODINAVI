@@ -42,7 +42,7 @@
 
     <TextView
         android:id="@+id/introduceGuideTv1"
-        android:layout_width="330dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="코디나비를\n이용해주셔서 감사합니다."
         android:fontFamily="@font/soyo_maple_regular"
