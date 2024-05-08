@@ -78,6 +78,7 @@
             android:layout_marginEnd="30dp"
             android:layout_marginBottom="30dp"
             android:fontFamily="@font/soyo_maple_regular"
+            android:textColor="@color/black"
             android:text=" 남성"
             android:textSize="30dp" />
 
@@ -89,6 +90,7 @@
             android:layout_marginEnd="30dp"
             android:layout_marginBottom="30dp"
             android:fontFamily="@font/soyo_maple_regular"
+            android:textColor="@color/black"
             android:text=" 여성"
             android:textSize="30dp" />
     </RadioGroup>
