@@ -67,6 +67,16 @@
     </com.google.android.material.card.MaterialCardView>
 
     <android.widget.Button
+        android:id="@+id/speechBtn"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:background="@drawable/mainbtn"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchCv" />
+
+    <android.widget.Button
         android:id="@+id/searchBtn"
         android:layout_width="310dp"
         android:layout_height="90dp"
