@@ -91,6 +91,23 @@
         app:layout_constraintTop_toBottomOf="@+id/introduceAppcTv2"
         app:layout_constraintBottom_toBottomOf="@+id/introduceAppcback"/>
 
+    <TextView
+        android:id="@+id/startTVBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/soyo_maple_regular"
+        android:gravity="center"
+        android:layout_margin="20dp"
+        android:text="앱 시작하기"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:clickable="true"
+        app:layout_constraintEnd_toEndOf="@+id/introduceAppcback"
+        app:layout_constraintTop_toBottomOf="@+id/introduceAppcTv3"
+        app:layout_constraintBottom_toBottomOf="@+id/introduceAppcback"
+        android:contentDescription="앱 시작하기, 버튼" />
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/menuBottomNav"
         android:layout_width="match_parent"
