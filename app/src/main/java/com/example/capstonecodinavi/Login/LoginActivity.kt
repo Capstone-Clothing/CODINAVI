@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import com.example.capstonecodinavi.BuildConfig
+import com.example.capstonecodinavi.Guide.IntroduceAppBtn
 import com.example.capstonecodinavi.Main.MainActivity
 import com.example.capstonecodinavi.R
 import com.example.capstonecodinavi.User.UserActivity
@@ -102,7 +103,7 @@ class LoginActivity : AppCompatActivity() {
                 val loginMethod = "google" // 구글 로그인 방법 저장
                 saveLoginMethod(loginMethod) // SharedPreferences에 저장
 
-                moveToMainScreen()  // MainActivity로 이동
+                checkAndMoveToNextScreen() // MainActivity로 이동을 체크하는 새로운 메서드 호출
             } catch (e: ApiException) {
                 // Google Sign In 실패 처리
                 Log.e("[구글 로그인]", "로그인에 실패하였습니다 : ${e.statusCode}")
@@ -163,7 +164,7 @@ class LoginActivity : AppCompatActivity() {
                 saveLoginStatus(true)   // 로그인 상태 저장
                 saveLoginMethod("kakao")   // 카카오 로그인 방법 저장
 
-                moveToMainScreen()  // MainActivity로 이동
+                checkAndMoveToNextScreen()  // MainActivity로 이동을 체크하는 새로운 메서드 호출
             } else {
                 Log.d("[카카오 로그인]", "토큰 == null error == null")
             }
@@ -198,6 +199,27 @@ class LoginActivity : AppCompatActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish() // 현재 Activity 종료
+    }
+
+    // MainActivity 또는 IntroduceAppBtn으로 이동
+    private fun checkAndMoveToNextScreen() {
+        val sharedPref = getSharedPreferences("app_preferences", MODE_PRIVATE)
+        val hasShownIntroduce = sharedPref.getBoolean("hasShownIntroduceAppBtn", false)
+
+        if (!hasShownIntroduce) {
+            // IntroduceAppBtn 액티비티를 한 번도 보여준 적이 없는 경우
+            val editor = sharedPref.edit()
+            editor.putBoolean("hasShownIntroduceAppBtn", true)
+            editor.apply()
+
+            val intent = Intent(this, IntroduceAppBtn::class.java)
+            startActivity(intent)
+        } else {
+            // MainActivity로 이동
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+        finish()
     }
 
     // 로그인 상태 저장
