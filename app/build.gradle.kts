@@ -1,3 +1,7 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -5,9 +9,17 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
 }
 
+// 선언 및 키값 불러오기
+val properties = Properties()
+properties.load(FileInputStream(rootProject.file("local.properties")))
+
 android {
     namespace = "com.example.capstonecodinavi"
     compileSdk = 34
+
+    buildFeatures {
+        buildConfig = true
+    }
 
     defaultConfig {
         applicationId = "com.example.capstonecodinavi"
@@ -17,6 +29,12 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        // 타입 - 키 - 값
+        buildConfigField ("String", "KAKAO_NATIVE_APP_KEY", getApiKey("KAKAO_NATIVE_APP_KEY"))
+
+        // 매니페스트에서 사용
+        manifestPlaceholders["KAKAO_NATIVE_APP_KEY"] = "\"${properties["KAKAO_NATIVE_APP_KEY"]}\""
     }
 
     buildTypes {
@@ -40,6 +58,11 @@ android {
     }
 }
 
+// local.properties 내부에서 key 값을 가져오는 함수
+fun getApiKey(propertyKey: String): String {
+    return gradleLocalProperties(rootDir).getProperty(propertyKey)
+}
+
 dependencies {
 
 
@@ -56,11 +79,13 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
-
     //현재 위치
     implementation ("com.google.android.gms:play-services-location:21.0.1")
 
-    // 로그인
+    // 카카오 로그인
+    implementation("com.kakao.sdk:v2-user:2.8.6")
+
+    // 구글 로그인
     implementation ("com.google.android.gms:play-services-auth:21.0.0")
 
     implementation("com.google.android.gms:play-services-location:21.0.1")
@@ -81,5 +106,8 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
     implementation("androidx.navigation:navigation-runtime-ktx:2.7.7")
+
+    // 하단바(BottomNavigationView)
+    implementation("com.google.android.material:material:1.11.0")
 
 }

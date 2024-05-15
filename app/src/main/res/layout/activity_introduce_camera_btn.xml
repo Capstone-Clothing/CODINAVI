@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".Guide.IntroduceCameraBtn">
 
@@ -13,64 +13,84 @@
         android:id="@+id/frameLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/rectangle_3"
+        android:background="#2D0F51"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" >
-
-        <ImageButton
-            android:id="@+id/homeBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/home"
-            android:contentDescription="홈"
-            android:background="@android:color/transparent"
-            android:layout_gravity="left" />
 
         <TextView
             android:id="@+id/codinavi"
             android:layout_width="wrap_content"
             android:layout_height="53dp"
             android:fontFamily="@font/bakbakone_regular"
-            android:gravity="center"
             android:importantForAccessibility="no"
+            android:layout_gravity="center"
             android:text="CODINAVI"
-            android:textColor="#2D0F51"
-            android:textSize="35sp"
-            android:layout_gravity="center" />
+            android:textColor="#FFFFFF"
+            android:textSize="35sp" />
 
         <ImageButton
-            android:id="@+id/profileBtn"
+            android:id="@+id/back_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/profile"
-            android:contentDescription="마이페이지"
-            android:background="@android:color/transparent"
-            android:layout_gravity="right" />
+            android:layout_gravity="center"
+            android:layout_marginRight="170dp"
+            android:background="@drawable/back_btn"
+            android:contentDescription="뒤로가기" />
+
     </FrameLayout>
 
-
-    <ImageView
-        android:id="@+id/introduceCameraV"
-        android:layout_width="328dp"
-        android:layout_height="550dp"
+    <View
+        android:id="@+id/introduceCameraback"
+        android:layout_width="330dp"
+        android:layout_height="530dp"
         android:background="@drawable/rectangle_1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/menuBottomNav" />
 
     <TextView
-        android:id="@+id/introduceCameraTv"
+        android:id="@+id/introduceCameraTV"
         android:layout_width="291dp"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/soyo_maple_regular"
-        android:lineSpacingExtra="10dp"
         android:text="사용자가 선택한 옷을 카메라로 촬영하면 그 옷에 대한 설명과 어울리는 코디를 추천받을 수 있습니다.\n카메라로 촬영된 옷은 데이터에 저장됩니다.\n\n추천 기능에는 코디 추천과 색상 추천이 있습니다. \n\n코디 추천은 상의, 하의, 겉옷으로 나뉘며 인식된 옷과 어울리는 조합의 옷을 추천합니다. \n\n색상 추천은 인식된 옷과 어울리는 색상을 추천합니다."
+        android:fontFamily="@font/soyo_maple_regular"
         android:textColor="@color/black"
-        android:textSize="22sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:lineSpacingExtra="10dp"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/introduceCameraback"
+        app:layout_constraintBottom_toBottomOf="@+id/introduceCameraback"/>
+
+    <TextView
+        android:id="@+id/CameraTVBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/soyo_maple_regular"
+        android:gravity="center"
+        android:layout_marginRight="20dp"
+        android:text="촬영하러가기"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="@+id/introduceCameraback"
+        app:layout_constraintTop_toBottomOf="@+id/introduceCameraTV"
+        app:layout_constraintEnd_toEndOf="@+id/introduceCameraback"
+        android:contentDescription="촬영하러가기, 버튼" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/menuBottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangle_3"
+        app:itemActiveIndicatorStyle="@android:color/transparent"
+        app:itemIconSize="90dp"
+        app:itemIconTint="@color/white"
+        app:labelVisibilityMode="unlabeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/menu_bottom" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

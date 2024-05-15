@@ -32,14 +32,20 @@ class OtherlocationActivity : AppCompatActivity() {
         intent.getStringExtra("address")?.let { getLatLng(it) }
     }
     private fun action() {
-        binding.homeBtn.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-        }
-
-        binding.profileBtn.setOnClickListener {
-            val intent = Intent(this, UserActivity::class.java)
-            startActivity(intent)
+        binding.menuBottomNav.setOnItemSelectedListener { menuItem ->
+            when(menuItem.itemId) {
+                R.id.menu_home -> {
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                R.id.menu_user -> {
+                    val intent = Intent(this, UserActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                else -> false
+            }
         }
     }
 
