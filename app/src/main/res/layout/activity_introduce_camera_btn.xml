@@ -70,6 +70,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/soyo_maple_regular"
         android:gravity="center"
+        android:layout_marginRight="20dp"
         android:text="촬영하러가기"
         android:textColor="@color/black"
         android:textSize="20sp"
