@@ -5,13 +5,10 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
-import android.speech.SpeechRecognizer
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startActivity
 import com.example.capstonecodinavi.Main.MainActivity
 import com.example.capstonecodinavi.R
 import com.example.capstonecodinavi.User.UserActivity
@@ -60,13 +57,13 @@ class SearchOtherlocation : AppCompatActivity() {
         if (requestCode == 123 && resultCode == RESULT_OK && data != null) {
             val matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
             val result = matches?.get(0)
-            // 여기서 인식된 음성 결과(result)를 처리하면 됩니다.
+            // 여기서 인식된 음성 결과(result) 처리
             binding.searchEt.setText(result)
         }
     }
 
     private fun action() {
-        // <말하기> 버튼 클릭 시 음성인식 시작
+        // speechBtn 클릭 시 음성인식 시작
         binding.speechBtn.setOnClickListener {
             startSpeechRecognition()
         }
