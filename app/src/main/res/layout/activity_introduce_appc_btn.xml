@@ -44,11 +44,11 @@
         android:id="@+id/introduceAppcback"
         android:layout_width="330dp"
         android:layout_height="530dp"
-        android:layout_marginTop="30dp"
         android:background="@drawable/rectangle_1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+        app:layout_constraintBottom_toTopOf="@+id/menuBottomNav" />
 
     <TextView
         android:id="@+id/introduceAppcTv1"
