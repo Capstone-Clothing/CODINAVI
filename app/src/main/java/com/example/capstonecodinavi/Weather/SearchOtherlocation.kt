@@ -63,6 +63,10 @@ class SearchOtherlocation : AppCompatActivity() {
     }
 
     private fun action() {
+        binding.backBtn.setOnClickListener {
+            finish()
+        }
+
         // speechBtn 클릭 시 음성인식 시작
         binding.speechBtn.setOnClickListener {
             startSpeechRecognition()

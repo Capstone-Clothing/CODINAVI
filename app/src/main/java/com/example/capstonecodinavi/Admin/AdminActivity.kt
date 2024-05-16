@@ -35,6 +35,10 @@ class AdminActivity : AppCompatActivity() {
     }
 
     private fun action() {
+        binding.backBtn.setOnClickListener {
+            finish()
+        }
+
         binding.logoutBtn.setOnClickListener {
             logout()
         }

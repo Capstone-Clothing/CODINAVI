@@ -18,6 +18,10 @@ class GenderActivity : AppCompatActivity() {
     }
 
     private fun action() {
+        binding.backBtn.setOnClickListener {
+            finish()
+        }
+
         binding.genderChangeBtn.setOnClickListener {
 
         }

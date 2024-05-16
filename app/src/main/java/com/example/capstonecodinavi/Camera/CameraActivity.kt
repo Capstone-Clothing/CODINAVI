@@ -38,6 +38,10 @@ class CameraActivity : AppCompatActivity() {
     }
 
     private fun action() {
+        binding.backBtn.setOnClickListener {
+            finish()
+        }
+
         binding.captureBtn.setOnClickListener {
             val navFragment: NavHostFragment = binding.fragmentContainer.getFragment()
             val cameraFragment: CameraFragment = navFragment.childFragmentManager.fragments[0] as CameraFragment

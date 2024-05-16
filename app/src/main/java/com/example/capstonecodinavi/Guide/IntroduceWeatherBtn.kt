@@ -24,6 +24,10 @@ class IntroduceWeatherBtn : AppCompatActivity() {
     }
 
     private fun action() {
+        binding.backBtn.setOnClickListener {
+            finish()
+        }
+
         binding.menuBottomNav.setOnItemSelectedListener { menuItem ->
             when(menuItem.itemId) {
                 R.id.menu_home -> {
