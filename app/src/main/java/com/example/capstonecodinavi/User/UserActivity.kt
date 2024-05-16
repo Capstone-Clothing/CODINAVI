@@ -54,6 +54,10 @@ class UserActivity : AppCompatActivity() {
     }
 
     private fun action() {
+        binding.backBtn.setOnClickListener {
+            finish()
+        }
+
         binding.genderBtn.setOnClickListener {
             val intent = Intent(this, GenderActivity::class.java)
             startActivity(intent)

@@ -40,22 +40,47 @@
 
     </FrameLayout>
 
-    <TextView
-        android:id="@+id/introduceWeatherTV"
+    <View
+        android:id="@+id/introduceWeatherback"
         android:layout_width="330dp"
-        android:layout_height="wrap_content"
+        android:layout_height="280dp"
         android:background="@drawable/rectangle_1"
-        android:text="사용자의 현재 위치를 기반으로 날씨 정보를 제공하고, 날씨에 맞은 옷차림을 추천합니다.\n\n또한, 사용자가 원하는 지역을 입력하여 다른 지역의 날씨와 그에 따른 옷차림을 추천받을 수 있습니다."
-        android:fontFamily="@font/soyo_maple_regular"
-        android:textSize="22sp"
-        android:textColor="@color/black"
-        android:lineSpacingExtra="10dp"
-        android:padding="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout"
         app:layout_constraintBottom_toTopOf="@+id/menuBottomNav"
-        app:layout_constraintVertical_bias="0.1" />
+        app:layout_constraintVertical_bias="0.1"/>
+
+    <TextView
+        android:id="@+id/introduceCameraTV"
+        android:layout_width="291dp"
+        android:layout_height="wrap_content"
+        android:text="사용자의 현재 위치를 기반으로 날씨 정보를 제공하고, 날씨에 맞은 옷차림을 추천합니다.\n\n또한, 사용자가 원하는 지역을 입력하여 다른 지역의 날씨와 그에 따른 옷차림을 추천받을 수 있습니다."
+        android:fontFamily="@font/soyo_maple_regular"
+        android:textColor="@color/black"
+        android:lineSpacingExtra="10dp"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/introduceWeatherback"
+        app:layout_constraintBottom_toBottomOf="@+id/introduceWeatherback" />
+
+    <TextView
+        android:id="@+id/weatherTVBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/soyo_maple_regular"
+        android:gravity="center"
+        android:layout_marginRight="20dp"
+        android:text="날씨보러가기"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="@+id/introduceWeatherback"
+        app:layout_constraintTop_toBottomOf="@+id/introduceCameraTV"
+        app:layout_constraintEnd_toEndOf="@+id/introduceWeatherback"
+        android:contentDescription="날씨보러가기, 버튼" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/menuBottomNav"

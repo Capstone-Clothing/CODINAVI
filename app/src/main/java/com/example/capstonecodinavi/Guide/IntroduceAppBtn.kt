@@ -19,6 +19,10 @@ class IntroduceAppBtn : AppCompatActivity() {
     }
 
     private fun action() {
+        binding.backBtn.setOnClickListener {
+            finish()
+        }
+
         binding.nextBtn.setOnClickListener {
             val intent = Intent( this, IntroduceAppcBtn::class.java)
             startActivity(intent)

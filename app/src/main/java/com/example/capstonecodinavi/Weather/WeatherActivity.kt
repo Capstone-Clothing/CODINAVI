@@ -64,6 +64,10 @@ class WeatherActivity : AppCompatActivity() {
         }
     }
     private fun action() {
+        binding.backBtn.setOnClickListener {
+            finish()
+        }
+
         binding.searchOtherLocationBtn.setOnClickListener {
             val intent = Intent(this, SearchOtherlocation::class.java)
             startActivity(intent)

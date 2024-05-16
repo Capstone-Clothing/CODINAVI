@@ -3,6 +3,8 @@ package com.example.capstonecodinavi.Guide
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import androidx.activity.OnBackPressedCallback
 import com.example.capstonecodinavi.Main.MainActivity
 import com.example.capstonecodinavi.R
 import com.example.capstonecodinavi.User.UserActivity
@@ -19,6 +21,10 @@ class GuideActivity : AppCompatActivity() {
     }
 
     private fun action() {
+        binding.backBtn.setOnClickListener {
+            finish()
+        }
+
         binding.introduceAppBtn.setOnClickListener {
             val intent = Intent( this, IntroduceAppBtn::class.java)
             startActivity(intent)
