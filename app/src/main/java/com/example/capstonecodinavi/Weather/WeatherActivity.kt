@@ -22,11 +22,15 @@ import com.example.capstonecodinavi.Main.MainActivity
 import com.example.capstonecodinavi.R
 import com.example.capstonecodinavi.User.UserActivity
 import com.google.android.gms.location.*
+import com.loopj.android.http.AsyncHttpClient.log
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
 import java.math.RoundingMode
 import java.text.DecimalFormat
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 class WeatherActivity : AppCompatActivity() {
@@ -172,7 +176,8 @@ class WeatherActivity : AppCompatActivity() {
         }
     }
     fun getCurrentWeather(lat: Double, lon: Double) {
-        val url = "https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=2d360c1fe9d2bade8fc08a1679683e24"
+//        val url = "https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=2d360c1fe9d2bade8fc08a1679683e24"
+        val url = "https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=2d360c1fe9d2bade8fc08a1679683e24"
         val request = object :
             StringRequest(
                 Method.GET,
@@ -180,8 +185,29 @@ class WeatherActivity : AppCompatActivity() {
                 Response.Listener { response ->
                     try {
                         val jsonObject = JSONObject(response)
-                        val weather = jsonObject.getJSONArray("weather").getJSONObject(0).getString("main")
-                        val kelvin = jsonObject.getJSONObject("main").getString("temp").toDouble()
+
+                        // 날씨
+                        val weatherList = jsonObject.getJSONArray("list")
+                        var weather = ArrayList<String>();
+
+                        for (i in 0 until weatherList.length()) {
+
+                            val time = jsonObject.getJSONArray("list").getJSONObject(i).getString("dt_txt")
+
+                            val nowTime = LocalDateTime.now();
+                            val formatedNowTime = nowTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+
+                            val substringTime = time.substring(0 until 10)
+                            val substringNowTime = formatedNowTime.substring(0 until 10)
+
+                            if (substringTime == substringNowTime) {
+                                weather.add(jsonObject.getJSONArray("list").getJSONObject(i).getJSONArray("weather").getJSONObject(0).getString("main"))
+                            }
+                        }
+                        Log.d("checkWeatherList = ", "$weather")
+
+                        // 온도
+                        val kelvin = jsonObject.getJSONArray("list").getJSONObject(0).getJSONObject("main").getString("temp").toDouble()
                         var celsius = changeKelvinToCelsius(kelvin)
                         var weatherStr: String
 
