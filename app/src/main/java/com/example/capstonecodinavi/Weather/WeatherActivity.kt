@@ -175,6 +175,12 @@ class WeatherActivity : AppCompatActivity() {
             }
         }
     }
+
+    /*TODO : openweathermap에서 받아온 응답의 결과가 오늘의 날짜이면서 현재의 시간을 기점으로 이 시간 이후의 결과를 받아와야 함.
+            우선 api의 응답이 3시간 간격으로 응답해줌.
+            예를 들어, 현재 날짜가 5월 24일 새벽 1시라고 하면 5월 24일이면서 새벽 1시 이후이므로 새벽 3시부터의 결과를 받아오면 됨.
+            그리고 그 결과들을 List로 받아와서 순차적으로 앱에 나타나게 하면 됨.
+     */
     fun getCurrentWeather(lat: Double, lon: Double) {
 //        val url = "https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=2d360c1fe9d2bade8fc08a1679683e24"
         val url = "https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=2d360c1fe9d2bade8fc08a1679683e24"
