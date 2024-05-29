@@ -6,13 +6,13 @@
     android:layout_height="match_parent">
 
     <androidx.camera.view.PreviewView
-        android:id="@+id/view_finder"
+        android:id="@+id/previewView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:scaleType="fillStart"/>
 
     <com.example.capstonecodinavi.Camera.OverlayView
-        android:id="@+id/overlay"
+        android:id="@+id/overlayView"
         android:layout_height="match_parent"
         android:layout_width="match_parent" />
 
