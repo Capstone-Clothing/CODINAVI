@@ -64,10 +64,6 @@ class WeatherActivity : AppCompatActivity() {
     }
 
     private fun initData() {
-//        LocationRequest.create().apply {
-//            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-//        }
-
         LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, timeInterval).apply {
 
         }.build()
