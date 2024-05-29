@@ -42,14 +42,17 @@ class WeatherActivity : AppCompatActivity() {
     private var thoroughfare: String? = null
     private var timeInterval: Long = 3
 
+    lateinit var time: String
+
     val nowTime = LocalDateTime.now();
     val formatedNowTime = nowTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
-    val substringNowDay = formatedNowTime.substring(0 until 10)
     val substringNowTime = formatedNowTime.substring(11 until 13)
+    val substringNowTimeToInt = substringNowTime.toInt()
 
     companion object {
         var requestQueue: RequestQueue? = null
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityWeatherBinding.inflate(layoutInflater)
@@ -59,6 +62,7 @@ class WeatherActivity : AppCompatActivity() {
         getCurrentLocation()
         setTitle(" ")
     }
+
     private fun initData() {
 //        LocationRequest.create().apply {
 //            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
@@ -71,6 +75,7 @@ class WeatherActivity : AppCompatActivity() {
             requestQueue = Volley.newRequestQueue(applicationContext)
         }
     }
+
     private fun action() {
         binding.backBtn.setOnClickListener {
             finish()
@@ -98,6 +103,7 @@ class WeatherActivity : AppCompatActivity() {
             }
         }
     }
+
     fun getCurrentLocation() {
         if (!checkPermissionForLocation(this)) return
         val fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
@@ -113,12 +119,31 @@ class WeatherActivity : AppCompatActivity() {
                 success?.let { location ->
                     lat = location.latitude
                     lon = location.longitude
-                    Log.d("www","$lat, $lon")
+                    Log.d("checkLatAndLog","$lat, $lon")
                     getCurrentAddress(lat!!, lon!!)
-                    getCurrentWeather(lat!!, lon!!)
+                    if (substringNowTimeToInt in 0..3) {
+                        time = "03시"
+                    } else if (substringNowTimeToInt in 4 .. 6) {
+                        time = "06시"
+                    } else if (substringNowTimeToInt in 7 .. 9) {
+                        time = "09시"
+                    } else if (substringNowTimeToInt in 10 .. 12) {
+                        time = "12시"
+                    } else if (substringNowTimeToInt in 13 .. 15) {
+                        time = "15시"
+                    } else if (substringNowTimeToInt in 16 .. 18) {
+                        time = "18시"
+                    } else if (substringNowTimeToInt in 19 .. 21) {
+                        time = "21시"
+                    } else if (substringNowTimeToInt in 22 .. 23) {
+                        time = "21시"
+                    }
+                    Log.d("checkTime","$time")
+                    getCurrentWeather(lat!!, lon!!, time)
                 }
             }
     }
+
     fun getCurrentAddress(lat: Double, lng: Double) {
         if (Build.VERSION.SDK_INT < 33) {
             var address: List<Address>
@@ -183,38 +208,20 @@ class WeatherActivity : AppCompatActivity() {
     /*TODO : openweathermap에서 받아온 응답의 결과가 오늘의 날짜이면서 현재의 시간을 기점으로 이 시간 이후의 결과를 받아와야 함.
             1시간 단위로 가져오는 api로 바꾸기.
      */
-    fun getCurrentWeather(lat: Double, lon: Double) {
-        val url = "https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=2d360c1fe9d2bade8fc08a1679683e24"
-        //val url = "https://pro.openweathermap.org/data/2.5/forecast/hourly?lat=44.34&lon=10.99&appid={API key}"
+    fun getCurrentWeather(lat: Double, lon: Double, time: String) {
+        val url = "http://3.34.34.170:8080/weather?lat=${lat}&lon=${lon}&time=$time"
+        Log.d("checkURL","$url")
         val request = object :
             StringRequest(
                 Method.GET,
                 url,
                 Response.Listener { response ->
                     try {
-                        val jsonObject = JSONObject(response)
-
-                        // 날씨
-                        val weatherList = jsonObject.getJSONArray("list")
-                        var weather = ArrayList<String>();
-
-                        for (i in 0 until weatherList.length()) {
-                            val jsonTime = jsonObject.getJSONArray("list").getJSONObject(i).getString("dt_txt")
-                            val substringJsonDay = jsonTime.substring(0 until 10)
-                            val substringJsonTime = jsonTime.substring(11 until 13)
-
-                            if ((substringJsonDay == substringNowDay) && (substringJsonTime >= substringNowTime)) {
-                                weather.add(jsonObject.getJSONArray("list").getJSONObject(i).getJSONArray("weather").getJSONObject(0).getString("main"))
-                            }
-                        }
-                        Log.d("checkSubstringNowTime", "$substringNowTime")
-                        Log.d("checkSubstringTime", "$substringNowDay")
-                        Log.d("checkWeatherList = ", "$weather")
-
-                        // 온도
-                        val kelvin = jsonObject.getJSONArray("list").getJSONObject(0).getJSONObject("main").getString("temp").toDouble()
-                        var celsius = changeKelvinToCelsius(kelvin)
                         var weatherStr: String
+
+                        val jsonObject = JSONObject(response)
+                        val weather = jsonObject.getString("weather")
+                        val temp = jsonObject.getString("temp")
 
                         val weatherIconId = when {
                             weather.contains("Clouds") -> R.drawable.cloudy
@@ -235,8 +242,9 @@ class WeatherActivity : AppCompatActivity() {
 
                         binding.weatherIV.setImageResource(weatherIconId)
                         binding.currentWeatherTv1.text = "날씨 : ${weatherStr}"
-                        binding.currentWeatherTv2.text = "기온 : ${celsius}º"
-                        recommendCodi(celsius.toDouble())
+                        binding.currentWeatherTv2.text = "기온 : ${temp}º"
+
+                        recommendCodi(temp.toDouble())
                     } catch (e: JSONException) {
                         e.printStackTrace()
                     }
@@ -247,12 +255,6 @@ class WeatherActivity : AppCompatActivity() {
         requestQueue!!.add(request)
     }
 
-    fun changeKelvinToCelsius(temp: Double): String {
-        val changedTemp = (temp - 273.15)
-        val df = DecimalFormat("#.#")
-        df.roundingMode = RoundingMode.DOWN
-        return df.format(changedTemp)
-    }
     private fun recommendCodi(temp: Double) {
         val url = "http://3.34.34.170:8080/weather/clothInfo?temp=${temp}"
         val request = object : StringRequest(Method.GET, url, Response.Listener { response ->
