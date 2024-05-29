@@ -29,11 +29,21 @@ class CameraActivity : AppCompatActivity() {
     private var imageCapture: ImageCapture? = null
     private lateinit var photoFile: File
     private lateinit var objectDetectorHelper: ObjectDetectorHelper
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCameraBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setTitle(" ")
+
+        if (savedInstanceState == null) {
+            val navHostFragment = NavHostFragment.create(R.navigation.nav_graph)
+            supportFragmentManager.beginTransaction()
+                .replace(binding.fragmentContainer.id, navHostFragment)
+                .setPrimaryNavigationFragment(navHostFragment)  // 여기에 추가
+                .commit()
+        }
+
         action()
     }
 
@@ -43,15 +53,19 @@ class CameraActivity : AppCompatActivity() {
         }
 
         binding.captureBtn.setOnClickListener {
-            val navFragment: NavHostFragment = binding.fragmentContainer.getFragment()
-            val cameraFragment: CameraFragment = navFragment.childFragmentManager.fragments[0] as CameraFragment
-            imageCapture = cameraFragment.imageCapture
-            photoFile = File(
-                applicationContext.cacheDir,
-                "newImage.jpg"
-            )
-            takePhoto()
-            Log.d("check test", "$imageCapture")
+            val navFragment = supportFragmentManager.findFragmentById(binding.fragmentContainer.id) as NavHostFragment
+            val cameraFragment = navFragment.childFragmentManager.primaryNavigationFragment as? CameraFragment
+            if (cameraFragment != null) {
+                imageCapture = cameraFragment.getImageCapture()
+                photoFile = File(
+                    applicationContext.cacheDir,
+                    "newImage.jpg"
+                )
+                takePhoto()
+                Log.d("check test", "$imageCapture")
+            } else {
+                Log.e("CameraActivity", "CameraFragment not found")
+            }
         }
 
         binding.codiBtn.setOnClickListener {
@@ -64,10 +78,9 @@ class CameraActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        binding.menuBottomNav.setOnItemSelectedListener { menuItem->
-            when(menuItem.itemId) {
+        binding.menuBottomNav.setOnItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
                 R.id.menu_home -> {
-                    // 홈 버튼 클릭 시 MainActivity로 이동
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                     true
@@ -83,7 +96,7 @@ class CameraActivity : AppCompatActivity() {
     }
 
     private fun takePhoto() {
-        val mImageCapture = imageCapture ?:return
+        val mImageCapture = imageCapture ?: return
 
         val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
 
@@ -93,7 +106,7 @@ class CameraActivity : AppCompatActivity() {
             object : ImageCapture.OnImageSavedCallback {
                 override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
                     Glide.with(this@CameraActivity)
-                        .load(outputFileResults.savedUri)
+                        .load(photoFile)
                         .apply(
                             RequestOptions()
                                 .diskCacheStrategy(DiskCacheStrategy.NONE)
@@ -108,16 +121,19 @@ class CameraActivity : AppCompatActivity() {
                     binding.codiBtn.visibility = View.VISIBLE
                     binding.colorBtn.visibility = View.VISIBLE
                     binding.captureBtn.visibility = View.GONE
-                    binding.recogtext.visibility = View.GONE
-                }
 
+                    val navFragment = supportFragmentManager.findFragmentById(binding.fragmentContainer.id) as NavHostFragment
+                    val cameraFragment = navFragment.childFragmentManager.primaryNavigationFragment as? CameraFragment
+                    cameraFragment?.uploadImage(photoFile)
+                }
                 override fun onError(exception: ImageCaptureException) {
-                    Toast.makeText(applicationContext, "실패", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "사진 전송 실패", Toast.LENGTH_SHORT).show()
                 }
             }
         )
     }
+
     fun updateTextView(message: String) {
-        binding.recogtext.text=message
+        binding.recogtext.text = message
     }
 }

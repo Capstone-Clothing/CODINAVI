@@ -2,117 +2,159 @@ package com.example.capstonecodinavi.Camera
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.os.SystemClock
+import android.graphics.RectF
 import android.util.Log
-import org.tensorflow.lite.gpu.CompatibilityList
-import org.tensorflow.lite.support.image.ImageProcessor
+import org.tensorflow.lite.DataType
+import org.tensorflow.lite.Interpreter
+import org.tensorflow.lite.support.common.FileUtil
 import org.tensorflow.lite.support.image.TensorImage
-import org.tensorflow.lite.support.image.ops.Rot90Op
-import org.tensorflow.lite.task.core.BaseOptions
-import org.tensorflow.lite.task.vision.detector.Detection
-import org.tensorflow.lite.task.vision.detector.ObjectDetector
+import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
+import java.io.IOException
+import java.nio.ByteBuffer
+import java.nio.ByteOrder
+import java.nio.MappedByteBuffer
+import kotlin.math.min
 
-class ObjectDetectorHelper(
-    var threshold: Float = 0.5f,
-    var numThreads: Int = 2,
-    var maxResults: Int = 1,
-    var currentDelegate: Int = 0,
-    var currentModel: Int = 0,
-    val context: Context,
-    val objectDetectorListener: DetectorListener?
-) {
-    private var objectDetector: ObjectDetector? = null
+class ObjectDetectorHelper(context: Context) {
+
+    private val interpreter: Interpreter
+    private val labels: List<String>
+    private val imageSize = 416
+    private var viewWidth = 0f
+    private var viewHeight = 0f
+    private val threshold = 0.5f
+    private val minBoxSize = 20f
+
+    private val intValues = IntArray(imageSize * imageSize)
+    private val imgData: ByteBuffer = ByteBuffer.allocateDirect(1 * imageSize * imageSize * 3 * 4).apply {
+        order(ByteOrder.nativeOrder())
+    }
 
     init {
-        setupObjectDetector()
+        val model: MappedByteBuffer = FileUtil.loadMappedFile(context, "best-fp16.tflite")
+        val options = Interpreter.Options().apply {
+            setNumThreads(4)
+        }
+        interpreter = Interpreter(model, options)
+        labels = FileUtil.loadLabels(context, "labels.txt")
+        Log.d("ObjectDetectorHelper", "Labels loaded: ${labels.size} labels")
+        labels.forEachIndexed { index, label ->
+            Log.d("ObjectDetectorHelper", "Label[$index]: $label")
+        }
     }
 
-    fun clearObjectDetector() {
-        objectDetector = null
+    fun setOverlayViewSize(width: Float, height: Float) {
+        viewWidth = width
+        viewHeight = height
     }
 
-    fun setupObjectDetector() {
-        val optionsBuilder =
-            ObjectDetector.ObjectDetectorOptions.builder()
-                .setScoreThreshold(threshold)
-                .setMaxResults(maxResults)
+    fun detect(bitmap: Bitmap): List<DetectionResult> {
+        Log.d("ObjectDetectorHelper", "Original bitmap size: ${bitmap.width}x${bitmap.height}")
 
-        val baseOptionsBuilder = BaseOptions.builder().setNumThreads(numThreads)
+        // 이미지 전처리 과정
+        val resizedBitmap = Bitmap.createScaledBitmap(bitmap, imageSize, imageSize, true)
+        val tensorImage = preprocessImage(resizedBitmap)
 
-        when (currentDelegate) {
-            DELEGATE_CPU -> {
+        val input = tensorImage.tensorBuffer
+        val output = TensorBuffer.createFixedSize(intArrayOf(1, 10647, 13), DataType.FLOAT32)
+        interpreter.run(input.buffer, output.buffer.rewind())
+        val outputArray = output.floatArray
 
+        val detectionResults = processOutput(output)
+        detectionResults.forEach { result ->
+            Log.d("ObjectDetectorHelper", "Detected object: ${result.label}, Confidence: ${result.confidence}, BoundingBox: ${result.boundingBox}")
+        }
+
+        return detectionResults
+    }
+
+    private fun preprocessImage(bitmap: Bitmap): TensorImage {
+        bitmap.getPixels(intValues, 0, bitmap.width, 0, 0, bitmap.width, bitmap.height)
+
+        imgData.rewind()
+        for (i in 0 until imageSize) {
+            for (j in 0 until imageSize) {
+                val pixelValue = intValues[i * imageSize + j]
+                imgData.putFloat(((pixelValue shr 16 and 0xFF) - 0f) / 255.0f)
+                imgData.putFloat(((pixelValue shr 8 and 0xFF) - 0f) / 255.0f)
+                imgData.putFloat(((pixelValue and 0xFF) - 0f) / 255.0f)
             }
-            DELEGATE_GPU -> {
-                if (CompatibilityList().isDelegateSupportedOnThisDevice) {
-                    baseOptionsBuilder.useGpu()
+        }
+
+        val inputShape = intArrayOf(1, imageSize, imageSize, 3)
+        val tensorBuffer = TensorBuffer.createFixedSize(inputShape, DataType.FLOAT32)
+        tensorBuffer.loadBuffer(imgData)
+
+        val tensorImage = TensorImage(DataType.FLOAT32)
+        tensorImage.load(tensorBuffer)
+
+        return tensorImage
+    }
+
+    private fun processOutput(output: TensorBuffer): List<DetectionResult> {
+        val results = mutableListOf<DetectionResult>()
+        val outputArray = output.floatArray
+        val gridWidth = 10647
+        val numClasses = labels.size
+
+        if (outputArray.size != gridWidth * (5 + numClasses)) {
+            throw IllegalArgumentException("Output array size mismatch. Expected ${gridWidth * (5 + numClasses)} but got ${outputArray.size}")
+        }
+
+        var maxConfidence = 0f
+        var bestResult: DetectionResult? = null
+
+        for (i in 0 until gridWidth) {
+            val offset = i * (5 + numClasses)
+            val confidence = outputArray[offset + 4]
+
+            if (confidence >= threshold && confidence > maxConfidence) {
+                val xCenterNorm = outputArray[offset]
+                val yCenterNorm = outputArray[offset + 1]
+                val widthNorm = outputArray[offset + 2]
+                val heightNorm = outputArray[offset + 3]
+
+                val xCenter = xCenterNorm * viewWidth
+                val yCenter = yCenterNorm * viewHeight
+                val width = widthNorm * viewWidth
+                val height = heightNorm * viewHeight
+
+                val x1 = xCenter - width / 2
+                val y1 = yCenter - height / 2
+                val x2 = xCenter + width / 2
+                val y2 = yCenter + height / 2
+
+                if (width > minBoxSize && height > minBoxSize && x1 >= 0 && y1 >= 0 && x2 <= viewWidth && y2 <= viewHeight) {
+                    var maxClass = -1
+                    var maxClassProb = 0f
+                    for (c in 0 until numClasses) {
+                        val classProb = outputArray[offset + 5 + c]
+                        if (classProb > maxClassProb) {
+                            maxClassProb = classProb
+                            maxClass = c
+                        }
+                    }
+
+                    if (maxClass != -1 && maxClass < labels.size) {
+                        val boundingBox = RectF(x1, y1, x2, y2)
+                        val label = labels[maxClass]
+                        bestResult = DetectionResult(boundingBox, confidence, label)
+                        maxConfidence = confidence
+                        Log.d("ObjectDetectorHelper", "Best detection updated - Class: $maxClass, Label: $label, BoundingBox: $boundingBox, Confidence: $confidence")
+                    }
                 } else {
-                    objectDetectorListener?.onError("GPU is not supported on this device")
+                    Log.d("ObjectDetectorHelper", "Filtered out invalid bounding box - Size: ${width}x${height}, Coordinates: (${x1}, ${y1}, ${x2}, ${y2})")
                 }
             }
-            DELEGATE_NNAPI -> {
-                baseOptionsBuilder.useNnapi()
-            }
         }
 
-        optionsBuilder.setBaseOptions(baseOptionsBuilder.build())
-
-        val modelName =
-            when (currentModel) {
-                MODEL_MOBILENETV1 -> "lite-model_ssd_mobilenet_v1_1_metadata_2.tflite"
-                MODEL_EFFICIENTDETV0 -> "lite-model_efficient_lite0_detection_metadata_1.tflite"
-                MODEL_EFFICIENTDETV1 -> "lite-model_efficient_lite1_detection_metadata_1.tflite"
-                MODEL_EFFICIENTDETV2 -> "lite-model_efficient_lite2_detection_metadata_1.tflite"
-                else -> "mobilenetv1.tflite"
-            }
-
-        try {
-            objectDetector =
-                ObjectDetector.createFromFileAndOptions(context, modelName, optionsBuilder.build())
-        } catch (e: IllegalStateException) {
-            objectDetectorListener?.onError(
-                "Object detector failed to initialize. See error logs for details"
-            )
-            Log.e("Test", "TFLite failed to load model with error: " + e.message)
-        }
-    }
-
-    fun detect(image: Bitmap, imageRotation: Int) {
-        if (objectDetector == null) {
-            setupObjectDetector()
-        }
-
-        var inferenceTime = SystemClock.uptimeMillis()
-
-        val imageProcessor =
-            ImageProcessor.Builder()
-                .add(Rot90Op(-imageRotation / 90))
-                .build()
-
-        val tensorImage = imageProcessor.process(TensorImage.fromBitmap(image))
-
-        val results = objectDetector?.detect(tensorImage)
-        inferenceTime = SystemClock.uptimeMillis() - inferenceTime
-        objectDetectorListener?.onResults( results, inferenceTime, tensorImage.height, tensorImage.width)
-    }
-
-    interface DetectorListener {
-        fun onError(error: String)
-        fun onResults(
-            results: MutableList<Detection>?,
-            inferenceTime: Long,
-            imageHeight: Int,
-            imageWidth: Int
-        )
-    }
-
-    companion object {
-        const val DELEGATE_CPU = 0
-        const val DELEGATE_GPU = 1
-        const val DELEGATE_NNAPI = 2
-        const val MODEL_MOBILENETV1 = 0
-        const val MODEL_EFFICIENTDETV0 = 1
-        const val MODEL_EFFICIENTDETV1 = 2
-        const val MODEL_EFFICIENTDETV2 = 3
+        bestResult?.let { results.add(it) }
+        return results
     }
 }
+
+data class DetectionResult(
+    val boundingBox: RectF,
+    val confidence: Float,
+    val label: String
+)

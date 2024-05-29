@@ -1,197 +1,235 @@
 package com.example.capstonecodinavi.Camera
 
-import android.annotation.SuppressLint
-import android.content.res.Configuration
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.ImageFormat
+import android.graphics.Rect
+import android.graphics.SurfaceTexture
+import android.graphics.YuvImage
 import android.os.Bundle
 import android.util.Log
+import android.util.Size
 import android.view.LayoutInflater
+import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.camera.core.AspectRatio
-import androidx.camera.core.Camera
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
-import androidx.camera.core.ImageAnalysis.OUTPUT_IMAGE_FORMAT_RGBA_8888
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageProxy
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
 import com.example.capstonecodinavi.R
-import com.example.capstonecodinavi.Recommend.ConfirmActivity
 import com.example.capstonecodinavi.databinding.FragmentCameraBinding
-import java.util.LinkedList
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
-import org.tensorflow.lite.*
-import org.tensorflow.lite.task.vision.detector.Detection
 
-class CameraFragment : Fragment(), ObjectDetectorHelper.DetectorListener {
+class CameraFragment : Fragment() {
 
-    var imageCapture: ImageCapture? = null
-    private val TAG = "ObjectDetection"
-
-    private var _fragmentCameraBinding: FragmentCameraBinding? = null
-
-    private val fragmentCameraBinding
-        get() = _fragmentCameraBinding!!
-
-    private lateinit var objectDetectorHelper: ObjectDetectorHelper
-    private lateinit var bitmapBuffer: Bitmap
-    private var preview: Preview? = null
-    private var imageAnalyzer: ImageAnalysis? = null
-    private var camera: Camera? = null
-    private var cameraProvider: ProcessCameraProvider? = null
-
+    private lateinit var binding: FragmentCameraBinding
     private lateinit var cameraExecutor: ExecutorService
-
-    override fun onResume() {
-        super.onResume()
-        if (!PermissionsFragment.hasPermissions(requireContext())) {
-            Navigation.findNavController(requireActivity(), R.id.fragment_container)
-                .navigate(CameraFragmentDirections.actionCameraToPermissions())
-        }
-    }
-
-    override fun onDestroyView() {
-        //_fragmentCameraBinding = null
-        super.onDestroyView()
-        cameraExecutor.shutdown()
-    }
+    private var imageCapture: ImageCapture? = null
+    private lateinit var overlayView: OverlayView
+    private lateinit var objectDetectorHelper: ObjectDetectorHelper
+    private var isOverlayViewReady = false
+    private var pendingImageProxy: ImageProxy? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        _fragmentCameraBinding = FragmentCameraBinding.inflate(inflater, container, false)
-
-        return fragmentCameraBinding.root
+    ): View? {
+        binding = FragmentCameraBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    @SuppressLint("MissingPermission")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        overlayView = view.findViewById(R.id.overlayView)
+        objectDetectorHelper = ObjectDetectorHelper(requireContext())
 
-        objectDetectorHelper = ObjectDetectorHelper(
-            context = requireContext(),
-            objectDetectorListener = this)
+        overlayView.surfaceTextureListener = object : TextureView.SurfaceTextureListener {
+            override fun onSurfaceTextureAvailable(surface: SurfaceTexture, width: Int, height: Int) {
+                isOverlayViewReady = true
+                objectDetectorHelper.setOverlayViewSize(overlayView.width.toFloat(), overlayView.height.toFloat())
+                pendingImageProxy?.let {
+                    processImageProxy(it)
+                    pendingImageProxy = null
+                }
+            }
+
+            override fun onSurfaceTextureSizeChanged(surface: SurfaceTexture, width: Int, height: Int) {
+                isOverlayViewReady = true
+            }
+
+            override fun onSurfaceTextureDestroyed(surface: SurfaceTexture): Boolean {
+                isOverlayViewReady = false
+                return true
+            }
+
+            override fun onSurfaceTextureUpdated(surface: SurfaceTexture) {
+                // Do nothing
+            }
+        }
 
         cameraExecutor = Executors.newSingleThreadExecutor()
-
-        fragmentCameraBinding.viewFinder.post {
-            setUpCamera()
-        }
+        startCamera()
     }
-    private fun setUpCamera() {
+
+    private fun startCamera() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
-        cameraProviderFuture.addListener(
-            {
-                imageCapture = ImageCapture.Builder().build()
-                cameraProvider = cameraProviderFuture.get()
-
-                bindCameraUseCases()
-            },
-            ContextCompat.getMainExecutor(requireContext())
-        )
-    }
-    @SuppressLint("UnsafeOptInUsageError")
-    private fun bindCameraUseCases() {
-
-        val cameraProvider =
-            cameraProvider ?: throw IllegalStateException("Camera initialization failed.")
-
-        val cameraSelector =
-            CameraSelector.Builder().requireLensFacing(CameraSelector.LENS_FACING_BACK).build()
-
-        preview =
-            Preview.Builder()
-                .setTargetAspectRatio(AspectRatio.RATIO_4_3)
-                .setTargetRotation(fragmentCameraBinding.viewFinder.display.rotation)
-                .build()
-
-        imageAnalyzer =
-            ImageAnalysis.Builder()
-                .setTargetAspectRatio(AspectRatio.RATIO_4_3)
-                .setTargetRotation(fragmentCameraBinding.viewFinder.display.rotation)
+        cameraProviderFuture.addListener({
+            val cameraProvider = cameraProviderFuture.get()
+            val preview = Preview.Builder().build().also {
+                it.setSurfaceProvider(binding.previewView.surfaceProvider)
+            }
+            val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+            val imageAnalysis = ImageAnalysis.Builder()
+                .setTargetResolution(Size(1280, 720))
                 .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
-                .setOutputImageFormat(OUTPUT_IMAGE_FORMAT_RGBA_8888)
                 .build()
-                .also {
-                    it.setAnalyzer(cameraExecutor) { image ->
-                        if (!::bitmapBuffer.isInitialized) {
-                            bitmapBuffer = Bitmap.createBitmap(
-                                image.width,
-                                image.height,
-                                Bitmap.Config.ARGB_8888
-                            )
-                        }
 
-                        detectObjects(image)
-                    }
+            imageCapture = ImageCapture.Builder().build() // ImageCapture 초기화
+
+            imageAnalysis.setAnalyzer(cameraExecutor) { imageProxy ->
+                if (isOverlayViewReady) {
+                    processImageProxy(imageProxy)
+                } else {
+                    pendingImageProxy = imageProxy
                 }
+            }
 
-        try {
-            preview?.setSurfaceProvider(fragmentCameraBinding.viewFinder.surfaceProvider)
-            cameraProvider.unbindAll()
-            cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageAnalyzer, imageCapture)
-        } catch (exc: Exception) {
-            Log.e(TAG, "Use case binding failed", exc)
-        }
+            try {
+                cameraProvider.unbindAll()
+                cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageAnalysis, imageCapture)
+            } catch (exc: Exception) {
+                Log.e("CameraFragment", "Use case binding failed", exc)
+            }
+        }, ContextCompat.getMainExecutor(requireContext()))
     }
 
-    private fun detectObjects(image: ImageProxy) {
-        image.use { bitmapBuffer.copyPixelsFromBuffer(image.planes[0].buffer) }
+    private fun processImageProxy(imageProxy: ImageProxy) {
+        Log.d("CameraFragment", "Processing image proxy")
+        val bitmap = imageProxyToBitmap(imageProxy)
+        val detectionResults = objectDetectorHelper.detect(bitmap)
 
-        val imageRotation = image.imageInfo.rotationDegrees
-        objectDetectorHelper.detect(bitmapBuffer, imageRotation)
-    }
-
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        imageAnalyzer?.targetRotation = fragmentCameraBinding.viewFinder.display.rotation
-    }
-    private var lastMessage = ""
-    override fun onResults(
-        results: MutableList<Detection>?,
-        inferenceTime: Long,
-        imageHeight: Int,
-        imageWidth: Int
-    ) {
         activity?.runOnUiThread {
-            fragmentCameraBinding.overlay.setResults(
-                results ?: LinkedList<Detection>(),
-                imageHeight,
-                imageWidth
-            )
-
-            val newMessage = if (results?.size == 0) {
-                "옷을 정확히 인식시켜주세요"
+            if (overlayView.isAvailable) {
+                Log.d("CameraFragment", "OverlayView surface is available")
+                overlayView.setResults(detectionResults)
+                updateTextView(detectionResults)
             } else {
-                "촬영해주세요"
+                Log.e("CameraFragment", "OverlayView surface is not available, retrying in 100ms")
+                overlayView.postDelayed({
+                    if (overlayView.isAvailable) {
+                        overlayView.setResults(detectionResults)
+                        updateTextView(detectionResults)
+                    } else {
+                        Log.e("CameraFragment", "OverlayView surface is still not available")
+                    }
+                }, 100)
             }
-
-
-            if (newMessage != lastMessage) {
-                updateTextViewInActivity(newMessage)
-                activity?.window?.decorView?.announceForAccessibility(newMessage)
-                lastMessage = newMessage
-            }
-
-            fragmentCameraBinding.overlay.invalidate()
         }
+
+        imageProxy.close()
     }
-    private fun updateTextViewInActivity(message: String) {
+
+    private fun updateTextView(detectionResults: List<DetectionResult>) {
+        val message: String
+        if (detectionResults.isNotEmpty()) {
+            val boundingBox = detectionResults[0].boundingBox
+            val boxWidth = boundingBox.width()
+            val boxHeight = boundingBox.height()
+
+            val minSize = 400
+            val maxSize = 800
+
+            message = when {
+                boxWidth < minSize || boxHeight < minSize -> {
+                    "가까이 가주세요."
+                }
+                boxWidth > maxSize || boxHeight > maxSize -> {
+                    "떨어져 주세요."
+                }
+                else -> {
+                    "사진을 찍어주세요."
+                }
+            }
+        } else {
+            message = "다시 인식해주세요."
+        }
         (activity as? CameraActivity)?.updateTextView(message)
     }
 
-    override fun onError(error: String) {
-        activity?.runOnUiThread {
-            Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
-        }
+    private fun imageProxyToBitmap(imageProxy: ImageProxy): Bitmap {
+        val yBuffer = imageProxy.planes[0].buffer
+        val uBuffer = imageProxy.planes[1].buffer
+        val vBuffer = imageProxy.planes[2].buffer
+
+        val ySize = yBuffer.remaining()
+        val uSize = uBuffer.remaining()
+        val vSize = vBuffer.remaining()
+
+        val nv21 = ByteArray(ySize + uSize + vSize)
+
+        yBuffer.get(nv21, 0, ySize)
+        vBuffer.get(nv21, ySize, vSize)
+        uBuffer.get(nv21, ySize + vSize, uSize)
+
+        val yuvImage = YuvImage(nv21, ImageFormat.NV21, imageProxy.width, imageProxy.height, null)
+        val out = ByteArrayOutputStream()
+        yuvImage.compressToJpeg(Rect(0, 0, imageProxy.width, imageProxy.height), 100, out)
+        val imageBytes = out.toByteArray()
+
+        val bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+        return Bitmap.createScaledBitmap(bitmap, 416, 416, true)
+    }
+    fun uploadImage(file: File) {
+        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val uniqueFileName = "IMG_${timeStamp}.jpg"
+
+        val requestFile = RequestBody.create("image/jpeg".toMediaTypeOrNull(), file)
+        val body = MultipartBody.Part.createFormData("file", uniqueFileName, requestFile)
+
+        val call = RetrofitClient.instance.uploadImage(body)
+        call.enqueue(object : Callback<String> {
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                if (response.isSuccessful) {
+                    Log.d("CameraFragment", "Image upload successful: ${response.body()}")
+                    Toast.makeText(context, "Image upload successful", Toast.LENGTH_SHORT).show()
+                } else {
+                    Log.e("CameraFragment", "Image upload failed: ${response.errorBody()?.string()}")
+                    Toast.makeText(context, "Image upload failed", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Log.e("CameraFragment", "Image upload error: ${t.message}")
+                Toast.makeText(context, "Image upload error", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        cameraExecutor.shutdown()
+    }
+
+
+    fun getImageCapture(): ImageCapture? {
+        return imageCapture
     }
 }

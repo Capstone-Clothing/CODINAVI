@@ -4,96 +4,82 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import android.graphics.Rect
+import android.graphics.PorterDuff
 import android.graphics.RectF
+import android.graphics.SurfaceTexture
 import android.util.AttributeSet
+import android.util.Log
+import android.view.SurfaceHolder
+import android.view.SurfaceView
+import android.view.TextureView
 import android.view.View
-import androidx.core.content.ContextCompat
-import com.example.capstonecodinavi.R
-import org.tensorflow.lite.task.vision.detector.Detection
-import java.util.LinkedList
-import kotlin.math.max
+import androidx.core.os.HandlerCompat.postDelayed
 
-class OverlayView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
 
-    private var results: List<Detection> = LinkedList<Detection>()
-    private var boxPaint = Paint()
-    private var textBackgroundPaint = Paint()
-    private var textPaint = Paint()
+class OverlayView @JvmOverloads constructor(
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+) : TextureView(context, attrs, defStyleAttr), TextureView.SurfaceTextureListener {
 
-    private var scaleFactor: Float = 1f
-
-    private var bounds = Rect()
+    private var detections: List<DetectionResult> = emptyList()
+    private val paint = Paint().apply {
+        color = android.graphics.Color.RED
+        style = Paint.Style.STROKE
+        strokeWidth = 8f
+    }
 
     init {
-        initPaints()
+        surfaceTextureListener = this
     }
 
-    fun clear() {
-        textPaint.reset()
-        textBackgroundPaint.reset()
-        boxPaint.reset()
-        invalidate()
-        initPaints()
-    }
-
-    private fun initPaints() {
-        textBackgroundPaint.color = Color.BLACK
-        textBackgroundPaint.style = Paint.Style.FILL
-        textBackgroundPaint.textSize = 50f
-
-        textPaint.color = Color.WHITE
-        textPaint.style = Paint.Style.FILL
-        textPaint.textSize = 50f
-
-        boxPaint.color = ContextCompat.getColor(context!!, R.color.bounding_box_color)
-        boxPaint.strokeWidth = 8F
-        boxPaint.style = Paint.Style.STROKE
-    }
-
-    override fun draw(canvas: Canvas) {
-        super.draw(canvas)
-
-        for (result in results) {
-            val boundingBox = result.boundingBox
-
-            val top = boundingBox.top * scaleFactor
-            val bottom = boundingBox.bottom * scaleFactor
-            val left = boundingBox.left * scaleFactor
-            val right = boundingBox.right * scaleFactor
-
-            val drawableRect = RectF(left, top, right, bottom)
-            canvas.drawRect(drawableRect, boxPaint)
-
-            val drawableText =
-                result.categories[0].label + " " +
-                        String.format("%.2f", result.categories[0].score)
-
-            textBackgroundPaint.getTextBounds(drawableText, 0, drawableText.length, bounds)
-            val textWidth = bounds.width()
-            val textHeight = bounds.height()
-            canvas.drawRect(
-                left,
-                top,
-                left + textWidth + BOUNDING_RECT_TEXT_PADDING,
-                top + textHeight + BOUNDING_RECT_TEXT_PADDING,
-                textBackgroundPaint
-            )
-
-            canvas.drawText(drawableText, left, top + bounds.height(), textPaint)
+    fun setResults(detections: List<DetectionResult>) {
+        this.detections = detections
+        Log.d("OverlayView", "Detection results set: $detections")
+        detections.forEach {
+            Log.d("OverlayView", "BoundingBox - Left: ${it.boundingBox.left}, Top: ${it.boundingBox.top}, Right: ${it.boundingBox.right}, Bottom: ${it.boundingBox.bottom}, Confidence: ${it.confidence}")
+        }
+        if (isAvailable) {
+            drawDetections()
+        } else {
+            postDelayed({ setResults(detections) }, 100)
         }
     }
 
-    fun setResults(
-        detectionResults: MutableList<Detection>,
-        imageHeight: Int,
-        imageWidth: Int,
-    ) {
-        results = detectionResults
-        scaleFactor = max(width * 1f / imageWidth, height * 1f / imageHeight)
+    private fun drawDetections() {
+        val canvas: Canvas? = lockCanvas()
+        if (canvas != null) {
+            try {
+                synchronized(this) {
+                    canvas.drawColor(0, android.graphics.PorterDuff.Mode.CLEAR)
+                    detections.forEach { detection ->
+                        Log.d("OverlayView", "Drawing BoundingBox - Left: ${detection.boundingBox.left}, Top: ${detection.boundingBox.top}, Right: ${detection.boundingBox.right}, Bottom: ${detection.boundingBox.bottom}")
+                        canvas.drawRect(detection.boundingBox, paint)
+                    }
+                }
+            } finally {
+                unlockCanvasAndPost(canvas)
+            }
+        } else {
+            postDelayed({ drawDetections() }, 100)
+        }
     }
 
-    companion object {
-        private const val BOUNDING_RECT_TEXT_PADDING = 8
+    override fun onSurfaceTextureAvailable(surface: SurfaceTexture, width: Int, height: Int) {
+        if (detections.isNotEmpty()) {
+            drawDetections()
+        }
+    }
+
+    override fun onSurfaceTextureSizeChanged(surface: SurfaceTexture, width: Int, height: Int) {
+        if (detections.isNotEmpty()) {
+            drawDetections()
+        }
+    }
+
+    override fun onSurfaceTextureDestroyed(surface: SurfaceTexture): Boolean {
+        return true
+    }
+
+    override fun onSurfaceTextureUpdated(surface: SurfaceTexture) {
+        // Do nothing
     }
 }
