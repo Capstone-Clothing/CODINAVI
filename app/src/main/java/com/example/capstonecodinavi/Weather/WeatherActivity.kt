@@ -205,7 +205,7 @@ class WeatherActivity : AppCompatActivity() {
             1시간 단위로 가져오는 api로 바꾸기.
      */
     fun getCurrentWeather(lat: Double, lon: Double, time: String) {
-        val url = "http://3.34.34.170:8080/weather?lat=${lat}&lon=${lon}&time=$time"
+        val url = "http://3.34.34.170:8080/weather?lat=${lat}&lon=${lon}&time=${time}"
         Log.d("checkURL","$url")
         val request = object :
             StringRequest(
@@ -267,6 +267,7 @@ class WeatherActivity : AppCompatActivity() {
         request.setShouldCache(false) // 이전 결과가 있어도 새 요청하여 결과 보여주기
         requestQueue!!.add(request)
     }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -281,6 +282,7 @@ class WeatherActivity : AppCompatActivity() {
             }
         }
     }
+
     fun checkPermissionForLocation(context: Context): Boolean {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
