@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context=".Weather.OthertimeActivity">
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#2D0F51"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" >
+
+        <TextView
+            android:id="@+id/codinavi"
+            android:layout_width="wrap_content"
+            android:layout_height="53dp"
+            android:fontFamily="@font/bakbakone_regular"
+            android:importantForAccessibility="no"
+            android:layout_gravity="center"
+            android:text="CODINAVI"
+            android:textColor="#FFFFFF"
+            android:textSize="35sp" />
+
+        <ImageButton
+            android:id="@+id/back_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="170dp"
+            android:background="@drawable/back_btn"
+            android:contentDescription="뒤로가기" />
+    </FrameLayout>
+
+    <View
+        android:id="@+id/weatherback"
+        android:layout_width="330dp"
+        android:layout_height="400dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/rectangle_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
+
+    <!-- 시간 -->
+    <TextView
+        android:id="@+id/timeTv"
+        android:layout_width="291dp"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/weatherback"
+        app:layout_constraintBottom_toTopOf="@+id/temperatureTv" />
+
+    <!-- 날씨 아이콘 -->
+    <ImageView
+        android:id="@+id/weatherIV"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginLeft="40dp"
+        app:layout_constraintStart_toStartOf="@+id/timeTv"
+        app:layout_constraintTop_toTopOf="@+id/temperatureTv"
+        app:layout_constraintBottom_toBottomOf="@+id/temperatureTv"
+        />
+
+    <!-- 기온 -->
+    <TextView
+        android:id="@+id/temperatureTv"
+        android:layout_width="291dp"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        android:gravity="right"
+        android:layout_marginRight="60dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timeTv"
+        app:layout_constraintBottom_toTopOf="@+id/recommendClothTv" />
+
+    <!-- 강수량 -->
+
+    <!-- 습도 -->
+
+    <!-- 코디 추천 text -->
+    <TextView
+        android:id="@+id/recommendClothTv"
+        android:layout_width="291dp"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="10dp"
+        android:text=""
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/temperatureTv"
+        app:layout_constraintBottom_toBottomOf="@+id/weatherback" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/menuBottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangle_3"
+        app:itemActiveIndicatorStyle="@android:color/transparent"
+        app:itemIconSize="90dp"
+        app:itemIconTint="@color/white"
+        app:labelVisibilityMode="unlabeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/menu_bottom" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
