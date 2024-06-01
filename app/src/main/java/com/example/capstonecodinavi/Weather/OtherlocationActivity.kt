@@ -103,9 +103,9 @@ class OtherlocationActivity : AppCompatActivity() {
                         }
 
                         binding.weatherIV.setImageResource(weatherIconId)
-                        binding.currentLocationTv.text = "${intent.getStringExtra("address")}"
-                        binding.currentWeatherTv1.text = "날씨 : ${weatherStr}"
-                        binding.currentWeatherTv2.text = "기온 : ${celsius}º"
+                        binding.locationTv.text = "${intent.getStringExtra("address")}"
+                        binding.weatherTv.text = "날씨 : ${weatherStr}"
+                        binding.temperatureTv.text = "기온 : ${celsius}º"
                         recommendCodi(celsius.toDouble())
                     } catch (e: JSONException) {
                         e.printStackTrace()
