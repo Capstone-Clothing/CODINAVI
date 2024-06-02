@@ -36,6 +36,11 @@ class OtherlocationActivity : AppCompatActivity() {
             finish()
         }
 
+        binding.hourlyWeatherBtn.setOnClickListener {
+            val intent = Intent(this, SearchOthertime::class.java)
+            startActivity(intent)
+        }
+
         binding.menuBottomNav.setOnItemSelectedListener { menuItem ->
             when(menuItem.itemId) {
                 R.id.menu_home -> {

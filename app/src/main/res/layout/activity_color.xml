@@ -82,7 +82,7 @@
         android:fontFamily="@font/soyo_maple_regular"
         android:text="확인하기"
         android:textColor="@color/white"
-        android:textSize="40sp"
+        android:textSize="3540sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

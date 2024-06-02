@@ -43,7 +43,7 @@
     <View
         android:id="@+id/weatherback"
         android:layout_width="330dp"
-        android:layout_height="420dp"
+        android:layout_height="350dp"
         android:layout_marginTop="30dp"
         android:background="@drawable/rectangle_1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -81,7 +81,7 @@
         android:id="@+id/weatherIV"
         android:layout_width="90dp"
         android:layout_height="90dp"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="30dp"
         app:layout_constraintStart_toStartOf="@+id/locationTv"
         app:layout_constraintTop_toTopOf="@+id/weatherTv"
         app:layout_constraintBottom_toBottomOf="@+id/temperatureTv" />
@@ -98,7 +98,7 @@
         app:layout_constraintEnd_toEndOf="@+id/weatherback"
         app:layout_constraintTop_toBottomOf="@+id/locationTv"
         app:layout_constraintBottom_toTopOf="@+id/temperatureTv"
-        app:layout_constraintHorizontal_bias="0.8" />
+        app:layout_constraintHorizontal_bias="0.7" />
 
     <!-- 기온 -->
     <TextView
@@ -140,7 +140,7 @@
         app:layout_constraintStart_toStartOf="@+id/weatherback"
         app:layout_constraintEnd_toEndOf="@+id/weatherback"
         app:layout_constraintTop_toBottomOf="@+id/highLowTempTv"
-        app:layout_constraintBottom_toTopOf="@+id/recommendClothTv"
+        app:layout_constraintBottom_toBottomOf="@+id/weatherback"
         />
 
     <!-- 코디 추천 text -->
@@ -155,8 +155,24 @@
         android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/weatherSummaryTv"
-        app:layout_constraintBottom_toBottomOf="@+id/weatherback" />
+        app:layout_constraintTop_toBottomOf="@+id/weatherback"
+        app:layout_constraintBottom_toTopOf="@+id/hourlyWeatherBtn" />
+
+    <android.widget.Button
+        android:id="@+id/hourlyWeatherBtn"
+        android:layout_width="310dp"
+        android:layout_height="90dp"
+        android:text="시간별 조회하기"
+        android:textColor="@color/white"
+        android:fontFamily="@font/soyo_maple_regular"
+        android:textStyle="bold"
+        android:textSize="35dp"
+        android:background="@drawable/mainbtn"
+        app:layout_constraintTop_toBottomOf="@+id/recommendClothTv"
+        app:layout_constraintBottom_toTopOf="@+id/menuBottomNav"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/menuBottomNav"
