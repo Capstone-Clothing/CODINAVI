@@ -65,3 +65,5 @@ class AdminActivity : AppCompatActivity() {
 }
 
 //test
+
+//test2
