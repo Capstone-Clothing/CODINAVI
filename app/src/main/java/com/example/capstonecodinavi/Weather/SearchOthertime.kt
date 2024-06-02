@@ -6,13 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.capstonecodinavi.Main.MainActivity
 import com.example.capstonecodinavi.R
 import com.example.capstonecodinavi.User.UserActivity
-import com.example.capstonecodinavi.databinding.ActivityOthertimeBinding
+import com.example.capstonecodinavi.databinding.ActivitySearchOthertimeBinding
 
 class SearchOthertime : AppCompatActivity() {
-    lateinit var binding: ActivityOthertimeBinding
+    lateinit var binding: ActivitySearchOthertimeBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityOthertimeBinding.inflate(layoutInflater)
+        binding = ActivitySearchOthertimeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         action()
