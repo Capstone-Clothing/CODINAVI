@@ -78,8 +78,8 @@ class WeatherActivity : AppCompatActivity() {
         }
 
         binding.hourlyWeatherBtn.setOnClickListener {
-            // val intent = Intent(this, HourlyWeatherActivity::class.java)
-            // startActivity(intent)
+            val intent = Intent(this, SearchOthertime::class.java)
+            startActivity(intent)
         }
 
         binding.searchOtherLocationBtn.setOnClickListener {
