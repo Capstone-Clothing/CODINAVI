@@ -4,6 +4,61 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
     tools:context=".Weather.SearchOthertime">
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#2D0F51"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" >
+
+        <TextView
+            android:id="@+id/codinavi"
+            android:layout_width="wrap_content"
+            android:layout_height="53dp"
+            android:fontFamily="@font/bakbakone_regular"
+            android:importantForAccessibility="no"
+            android:layout_gravity="center"
+            android:text="CODINAVI"
+            android:textColor="#FFFFFF"
+            android:textSize="35sp" />
+
+        <ImageButton
+            android:id="@+id/back_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="170dp"
+            android:background="@drawable/back_btn"
+            android:contentDescription="뒤로가기" />
+    </FrameLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+        
+        <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+        </GridLayout>
+    </ScrollView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/menuBottomNav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangle_3"
+        app:itemActiveIndicatorStyle="@android:color/transparent"
+        app:itemIconSize="90dp"
+        app:itemIconTint="@color/white"
+        app:labelVisibilityMode="unlabeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/menu_bottom" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
