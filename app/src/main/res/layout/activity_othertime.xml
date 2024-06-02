@@ -42,7 +42,7 @@
     <View
         android:id="@+id/weatherback"
         android:layout_width="330dp"
-        android:layout_height="420dp"
+        android:layout_height="400dp"
         android:layout_marginTop="30dp"
         android:background="@drawable/rectangle_1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -61,20 +61,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/weatherback"
-        app:layout_constraintBottom_toTopOf="@+id/currentWeatherTv" />
+        app:layout_constraintBottom_toTopOf="@+id/weatherIV" />
 
     <!-- 날씨 아이콘 -->
+
+    <!-- 날씨 -->
     <ImageView
         android:id="@+id/weatherIV"
         android:layout_width="90dp"
         android:layout_height="90dp"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/currentWeatherTv"
         app:layout_constraintStart_toStartOf="@+id/timeTv"
-        app:layout_constraintTop_toTopOf="@+id/currentWeatherTv"
-        app:layout_constraintBottom_toBottomOf="@+id/precipitationTv"
-         />
+        app:layout_constraintTop_toBottomOf="@+id/timeTv"
+        />
 
-    <!-- 날씨 -->
     <TextView
         android:id="@+id/currentWeatherTv"
         android:layout_width="wrap_content"
@@ -82,25 +83,25 @@
         android:text="날씨 : "
         android:textColor="@color/black"
         android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@+id/weatherback"
-        app:layout_constraintEnd_toEndOf="@+id/weatherback"
-        app:layout_constraintTop_toBottomOf="@+id/timeTv"
+        app:layout_constraintStart_toStartOf="@+id/weatherIV"
+        app:layout_constraintEnd_toEndOf="@+id/weatherIV"
+        app:layout_constraintTop_toBottomOf="@+id/weatherIV"
         app:layout_constraintBottom_toTopOf="@+id/temperatureTv"
-        app:layout_constraintHorizontal_bias="0.8"/>
+        />
 
     <!-- 기온 -->
     <TextView
         android:id="@+id/temperatureTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="기온 : "
+        android:text="기온"
         android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@+id/weatherback"
-        app:layout_constraintEnd_toEndOf="@+id/weatherback"
+        android:textSize="30sp"
+        app:layout_constraintStart_toStartOf="@+id/weatherIV"
+        app:layout_constraintEnd_toEndOf="@+id/weatherIV"
         app:layout_constraintTop_toBottomOf="@+id/currentWeatherTv"
-        app:layout_constraintBottom_toTopOf="@+id/humidityTv"
-        app:layout_constraintHorizontal_bias="0.8" />
+        app:layout_constraintBottom_toBottomOf="@+id/weatherback"
+        />
 
     <!-- 습도 -->
     <TextView
@@ -110,9 +111,12 @@
         android:text="습도 : "
         android:textColor="@color/black"
         android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@+id/temperatureTv"
-        app:layout_constraintTop_toBottomOf="@+id/temperatureTv"
+        android:layout_marginTop="50dp"
+        app:layout_constraintStart_toStartOf="@+id/weatherback"
+        app:layout_constraintEnd_toEndOf="@+id/weatherback"
+        app:layout_constraintTop_toBottomOf="@+id/timeTv"
         app:layout_constraintBottom_toTopOf="@+id/precipitationTv"
+        app:layout_constraintHorizontal_bias="0.7"
         />
 
     <!-- 강수량 -->
@@ -123,9 +127,23 @@
         android:text="강수량 : "
         android:textColor="@color/black"
         android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@+id/temperatureTv"
+        app:layout_constraintStart_toStartOf="@+id/humidityTv"
         app:layout_constraintTop_toBottomOf="@+id/humidityTv"
-        app:layout_constraintBottom_toTopOf="@+id/recommendClothTv"
+        app:layout_constraintBottom_toBottomOf="@+id/precipitationProbTv"
+        />
+
+    <!-- 강수확률 -->
+    <TextView
+        android:id="@+id/precipitationProbTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="강수확률 : "
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintStart_toStartOf="@+id/humidityTv"
+        app:layout_constraintTop_toBottomOf="@+id/precipitationTv"
+        app:layout_constraintBottom_toBottomOf="@+id/weatherback"
         />
 
     <!-- 코디 추천 text -->
@@ -140,8 +158,8 @@
         android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/precipitationTv"
-        app:layout_constraintBottom_toBottomOf="@+id/weatherback" />
+        app:layout_constraintTop_toBottomOf="@+id/weatherback"
+        app:layout_constraintBottom_toTopOf="@+id/menuBottomNav" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/menuBottomNav"
