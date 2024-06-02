@@ -29,5 +29,5 @@
 |김주환|장민준|정윤진|최아로인|
 |:---:|:---:|:---:|:---:|
 |![image](https://github.com/Capstone-Clothing/CODINAVI/assets/132319686/bc18d99a-7ee5-4097-ac83-debb52d77256)|![image](https://github.com/Capstone-Clothing/CODINAVI/assets/151013952/5b0c2869-9af6-4622-ad56-a6966412ca03)|![image](https://github.com/Capstone-Clothing/CODINAVI/assets/151013952/2ebaae4c-b371-4933-a116-2c20ff049f68)|![image](https://github.com/Capstone-Clothing/CODINAVI/assets/151013952/8427506a-f31d-435a-99b4-15357e5d6c6d)|
-|[@OrangeKim98](https://github.com/OrangeKim98)|[@JMJ123-SG](https://github.com/JMJ123-SG)|[@yoonjin301](https://github.com/yoonjin301)|[@roin0917](https://github.com/roin0917)|
+|[@OrangeKim98](https://github.com/OrangeKim98)|[@JMJ123-SG](https://github.com/JMJ123-SG)|[@maruru301](https://github.com/maruru301)|[@roin0917](https://github.com/roin0917)|
 
