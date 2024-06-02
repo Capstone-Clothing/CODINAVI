@@ -58,35 +58,39 @@
             android:orientation="horizontal">
 
             <LinearLayout
+                android:id="@+id/hourlyBtn"
                 android:layout_width="100dp"
                 android:layout_height="130dp"
                 android:layout_margin="10dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:background="@drawable/rectangle_1"
+                android:orientation="vertical"
                 android:gravity="center"
                 android:padding="8dp" >
 
+                <!-- 시간 -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="시간"
                     android:textColor="@color/black"
-                    android:textSize="10dp" />
+                    android:textSize="25dp" />
 
                 <!-- 날씨 아이콘 -->
                 <ImageView
                     android:id="@+id/weatherIV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:src="@drawable/snowy" />
 
+                <!-- 기온 -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="기온"
                     android:textColor="@color/black"
-                    android:textSize="10dp" />
+                    android:textSize="25dp" />
             </LinearLayout>
 
 

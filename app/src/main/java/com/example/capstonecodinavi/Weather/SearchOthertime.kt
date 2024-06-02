@@ -24,6 +24,11 @@ class SearchOthertime : AppCompatActivity() {
             finish()
         }
 
+        binding.hourlyBtn.setOnClickListener {
+            val intent = Intent(this, OthertimeActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.menuBottomNav.setOnItemSelectedListener { menuItem->
             when(menuItem.itemId) {
                 R.id.menu_home -> {
