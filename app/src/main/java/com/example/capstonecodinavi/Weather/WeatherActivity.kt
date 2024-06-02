@@ -307,5 +307,3 @@ class WeatherActivity : AppCompatActivity() {
         }
     }
 }
-
-// test
