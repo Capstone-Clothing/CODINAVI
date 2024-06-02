@@ -63,3 +63,5 @@ class AdminActivity : AppCompatActivity() {
         finish()
     }
 }
+
+//test
