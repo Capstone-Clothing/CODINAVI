@@ -40,11 +40,102 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-        
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="53dp">
+
         <GridLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:columnCount="3"
+            android:orientation="horizontal">
+
+            <android.widget.Button
+                android:layout_width="100dp"
+                android:layout_height="130dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/rectangle_1" />
+
+            <android.widget.Button
+                android:layout_width="100dp"
+                android:layout_height="130dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/rectangle_1" />
+
+            <android.widget.Button
+                android:layout_width="100dp"
+                android:layout_height="130dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/rectangle_1" />
+
+            <android.widget.Button
+                android:layout_width="100dp"
+                android:layout_height="130dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/rectangle_1" />
+
+            <android.widget.Button
+                android:layout_width="100dp"
+                android:layout_height="130dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/rectangle_1" />
+
+            <android.widget.Button
+                android:layout_width="100dp"
+                android:layout_height="130dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/rectangle_1" />
+
+            <android.widget.Button
+                android:layout_width="100dp"
+                android:layout_height="130dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/rectangle_1" />
+
+            <android.widget.Button
+                android:layout_width="100dp"
+                android:layout_height="130dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/rectangle_1" />
+
+            <android.widget.Button
+                android:layout_width="100dp"
+                android:layout_height="130dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/rectangle_1" />
+
+            <android.widget.Button
+                android:layout_width="100dp"
+                android:layout_height="130dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/rectangle_1" />
+
+            <android.widget.Button
+                android:layout_width="100dp"
+                android:layout_height="130dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/rectangle_1" />
+
+            <android.widget.Button
+                android:layout_width="100dp"
+                android:layout_height="130dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/rectangle_1" />
+
+            <android.widget.Button
+                android:layout_width="100dp"
+                android:layout_height="130dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/rectangle_1" />
+
+
+            <android.widget.Button
+                android:layout_width="100dp"
+                android:layout_height="130dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/rectangle_1" />
+
 
         </GridLayout>
     </ScrollView>
