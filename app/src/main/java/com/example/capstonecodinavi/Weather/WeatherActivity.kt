@@ -29,7 +29,6 @@ import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.ArrayList
 import java.util.Locale
 
 class WeatherActivity : AppCompatActivity() {
@@ -46,7 +45,7 @@ class WeatherActivity : AppCompatActivity() {
     lateinit var time: String
 
     val nowTime = LocalDateTime.now();
-    val formatedNowTime = nowTime.format(DateTimeFormatter.ofPattern("yyyyMMdd HH:mm:ss"))
+    val formatedNowTime = nowTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
     val substringNowTime = formatedNowTime.substring(11 until 13)
     val substringNowTimeToInt = substringNowTime.toInt()
 
@@ -76,6 +75,11 @@ class WeatherActivity : AppCompatActivity() {
     private fun action() {
         binding.backBtn.setOnClickListener {
             finish()
+        }
+
+        binding.hourlyWeatherBtn.setOnClickListener {
+            val intent = Intent(this, SearchOthertime::class.java)
+            startActivity(intent)
         }
 
         binding.searchOtherLocationBtn.setOnClickListener {
@@ -116,9 +120,27 @@ class WeatherActivity : AppCompatActivity() {
                 success?.let { location ->
                     lat = location.latitude
                     lon = location.longitude
-                    Log.d("checkLatLon", "$lat $lon")
+                    Log.d("checkLatAndLog","$lat, $lon")
                     getCurrentAddress(lat!!, lon!!)
-                    getCurrentWeather(lat!!, lon!!)
+                    if (substringNowTimeToInt in 0..3) {
+                        time = "03시"
+                    } else if (substringNowTimeToInt in 4 .. 6) {
+                        time = "06시"
+                    } else if (substringNowTimeToInt in 7 .. 9) {
+                        time = "09시"
+                    } else if (substringNowTimeToInt in 10 .. 12) {
+                        time = "12시"
+                    } else if (substringNowTimeToInt in 13 .. 15) {
+                        time = "15시"
+                    } else if (substringNowTimeToInt in 16 .. 18) {
+                        time = "18시"
+                    } else if (substringNowTimeToInt in 19 .. 21) {
+                        time = "21시"
+                    } else if (substringNowTimeToInt in 22 .. 23) {
+                        time = "21시"
+                    }
+                    Log.d("checkTime","$time")
+                    getCurrentWeather(lat!!, lon!!, time)
                 }
             }
     }
@@ -187,8 +209,9 @@ class WeatherActivity : AppCompatActivity() {
     /*TODO : openweathermap에서 받아온 응답의 결과가 오늘의 날짜이면서 현재의 시간을 기점으로 이 시간 이후의 결과를 받아와야 함.
             1시간 단위로 가져오는 api로 바꾸기.
      */
-    fun getCurrentWeather(lat: Double, lon: Double) {
-        val url = "http://3.34.34.170:8080/weather?lat=${lat}&lon=${lon}"
+    fun getCurrentWeather(lat: Double, lon: Double, time: String) {
+        val url = "http://3.34.34.170:8080/weather?lat=${lat}&lon=${lon}&time=${time}"
+        Log.d("checkURL","$url")
         val request = object :
             StringRequest(
                 Method.GET,
@@ -196,61 +219,33 @@ class WeatherActivity : AppCompatActivity() {
                 Response.Listener { response ->
                     try {
                         var weatherStr: String
-                        var weatherIconId: Int? = null
-                        lateinit var date: String
-                        lateinit var weather: String
-                        lateinit var weather2: String
-                        lateinit var weatherList: ArrayList<JSONObject>
 
                         val jsonObject = JSONObject(response)
-                        val jsonArray = jsonObject.getJSONArray("infoFromDateList")
+                        val weather = jsonObject.getString("weather")
+                        val temp = jsonObject.getString("temp")
 
-                        for (i in 0 until jsonArray.length()) {
-                            val item = jsonArray.getJSONObject(i)
-                            date = item.getString("date")
-
-                            if (date == formatedNowTime) {
-
-                                weatherList.add(item.getJSONObject("info"))
-                                Log.d("weatherList = ", "$weatherList")
-                                weather = item.getJSONObject("info").getString("weather")
-                                weather2 = item.getJSONObject("info").getString("precipitationType")
-
-                                weatherIconId = when {
-                                    weather.contains("흐림") -> R.drawable.cloudy
-                                    weather.contains("구름많음") -> R.drawable.cloudy
-                                    weather.contains("맑음") -> R.drawable.sunny
-                                    weather2.contains("비") -> R.drawable.rainy
-                                    weather2.contains("눈") -> R.drawable.snowy
-                                    weather2.contains("비 또는 눈") -> R.drawable.rainy
-                                    else -> R.drawable.rainy
-                                }
-                            }
+                        val weatherIconId = when {
+                            weather.contains("Clouds") -> R.drawable.cloudy
+                            weather.contains("Rain") -> R.drawable.rainy
+                            weather.contains("Snow") -> R.drawable.snowy
+                            else -> R.drawable.sunny
                         }
 
-                        if (weather.contains("흐림")) {
+                        if (weather.contains("Clouds")) {
                             weatherStr = "흐림"
-                        } else if (weather.contains("맑음")) {
-                            weatherStr = "맑음"
-                        } else if (weather.contains("구름많음")) {
-                            weatherStr = "구름많음"
-                        } else if (weather2.contains("없음")) {
-                            weatherStr = ""
-                        } else if (weather2.contains("비")) {
+                        } else if (weather.contains("Rain")) {
                             weatherStr = "비"
-                        } else if (weather2.contains("눈")) {
+                        } else if (weather.contains("Snow")) {
                             weatherStr = "눈"
-                        } else if (weather2.contains("비 또는 눈")) {
-                            weatherStr = "비 또는 눈"
                         } else {
-                            weatherStr = "소나기"
+                            weatherStr = "맑음"
                         }
 
-                        binding.weatherIV.setImageResource(weatherIconId!!)
-                        binding.currentWeatherTv1.text = "날씨 : ${weatherStr}"
-//                        binding.currentWeatherTv2.text = "기온 : ${temp}º"
+                        binding.weatherIV.setImageResource(weatherIconId)
+                        binding.currentWeatherTv.text = "날씨 : ${weatherStr}"
+                        binding.temperatureTv.text = "기온 : ${temp}º"
 
-//                        recommendCodi(temp.toDouble())
+                        recommendCodi(temp.toDouble())
                     } catch (e: JSONException) {
                         e.printStackTrace()
                     }
@@ -267,6 +262,7 @@ class WeatherActivity : AppCompatActivity() {
             try {
                 val jsonObject = JSONObject(response)
                 val recInfo = jsonObject.getString("recInfo")
+                Log.d("checkcheck","$response")
                 binding.recommendClothTv.text = recInfo
 
             } catch (e: JSONException) {
@@ -307,5 +303,3 @@ class WeatherActivity : AppCompatActivity() {
         }
     }
 }
-
-// test
