@@ -169,12 +169,11 @@
         android:textStyle="bold"
         android:textSize="30dp"
         android:lineSpacingExtra="10dp"
-        android:layout_marginLeft="20dp"
         android:background="@drawable/mainbtn"
         app:layout_constraintTop_toBottomOf="@+id/recommendClothTv"
         app:layout_constraintBottom_toTopOf="@+id/menuBottomNav"
-        app:layout_constraintRight_toLeftOf="@+id/vertical_centerline"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/weatherback"
+        app:layout_constraintEnd_toStartOf="@+id/searchOtherLocationBtn"
         />
 
     <android.widget.Button
@@ -187,20 +186,12 @@
         android:textStyle="bold"
         android:textSize="30dp"
         android:lineSpacingExtra="10dp"
-        android:layout_marginRight="20dp"
         android:background="@drawable/mainbtn"
         app:layout_constraintTop_toBottomOf="@+id/recommendClothTv"
         app:layout_constraintBottom_toTopOf="@+id/menuBottomNav"
-        app:layout_constraintLeft_toRightOf="@+id/vertical_centerline"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/hourlyWeatherBtn"
+        app:layout_constraintEnd_toEndOf="@+id/weatherback"
         />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/vertical_centerline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent=".50" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/menuBottomNav"
