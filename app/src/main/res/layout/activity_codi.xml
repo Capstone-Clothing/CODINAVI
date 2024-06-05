@@ -68,7 +68,7 @@
         android:id="@+id/confirmBtn"
         android:layout_width="330dp"
         android:layout_height="90dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/mainbtn"
         android:fontFamily="@font/soyo_maple_regular"
         android:text="확인하기"
