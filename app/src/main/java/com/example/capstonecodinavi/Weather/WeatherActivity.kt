@@ -25,8 +25,6 @@ import com.google.android.gms.location.*
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
-import java.math.RoundingMode
-import java.text.DecimalFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.ArrayList
@@ -47,9 +45,11 @@ class WeatherActivity : AppCompatActivity() {
 
     val nowTime = LocalDateTime.now();
     val formatedNowTime = nowTime.format(DateTimeFormatter.ofPattern("yyyyMMdd HH:mm:ss"))
-    val substringNowDateAndTime = formatedNowTime.substring(0 until 8)
+    val substringNowDate = formatedNowTime.substring(0 until 8)
     val substringNowTime = formatedNowTime.substring(9 until 11)
     val substringNowTimeToInt = substringNowTime.toInt()
+
+    private var weatherList: ArrayList<JSONObject> = ArrayList()
 
     companion object {
         var requestQueue: RequestQueue? = null
@@ -196,38 +196,42 @@ class WeatherActivity : AppCompatActivity() {
                 url,
                 Response.Listener { response ->
                     try {
+                        Log.d("checkResponse", "$response")
                         var weatherStr: String
                         var weatherIconId: Int? = null
-                        lateinit var date: String
                         lateinit var weather: String
                         lateinit var weather2: String
-                        lateinit var weatherList: ArrayList<JSONObject>
 
                         val jsonObject = JSONObject(response)
                         val jsonArray = jsonObject.getJSONArray("infoFromDateList")
 
                         for (i in 0 until jsonArray.length()) {
                             val item = jsonArray.getJSONObject(i)
-                            date = item.getString("date")
+                            val date = item.getString("date")
 
-                            if (date == substringNowDateAndTime) {
+                            if (date.equals(substringNowDate)) {
 
                                 weatherList.add(item.getJSONObject("info"))
-                                Log.d("weatherList = ", "$weatherList")
-                                weather = item.getJSONObject("info").getString("weather")
-                                weather2 = item.getJSONObject("info").getString("precipitationType")
 
-                                weatherIconId = when {
-                                    weather.contains("흐림") -> R.drawable.cloudy
-                                    weather.contains("구름많음") -> R.drawable.cloudy
-                                    weather.contains("맑음") -> R.drawable.sunny
-                                    weather2.contains("비") -> R.drawable.rainy
-                                    weather2.contains("눈") -> R.drawable.snowy
-                                    weather2.contains("비 또는 눈") -> R.drawable.rainy
-                                    else -> R.drawable.rainy
-                                }
                             }
                         }
+//                        weather = item.getJSONObject("info").getString("weather")
+//                        weather2 = item.getJSONObject("info").getString("precipitationType")
+
+                        weatherIconId = when {
+                            weather.contains("흐림") -> R.drawable.cloudy
+                            weather.contains("구름많음") -> R.drawable.cloudy
+                            weather.contains("맑음") -> R.drawable.sunny
+                            weather2.contains("비") -> R.drawable.rainy
+                            weather2.contains("눈") -> R.drawable.snowy
+                            weather2.contains("비 또는 눈") -> R.drawable.rainy
+                            else -> R.drawable.rainy
+                        }
+
+                        Log.d("checkWeather = ", weather)
+                        Log.d("checkWeather2 = ", weather2)
+                        Log.d("weatherList = ", "$weatherList")
+
 
                         if (weather.contains("흐림")) {
                             weatherStr = "흐림"
@@ -250,7 +254,6 @@ class WeatherActivity : AppCompatActivity() {
                         binding.weatherIV.setImageResource(weatherIconId!!)
                         binding.currentWeatherTv1.text = "날씨 : ${weatherStr}"
 //                        binding.currentWeatherTv2.text = "기온 : ${temp}º"
-
 //                        recommendCodi(temp.toDouble())
                     } catch (e: JSONException) {
                         e.printStackTrace()
@@ -307,11 +310,5 @@ class WeatherActivity : AppCompatActivity() {
             true
         }
     }
-}
 
-// test
-// first commit
-// first commit - again
-// 진짜 마지막 테스트
-// 아니야 아직
-// 한 발 남았다.
+}
