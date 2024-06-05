@@ -47,7 +47,8 @@ class WeatherActivity : AppCompatActivity() {
 
     val nowTime = LocalDateTime.now();
     val formatedNowTime = nowTime.format(DateTimeFormatter.ofPattern("yyyyMMdd HH:mm:ss"))
-    val substringNowTime = formatedNowTime.substring(11 until 13)
+    val substringNowDateAndTime = formatedNowTime.substring(0 until 8)
+    val substringNowTime = formatedNowTime.substring(9 until 11)
     val substringNowTimeToInt = substringNowTime.toInt()
 
     companion object {
@@ -209,7 +210,7 @@ class WeatherActivity : AppCompatActivity() {
                             val item = jsonArray.getJSONObject(i)
                             date = item.getString("date")
 
-                            if (date == formatedNowTime) {
+                            if (date == substringNowDateAndTime) {
 
                                 weatherList.add(item.getJSONObject("info"))
                                 Log.d("weatherList = ", "$weatherList")
