@@ -93,8 +93,8 @@ class LoginActivity : AppCompatActivity() {
         if (requestCode == RC_SIGN_IN) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
-                Log.d("[구글 로그인]","로그인에 성공하였습니다.")
                 val account = task.getResult(ApiException::class.java)
+                Log.d("[구글 로그인]","로그인에 성공하였습니다.")
                 val username = account?.displayName
 
                 saveUsername(username ?: "Unknown") // 사용자 이름이 없을 경우
@@ -107,6 +107,7 @@ class LoginActivity : AppCompatActivity() {
             } catch (e: ApiException) {
                 // Google Sign In 실패 처리
                 Log.e("[구글 로그인]", "로그인에 실패하였습니다 : ${e.statusCode}")
+                Log.e("[구글 로그인]", "로그인에 실패하였습니다 : ${e.message}")
             }
         }
     }
