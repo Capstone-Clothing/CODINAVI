@@ -27,7 +27,7 @@
             android:layout_gravity="center"
             android:text="CODINAVI"
             android:textColor="#FFFFFF"
-            android:textSize="35sp" />
+            android:textSize="35dp" />
 
         <ImageButton
             android:id="@+id/back_btn"
@@ -46,7 +46,7 @@
         android:layout_height="wrap_content"
         android:text="코디나비를\n이용해주셔서 감사합니다."
         android:fontFamily="@font/soyo_maple_regular"
-        android:textSize="25sp"
+        android:textSize="25dp"
         android:textStyle="bold"
         android:textColor="@color/black"
         android:lineSpacingExtra="10dp"
@@ -63,7 +63,7 @@
         android:layout_marginTop="20dp"
         android:text="아래 버튼을 통해 앱 이용 방법을 소개해드릴게요."
         android:textColor="@color/black"
-        android:textSize="15sp"
+        android:textSize="15dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -78,7 +78,7 @@
         android:fontFamily="@font/soyo_maple_regular"
         android:text="앱 구성 소개"
         android:textColor="@color/white"
-        android:textSize="35sp"
+        android:textSize="35dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -93,7 +93,7 @@
         android:fontFamily="@font/soyo_maple_regular"
         android:text="의류 촬영 기능 소개"
         android:textColor="@color/white"
-        android:textSize="35sp"
+        android:textSize="35dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -108,7 +108,7 @@
         android:fontFamily="@font/soyo_maple_regular"
         android:text="날씨 기능 소개"
         android:textColor="@color/white"
-        android:textSize="35sp"
+        android:textSize="35dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

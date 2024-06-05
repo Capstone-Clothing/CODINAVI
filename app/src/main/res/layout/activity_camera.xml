@@ -34,7 +34,7 @@
                 android:layout_gravity="center"
                 android:text="CODINAVI"
                 android:textColor="#FFFFFF"
-                android:textSize="35sp" />
+                android:textSize="35dp" />
 
             <ImageButton
                 android:id="@+id/back_btn"
@@ -114,7 +114,7 @@
             android:fontFamily="@font/soyo_maple_regular"
             android:text="촬영하기"
             android:textColor="@color/white"
-            android:textSize="35sp"
+            android:textSize="35dp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
