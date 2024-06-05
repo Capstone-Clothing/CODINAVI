@@ -150,19 +150,20 @@
         android:layout_width="290dp"
         android:layout_height="wrap_content"
         android:lineSpacingExtra="10dp"
+        android:layout_marginTop="30dp"
         android:text="코디 추천 문구"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/weatherback"
-        app:layout_constraintBottom_toTopOf="@+id/hourlyWeatherBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/weatherback" />
 
     <android.widget.Button
         android:id="@+id/hourlyWeatherBtn"
         android:layout_width="130dp"
         android:layout_height="100dp"
+        android:layout_marginTop="30dp"
         android:text="시간별\n조회"
         android:textColor="@color/white"
         android:fontFamily="@font/soyo_maple_regular"
@@ -171,7 +172,6 @@
         android:lineSpacingExtra="10dp"
         android:background="@drawable/mainbtn"
         app:layout_constraintTop_toBottomOf="@+id/recommendClothTv"
-        app:layout_constraintBottom_toTopOf="@+id/menuBottomNav"
         app:layout_constraintStart_toStartOf="@+id/weatherback"
         app:layout_constraintEnd_toStartOf="@+id/searchOtherLocationBtn"
         />
@@ -180,6 +180,7 @@
         android:id="@+id/searchOtherLocationBtn"
         android:layout_width="130dp"
         android:layout_height="100dp"
+        android:layout_marginTop="30dp"
         android:text="지역\n변경"
         android:textColor="@color/white"
         android:fontFamily="@font/soyo_maple_regular"
@@ -188,7 +189,6 @@
         android:lineSpacingExtra="10dp"
         android:background="@drawable/mainbtn"
         app:layout_constraintTop_toBottomOf="@+id/recommendClothTv"
-        app:layout_constraintBottom_toTopOf="@+id/menuBottomNav"
         app:layout_constraintStart_toEndOf="@+id/hourlyWeatherBtn"
         app:layout_constraintEnd_toEndOf="@+id/weatherback"
         />
