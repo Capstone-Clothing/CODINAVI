@@ -41,7 +41,7 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/searchCv"
-        android:layout_width="320dp"
+        android:layout_width="330dp"
         android:layout_height="wrap_content"
         app:cardCornerRadius="30dp"
         app:cardBackgroundColor="@color/white"
@@ -71,17 +71,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="120dp"
-        android:text="오른쪽 음성 인식 버튼을 통해\n   지역 이름을 말씀해주세요."
+        android:text="오른쪽 음성 인식 버튼을 통해\n지역 이름을 말씀해주세요."
         android:lineSpacingExtra="10dp"
         android:fontFamily="@font/soyo_maple_regular"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/searchCv"
         app:layout_constraintEnd_toStartOf="@+id/speechBtn"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout"
         />
-
 
     <android.widget.Button
         android:id="@+id/speechBtn"
@@ -90,8 +89,8 @@
         android:layout_marginTop="100dp"
         android:background="@drawable/speech_btn"
         app:layout_constraintStart_toEndOf="@+id/speechTv"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+        app:layout_constraintEnd_toEndOf="@+id/searchCv"
         android:contentDescription="음성 인식"/>
 
     <android.widget.Button
