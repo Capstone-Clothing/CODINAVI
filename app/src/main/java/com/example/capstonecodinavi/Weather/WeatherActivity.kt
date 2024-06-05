@@ -79,6 +79,11 @@ class WeatherActivity : AppCompatActivity() {
             finish()
         }
 
+        binding.hourlyWeatherBtn.setOnClickListener {
+            val intent = Intent(this, SearchOthertime::class.java)
+            startActivity(intent)
+        }
+
         binding.searchOtherLocationBtn.setOnClickListener {
             val intent = Intent(this, SearchOtherlocation::class.java)
             startActivity(intent)
@@ -252,7 +257,7 @@ class WeatherActivity : AppCompatActivity() {
                         }
 
                         binding.weatherIV.setImageResource(weatherIconId!!)
-                        binding.currentWeatherTv1.text = "날씨 : ${weatherStr}"
+                        binding.currentWeatherTv.text = "날씨 : ${weatherStr}"
 //                        binding.currentWeatherTv2.text = "기온 : ${temp}º"
 //                        recommendCodi(temp.toDouble())
                     } catch (e: JSONException) {

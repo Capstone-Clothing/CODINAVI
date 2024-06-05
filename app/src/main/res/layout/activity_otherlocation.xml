@@ -27,7 +27,7 @@
             android:layout_gravity="center"
             android:text="CODINAVI"
             android:textColor="#FFFFFF"
-            android:textSize="35sp" />
+            android:textSize="35dp" />
 
         <ImageButton
             android:id="@+id/back_btn"
@@ -43,13 +43,15 @@
     <View
         android:id="@+id/weatherback"
         android:layout_width="330dp"
-        android:layout_height="400dp"
+        android:layout_height="350dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/rectangle_1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout"
-        android:layout_marginTop="30dp" />
+        />
 
+    <!-- 위치 아이콘 -->
     <ImageView
         android:id="@+id/placeIv"
         android:layout_width="30dp"
@@ -57,72 +59,120 @@
         android:src="@drawable/place_marker"
         android:layout_marginLeft="20dp"
         app:layout_constraintStart_toStartOf="@+id/weatherback"
-        app:layout_constraintTop_toTopOf="@+id/currentLocationTv"
-        app:layout_constraintBottom_toBottomOf="@+id/currentLocationTv" />
+        app:layout_constraintTop_toTopOf="@+id/locationTv"
+        app:layout_constraintBottom_toBottomOf="@+id/locationTv" />
 
+    <!-- 검색한 위치 -->
     <TextView
-        android:id="@+id/currentLocationTv"
-        android:layout_width="291dp"
+        android:id="@+id/locationTv"
+        android:layout_width="290dp"
         android:layout_height="wrap_content"
-        android:text=""
+        android:text="검색한 위치"
         android:textColor="@color/black"
-        android:textSize="22sp"
+        android:textSize="22dp"
         android:gravity="center"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/weatherback"
+        app:layout_constraintEnd_toEndOf="@+id/weatherback"
         app:layout_constraintTop_toTopOf="@+id/weatherback"
-        app:layout_constraintBottom_toTopOf="@+id/currentWeatherTv1" />
+        app:layout_constraintBottom_toTopOf="@+id/weatherTv" />
 
+    <!-- 날씨 아이콘 -->
     <ImageView
         android:id="@+id/weatherIV"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginLeft="40dp"
-        app:layout_constraintStart_toStartOf="@+id/currentLocationTv"
-        app:layout_constraintTop_toTopOf="@+id/currentWeatherTv1"
-        app:layout_constraintBottom_toBottomOf="@+id/currentWeatherTv2" />
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="30dp"
+        app:layout_constraintStart_toStartOf="@+id/locationTv"
+        app:layout_constraintTop_toTopOf="@+id/weatherTv"
+        app:layout_constraintBottom_toBottomOf="@+id/temperatureTv" />
 
+    <!-- 날씨 -->
     <TextView
-        android:id="@+id/currentWeatherTv1"
-        android:layout_width="291dp"
+        android:id="@+id/weatherTv"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
+        android:text="날씨 : "
         android:textColor="@color/black"
-        android:textSize="22sp"
-        android:gravity="right"
-        android:layout_marginRight="60dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/currentLocationTv"
-        app:layout_constraintBottom_toTopOf="@+id/currentWeatherTv2" />
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="@+id/weatherback"
+        app:layout_constraintEnd_toEndOf="@+id/weatherback"
+        app:layout_constraintTop_toBottomOf="@+id/locationTv"
+        app:layout_constraintBottom_toTopOf="@+id/temperatureTv"
+        app:layout_constraintHorizontal_bias="0.7" />
 
+    <!-- 기온 -->
     <TextView
-        android:id="@+id/currentWeatherTv2"
-        android:layout_width="291dp"
+        android:id="@+id/temperatureTv"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
+        android:text="기온 : "
         android:textColor="@color/black"
-        android:textSize="22sp"
-        android:gravity="right"
-        android:layout_marginRight="60dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/currentWeatherTv1"
-        app:layout_constraintBottom_toTopOf="@+id/recommendClothTv" />
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="@+id/weatherTv"
+        app:layout_constraintTop_toBottomOf="@+id/weatherTv"
+        app:layout_constraintBottom_toTopOf="@+id/highLowTempTv" />
 
+    <!-- 최고/최저 기온 -->
+    <TextView
+        android:id="@+id/highLowTempTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="최고 : 25º / 최저 : 15º"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="@+id/weatherback"
+        app:layout_constraintEnd_toEndOf="@+id/weatherback"
+        app:layout_constraintTop_toBottomOf="@+id/temperatureTv"
+        app:layout_constraintBottom_toTopOf="@+id/weatherSummaryTv"
+        />
+
+    <!-- 한 줄평 -->
+    <TextView
+        android:id="@+id/weatherSummaryTv"
+        android:layout_width="290dp"
+        android:layout_height="wrap_content"
+        android:text="오늘 아침 청명한 상태가 예상되며,\n밤까지 이어집니다."
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:lineSpacingExtra="10dp"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="@+id/weatherback"
+        app:layout_constraintEnd_toEndOf="@+id/weatherback"
+        app:layout_constraintTop_toBottomOf="@+id/highLowTempTv"
+        app:layout_constraintBottom_toBottomOf="@+id/weatherback"
+        />
+
+    <!-- 코디 추천 text -->
     <TextView
         android:id="@+id/recommendClothTv"
-        android:layout_width="291dp"
+        android:layout_width="290dp"
         android:layout_height="wrap_content"
         android:lineSpacingExtra="10dp"
-        android:text=""
+        android:text="코디 추천 문구"
         android:textColor="@color/black"
-        android:textSize="22sp"
+        android:textSize="20dp"
         android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/currentWeatherTv2"
-        app:layout_constraintBottom_toBottomOf="@+id/weatherback" />
+        app:layout_constraintTop_toBottomOf="@+id/weatherback"
+        app:layout_constraintBottom_toTopOf="@+id/hourlyWeatherBtn" />
+
+    <android.widget.Button
+        android:id="@+id/hourlyWeatherBtn"
+        android:layout_width="310dp"
+        android:layout_height="90dp"
+        android:text="시간별 조회하기"
+        android:textColor="@color/white"
+        android:fontFamily="@font/soyo_maple_regular"
+        android:textStyle="bold"
+        android:textSize="35dp"
+        android:background="@drawable/mainbtn"
+        app:layout_constraintTop_toBottomOf="@+id/recommendClothTv"
+        app:layout_constraintBottom_toTopOf="@+id/menuBottomNav"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/menuBottomNav"

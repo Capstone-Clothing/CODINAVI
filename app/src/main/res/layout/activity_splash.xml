@@ -33,7 +33,7 @@
         android:importantForAccessibility="no"
         android:text="CODINAVI"
         android:textColor="@color/black"
-        android:textSize="50sp"
+        android:textSize="50dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_bias="0.53"

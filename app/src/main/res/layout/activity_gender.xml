@@ -26,7 +26,7 @@
             android:layout_gravity="center"
             android:text="CODINAVI"
             android:textColor="#FFFFFF"
-            android:textSize="35sp" />
+            android:textSize="35dp" />
 
         <ImageButton
             android:id="@+id/back_btn"
@@ -46,7 +46,7 @@
         android:fontFamily="@font/soyo_maple_bold"
         android:text="현재 성별 : 여성"
         android:textColor="@color/black"
-        android:textSize="30sp"
+        android:textSize="30dp"
         android:layout_marginTop="40dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -103,7 +103,7 @@
         android:fontFamily="@font/soyo_maple_regular"
         android:text="변경하기"
         android:textColor="@color/white"
-        android:textSize="40sp"
+        android:textSize="35dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

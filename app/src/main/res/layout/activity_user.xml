@@ -26,7 +26,7 @@
             android:layout_gravity="center"
             android:text="CODINAVI"
             android:textColor="#FFFFFF"
-            android:textSize="35sp" />
+            android:textSize="35dp" />
 
         <ImageButton
             android:id="@+id/back_btn"
@@ -46,7 +46,7 @@
         android:fontFamily="@font/soyo_maple_bold"
         android:text="User"
         android:textColor="@color/black"
-        android:textSize="45sp"
+        android:textSize="45dp"
         android:layout_marginTop="40dp"
         app:layout_constraintBottom_toTopOf="@+id/rectangle2"
         app:layout_constraintEnd_toEndOf="parent"
@@ -81,7 +81,7 @@
         android:fontFamily="@font/soyo_maple_regular"
         android:text="성별 변경"
         android:textColor="@color/white"
-        android:textSize="45sp"
+        android:textSize="35dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/guideBtn"
         app:layout_constraintEnd_toEndOf="parent"
@@ -96,7 +96,7 @@
         android:fontFamily="@font/soyo_maple_regular"
         android:text="사용설명서"
         android:textColor="@color/white"
-        android:textSize="45sp"
+        android:textSize="35dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/administratorInquiryBtn"
         app:layout_constraintEnd_toEndOf="parent"
@@ -111,7 +111,7 @@
         android:fontFamily="@font/soyo_maple_regular"
         android:text="관리자 문의"
         android:textColor="@color/white"
-        android:textSize="45sp"
+        android:textSize="35dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -126,7 +126,7 @@
         android:fontFamily="@font/soyo_maple_regular"
         android:text="로그아웃"
         android:textColor="@color/white"
-        android:textSize="45sp"
+        android:textSize="35dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
