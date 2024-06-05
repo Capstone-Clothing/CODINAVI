@@ -26,7 +26,7 @@
             android:layout_gravity="center"
             android:text="CODINAVI"
             android:textColor="#FFFFFF"
-            android:textSize="35sp" />
+            android:textSize="35dp" />
 
         <ImageButton
             android:id="@+id/back_btn"
@@ -73,7 +73,7 @@
         android:lineSpacingExtra="10dp"
         android:fontFamily="@font/soyo_maple_regular"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/searchCv"
         app:layout_constraintEnd_toStartOf="@+id/speechBtn"
@@ -101,7 +101,7 @@
         android:fontFamily="@font/soyo_maple_regular"
         android:text="지역 검색하기"
         android:textColor="@color/white"
-        android:textSize="35sp"
+        android:textSize="35dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
