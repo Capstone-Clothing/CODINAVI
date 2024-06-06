@@ -74,7 +74,7 @@
         android:layout_marginTop="13dp"/>
 
     <ScrollView
-        android:id="@+id/scrolluser"
+        android:id="@+id/scrollUser"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scrollbars="none"
