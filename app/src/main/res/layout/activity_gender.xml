@@ -44,10 +44,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/soyo_maple_bold"
-        android:text="현재 성별 : 여성"
+        android:text="현재 성별 : "
         android:textColor="@color/black"
         android:textSize="30dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="50dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout"
@@ -58,7 +58,7 @@
         android:layout_width="328dp"
         android:layout_height="200dp"
         android:background="@drawable/rectangle_1"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/gender" />
@@ -67,7 +67,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@+id/genderback"
-        app:layout_constraintTop_toTopOf="@+id/genderback" >
+        app:layout_constraintTop_toTopOf="@+id/genderback"
+        app:layout_constraintBottom_toBottomOf="@+id/genderback">
 
         <RadioButton
             android:id="@+id/male"
@@ -80,7 +81,7 @@
             android:fontFamily="@font/soyo_maple_regular"
             android:textColor="@color/black"
             android:text=" 남성"
-            android:textSize="30dp" />
+            android:textSize="25dp" />
 
         <RadioButton
             android:id="@+id/female"
@@ -92,13 +93,14 @@
             android:fontFamily="@font/soyo_maple_regular"
             android:textColor="@color/black"
             android:text=" 여성"
-            android:textSize="30dp" />
+            android:textSize="25dp" />
     </RadioGroup>
 
     <android.widget.Button
         android:id="@+id/genderChangeBtn"
         android:layout_width="310dp"
         android:layout_height="90dp"
+        android:layout_marginTop="50dp"
         android:background="@drawable/mainbtn"
         android:fontFamily="@font/soyo_maple_regular"
         android:text="변경하기"
@@ -107,9 +109,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/menuBottomNav"
-        app:layout_constraintVertical_bias="0.95" />
+        app:layout_constraintTop_toBottomOf="@+id/genderback" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/menuBottomNav"
