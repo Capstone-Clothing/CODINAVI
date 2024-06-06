@@ -144,63 +144,78 @@
         app:layout_constraintBottom_toBottomOf="@+id/weatherback"
         />
 
-    <!-- 코디 추천 text -->
-    <TextView
-        android:id="@+id/recommendClothTv"
-        android:layout_width="290dp"
-        android:layout_height="wrap_content"
-        android:lineSpacingExtra="10dp"
-        android:text="코디 추천 문구"
-        android:textColor="@color/black"
-        android:textSize="20dp"
-        android:gravity="center"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+    <ScrollView
+        android:id="@+id/scrollWeather"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@+id/weatherback"
-        app:layout_constraintBottom_toTopOf="@+id/hourlyWeatherBtn" />
-
-    <android.widget.Button
-        android:id="@+id/hourlyWeatherBtn"
-        android:layout_width="130dp"
-        android:layout_height="100dp"
-        android:text="시간별\n조회"
-        android:textColor="@color/white"
-        android:fontFamily="@font/soyo_maple_regular"
-        android:textStyle="bold"
-        android:textSize="30dp"
-        android:lineSpacingExtra="10dp"
-        android:layout_marginLeft="20dp"
-        android:background="@drawable/mainbtn"
-        app:layout_constraintTop_toBottomOf="@+id/recommendClothTv"
         app:layout_constraintBottom_toTopOf="@+id/menuBottomNav"
-        app:layout_constraintRight_toLeftOf="@+id/vertical_centerline"
-        app:layout_constraintLeft_toLeftOf="parent"
-        />
+        android:scrollbars="none" >
 
-    <android.widget.Button
-        android:id="@+id/searchOtherLocationBtn"
-        android:layout_width="130dp"
-        android:layout_height="100dp"
-        android:text="지역\n변경"
-        android:textColor="@color/white"
-        android:fontFamily="@font/soyo_maple_regular"
-        android:textStyle="bold"
-        android:textSize="30dp"
-        android:lineSpacingExtra="10dp"
-        android:layout_marginRight="20dp"
-        android:background="@drawable/mainbtn"
-        app:layout_constraintTop_toBottomOf="@+id/recommendClothTv"
-        app:layout_constraintBottom_toTopOf="@+id/menuBottomNav"
-        app:layout_constraintLeft_toRightOf="@+id/vertical_centerline"
-        app:layout_constraintRight_toRightOf="parent"
-        />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/vertical_centerline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent=".50" />
+            <!-- 코디 추천 text -->
+            <TextView
+                android:id="@+id/recommendClothTv"
+                android:layout_width="290dp"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="10dp"
+                android:layout_marginTop="30dp"
+                android:text="코디 추천 문구\n코디 추천 문구\n코디 추천 문구\n코디 추천 문구\n코디 추천 문구\n코디 추천 문구"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:gravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- 시간별 날씨 버튼 -->
+            <android.widget.Button
+                android:id="@+id/hourlyWeatherBtn"
+                android:layout_width="130dp"
+                android:layout_height="100dp"
+                android:text="시간별\n조회"
+                android:textColor="@color/white"
+                android:fontFamily="@font/soyo_maple_regular"
+                android:textStyle="bold"
+                android:layout_marginTop="30dp"
+                android:textSize="30dp"
+                android:lineSpacingExtra="10dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/mainbtn"
+                app:layout_constraintTop_toBottomOf="@+id/recommendClothTv"
+                app:layout_constraintRight_toLeftOf="@+id/vertical_centerline"
+                app:layout_constraintLeft_toLeftOf="parent" />
+
+            <!-- 지역 변경 버튼 -->
+            <android.widget.Button
+                android:id="@+id/searchOtherLocationBtn"
+                android:layout_width="130dp"
+                android:layout_height="100dp"
+                android:text="지역\n변경"
+                android:textColor="@color/white"
+                android:fontFamily="@font/soyo_maple_regular"
+                android:textStyle="bold"
+                android:layout_marginTop="30dp"
+                android:textSize="30dp"
+                android:lineSpacingExtra="10dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/mainbtn"
+                app:layout_constraintTop_toBottomOf="@+id/recommendClothTv"
+                app:layout_constraintLeft_toRightOf="@+id/vertical_centerline"
+                app:layout_constraintRight_toRightOf="parent" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/vertical_centerline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent=".50" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/menuBottomNav"

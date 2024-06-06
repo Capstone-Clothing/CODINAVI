@@ -133,7 +133,7 @@ class WeatherActivity : AppCompatActivity() {
                 success?.let { location ->
                     lat = location.latitude
                     lon = location.longitude
-                    Log.d("checkLatLon", "$lat $lon")
+                    Log.d("checkLatAndLog","$lat, $lon")
                     getCurrentAddress(lat!!, lon!!)
                     getCurrentWeather(lat!!, lon!!)
                 }
@@ -207,13 +207,13 @@ class WeatherActivity : AppCompatActivity() {
      */
     fun getCurrentWeather(lat: Double, lon: Double) {
         val url = "http://3.34.34.170:8080/weather?lat=${lat}&lon=${lon}"
+        Log.d("checkURL","$url")
         val request = object :
             StringRequest(
                 Method.GET,
                 url,
                 Response.Listener { response ->
                     try {
-                        Log.d("checkResponse", "$response")
                         var weatherStr: String
                         var weatherIconId: Int? = null
                         lateinit var temp: String
@@ -237,9 +237,7 @@ class WeatherActivity : AppCompatActivity() {
 
 
                         for (i in 0 until weatherList.size) {
-                            if (weatherList.get(i).getString("time")
-                                    .equals(substringNowTime + "00")
-                            ) {
+                            if (weatherList.get(i).getString("time").equals(substringNowTime + "00")) {
                                 weather = weatherList.get(i).getString("weather")
                                 weather2 = weatherList.get(i).getString("precipitationType")
                                 temp = weatherList.get(i).getString("temp")
@@ -248,39 +246,8 @@ class WeatherActivity : AppCompatActivity() {
                             nextNum = i + 1
                         }
 
-                        if (weather.contains("흐림")) {
-                            weatherIconId = R.drawable.cloudy
-                        } else if (weather.contains("구름많음")) {
-                            weatherIconId = R.drawable.cloudy
-                        } else if (weather.contains("맑음")) {
-                            weatherIconId = R.drawable.sunny
-                        } else if (weather2.contains("비")) {
-                            weatherIconId = R.drawable.rainy
-                        } else if (weather2.contains("눈")) {
-                            weatherIconId = R.drawable.snowy
-                        } else if (weather2.contains("비 또는 눈")) {
-                            weatherIconId = R.drawable.rainy
-                        } else {
-                            weatherIconId = R.drawable.rainy
-                        }
-
-                        if (weather.contains("흐림")) {
-                            weatherStr = "흐림"
-                        } else if (weather.contains("맑음")) {
-                            weatherStr = "맑음"
-                        } else if (weather.contains("구름많음")) {
-                            weatherStr = "구름많음"
-                        } else if (weather2.contains("없음")) {
-                            weatherStr = ""
-                        } else if (weather2.contains("비")) {
-                            weatherStr = "비"
-                        } else if (weather2.contains("눈")) {
-                            weatherStr = "눈"
-                        } else if (weather2.contains("비 또는 눈")) {
-                            weatherStr = "비 또는 눈"
-                        } else {
-                            weatherStr = "소나기"
-                        }
+                        weatherIconId = getWeatherIconId(weather, weather2)
+                        weatherStr = getWeatherStr(weather, weather2)
 
                         binding.weatherIV.setImageResource(weatherIconId!!)
                         binding.currentWeatherTv.text = "날씨 : $weatherStr"
@@ -293,23 +260,6 @@ class WeatherActivity : AppCompatActivity() {
                 },
                 Response.ErrorListener { }
             ) {}
-        request.setShouldCache(false) // 이전 결과가 있어도 새 요청하여 결과 보여주기
-        requestQueue!!.add(request)
-    }
-
-    private fun recommendCodi(temp: Double) {
-        val url = "http://3.34.34.170:8080/weather/clothInfo?temp=${temp}"
-        val request = object : StringRequest(Method.GET, url, Response.Listener { response ->
-            try {
-                val jsonObject = JSONObject(response)
-                val recInfo = jsonObject.getString("recInfo")
-                binding.recommendClothTv.text = recInfo
-
-            } catch (e: JSONException) {
-                e.printStackTrace()
-            }
-        },
-            Response.ErrorListener { }) {}
         request.setShouldCache(false) // 이전 결과가 있어도 새 요청하여 결과 보여주기
         requestQueue!!.add(request)
     }
@@ -329,6 +279,24 @@ class WeatherActivity : AppCompatActivity() {
         }
     }
 
+    private fun recommendCodi(temp: Double) {
+        val url = "http://3.34.34.170:8080/weather/clothInfo?temp=${temp}"
+        val request = object : StringRequest(Method.GET, url, Response.Listener { response ->
+            try {
+                val jsonObject = JSONObject(response)
+                val recInfo = jsonObject.getString("recInfo")
+                Log.d("checkcheck","$response")
+                binding.recommendClothTv.text = recInfo
+
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
+        },
+            Response.ErrorListener { }) {}
+        request.setShouldCache(false) // 이전 결과가 있어도 새 요청하여 결과 보여주기
+        requestQueue!!.add(request)
+    }
+
     fun checkPermissionForLocation(context: Context): Boolean {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -345,6 +313,52 @@ class WeatherActivity : AppCompatActivity() {
         } else {
             true
         }
+    }
+
+    fun getWeatherIconId(weather:String, weather2:String): Int {
+
+        var weatherIconId: Int
+
+        if (weather.contains("흐림")) {
+            weatherIconId = R.drawable.cloudy
+        } else if (weather.contains("구름많음")) {
+            weatherIconId = R.drawable.cloudy
+        } else if (weather.contains("맑음")) {
+            weatherIconId = R.drawable.sunny
+        } else if (weather2.contains("비")) {
+            weatherIconId = R.drawable.rainy
+        } else if (weather2.contains("눈")) {
+            weatherIconId = R.drawable.snowy
+        } else if (weather2.contains("비 또는 눈")) {
+            weatherIconId = R.drawable.rainy
+        } else {
+            weatherIconId = R.drawable.rainy
+        }
+
+        return weatherIconId
+    }
+
+    fun getWeatherStr(weather:String, weather2: String): String {
+
+        var weatherStr: String
+
+        if (weather.contains("흐림")) {
+            weatherStr = "흐림"
+        } else if (weather.contains("구름많음")) {
+            weatherStr = "구름많음"
+        } else if (weather.contains("맑음")) {
+            weatherStr = "맑음"
+        } else if (weather2.contains("비")) {
+            weatherStr = "비"
+        } else if (weather2.contains("눈")) {
+            weatherStr = "눈"
+        } else if (weather2.contains("비 또는 눈")) {
+            weatherStr = "비 또는 눈"
+        } else {
+            weatherStr = "소나기"
+        }
+
+        return weatherStr
     }
 
 }
