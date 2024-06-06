@@ -44,21 +44,21 @@
         android:id="@+id/colorIv"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
-        app:layout_constraintBottom_toTopOf="@+id/colorV" />
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
 
     <ImageView
         android:id="@+id/colorV"
         android:layout_width="330dp"
         android:layout_height="280dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/rectangle_1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/colorIv"
-        app:layout_constraintBottom_toTopOf="@+id/confirmBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/colorIv" />
 
     <TextView
         android:id="@+id/colorTv"
@@ -78,6 +78,7 @@
         android:id="@+id/confirmBtn"
         android:layout_width="330dp"
         android:layout_height="90dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/mainbtn"
         android:fontFamily="@font/soyo_maple_regular"
         android:text="확인하기"
@@ -86,9 +87,7 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/menuBottomNav"
-        app:layout_constraintVertical_bias="0.95" />
+        app:layout_constraintTop_toBottomOf="@+id/colorV" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/menuBottomNav"
