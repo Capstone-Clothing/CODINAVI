@@ -23,7 +23,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.capstonecodinavi"
-        minSdk = 31
+        minSdk = 28
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
