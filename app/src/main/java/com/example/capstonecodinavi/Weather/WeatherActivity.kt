@@ -48,7 +48,7 @@ class WeatherActivity : AppCompatActivity() {
     val substringNowDate = formatedNowTime.substring(0 until 8)
     val substringNowTime = formatedNowTime.substring(9 until 11)
 
-    private var weatherList: ArrayList<JSONObject> = ArrayList()
+    private var weatheInfoList: ArrayList<JSONObject> = ArrayList()
 
     companion object {
         var requestQueue: RequestQueue? = null
@@ -217,8 +217,8 @@ class WeatherActivity : AppCompatActivity() {
                         var weatherStr: String
                         var weatherIconId: Int? = null
                         lateinit var temp: String
-                        //lateinit var highTemp: String
-                        //lateinit var lowTemp: String
+                        lateinit var lowTemp: String
+                        lateinit var highTemp: String
                         lateinit var weather: String
                         lateinit var weather2: String
 
@@ -230,29 +230,31 @@ class WeatherActivity : AppCompatActivity() {
                             val date = item.getString("date")
 
                             if (date.equals(substringNowDate)) {
-                                weatherList.add(item.getJSONObject("info"))
+                                weatheInfoList.add(item.getJSONObject("info"))
                             }
                         }
-                        Log.d("weatherList = ", "$weatherList")
 
+                        Log.d("weatherList = ", "$weatheInfoList")
 
-                        for (i in 0 until weatherList.size) {
-                            if (weatherList.get(i).getString("time").equals(substringNowTime + "00")) {
-                                weather = weatherList.get(i).getString("weather")
-                                weather2 = weatherList.get(i).getString("precipitationType")
-                                temp = weatherList.get(i).getString("temp")
+                        for (i in 0 until weatheInfoList.size) {
+                            if (weatheInfoList.get(i).getString("time").equals(substringNowTime + "00")) {
+                                weather = weatheInfoList.get(i).getString("weather")
+                                weather2 = weatheInfoList.get(i).getString("precipitationType")
+                                temp = weatheInfoList.get(i).getString("temp")
+                                nextNum = i + 1
                             }
-
-                            nextNum = i + 1
                         }
 
                         weatherIconId = getWeatherIconId(weather, weather2)
                         weatherStr = getWeatherStr(weather, weather2)
 
+                        lowTemp = jsonArray.getJSONObject(0).getString("lowTemp")
+                        highTemp = jsonArray.getJSONObject(0).getString("highTemp")
+
                         binding.weatherIV.setImageResource(weatherIconId!!)
                         binding.currentWeatherTv.text = "날씨 : $weatherStr"
                         binding.temperatureTv.text = "기온 : ${temp}º"
-//                        binding.highLowTempTv.text = "최고 : ${}"
+                        binding.highLowTempTv.text = "최고 : ${highTemp}º / 최저 : ${lowTemp}º"
                         recommendCodi(temp.toDouble())
                     } catch (e: JSONException) {
                         e.printStackTrace()
@@ -317,22 +319,44 @@ class WeatherActivity : AppCompatActivity() {
 
     fun getWeatherIconId(weather:String, weather2:String): Int {
 
-        var weatherIconId: Int
+        var weatherIconId: Int = 0
 
         if (weather.contains("흐림")) {
-            weatherIconId = R.drawable.cloudy
+            if (weather2.contains("비")) {
+                weatherIconId = R.drawable.rainy
+            } else if (weather2.contains("눈")) {
+                weatherIconId = R.drawable.snowy
+            } else if (weather2.contains("비 또는 눈")) {
+                weatherIconId = R.drawable.rainy
+            } else if (weather2.contains("소나기")) {
+                weatherIconId = R.drawable.rainy
+            } else {
+                weatherIconId = R.drawable.cloudy
+            }
         } else if (weather.contains("구름많음")) {
-            weatherIconId = R.drawable.cloudy
+            if (weather2.contains("비")) {
+                weatherIconId = R.drawable.rainy
+            } else if (weather2.contains("눈")) {
+                weatherIconId = R.drawable.snowy
+            } else if (weather2.contains("비 또는 눈")) {
+                weatherIconId = R.drawable.rainy
+            } else if (weather2.contains("소나기")) {
+                weatherIconId = R.drawable.rainy
+            } else {
+                weatherIconId = R.drawable.cloudy
+            }
         } else if (weather.contains("맑음")) {
-            weatherIconId = R.drawable.sunny
-        } else if (weather2.contains("비")) {
-            weatherIconId = R.drawable.rainy
-        } else if (weather2.contains("눈")) {
-            weatherIconId = R.drawable.snowy
-        } else if (weather2.contains("비 또는 눈")) {
-            weatherIconId = R.drawable.rainy
-        } else {
-            weatherIconId = R.drawable.rainy
+            if (weather2.contains("비")) {
+                weatherIconId = R.drawable.rainy
+            } else if (weather2.contains("눈")) {
+                weatherIconId = R.drawable.snowy
+            } else if (weather2.contains("비 또는 눈")) {
+                weatherIconId = R.drawable.rainy
+            } else if (weather2.contains("소나기")) {
+                weatherIconId = R.drawable.rainy
+            } else {
+                weatherIconId = R.drawable.sunny
+            }
         }
 
         return weatherIconId
@@ -340,24 +364,45 @@ class WeatherActivity : AppCompatActivity() {
 
     fun getWeatherStr(weather:String, weather2: String): String {
 
-        var weatherStr: String
+        lateinit var weatherStr: String
 
         if (weather.contains("흐림")) {
-            weatherStr = "흐림"
+            if (weather2.contains("비")) {
+                weatherStr = "비"
+            } else if (weather2.contains("눈")) {
+                weatherStr = "눈"
+            } else if (weather2.contains("비 또는 눈")) {
+                weatherStr = "비 또는 눈"
+            } else if (weather2.contains("소나기")) {
+                weatherStr = "소나기"
+            } else {
+                weatherStr = "흐림"
+            }
         } else if (weather.contains("구름많음")) {
-            weatherStr = "구름많음"
+            if (weather2.contains("비")) {
+                weatherStr = "비"
+            } else if (weather2.contains("눈")) {
+                weatherStr = "눈"
+            } else if (weather2.contains("비 또는 눈")) {
+                weatherStr = "비 또는 눈"
+            } else if (weather2.contains("소나기")) {
+                weatherStr = "소나기"
+            } else {
+                weatherStr = "구름많음"
+            }
         } else if (weather.contains("맑음")) {
-            weatherStr = "맑음"
-        } else if (weather2.contains("비")) {
-            weatherStr = "비"
-        } else if (weather2.contains("눈")) {
-            weatherStr = "눈"
-        } else if (weather2.contains("비 또는 눈")) {
-            weatherStr = "비 또는 눈"
-        } else {
-            weatherStr = "소나기"
+            if (weather2.contains("비")) {
+                weatherStr = "비"
+            } else if (weather2.contains("눈")) {
+                weatherStr = "눈"
+            } else if (weather2.contains("비 또는 눈")) {
+                weatherStr = "비 또는 눈"
+            } else if (weather2.contains("소나기")) {
+                weatherStr = "소나기"
+            } else {
+                weatherStr = "맑음"
+            }
         }
-
         return weatherStr
     }
 
