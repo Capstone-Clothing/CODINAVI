@@ -165,4 +165,5 @@ class SearchOthertime : AppCompatActivity() {
         return weatherIconId
     }
 
+    //다시
 }
