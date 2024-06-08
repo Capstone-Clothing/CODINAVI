@@ -44,7 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/soyo_maple_bold"
-        android:text="현재 성별 : "
+        android:text="-"
         android:textColor="@color/black"
         android:textSize="30dp"
         android:layout_marginTop="50dp"
@@ -64,6 +64,7 @@
         app:layout_constraintTop_toBottomOf="@+id/gender" />
 
     <RadioGroup
+        android:id="@+id/radioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@+id/genderback"
