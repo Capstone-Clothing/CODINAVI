@@ -81,14 +81,42 @@
         android:id="@+id/introduceAppcTv3"
         android:layout_width="291dp"
         android:layout_height="wrap_content"
-        android:text="앱 화면 왼쪽 상단에는 뒤로가기 버튼이 있습니다.\n앱 화면 하단에는 총 2개의 탭이 있습니다. 왼쪽부터 홈, 마이페이지 버튼입니다.\n\n1. 홈: 위에서부터 '의류 촬영하기', '날씨 알아보기' 버튼이 있습니다.\n\n 2. 마이페이지 : 위에서부터 '성별 변경', '사용설명서', '관리자 문의', '로그아웃' 버튼이 있습니다."
+        android:text="앱 화면 왼쪽 상단에는 뒤로가기 버튼이 있습니다.\n앱 화면 하단에는 총 2개의 탭이 있습니다. 왼쪽부터 홈, 마이페이지 버튼입니다."
         android:fontFamily="@font/soyo_maple_regular"
         android:textColor="@color/black"
         android:lineSpacingExtra="10dp"
-        android:textSize="20dp"
+        android:textSize="17dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/introduceAppcTv2"
+        app:layout_constraintBottom_toTopOf="@+id/introduceAppcTv4"/>
+
+    <TextView
+        android:id="@+id/introduceAppcTv4"
+        android:layout_width="291dp"
+        android:layout_height="wrap_content"
+        android:text="1. 홈: 위에서부터 '의류 촬영하기', '날씨 알아보기' 버튼이 있습니다."
+        android:fontFamily="@font/soyo_maple_regular"
+        android:textColor="@color/black"
+        android:lineSpacingExtra="10dp"
+        android:textSize="17dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/introduceAppcTv3"
+        app:layout_constraintBottom_toTopOf="@+id/introduceAppcTv5"/>
+
+    <TextView
+        android:id="@+id/introduceAppcTv5"
+        android:layout_width="291dp"
+        android:layout_height="wrap_content"
+        android:text="2. 마이페이지 : 위에서부터 '성별 변경', '사용설명서', '관리자 문의', '로그아웃' 버튼이 있습니다."
+        android:fontFamily="@font/soyo_maple_regular"
+        android:textColor="@color/black"
+        android:lineSpacingExtra="10dp"
+        android:textSize="17dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/introduceAppcTv4"
         app:layout_constraintBottom_toBottomOf="@+id/introduceAppcback"/>
 
     <TextView
@@ -104,7 +132,7 @@
         android:textStyle="bold"
         android:clickable="true"
         app:layout_constraintEnd_toEndOf="@+id/introduceAppcback"
-        app:layout_constraintTop_toBottomOf="@+id/introduceAppcTv3"
+        app:layout_constraintTop_toBottomOf="@+id/introduceAppcTv5"
         app:layout_constraintBottom_toBottomOf="@+id/introduceAppcback"
         android:contentDescription="앱 시작하기, 버튼" />
 

@@ -51,17 +51,59 @@
         app:layout_constraintBottom_toTopOf="@+id/menuBottomNav" />
 
     <TextView
-        android:id="@+id/introduceCameraTV"
+        android:id="@+id/introduceCameraTV1"
         android:layout_width="291dp"
         android:layout_height="wrap_content"
-        android:text="사용자가 선택한 옷을 카메라로 촬영하면 그 옷에 대한 설명과 어울리는 코디를 추천받을 수 있습니다.\n카메라로 촬영된 옷은 데이터에 저장됩니다.\n\n추천 기능에는 코디 추천과 색상 추천이 있습니다. \n\n코디 추천은 상의, 하의, 겉옷으로 나뉘며 인식된 옷과 어울리는 조합의 옷을 추천합니다. \n\n색상 추천은 인식된 옷과 어울리는 색상을 추천합니다."
+        android:text="사용자가 선택한 옷을 카메라로 촬영하면 해당 옷의 정보와 어울리는 옷차림을 추천합니다.\n해당 화면에는 코디 추천, 색상 추천, 상황별 코디 판별 버튼이 있습니다."
         android:fontFamily="@font/soyo_maple_regular"
         android:textColor="@color/black"
         android:lineSpacingExtra="10dp"
-        android:textSize="20dp"
+        android:textSize="17dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/introduceCameraback"
+        app:layout_constraintBottom_toTopOf="@+id/introduceCameraTV2"/>
+
+    <TextView
+        android:id="@+id/introduceCameraTV2"
+        android:layout_width="291dp"
+        android:layout_height="wrap_content"
+        android:text="코디 추천 버튼을 누르면 인식된 옷과 어울리는 조합의 옷을 추천합니다."
+        android:fontFamily="@font/soyo_maple_regular"
+        android:textColor="@color/black"
+        android:lineSpacingExtra="10dp"
+        android:textSize="17dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/introduceCameraTV1"
+        app:layout_constraintBottom_toTopOf="@+id/introduceCameraTV3"/>
+
+    <TextView
+        android:id="@+id/introduceCameraTV3"
+        android:layout_width="291dp"
+        android:layout_height="wrap_content"
+        android:text="색상 추천 버튼을 누르면  인식된 옷의 색상과 어울리는 색상을 추천합니다."
+        android:fontFamily="@font/soyo_maple_regular"
+        android:textColor="@color/black"
+        android:lineSpacingExtra="10dp"
+        android:textSize="17dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/introduceCameraTV2"
+        app:layout_constraintBottom_toTopOf="@+id/introduceCameraTV4"/>
+
+    <TextView
+        android:id="@+id/introduceCameraTV4"
+        android:layout_width="291dp"
+        android:layout_height="wrap_content"
+        android:text="상황별 코디 판별 버튼을 누르면 원하는 상황의 키워드를 선택할 수 있습니다. 인식된 옷이 선택한 상황에서의 적절한 옷차림인지 판별해주며, 선택한 상황의 정형화된 옷차림을 알려줍니다."
+        android:fontFamily="@font/soyo_maple_regular"
+        android:textColor="@color/black"
+        android:lineSpacingExtra="10dp"
+        android:textSize="17dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/introduceCameraTV3"
         app:layout_constraintBottom_toBottomOf="@+id/introduceCameraback"/>
 
     <TextView
@@ -77,7 +119,7 @@
         android:textStyle="bold"
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="@+id/introduceCameraback"
-        app:layout_constraintTop_toBottomOf="@+id/introduceCameraTV"
+        app:layout_constraintTop_toBottomOf="@+id/introduceCameraTV4"
         app:layout_constraintEnd_toEndOf="@+id/introduceCameraback"
         android:contentDescription="촬영하러가기, 버튼" />
 
