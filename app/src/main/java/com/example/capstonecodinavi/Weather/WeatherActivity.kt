@@ -1,18 +1,17 @@
 package com.example.capstonecodinavi.Weather
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import com.example.capstonecodinavi.databinding.ActivityWeatherBinding
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.os.Build
+import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.android.volley.RequestQueue
 import com.android.volley.Response
@@ -21,12 +20,13 @@ import com.android.volley.toolbox.Volley
 import com.example.capstonecodinavi.Main.MainActivity
 import com.example.capstonecodinavi.R
 import com.example.capstonecodinavi.User.UserActivity
-import com.google.android.gms.location.*
+import com.example.capstonecodinavi.databinding.ActivityWeatherBinding
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
-import java.math.RoundingMode
-import java.text.DecimalFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -42,12 +42,13 @@ class WeatherActivity : AppCompatActivity() {
     private var thoroughfare: String? = null
     private var timeInterval: Long = 3
 
-    lateinit var time: String
-
+    var nextNum: Int = 0
     val nowTime = LocalDateTime.now();
-    val formatedNowTime = nowTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
-    val substringNowTime = formatedNowTime.substring(11 until 13)
-    val substringNowTimeToInt = substringNowTime.toInt()
+    val formatedNowTime = nowTime.format(DateTimeFormatter.ofPattern("yyyyMMdd HH:mm:ss"))
+    val substringNowDate = formatedNowTime.substring(0 until 8)
+    val substringNowTime = formatedNowTime.substring(9 until 11)
+
+    private var weatheInfoList: ArrayList<JSONObject> = ArrayList()
 
     companion object {
         var requestQueue: RequestQueue? = null
@@ -79,6 +80,9 @@ class WeatherActivity : AppCompatActivity() {
 
         binding.hourlyWeatherBtn.setOnClickListener {
             val intent = Intent(this, SearchOthertime::class.java)
+            intent.putExtra("nextNum", nextNum)
+            intent.putExtra("lat", lat)
+            intent.putExtra("lon", lon)
             startActivity(intent)
         }
 
@@ -87,19 +91,21 @@ class WeatherActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        binding.menuBottomNav.setOnItemSelectedListener { menuItem->
-            when(menuItem.itemId) {
+        binding.menuBottomNav.setOnItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
                 R.id.menu_home -> {
                     // 홈 버튼 클릭 시 MainActivity로 이동
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                     true
                 }
+
                 R.id.menu_user -> {
                     val intent = Intent(this, UserActivity::class.java)
                     startActivity(intent)
                     true
                 }
+
                 else -> false
             }
         }
@@ -109,8 +115,15 @@ class WeatherActivity : AppCompatActivity() {
         if (!checkPermissionForLocation(this)) return
         val fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
-        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-            && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+            && ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
             return
         }
 
@@ -122,25 +135,7 @@ class WeatherActivity : AppCompatActivity() {
                     lon = location.longitude
                     Log.d("checkLatAndLog","$lat, $lon")
                     getCurrentAddress(lat!!, lon!!)
-                    if (substringNowTimeToInt in 0..3) {
-                        time = "03시"
-                    } else if (substringNowTimeToInt in 4 .. 6) {
-                        time = "06시"
-                    } else if (substringNowTimeToInt in 7 .. 9) {
-                        time = "09시"
-                    } else if (substringNowTimeToInt in 10 .. 12) {
-                        time = "12시"
-                    } else if (substringNowTimeToInt in 13 .. 15) {
-                        time = "15시"
-                    } else if (substringNowTimeToInt in 16 .. 18) {
-                        time = "18시"
-                    } else if (substringNowTimeToInt in 19 .. 21) {
-                        time = "21시"
-                    } else if (substringNowTimeToInt in 22 .. 23) {
-                        time = "21시"
-                    }
-                    Log.d("checkTime","$time")
-                    getCurrentWeather(lat!!, lon!!, time)
+                    getCurrentWeather(lat!!, lon!!)
                 }
             }
     }
@@ -189,7 +184,8 @@ class WeatherActivity : AppCompatActivity() {
                     }
                     addresses?.let {
                         if (locality != null && adminArea != null && thoroughfare != null) {
-                            binding.currentLocationTv.text = "${adminArea} ${locality} ${thoroughfare}"
+                            binding.currentLocationTv.text =
+                                "${adminArea} ${locality} ${thoroughfare}"
                         } else if (locality == null) {
                             binding.currentLocationTv.text = "${adminArea} ${thoroughfare}"
                         } else if (adminArea == null) {
@@ -209,8 +205,8 @@ class WeatherActivity : AppCompatActivity() {
     /*TODO : openweathermap에서 받아온 응답의 결과가 오늘의 날짜이면서 현재의 시간을 기점으로 이 시간 이후의 결과를 받아와야 함.
             1시간 단위로 가져오는 api로 바꾸기.
      */
-    fun getCurrentWeather(lat: Double, lon: Double, time: String) {
-        val url = "http://3.34.34.170:8080/weather?lat=${lat}&lon=${lon}&time=${time}"
+    fun getCurrentWeather(lat: Double, lon: Double) {
+        val url = "http://3.34.34.170:8080/weather?lat=${lat}&lon=${lon}"
         Log.d("checkURL","$url")
         val request = object :
             StringRequest(
@@ -219,55 +215,53 @@ class WeatherActivity : AppCompatActivity() {
                 Response.Listener { response ->
                     try {
                         var weatherStr: String
+                        var weatherIconId: Int? = null
+                        lateinit var temp: String
+                        lateinit var lowTemp: String
+                        lateinit var highTemp: String
+                        lateinit var weather: String
+                        lateinit var weather2: String
 
                         val jsonObject = JSONObject(response)
-                        val weather = jsonObject.getString("weather")
-                        val temp = jsonObject.getString("temp")
+                        val jsonArray = jsonObject.getJSONArray("infoFromDateList")
 
-                        val weatherIconId = when {
-                            weather.contains("Clouds") -> R.drawable.cloudy
-                            weather.contains("Rain") -> R.drawable.rainy
-                            weather.contains("Snow") -> R.drawable.snowy
-                            else -> R.drawable.sunny
+                        for (i in 0 until jsonArray.length()) {
+                            val item = jsonArray.getJSONObject(i)
+                            val date = item.getString("date")
+
+                            if (date.equals(substringNowDate)) {
+                                weatheInfoList.add(item.getJSONObject("info"))
+                            }
                         }
 
-                        if (weather.contains("Clouds")) {
-                            weatherStr = "흐림"
-                        } else if (weather.contains("Rain")) {
-                            weatherStr = "비"
-                        } else if (weather.contains("Snow")) {
-                            weatherStr = "눈"
-                        } else {
-                            weatherStr = "맑음"
+                        Log.d("weatherList = ", "$weatheInfoList")
+
+                        for (i in 0 until weatheInfoList.size) {
+                            if (weatheInfoList.get(i).getString("time").equals(substringNowTime + "00")) {
+                                weather = weatheInfoList.get(i).getString("weather")
+                                weather2 = weatheInfoList.get(i).getString("precipitationType")
+                                temp = weatheInfoList.get(i).getString("temp")
+                                nextNum = i + 1
+                            }
                         }
+
+                        weatherIconId = getWeatherIconId(weather, weather2)
+                        weatherStr = getWeatherStr(weather, weather2)
+
+                        lowTemp = jsonArray.getJSONObject(0).getString("lowTemp")
+                        highTemp = jsonArray.getJSONObject(0).getString("highTemp")
+
                         binding.weatherIV.setImageResource(weatherIconId!!)
-                        binding.currentWeatherTv.text = "날씨 : ${weatherStr}"
-//                        binding.currentWeatherTv2.text = "기온 : ${temp}º"
-
+                        binding.currentWeatherTv.text = "날씨 : $weatherStr"
+                        binding.temperatureTv.text = "기온 : ${temp}º"
+                        binding.highLowTempTv.text = "최고 : ${highTemp}º / 최저 : ${lowTemp}º"
                         recommendCodi(temp.toDouble())
                     } catch (e: JSONException) {
                         e.printStackTrace()
                     }
                 },
                 Response.ErrorListener { }
-            ) { }
-        request.setShouldCache(false) // 이전 결과가 있어도 새 요청하여 결과 보여주기
-        requestQueue!!.add(request)
-    }
-
-    private fun recommendCodi(temp: Double) {
-        val url = "http://3.34.34.170:8080/weather/clothInfo?temp=${temp}"
-        val request = object : StringRequest(Method.GET, url, Response.Listener { response ->
-            try {
-                val jsonObject = JSONObject(response)
-                val recInfo = jsonObject.getString("recInfo")
-                Log.d("checkcheck","$response")
-                binding.recommendClothTv.text = recInfo
-
-            } catch (e: JSONException) {
-                e.printStackTrace()
-            } },
-            Response.ErrorListener { }) {}
+            ) {}
         request.setShouldCache(false) // 이전 결과가 있어도 새 요청하여 결과 보여주기
         requestQueue!!.add(request)
     }
@@ -287,13 +281,34 @@ class WeatherActivity : AppCompatActivity() {
         }
     }
 
+    private fun recommendCodi(temp: Double) {
+        val url = "http://3.34.34.170:8080/weather/clothInfo?temp=${temp}"
+        val request = object : StringRequest(Method.GET, url, Response.Listener { response ->
+            try {
+                val jsonObject = JSONObject(response)
+                val recInfo = jsonObject.getString("recInfo")
+                Log.d("checkcheck","$response")
+                binding.recommendClothTv.text = recInfo
+
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
+        },
+            Response.ErrorListener { }) {}
+        request.setShouldCache(false) // 이전 결과가 있어도 새 요청하여 결과 보여주기
+        requestQueue!!.add(request)
+    }
+
     fun checkPermissionForLocation(context: Context): Boolean {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 return true
             } else {
                 // 권한이 없으므로 권한 요청 알림 보내기
-                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_PERMISSION_LOCATION
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    REQUEST_PERMISSION_LOCATION
                 )
                 return false
             }
@@ -301,4 +316,94 @@ class WeatherActivity : AppCompatActivity() {
             true
         }
     }
+
+    fun getWeatherIconId(weather:String, weather2:String): Int {
+
+        var weatherIconId: Int = 0
+
+        if (weather.contains("흐림")) {
+            if (weather2.contains("비")) {
+                weatherIconId = R.drawable.rainy
+            } else if (weather2.contains("눈")) {
+                weatherIconId = R.drawable.snowy
+            } else if (weather2.contains("비 또는 눈")) {
+                weatherIconId = R.drawable.rainy
+            } else if (weather2.contains("소나기")) {
+                weatherIconId = R.drawable.rainy
+            } else {
+                weatherIconId = R.drawable.cloudy
+            }
+        } else if (weather.contains("구름많음")) {
+            if (weather2.contains("비")) {
+                weatherIconId = R.drawable.rainy
+            } else if (weather2.contains("눈")) {
+                weatherIconId = R.drawable.snowy
+            } else if (weather2.contains("비 또는 눈")) {
+                weatherIconId = R.drawable.rainy
+            } else if (weather2.contains("소나기")) {
+                weatherIconId = R.drawable.rainy
+            } else {
+                weatherIconId = R.drawable.cloudy
+            }
+        } else if (weather.contains("맑음")) {
+            if (weather2.contains("비")) {
+                weatherIconId = R.drawable.rainy
+            } else if (weather2.contains("눈")) {
+                weatherIconId = R.drawable.snowy
+            } else if (weather2.contains("비 또는 눈")) {
+                weatherIconId = R.drawable.rainy
+            } else if (weather2.contains("소나기")) {
+                weatherIconId = R.drawable.rainy
+            } else {
+                weatherIconId = R.drawable.sunny
+            }
+        }
+
+        return weatherIconId
+    }
+
+    fun getWeatherStr(weather:String, weather2: String): String {
+
+        lateinit var weatherStr: String
+
+        if (weather.contains("흐림")) {
+            if (weather2.contains("비")) {
+                weatherStr = "비"
+            } else if (weather2.contains("눈")) {
+                weatherStr = "눈"
+            } else if (weather2.contains("비 또는 눈")) {
+                weatherStr = "비 또는 눈"
+            } else if (weather2.contains("소나기")) {
+                weatherStr = "소나기"
+            } else {
+                weatherStr = "흐림"
+            }
+        } else if (weather.contains("구름많음")) {
+            if (weather2.contains("비")) {
+                weatherStr = "비"
+            } else if (weather2.contains("눈")) {
+                weatherStr = "눈"
+            } else if (weather2.contains("비 또는 눈")) {
+                weatherStr = "비 또는 눈"
+            } else if (weather2.contains("소나기")) {
+                weatherStr = "소나기"
+            } else {
+                weatherStr = "구름많음"
+            }
+        } else if (weather.contains("맑음")) {
+            if (weather2.contains("비")) {
+                weatherStr = "비"
+            } else if (weather2.contains("눈")) {
+                weatherStr = "눈"
+            } else if (weather2.contains("비 또는 눈")) {
+                weatherStr = "비 또는 눈"
+            } else if (weather2.contains("소나기")) {
+                weatherStr = "소나기"
+            } else {
+                weatherStr = "맑음"
+            }
+        }
+        return weatherStr
+    }
+
 }
