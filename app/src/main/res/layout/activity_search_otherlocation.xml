@@ -26,7 +26,7 @@
             android:layout_gravity="center"
             android:text="CODINAVI"
             android:textColor="#FFFFFF"
-            android:textSize="35sp" />
+            android:textSize="35dp" />
 
         <ImageButton
             android:id="@+id/back_btn"
@@ -41,18 +41,16 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/searchCv"
-        android:layout_width="320dp"
+        android:layout_width="330dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
         app:cardCornerRadius="30dp"
         app:cardBackgroundColor="@color/white"
         app:strokeColor="#2D0F51"
         app:strokeWidth="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintTop_toBottomOf="@+id/speechBtn"
-        app:layout_constraintBottom_toTopOf="@+id/searchBtn"
-        app:layout_constraintVertical_bias="0.2" >
+        app:layout_constraintTop_toBottomOf="@+id/speechBtn" >
 
         <EditText
             android:id="@+id/searchEt"
@@ -71,44 +69,43 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="120dp"
-        android:text="오른쪽 음성 인식 버튼을 통해\n   지역 이름을 말씀해주세요."
+        android:text="오른쪽 음성 인식 버튼을 통해\n지역 이름을 말씀해주세요."
         android:lineSpacingExtra="10dp"
         android:fontFamily="@font/soyo_maple_regular"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="20dp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/searchCv"
         app:layout_constraintEnd_toStartOf="@+id/speechBtn"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout"
         />
-
 
     <android.widget.Button
         android:id="@+id/speechBtn"
         android:layout_width="90dp"
         android:layout_height="90dp"
         android:layout_marginTop="100dp"
+        android:layout_marginStart="10dp"
         android:background="@drawable/speech_btn"
         app:layout_constraintStart_toEndOf="@+id/speechTv"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+        app:layout_constraintEnd_toEndOf="@+id/searchCv"
         android:contentDescription="음성 인식"/>
 
     <android.widget.Button
         android:id="@+id/searchBtn"
         android:layout_width="310dp"
         android:layout_height="90dp"
+        android:layout_marginTop="100dp"
         android:background="@drawable/mainbtn"
         android:fontFamily="@font/soyo_maple_regular"
         android:text="지역 검색하기"
         android:textColor="@color/white"
-        android:textSize="35sp"
+        android:textSize="35dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/menuBottomNav"
-        app:layout_constraintVertical_bias="0.95" />
+        app:layout_constraintTop_toBottomOf="@+id/searchCv" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/menuBottomNav"
