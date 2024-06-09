@@ -27,6 +27,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="34">
         <activity
+            android:name=".item_weather"
+            android:exported="false" />
+        <activity
             android:name=".Recommend.OccasionActivity"
             android:exported="false" />
         <activity
