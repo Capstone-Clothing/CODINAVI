@@ -73,6 +73,7 @@
 
                     <!-- 시간 -->
                     <TextView
+                        android:id="@+id/timeTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="시간"
@@ -88,6 +89,7 @@
 
                     <!-- 기온 -->
                     <TextView
+                        android:id="@+id/tempTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="기온"

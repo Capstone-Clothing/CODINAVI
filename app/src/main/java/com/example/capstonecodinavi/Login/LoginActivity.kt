@@ -6,32 +6,25 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
-import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import com.example.capstonecodinavi.BuildConfig
 import com.example.capstonecodinavi.Guide.IntroduceAppBtn
 import com.example.capstonecodinavi.Main.MainActivity
 import com.example.capstonecodinavi.R
-import com.example.capstonecodinavi.User.GenderActivity
-import com.example.capstonecodinavi.User.UserActivity
 import com.example.capstonecodinavi.databinding.ActivityLoginBinding
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.SignInButton
-import com.google.android.gms.common.api.ApiException
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.KakaoSdk
 import com.kakao.sdk.common.model.AuthErrorCause
+import com.kakao.sdk.network.origin
 import com.kakao.sdk.user.UserApiClient
 import com.kakao.sdk.user.model.User
 
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
-    private lateinit var mGoogleSignInClient: GoogleSignInClient
     private lateinit var sharedPreferences: SharedPreferences
+    // 카카오 SDK에서 사용되는 로그인 결과 처리를 위한 콜백 함수를 저장하는 변수
+    private lateinit var kakaoCallback: (OAuthToken?, Throwable?) -> Unit
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,84 +32,37 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
         setTitle(" ")
 
-        // SharedPreferences 초기화
-        sharedPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE)
-
-        // Kakao SDK 초기화
-        KakaoSdk.init(this, BuildConfig.KAKAO_NATIVE_APP_KEY)
+        initSharedPreferences()
+        initKakaoSdk()
 
         // 사용자가 이미 로그인 한 경우 MainActivity로 이동
         if(isLoggedIn()) {
             moveToMainScreen()
             return
+        } else {
+            setupLoginButton()
+            setKakaoCallback()  // KakaoCallback 설정
         }
+    }
 
-        // 구글 로그인 옵션 설정
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestEmail()     // 이메일 요청
-            .build()
+    // SharedPreferences 초기화
+    private fun initSharedPreferences() {
+        sharedPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE)
+    }
 
-        // 구글 로그인 클라이언트 설정
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
+    // Kakao SDK 초기화
+    private fun initKakaoSdk() {
+        KakaoSdk.init(this, BuildConfig.KAKAO_NATIVE_APP_KEY)
+    }
 
-        // 구글 로그인 버튼 설정
-        val googleLoginButton = findViewById<SignInButton>(R.id.googleLoginBtn)
-        googleLoginButton.setOnClickListener {
-            signIn()
-        }
-
-        // 카카오 로그인 버튼 설정
+    // 카카오 로그인 버튼 설정
+    private fun setupLoginButton() {
         val kakaoLoginButton = findViewById<Button>(R.id.kakaoLoginBtn)
-        kakaoLoginButton.setOnClickListener {
-            btnKakaoLogin()
-        }
-
-        // KakaoCallback 설정
-        setKakaoCallback()
+        kakaoLoginButton.setOnClickListener { btnKakaoLogin() }
     }
 
-    // 구글 로그인 요청 시작
-    private fun signIn() {
-        val signInIntent = mGoogleSignInClient.signInIntent
-        try {
-            startActivityForResult(signInIntent, RC_SIGN_IN)
-        } catch (e: Exception) {
-            // 예외 처리 코드 추가
-            Log.e("LoginActivity", "Error starting sign-in activity: ${e.message}", e)
-        }
-    }
-
-    // 구글 로그인 결과 처리
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == RC_SIGN_IN) {
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            try {
-                val account = task.getResult(ApiException::class.java)
-                Log.d("[구글 로그인]","로그인에 성공하였습니다.")
-                val username = account?.displayName
-
-                saveUsername(username ?: "Unknown") // 사용자 이름이 없을 경우
-
-                saveLoginStatus(true)   // 로그인 상태 저장
-                saveLoginMethod("google") // SharedPreferences에 저장
-
-
-                checkAndMoveToNextScreen("google") // MainActivity로 이동을 체크하는 새로운 메서드 호출
-            } catch (e: ApiException) {
-                // Google Sign In 실패 처리
-                Log.e("[구글 로그인]", "로그인에 실패하였습니다 : ${e.statusCode}")
-                Log.e("[구글 로그인]", "로그인에 실패하였습니다 : ${e.message}")
-            }
-        }
-    }
-
-    // 카카오 SDK에서 사용되는 로그인 결과 처리를 위한 콜백 함수를 저장하는 변수
-    lateinit var kakaoCallback: (OAuthToken?, Throwable?) -> Unit
-
+    // 카카오톡이 설치되어 있으면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
     private fun btnKakaoLogin() {
-        // 카카오톡이 설치되어 있으면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
         if (UserApiClient.instance.isKakaoTalkLoginAvailable(this)) {
             UserApiClient.instance.loginWithKakaoTalk(this, callback = kakaoCallback)
         } else {
@@ -126,73 +72,57 @@ class LoginActivity : AppCompatActivity() {
 
     private fun setKakaoCallback() {
         kakaoCallback = { token, error ->
-            if (error != null) {
-                when {
-                    error.toString() == AuthErrorCause.AccessDenied.toString() -> {
-                        Log.d("[카카오 로그인]", "접근이 거부됨(동의 취소)")
-                    }
-                    error.toString() == AuthErrorCause.InvalidClient.toString() -> {
-                        Log.d("[카카오 로그인]", "유효하지 않은 앱")
-                    }
-                    error.toString() == AuthErrorCause.InvalidGrant.toString() -> {
-                        Log.d("[카카오 로그인]", "인증 수단이 유효하지 않아 인증할 수 없는 상태")
-                    }
-                    error.toString() == AuthErrorCause.InvalidRequest.toString() -> {
-                        Log.d("[카카오 로그인]", "요청 파라미터 오류")
-                    }
-                    error.toString() == AuthErrorCause.InvalidScope.toString() -> {
-                        Log.d("[카카오 로그인]", "유효하지 않은 scope ID")
-                    }
-                    error.toString() == AuthErrorCause.Misconfigured.toString() -> {
-                        Log.d("[카카오 로그인]", "설정이 올바르지 않음(android key hash)")
-                    }
-                    error.toString() == AuthErrorCause.ServerError.toString() -> {
-                        Log.d("[카카오 로그인]", "서버 내부 에러")
-                    }
-                    error.toString() == AuthErrorCause.Unauthorized.toString() -> {
-                        Log.d("[카카오 로그인]", "앱이 요청 권한이 없음")
-                    }
-                    else -> { // Unknown
-                        Log.d("[카카오 로그인]",error.toString())
-                        Log.d("[카카오 로그인]", "기타 에러")
-                    }
-                }
-            } else if (token != null){
-                // 카카오 로그인 성공 시 처리
-                Log.d("[카카오 로그인]", "로그인에 성공하였습니다.\n${token.accessToken}")
-                getUserInfo() // 사용자 정보 가져오기
-
-                saveLoginStatus(true)   // 로그인 상태 저장
-                saveLoginMethod("kakao")   // 카카오 로그인 방법 저장
-
-                checkAndMoveToNextScreen("kakao")  // MainActivity로 이동을 체크하는 새로운 메서드 호출
-            } else {
-                Log.d("[카카오 로그인]", "토큰 == null error == null")
+            when {
+                error != null -> handleLoginError(error)
+                token != null -> handleLoginSuccess(token)
+                else -> Log.d("[카카오 로그인]", "토큰 == null error == null")
             }
         }
     }
 
+    private fun handleLoginError(error: Throwable) {
+        val errorMessage = when (error.toString()) {
+            AuthErrorCause.AccessDenied.toString() -> "접근이 거부됨(동의 취소)"
+            AuthErrorCause.InvalidClient.toString() -> "유효하지 않은 앱"
+            AuthErrorCause.InvalidGrant.toString() -> "인증 수단이 유효하지 않아 인증할 수 없는 상태"
+            AuthErrorCause.InvalidRequest.toString() -> "요청 파라미터 오류"
+            AuthErrorCause.InvalidScope.toString() -> "유효하지 않은 scope ID"
+            AuthErrorCause.Misconfigured.toString() -> "설정이 올바르지 않음(android key hash)"
+            AuthErrorCause.ServerError.toString() -> "서버 내부 에러"
+            AuthErrorCause.Unauthorized.toString() -> "앱이 요청 권한이 없음"
+            else -> "기타 에러"
+        }
+        Log.d("[카카오 로그인]", errorMessage)
+        Log.d("[카카오 로그인]", error.toString())
+    }
+
+    private fun handleLoginSuccess(token: OAuthToken) {
+        Log.d("[카카오 로그인]", "로그인에 성공하였습니다.\n${token.accessToken}")
+        getUserInfo()
+        saveLoginStatus(true)
+        saveLoginMethod("kakao")
+        checkAndMoveToNextScreen()
+    }
+
     // 카카오 로그인 후 사용자 정보 가져오기
     private fun getUserInfo() {
-        // 사용자 정보 요청
-        UserApiClient.instance.me { user: User?, error: Throwable? ->
+        UserApiClient.instance.me { user, error ->
             if (error != null) {
                 Log.e(TAG, "사용자 정보 요청 실패", error)
             } else if (user != null) {
-                // 사용자 정보 가져오기 성공
-                val userId = user.id.toString()
                 val userName = user.kakaoAccount?.profile?.nickname ?: "Unknown"
-                Log.i("[카카오 로그인]", "사용자 정보 : ID = $userId, 이름 = $userName")
-                saveUsername(userName)  // 사용자 이름 저장
+                Log.i("[카카오 로그인]", "사용자 정보 : ID = ${user.id}, 이름 = $userName")
+                saveUsername(userName)
             }
         }
     }
 
     // 로그인 방법 저장
     private fun saveLoginMethod(loginMethod: String) {
-        val editor = sharedPreferences.edit()
-        editor.putString("loginMethod", loginMethod)
-        editor.apply()
+        with(sharedPreferences.edit()) {
+            putString("loginMethod", loginMethod)
+            apply()
+        }
     }
 
     // MainActivity로 이동
@@ -203,35 +133,33 @@ class LoginActivity : AppCompatActivity() {
     }
 
     // MainActivity 또는 IntroduceAppBtn으로 이동
-    private fun checkAndMoveToNextScreen(loginMethod: String) {
+    private fun checkAndMoveToNextScreen() {
         val sharedPref = getSharedPreferences("app_preferences", MODE_PRIVATE)
         val hasShownIntroduce = sharedPref.getBoolean("hasShownIntroduceAppBtn", false)
 
         if (!hasShownIntroduce) {
             // IntroduceAppBtn 액티비티를 한 번도 보여준 적이 없는 경우
-            val editor = sharedPref.edit()
-            editor.putBoolean("hasShownIntroduceAppBtn", true)
-            editor.apply()
+            with(sharedPref.edit()) {
+                putBoolean("hasShownIntroduceAppBtn", true)
+                apply()
+            }
 
             val intent = Intent(this, IntroduceAppBtn::class.java)
             startActivity(intent)
         } else {
-            // MainActivity로 이동하기 전에 GenderActivity로 이동
-            val intent = Intent(this, GenderActivity::class.java)
-            intent.putExtra("loginMethod", loginMethod) // 로그인 방법 전달
+            // MainActivity로 이동
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
-//            // MainActivity로 이동
-//            val intent = Intent(this, MainActivity::class.java)
-//            startActivity(intent)
         }
         finish()
     }
 
     // 로그인 상태 저장
     private fun saveLoginStatus(isLoggedIn: Boolean) {
-        val editor = sharedPreferences.edit()
-        editor.putBoolean("isLoggedIn", isLoggedIn)
-        editor.apply()
+        with(sharedPreferences.edit()) {
+            putBoolean("isLoggedIn", isLoggedIn)
+            apply()
+        }
     }
 
     // 로그인 상태 가져오기
@@ -247,12 +175,9 @@ class LoginActivity : AppCompatActivity() {
 
     // 사용자 이름 저장
     private fun saveUsername(username: String) {
-        val editor = sharedPreferences.edit()
-        editor.putString("username", username)
-        editor.apply()
-    }
-
-    companion object {
-        const val RC_SIGN_IN = 123
+        with(sharedPreferences.edit()) {
+            putString("username", username)
+            apply()
+        }
     }
 }

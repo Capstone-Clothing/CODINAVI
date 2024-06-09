@@ -33,6 +33,9 @@
             android:name=".Recommend.OccasionActivity"
             android:exported="false" />
         <activity
+            android:name=".Recommend.SearchOccasionActivity"
+            android:exported="false" />
+        <activity
             android:name=".Weather.SearchOthertime"
             android:exported="false" />
         <activity
