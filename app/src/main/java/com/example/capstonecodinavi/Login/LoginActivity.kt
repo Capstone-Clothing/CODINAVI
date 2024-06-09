@@ -11,13 +11,12 @@ import com.example.capstonecodinavi.BuildConfig
 import com.example.capstonecodinavi.Guide.IntroduceAppBtn
 import com.example.capstonecodinavi.Main.MainActivity
 import com.example.capstonecodinavi.R
+import com.example.capstonecodinavi.User.GenderActivity
 import com.example.capstonecodinavi.databinding.ActivityLoginBinding
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.KakaoSdk
 import com.kakao.sdk.common.model.AuthErrorCause
-import com.kakao.sdk.network.origin
 import com.kakao.sdk.user.UserApiClient
-import com.kakao.sdk.user.model.User
 
 
 class LoginActivity : AppCompatActivity() {
@@ -135,23 +134,35 @@ class LoginActivity : AppCompatActivity() {
     // MainActivity 또는 IntroduceAppBtn으로 이동
     private fun checkAndMoveToNextScreen() {
         val sharedPref = getSharedPreferences("app_preferences", MODE_PRIVATE)
-        val hasShownIntroduce = sharedPref.getBoolean("hasShownIntroduceAppBtn", false)
-
-        if (!hasShownIntroduce) {
-            // IntroduceAppBtn 액티비티를 한 번도 보여준 적이 없는 경우
-            with(sharedPref.edit()) {
-                putBoolean("hasShownIntroduceAppBtn", true)
-                apply()
-            }
-
-            val intent = Intent(this, IntroduceAppBtn::class.java)
-            startActivity(intent)
-        } else {
-            // MainActivity로 이동
+//        val hasShownIntroduce = sharedPref.getBoolean("hasShownIntroduceAppBtn", false)
+//
+//        if (!hasShownIntroduce) {   // IntroduceAppBtn 액티비티를 한 번도 보여준 적이 없는 경우
+//            with(sharedPref.edit()) {
+//                putBoolean("hasShownIntroduceAppBtn", true)
+//                apply()
+//            }
+//
+//            // IntroduceAppBtn 액티비티 및 GenderActivity를 액티비티 스택에 차례대로 추가
+//            val introduceAppBtnIntent = Intent(this, IntroduceAppBtn::class.java)
+//            startActivity(introduceAppBtnIntent)
+//
+//            if (!isGenderSet()) {
+//                val genderActivityIntent = Intent(this, GenderActivity::class.java)
+//                startActivity(genderActivityIntent)
+//            }
+//            finish()
+//            return
+//        }
+//        // IntroduceAppBtn 액티비티를 이미 보여준 적이 있는 경우
+        if (!isGenderSet()) { // Gender가 설정되지 않은 경우
+            val genderActivityIntent = Intent(this, GenderActivity::class.java)
+            startActivity(genderActivityIntent)
+            finish()
+        } else {    // MainActivity로 이동
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+            finish()
         }
-        finish()
     }
 
     // 로그인 상태 저장
@@ -179,5 +190,11 @@ class LoginActivity : AppCompatActivity() {
             putString("username", username)
             apply()
         }
+    }
+
+    // 성별 여부 확인
+    private fun isGenderSet(): Boolean {
+        val gender = sharedPreferences.getInt("gender", -1)
+        return gender != -1
     }
 }

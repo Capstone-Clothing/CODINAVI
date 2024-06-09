@@ -47,12 +47,15 @@ class GenderActivity : AppCompatActivity() {
             saveGender(index)
             updateGenderTV(index)   // TextView 업데이트
 
-            if (index == 0) {
+            if (index == 0) {   // index가 0이면 남성
                 Toast.makeText(this, "성별을 남성으로 설정하였습니다.", Toast.LENGTH_SHORT).show()
-            } else if (index == 1) {
+            } else if (index == 1) {    // index가 1이면 여성
                 Toast.makeText(this, "성별을 여성으로 설정하였습니다.", Toast.LENGTH_SHORT).show()
             }
 
+            // Gender 설정 후 MainActivity로 이동
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
             finish()
         }
 
@@ -83,9 +86,9 @@ class GenderActivity : AppCompatActivity() {
     // TextView 업데이트 함수
     private fun updateGenderTV(gender: Int) {
         val genderText = when(gender) {
-            0 -> "남성"   // 0번 라디오 버튼이 남성인 경우
-            1 -> "여성"   // 1번 라디오 버튼이 남성인 경우
-            else -> "-"
+            0 -> "현재 성별: 남성"   // 0번 라디오 버튼이 남성인 경우
+            1 -> "현재 성별: 여성"   // 1번 라디오 버튼이 남성인 경우
+            else -> "설정해주세요"
         }
         binding.gender.text = genderText
     }
