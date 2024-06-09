@@ -12,6 +12,7 @@ import com.example.capstonecodinavi.BuildConfig
 import com.example.capstonecodinavi.Guide.IntroduceAppBtn
 import com.example.capstonecodinavi.Main.MainActivity
 import com.example.capstonecodinavi.R
+import com.example.capstonecodinavi.User.GenderActivity
 import com.example.capstonecodinavi.User.UserActivity
 import com.example.capstonecodinavi.databinding.ActivityLoginBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -72,7 +73,6 @@ class LoginActivity : AppCompatActivity() {
 
         // KakaoCallback 설정
         setKakaoCallback()
-
     }
 
     // 구글 로그인 요청 시작
@@ -98,12 +98,12 @@ class LoginActivity : AppCompatActivity() {
                 val username = account?.displayName
 
                 saveUsername(username ?: "Unknown") // 사용자 이름이 없을 경우
+
                 saveLoginStatus(true)   // 로그인 상태 저장
+                saveLoginMethod("google") // SharedPreferences에 저장
 
-                val loginMethod = "google" // 구글 로그인 방법 저장
-                saveLoginMethod(loginMethod) // SharedPreferences에 저장
 
-                checkAndMoveToNextScreen() // MainActivity로 이동을 체크하는 새로운 메서드 호출
+                checkAndMoveToNextScreen("google") // MainActivity로 이동을 체크하는 새로운 메서드 호출
             } catch (e: ApiException) {
                 // Google Sign In 실패 처리
                 Log.e("[구글 로그인]", "로그인에 실패하였습니다 : ${e.statusCode}")
@@ -165,7 +165,7 @@ class LoginActivity : AppCompatActivity() {
                 saveLoginStatus(true)   // 로그인 상태 저장
                 saveLoginMethod("kakao")   // 카카오 로그인 방법 저장
 
-                checkAndMoveToNextScreen()  // MainActivity로 이동을 체크하는 새로운 메서드 호출
+                checkAndMoveToNextScreen("kakao")  // MainActivity로 이동을 체크하는 새로운 메서드 호출
             } else {
                 Log.d("[카카오 로그인]", "토큰 == null error == null")
             }
@@ -203,7 +203,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     // MainActivity 또는 IntroduceAppBtn으로 이동
-    private fun checkAndMoveToNextScreen() {
+    private fun checkAndMoveToNextScreen(loginMethod: String) {
         val sharedPref = getSharedPreferences("app_preferences", MODE_PRIVATE)
         val hasShownIntroduce = sharedPref.getBoolean("hasShownIntroduceAppBtn", false)
 
@@ -216,9 +216,13 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, IntroduceAppBtn::class.java)
             startActivity(intent)
         } else {
-            // MainActivity로 이동
-            val intent = Intent(this, MainActivity::class.java)
+            // MainActivity로 이동하기 전에 GenderActivity로 이동
+            val intent = Intent(this, GenderActivity::class.java)
+            intent.putExtra("loginMethod", loginMethod) // 로그인 방법 전달
             startActivity(intent)
+//            // MainActivity로 이동
+//            val intent = Intent(this, MainActivity::class.java)
+//            startActivity(intent)
         }
         finish()
     }
