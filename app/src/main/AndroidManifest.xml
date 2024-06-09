@@ -27,6 +27,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="34">
         <activity
+            android:name=".Recommend.OccasionActivity"
+            android:exported="false" />
+        <activity
             android:name=".Weather.SearchOthertime"
             android:exported="false" />
         <activity
