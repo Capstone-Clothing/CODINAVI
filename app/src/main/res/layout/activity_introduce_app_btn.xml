@@ -81,7 +81,7 @@
         android:id="@+id/introduceAppTv3"
         android:layout_width="291dp"
         android:layout_height="wrap_content"
-        android:text="코디나비는 시각장애인을 위한\n코디 추천 서비스 어플입니다.\n\n카메라를 통해 옷의 정보를 제\n공하고 그에 맞는 코디를 추천\n해주며 날씨에 맞는 옷차림을\n 소개해줍니다.\n\n본 앱은 한국패션산업연구원이\n검수한 데이터를 활용하여 정확\n한 옷 인식 및 자연스러운 코디\n추천을 제공합니다."
+        android:text="코디나비는 시각장애인을 위한 코디 추천 서비스 어플입니다."
         android:fontFamily="@font/soyo_maple_regular"
         android:textColor="@color/black"
         android:lineSpacingExtra="10dp"
@@ -89,6 +89,34 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/introduceAppTv2"
+        app:layout_constraintBottom_toBottomOf="@+id/introduceAppTv4"/>
+
+    <TextView
+        android:id="@+id/introduceAppTv4"
+        android:layout_width="291dp"
+        android:layout_height="wrap_content"
+        android:text="카메라를 통해 옷의 정보를 제공하고 그에 맞는 코디를 추천해주며 날씨에 맞는 옷차림을 소개해줍니다."
+        android:fontFamily="@font/soyo_maple_regular"
+        android:textColor="@color/black"
+        android:lineSpacingExtra="10dp"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/introduceAppTv3"
+        app:layout_constraintBottom_toTopOf="@+id/introduceAppTv5"/>
+
+    <TextView
+        android:id="@+id/introduceAppTv5"
+        android:layout_width="291dp"
+        android:layout_height="wrap_content"
+        android:text="본 앱은 한국패션산업연구원이 검수한 데이터를 활용하여 정확한 옷 인식 및 자연스러운 코디 추천을 제공합니다."
+        android:fontFamily="@font/soyo_maple_regular"
+        android:textColor="@color/black"
+        android:lineSpacingExtra="10dp"
+        android:textSize="17dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/introduceAppTv4"
         app:layout_constraintBottom_toBottomOf="@+id/introduceAppback"/>
 
     <ImageButton
@@ -97,12 +125,10 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:background="@drawable/next_btn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/introduceAppback"
+        app:layout_constraintTop_toBottomOf="@id/introduceAppTv5"
         app:layout_constraintBottom_toBottomOf="@+id/introduceAppback"
-        android:layout_marginLeft="200dp"
-        android:contentDescription="다음 페이지로 이동"
-        />
+        android:contentDescription="다음 페이지로 이동, 버튼" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/menuBottomNav"
