@@ -11,8 +11,6 @@ import com.example.capstonecodinavi.Login.LoginActivity
 import com.example.capstonecodinavi.Main.MainActivity
 import com.example.capstonecodinavi.R
 import com.example.capstonecodinavi.databinding.ActivityUserBinding
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.kakao.sdk.user.UserApiClient
 
 class UserActivity : AppCompatActivity() {
@@ -106,28 +104,6 @@ class UserActivity : AppCompatActivity() {
         val loginMethod = sharedPreferences.getString(LOGIN_METHOD_KEY, null)
 
         when (loginMethod) {
-            "google" -> {
-                Log.d("[구글 로그아웃]", "구글 로그아웃 수행")
-
-                // 구글 로그아웃 수행
-                val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                    .requestEmail()
-                    .build()
-                val googleSignInClient = GoogleSignIn.getClient(this, gso)
-                googleSignInClient.signOut()
-
-                Log.d("[구글 로그아웃]", "구글 로그아웃 완료")
-
-                // SharedPreferences에서 로그인 상태 변경
-                val editor = sharedPreferences.edit()
-                editor.putBoolean("isLoggedIn", false)
-                editor.apply()
-
-                Log.d("[구글 로그아웃]", "로그인 상태 변경 완료")
-
-                // 로그인 화면으로 이동
-                moveToLoginScreen()
-            }
             "kakao" -> {
                 Log.d("[카카오 로그아웃]", "카카오 로그아웃 수행")
 
@@ -159,5 +135,3 @@ class UserActivity : AppCompatActivity() {
         }
     }
 }
-
-//test
