@@ -1,5 +1,6 @@
 package com.example.capstonecodinavi.Main
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Bitmap
@@ -66,5 +67,11 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
+    }
+
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed() {
+        // 현재 태스크를 백그라운드로 이동시킴
+        moveTaskToBack(true)
     }
 }
