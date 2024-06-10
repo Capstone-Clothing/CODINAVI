@@ -3,6 +3,7 @@ package com.example.capstonecodinavi.Weather
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.RequestQueue
@@ -52,7 +53,7 @@ class SearchOthertime : AppCompatActivity() {
 
     private fun setupRecyclerView() {
         weatherAdapter = WeatherAdapter(weatherInfoList)
-        binding.recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding. recyclerView.layoutManager = GridLayoutManager(this, 3) // 한 줄에 3개의 아이템을 표시
         binding.recyclerView.adapter = weatherAdapter
     }
 
