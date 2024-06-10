@@ -27,6 +27,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="34">
         <activity
+            android:name=".User.FirstGenderSetActivity"
+            android:exported="false" />
+        <activity
             android:name=".User.GenderInputActivity"
             android:exported="false" />
         <activity

@@ -1,6 +1,5 @@
 package com.example.capstonecodinavi.User
 
-import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity

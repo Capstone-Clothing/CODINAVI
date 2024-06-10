@@ -48,14 +48,10 @@ class GenderActivity : AppCompatActivity() {
             updateGenderTV(index)   // TextView 업데이트
 
             if (index == 0) {   // index가 0이면 남성
-                Toast.makeText(this, "성별을 남성으로 설정하였습니다.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "성별을 남성으로 변경하였습니다.", Toast.LENGTH_SHORT).show()
             } else if (index == 1) {    // index가 1이면 여성
-                Toast.makeText(this, "성별을 여성으로 설정하였습니다.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "성별을 여성으로 변경하였습니다.", Toast.LENGTH_SHORT).show()
             }
-
-            // Gender 설정 후 MainActivity로 이동
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
             finish()
         }
 

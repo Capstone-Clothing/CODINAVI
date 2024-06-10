@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white"
-    tools:context=".User.GenderActivity">
+    tools:context=".User.FirstGenderSetActivity">
 
     <FrameLayout
         android:id="@+id/frameLayout"
@@ -27,30 +28,39 @@
             android:text="CODINAVI"
             android:textColor="#FFFFFF"
             android:textSize="35dp" />
-
-        <ImageButton
-            android:id="@+id/back_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginRight="170dp"
-            android:background="@drawable/back_btn"
-            android:contentDescription="뒤로가기" />
-
     </FrameLayout>
 
     <TextView
-        android:id="@+id/gender"
+        android:id="@+id/genderSetTv1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/soyo_maple_bold"
-        android:text="설정해주세요"
+        android:text="성별에 따라 코디 추천이 달라지며,\n성별은 마이페이지에서 변경할 수 있습니다."
+        android:fontFamily="@font/soyo_maple_regular"
+        android:textSize="20dp"
+        android:textStyle="bold"
         android:textColor="@color/black"
-        android:textSize="25dp"
+        android:lineSpacingExtra="10dp"
         android:layout_marginTop="50dp"
+        android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
+
+    <TextView
+        android:id="@+id/genderSetTv2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="아래의 버튼을 눌러 성별을 설정해 주세요."
+        android:fontFamily="@font/soyo_maple_regular"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:lineSpacingExtra="10dp"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/genderSetTv1" />
 
     <ImageView
         android:id="@+id/genderback"
@@ -60,7 +70,7 @@
         android:layout_marginTop="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gender" />
+        app:layout_constraintTop_toBottomOf="@+id/genderSetTv2" />
 
     <RadioGroup
         android:id="@+id/radioGroup"
@@ -97,30 +107,18 @@
     </RadioGroup>
 
     <android.widget.Button
-        android:id="@+id/genderChangeBtn"
+        android:id="@+id/genderSetBtn"
         android:layout_width="310dp"
         android:layout_height="90dp"
         android:layout_marginTop="50dp"
         android:background="@drawable/mainbtn"
         android:fontFamily="@font/soyo_maple_regular"
-        android:text="변경하기"
+        android:text="설정하기"
         android:textColor="@color/white"
         android:textSize="35dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/genderback" />
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/menuBottomNav"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rectangle_3"
-        app:itemActiveIndicatorStyle="@android:color/transparent"
-        app:itemIconSize="90dp"
-        app:itemIconTint="@color/white"
-        app:labelVisibilityMode="unlabeled"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/menu_bottom" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
