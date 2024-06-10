@@ -103,7 +103,7 @@
         android:layout_marginTop="50dp"
         android:background="@drawable/mainbtn"
         android:fontFamily="@font/soyo_maple_regular"
-        android:text="변경하기"
+        android:text="설정하기"
         android:textColor="@color/white"
         android:textSize="35dp"
         android:textStyle="bold"
