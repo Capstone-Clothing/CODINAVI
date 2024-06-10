@@ -8,16 +8,14 @@ import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.example.capstonecodinavi.BuildConfig
-import com.example.capstonecodinavi.Guide.IntroduceAppBtn
 import com.example.capstonecodinavi.Main.MainActivity
 import com.example.capstonecodinavi.R
+import com.example.capstonecodinavi.User.FirstGenderSetActivity
 import com.example.capstonecodinavi.databinding.ActivityLoginBinding
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.KakaoSdk
 import com.kakao.sdk.common.model.AuthErrorCause
-import com.kakao.sdk.network.origin
 import com.kakao.sdk.user.UserApiClient
-import com.kakao.sdk.user.model.User
 
 
 class LoginActivity : AppCompatActivity() {
@@ -132,26 +130,17 @@ class LoginActivity : AppCompatActivity() {
         finish() // 현재 Activity 종료
     }
 
-    // MainActivity 또는 IntroduceAppBtn으로 이동
+    // MainActivity 또는 FirstGenderSetActivity으로 이동
     private fun checkAndMoveToNextScreen() {
-        val sharedPref = getSharedPreferences("app_preferences", MODE_PRIVATE)
-        val hasShownIntroduce = sharedPref.getBoolean("hasShownIntroduceAppBtn", false)
-
-        if (!hasShownIntroduce) {
-            // IntroduceAppBtn 액티비티를 한 번도 보여준 적이 없는 경우
-            with(sharedPref.edit()) {
-                putBoolean("hasShownIntroduceAppBtn", true)
-                apply()
-            }
-
-            val intent = Intent(this, IntroduceAppBtn::class.java)
+        if (!isGenderSet()) { // Gender가 설정되지 않은 경우
+            val intent = Intent(this, FirstGenderSetActivity::class.java)
             startActivity(intent)
-        } else {
-            // MainActivity로 이동
+            finish()
+        } else {    // MainActivity로 이동
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+            finish()
         }
-        finish()
     }
 
     // 로그인 상태 저장
@@ -179,5 +168,11 @@ class LoginActivity : AppCompatActivity() {
             putString("username", username)
             apply()
         }
+    }
+
+    // 성별 여부 확인
+    private fun isGenderSet(): Boolean {
+        val gender = sharedPreferences.getInt("gender", -1)
+        return gender != -1
     }
 }
