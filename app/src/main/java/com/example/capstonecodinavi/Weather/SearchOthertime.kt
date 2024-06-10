@@ -25,7 +25,7 @@ class SearchOthertime : AppCompatActivity() {
     lateinit var recyclerView: RecyclerView
 
     val nowTime = LocalDateTime.now()
-    val formatedNowTime = nowTime.format(DateTimeFormatter.ofPattern("yyyyMMdd HH:mm:ss"))
+    val formatedNowTime: String = nowTime.format(DateTimeFormatter.ofPattern("yyyyMMdd HH:mm:ss"))
     var nextNum: Int = 0
 
     private var weatherInfoList: ArrayList<JSONObject> = ArrayList()
@@ -73,7 +73,7 @@ class SearchOthertime : AppCompatActivity() {
             val weatherObject = JSONObject()
             weatherObject.put("time", time.format(DateTimeFormatter.ofPattern("HH:mm"))) // 시간 포맷 지정 필요
             weatherObject.put("weather", "맑음") // 날씨 정보 설정 (임시)
-            weatherObject.put("precipitationType", "없음") // 강수 형태 정보 설정 (임시)
+            // weatherObject.put("precipitationType", "없음") // 강수 형태 정보 설정 (임시)
             weatherObject.put("temp", "25") // 온도 정보 설정 (임시)
 
             // 생성한 JSON 객체를 리스트에 추가
@@ -140,10 +140,10 @@ class SearchOthertime : AppCompatActivity() {
             finish()
         }
 
-//        binding.hourlyBtn.setOnClickListener {
-//            val intent = Intent(this, OthertimeActivity::class.java)
-//            startActivity(intent)
-//        }
+        binding.recyclerView.setOnClickListener {
+            val intent = Intent(this, OthertimeActivity::class.java)
+            startActivity(intent)
+        }
 
         binding.menuBottomNav.setOnItemSelectedListener { menuItem->
             when(menuItem.itemId) {
