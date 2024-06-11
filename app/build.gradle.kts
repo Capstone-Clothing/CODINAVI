@@ -33,6 +33,9 @@ android {
         // 타입 - 키 - 값
         buildConfigField ("String", "KAKAO_NATIVE_APP_KEY", getApiKey("KAKAO_NATIVE_APP_KEY"))
 
+        // 타입 - 키 - 값
+        buildConfigField ("String", "YOUR_SERVICE_KEY", getApiKey("YOUR_SERVICE_KEY"))
+
         // 매니페스트에서 사용
         manifestPlaceholders["KAKAO_NATIVE_APP_KEY"] = "\"${properties["KAKAO_NATIVE_APP_KEY"]}\""
     }

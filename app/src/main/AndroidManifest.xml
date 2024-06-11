@@ -34,27 +34,6 @@
             android:name=".Recommend.SearchOccasionActivity"
             android:exported="false" />
         <activity
-            android:name=".Weather.SearchOthertime"
-            android:exported="false" />
-        <activity
-            android:name=".Weather.OthertimeActivity"
-            android:exported="false" />
-        <activity
-            android:name=".User.GenderActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Weather.OtherlocationActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Admin.AdminActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Weather.SearchOtherlocation"
-            android:exported="false" />
-        <activity
-            android:name=".Guide.IntroduceCameraBtn"
-            android:exported="false" />
-        <activity
             android:name=".Recommend.ConfirmActivity"
             android:exported="false" />
         <activity
@@ -64,15 +43,36 @@
             android:name=".Recommend.CodiRecommendActivity"
             android:exported="false" />
         <activity
+            android:name=".Weather.SearchOthertime"
+            android:exported="false" />
+        <activity
+            android:name=".Weather.OthertimeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Weather.WeatherActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Weather.OtherlocationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Weather.SearchOtherlocation"
+            android:exported="false" />
+        <activity
+            android:name=".User.GenderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Admin.AdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Guide.IntroduceCameraBtn"
+            android:exported="false" />
+        <activity
             android:name=".Guide.GuideActivity"
             android:exported="false" />
         <activity
             android:name=".Main.MainActivity"
             android:exported="false"
             android:launchMode="singleTask" />
-        <activity
-            android:name=".Weather.WeatherActivity"
-            android:exported="false" />
         <activity
             android:name=".User.UserActivity"
             android:exported="false"
