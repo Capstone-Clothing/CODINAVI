@@ -5,8 +5,8 @@ import com.example.capstonecodinavi.databinding.ItemWeatherBinding
 
 class WeatherViewHolder(val binding: ItemWeatherBinding):RecyclerView.ViewHolder(binding.root) {
     fun bindData(weather: Weather) {
-        binding.timeTv.text = weather.time
+        binding.timeTv.text = weather.time.substring(0 until 2) + "시"
         binding.weatherIV.setImageResource(weather.weatherIconId)
-        binding.tempTv.text = weather.temp
+        binding.tempTv.text = "${weather.temp}º"
     }
 }

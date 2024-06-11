@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
@@ -50,7 +50,7 @@ class SearchOthertime : AppCompatActivity() {
     private fun initUI() {
         adapter = WeatherAdapter(weatherInfoList)
         binding.recyclerView.adapter = adapter
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.layoutManager = GridLayoutManager(this, 3) // 한 줄에 3개의 아이템을 표시
 
         if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(applicationContext)
@@ -103,7 +103,7 @@ class SearchOthertime : AppCompatActivity() {
                         val jsonObject = JSONObject(response)
                         val jsonArray = jsonObject.getJSONArray("infoFromDateList")
 
-                        for (i in nextNum until nextNum + 14) {
+                        for (i in nextNum until nextNum + 24) {
                             val item = jsonArray.getJSONObject(i)
                             weatherJsonInfoList.add(item.getJSONObject("info"))
                         }
