@@ -7,6 +7,6 @@ class WeatherViewHolder(val binding: ItemWeatherBinding):RecyclerView.ViewHolder
     fun bindData(weather: Weather) {
         binding.timeTv.text = weather.time.substring(0 until 2) + "시"
         binding.weatherIV.setImageResource(weather.weatherIconId)
-        binding.tempTv.text = "${weather.temp}º"
+        binding.tempTv.text = weather.temp + "º"
     }
 }
