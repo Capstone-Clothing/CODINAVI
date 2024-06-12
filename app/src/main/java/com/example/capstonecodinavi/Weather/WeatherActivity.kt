@@ -48,7 +48,7 @@ class WeatherActivity : AppCompatActivity() {
     val substringNowDate = formatedNowTime.substring(0 until 8)
     val substringNowTime = formatedNowTime.substring(9 until 11)
 
-    private var weatheInfoList: ArrayList<JSONObject> = ArrayList()
+    private var weatherInfoList: ArrayList<JSONObject> = ArrayList()
 
     companion object {
         var requestQueue: RequestQueue? = null
@@ -230,17 +230,17 @@ class WeatherActivity : AppCompatActivity() {
                             val date = item.getString("date")
 
                             if (date.equals(substringNowDate)) {
-                                weatheInfoList.add(item.getJSONObject("info"))
+                                weatherInfoList.add(item.getJSONObject("info"))
                             }
                         }
 
-                        Log.d("weatherList = ", "$weatheInfoList")
+                        Log.d("weatherList = ", "$weatherInfoList")
 
-                        for (i in 0 until weatheInfoList.size) {
-                            if (weatheInfoList.get(i).getString("time").equals(substringNowTime + "00")) {
-                                weather = weatheInfoList.get(i).getString("weather")
-                                weather2 = weatheInfoList.get(i).getString("precipitationType")
-                                temp = weatheInfoList.get(i).getString("temp")
+                        for (i in 0 until weatherInfoList.size) {
+                            if (weatherInfoList.get(i).getString("time").equals(substringNowTime + "00")) {
+                                weather = weatherInfoList.get(i).getString("weather")
+                                weather2 = weatherInfoList.get(i).getString("precipitationType")
+                                temp = weatherInfoList.get(i).getString("temp")
                                 nextNum = i + 1
                             }
                         }

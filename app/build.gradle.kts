@@ -33,6 +33,9 @@ android {
         // 타입 - 키 - 값
         buildConfigField ("String", "KAKAO_NATIVE_APP_KEY", getApiKey("KAKAO_NATIVE_APP_KEY"))
 
+        // 타입 - 키 - 값
+        buildConfigField ("String", "YOUR_SERVICE_KEY", getApiKey("YOUR_SERVICE_KEY"))
+
         // 매니페스트에서 사용
         manifestPlaceholders["KAKAO_NATIVE_APP_KEY"] = "\"${properties["KAKAO_NATIVE_APP_KEY"]}\""
     }
@@ -68,10 +71,12 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation ("androidx.recyclerview:recyclerview:1.2.1")
 
     implementation("com.loopj.android:android-async-http:1.4.11")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.android.volley:volley:1.2.1")
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

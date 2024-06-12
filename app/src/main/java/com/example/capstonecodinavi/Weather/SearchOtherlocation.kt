@@ -38,6 +38,7 @@ class SearchOtherlocation : AppCompatActivity() {
                 arrayOf(android.Manifest.permission.RECORD_AUDIO), 0)
         }
     }
+    // test
 
     private fun startSpeechRecognition() {
         // 음성인식 인텐트 생성

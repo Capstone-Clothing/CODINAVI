@@ -38,151 +38,17 @@
             android:contentDescription="뒤로가기" />
     </FrameLayout>
 
-    <ScrollView
-        android:id="@+id/scrollweather"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="3"
         app:layout_constraintTop_toBottomOf="@id/frameLayout"
         app:layout_constraintBottom_toTopOf="@id/menuBottomNav"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:ignore="UselessParent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center" >
-
-            <GridLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:columnCount="3"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:id="@+id/hourlyBtn"
-                    android:layout_width="100dp"
-                    android:layout_height="130dp"
-                    android:layout_margin="10dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:background="@drawable/rectangle_1"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:padding="8dp" >
-
-                    <!-- 시간 -->
-                    <TextView
-                        android:id="@+id/timeTv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="시간"
-                        android:textColor="@color/black"
-                        android:textSize="25dp" />
-
-                    <!-- 날씨 아이콘 -->
-                    <ImageView
-                        android:id="@+id/weatherIV"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:src="@drawable/snowy" />
-
-                    <!-- 기온 -->
-                    <TextView
-                        android:id="@+id/tempTv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="기온"
-                        android:textColor="@color/black"
-                        android:textSize="25dp" />
-                </LinearLayout>
-
-
-                <android.widget.Button
-                    android:layout_width="100dp"
-                    android:layout_height="130dp"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/rectangle_1" />
-
-                <android.widget.Button
-                    android:layout_width="100dp"
-                    android:layout_height="130dp"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/rectangle_1" />
-
-                <android.widget.Button
-                    android:layout_width="100dp"
-                    android:layout_height="130dp"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/rectangle_1" />
-
-                <android.widget.Button
-                    android:layout_width="100dp"
-                    android:layout_height="130dp"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/rectangle_1" />
-
-                <android.widget.Button
-                    android:layout_width="100dp"
-                    android:layout_height="130dp"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/rectangle_1" />
-
-                <android.widget.Button
-                    android:layout_width="100dp"
-                    android:layout_height="130dp"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/rectangle_1" />
-
-                <android.widget.Button
-                    android:layout_width="100dp"
-                    android:layout_height="130dp"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/rectangle_1" />
-
-                <android.widget.Button
-                    android:layout_width="100dp"
-                    android:layout_height="130dp"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/rectangle_1" />
-
-                <android.widget.Button
-                    android:layout_width="100dp"
-                    android:layout_height="130dp"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/rectangle_1" />
-
-                <android.widget.Button
-                    android:layout_width="100dp"
-                    android:layout_height="130dp"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/rectangle_1" />
-
-                <android.widget.Button
-                    android:layout_width="100dp"
-                    android:layout_height="130dp"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/rectangle_1" />
-
-                <android.widget.Button
-                    android:layout_width="100dp"
-                    android:layout_height="130dp"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/rectangle_1" />
-
-
-                <android.widget.Button
-                    android:layout_width="100dp"
-                    android:layout_height="130dp"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/rectangle_1" />
-
-
-            </GridLayout>
-
-        </LinearLayout>
-
-    </ScrollView>
+        tools:ignore="UselessParent" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/menuBottomNav"
