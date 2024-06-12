@@ -18,6 +18,7 @@ import com.example.capstonecodinavi.Recommend.CodiRecommendActivity
 import com.example.capstonecodinavi.Recommend.ColorRecommendActivity
 import com.example.capstonecodinavi.Main.MainActivity
 import com.example.capstonecodinavi.R
+import com.example.capstonecodinavi.Recommend.SearchOccasionActivity
 import com.example.capstonecodinavi.User.UserActivity
 import com.example.capstonecodinavi.databinding.ActivityCameraBinding
 import java.io.File
@@ -78,6 +79,11 @@ class CameraActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.occasionCodiBtn.setOnClickListener {
+            val intent = Intent(this, SearchOccasionActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.menuBottomNav.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.menu_home -> {
@@ -112,15 +118,16 @@ class CameraActivity : AppCompatActivity() {
                                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                                 .skipMemoryCache(true)
                         )
-                        .into(binding.captureIV)
+//                        .into(binding.captureIV)
 
                     binding.fragmentContainer.visibility = View.GONE
                     binding.recogtext.visibility = View.GONE
-                    binding.captureIV.visibility = View.VISIBLE
+//                    binding.captureIV.visibility = View.VISIBLE
                     binding.textView2.visibility = View.VISIBLE
                     binding.codiBtn.visibility = View.VISIBLE
                     binding.colorBtn.visibility = View.VISIBLE
                     binding.captureBtn.visibility = View.GONE
+                    binding.occasionCodiBtn.visibility = View.VISIBLE
 
                     val navFragment = supportFragmentManager.findFragmentById(binding.fragmentContainer.id) as NavHostFragment
                     val cameraFragment = navFragment.childFragmentManager.primaryNavigationFragment as? CameraFragment
