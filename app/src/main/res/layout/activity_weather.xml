@@ -156,20 +156,35 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <!-- 코디 추천 text -->
+            <!-- 옷차림 추천 text -->
             <TextView
                 android:id="@+id/recommendClothTv"
                 android:layout_width="290dp"
                 android:layout_height="wrap_content"
                 android:lineSpacingExtra="10dp"
                 android:layout_marginTop="30dp"
-                android:text="코디 추천 문구\n코디 추천 문구\n코디 추천 문구\n코디 추천 문구\n코디 추천 문구\n코디 추천 문구"
+                android:text="코디 추천 문구\n코디 추천 문구\n코디 추천 문구"
                 android:textColor="@color/black"
                 android:textSize="20dp"
                 android:gravity="center"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- 추천 아이템 text -->
+            <TextView
+                android:id="@+id/recommendItemTv"
+                android:layout_width="290dp"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="10dp"
+                android:layout_marginTop="30dp"
+                android:text="추천 아이템 문구\n추천 아이템 문구\n추천 아이템 문구"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:gravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recommendClothTv" />
 
             <!-- 시간별 날씨 버튼 -->
             <android.widget.Button
@@ -185,7 +200,7 @@
                 android:lineSpacingExtra="10dp"
                 android:layout_marginLeft="20dp"
                 android:background="@drawable/mainbtn"
-                app:layout_constraintTop_toBottomOf="@+id/recommendClothTv"
+                app:layout_constraintTop_toBottomOf="@+id/recommendItemTv"
                 app:layout_constraintRight_toLeftOf="@+id/vertical_centerline"
                 app:layout_constraintLeft_toLeftOf="parent" />
 
@@ -203,7 +218,7 @@
                 android:lineSpacingExtra="10dp"
                 android:layout_marginRight="20dp"
                 android:background="@drawable/mainbtn"
-                app:layout_constraintTop_toBottomOf="@+id/recommendClothTv"
+                app:layout_constraintTop_toBottomOf="@+id/recommendItemTv"
                 app:layout_constraintLeft_toRightOf="@+id/vertical_centerline"
                 app:layout_constraintRight_toRightOf="parent" />
 
