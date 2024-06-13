@@ -4,11 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-<<<<<<< HEAD
 import androidx.recyclerview.widget.GridLayoutManager
-=======
-import androidx.recyclerview.widget.LinearLayoutManager
->>>>>>> 2e56e66f9beb6484ba4ab1925494b9e2273632df
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
@@ -54,11 +50,7 @@ class SearchOthertime : AppCompatActivity() {
     private fun initUI() {
         adapter = WeatherAdapter(weatherInfoList)
         binding.recyclerView.adapter = adapter
-<<<<<<< HEAD
         binding.recyclerView.layoutManager = GridLayoutManager(this, 3) // 한 줄에 3개의 아이템을 표시
-=======
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
->>>>>>> 2e56e66f9beb6484ba4ab1925494b9e2273632df
 
         if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(applicationContext)
@@ -111,11 +103,7 @@ class SearchOthertime : AppCompatActivity() {
                         val jsonObject = JSONObject(response)
                         val jsonArray = jsonObject.getJSONArray("infoFromDateList")
 
-<<<<<<< HEAD
                         for (i in nextNum until nextNum + 24) {
-=======
-                        for (i in nextNum until nextNum + 14) {
->>>>>>> 2e56e66f9beb6484ba4ab1925494b9e2273632df
                             val item = jsonArray.getJSONObject(i)
                             weatherJsonInfoList.add(item.getJSONObject("info"))
                         }
@@ -133,14 +121,11 @@ class SearchOthertime : AppCompatActivity() {
                             val weatherIconId = getWeatherIconId(info.getString("weather"), info.getString("precipitationType"))
                             val temp = info.getString("temp")
 
-                            weatherInfoList.add(Weather(time,weatherIconId,temp))
+                            weatherInfoList.add(Weather(time, weatherIconId, temp))
                         }
                         adapter.weatherList = weatherInfoList
                         adapter.notifyDataSetChanged()
 
-//                        binding.timeTv.text = weatherInfoList.get(0).getString("time").substring(0 until 2) + "시"
-//                        binding.weatherIV.setImageResource(getWeatherIconId(weatherList.get(0), weatherList2.get(0)))
-//                        binding.tempTv.text = weatherInfoList.get(0).getString("temp") + "º"
                     } catch (e: JSONException) {
                         e.printStackTrace()
                     }
