@@ -133,7 +133,7 @@ class WeatherActivity : AppCompatActivity() {
                 success?.let { location ->
                     lat = location.latitude
                     lon = location.longitude
-                    Log.d("checkLatAndLog","$lat, $lon")
+                    Log.d("checkLatAndLog", "$lat, $lon")
                     getCurrentAddress(lat!!, lon!!)
                     getCurrentWeather(lat!!, lon!!)
                 }
@@ -201,13 +201,9 @@ class WeatherActivity : AppCompatActivity() {
             }
         }
     }
-
-    /*TODO : openweathermap에서 받아온 응답의 결과가 오늘의 날짜이면서 현재의 시간을 기점으로 이 시간 이후의 결과를 받아와야 함.
-            1시간 단위로 가져오는 api로 바꾸기.
-     */
     fun getCurrentWeather(lat: Double, lon: Double) {
         val url = "http://3.34.34.170:8080/weather?lat=${lat}&lon=${lon}"
-        Log.d("checkURL","$url")
+        Log.d("checkURL", "$url")
         val request = object :
             StringRequest(
                 Method.GET,
@@ -237,7 +233,9 @@ class WeatherActivity : AppCompatActivity() {
                         Log.d("weatherList = ", "$weatherInfoList")
 
                         for (i in 0 until weatherInfoList.size) {
-                            if (weatherInfoList.get(i).getString("time").equals(substringNowTime + "00")) {
+                            if (weatherInfoList.get(i).getString("time")
+                                    .equals(substringNowTime + "00")
+                            ) {
                                 weather = weatherInfoList.get(i).getString("weather")
                                 weather2 = weatherInfoList.get(i).getString("precipitationType")
                                 temp = weatherInfoList.get(i).getString("temp")
@@ -255,7 +253,7 @@ class WeatherActivity : AppCompatActivity() {
                         binding.currentWeatherTv.text = "날씨 : $weatherStr"
                         binding.temperatureTv.text = "기온 : ${temp}º"
                         binding.highLowTempTv.text = "최고 : ${highTemp}º / 최저 : ${lowTemp}º"
-                        recommendCodi(temp.toDouble())
+                        recommendCodi(temp.toDouble(), "여자")
                     } catch (e: JSONException) {
                         e.printStackTrace()
                     }
@@ -281,19 +279,24 @@ class WeatherActivity : AppCompatActivity() {
         }
     }
 
-    private fun recommendCodi(temp: Double) {
-        val url = "http://3.34.34.170:8080/weather/clothInfo?temp=${temp}"
-        val request = object : StringRequest(Method.GET, url, Response.Listener { response ->
-            try {
-                val jsonObject = JSONObject(response)
-                val recInfo = jsonObject.getString("recInfo")
-                Log.d("checkcheck","$response")
-                binding.recommendClothTv.text = recInfo
+    private fun recommendCodi(temp: Double, gender: String) {
+        val url = "http://3.34.34.170:8080/weather/clothInfo?temp=${temp}&gender=${gender}"
+        val request = object :
+            StringRequest(
+                Method.GET,
+                url,
+                Response.Listener { response ->
+                    try {
+                        val jsonObject = JSONObject(response)
+                        val codi = jsonObject.getString("codi")
+                        val clothRec = jsonObject.getString("clothRec")
+                        binding.recommendClothTv.text = codi
+                        binding.recommendItemTv.text = clothRec
 
-            } catch (e: JSONException) {
-                e.printStackTrace()
-            }
-        },
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                    }
+                },
             Response.ErrorListener { }) {}
         request.setShouldCache(false) // 이전 결과가 있어도 새 요청하여 결과 보여주기
         requestQueue!!.add(request)
@@ -317,7 +320,7 @@ class WeatherActivity : AppCompatActivity() {
         }
     }
 
-    fun getWeatherIconId(weather:String, weather2:String): Int {
+    fun getWeatherIconId(weather: String, weather2: String): Int {
 
         var weatherIconId: Int = 0
 
@@ -362,7 +365,7 @@ class WeatherActivity : AppCompatActivity() {
         return weatherIconId
     }
 
-    fun getWeatherStr(weather:String, weather2: String): String {
+    fun getWeatherStr(weather: String, weather2: String): String {
 
         lateinit var weatherStr: String
 
