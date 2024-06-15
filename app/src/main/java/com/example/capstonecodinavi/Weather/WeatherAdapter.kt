@@ -23,6 +23,9 @@ class WeatherAdapter(var weatherList: ArrayList<Weather>) : RecyclerView.Adapter
     override fun onBindViewHolder(holder: WeatherViewHolder, position: Int) {
         val item = weatherList[position]
         holder.bindData(item)
+        holder.binding.parentLl.setOnClickListener {
+            itemClicked.postValue(item)
+        }
     }
 
     override fun getItemCount(): Int {

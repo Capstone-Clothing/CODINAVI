@@ -6,7 +6,9 @@
     android:background="@drawable/rectangle_1"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="8dp">
+    android:padding="8dp"
+    android:id="@+id/parentLl"
+    >
 
     <!-- 시간 -->
     <TextView
