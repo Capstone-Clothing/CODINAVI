@@ -20,9 +20,11 @@ import java.util.Locale
 
 class OtherlocationActivity : AppCompatActivity() {
     lateinit var binding: ActivityOtherlocationBinding
+
     private var lat : Double? = null
     private var lng : Double? = null
     private var searchText: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityOtherlocationBinding.inflate(layoutInflater)
@@ -31,6 +33,7 @@ class OtherlocationActivity : AppCompatActivity() {
         action()
         intent.getStringExtra("address")?.let { getLatLng(it) }
     }
+
     private fun action() {
         binding.backBtn.setOnClickListener {
             finish()
