@@ -93,7 +93,7 @@ class OthertimeActivity : AppCompatActivity() {
                         val codi = jsonObject.getString("codi")
                         val clothRec = jsonObject.getString("clothRec")
                         binding.recommendClothTv.text = codi
-                        binding.recommendItemTv.text = clothRec
+                        binding.recommendItemTv.text = "추천 아이템 : $clothRec"
 
                     } catch (e: JSONException) {
                         e.printStackTrace()
