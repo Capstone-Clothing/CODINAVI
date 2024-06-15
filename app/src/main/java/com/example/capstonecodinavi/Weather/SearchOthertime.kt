@@ -26,8 +26,9 @@ class SearchOthertime : AppCompatActivity() {
     var nextNum: Int = 0
 
     val weatherInfoList = ArrayList<Weather>()
-    lateinit var adapter: WeatherAdapter
     private var weatherJsonInfoList: ArrayList<JSONObject> = ArrayList()
+
+    lateinit var adapter: WeatherAdapter
 
     companion object {
         var requestQueue: RequestQueue? = null
@@ -108,8 +109,6 @@ class SearchOthertime : AppCompatActivity() {
                             weatherJsonInfoList.add(item.getJSONObject("info"))
                         }
 
-                        Log.d("weatherInfoList", "$weatherJsonInfoList")
-
                         for (i in 0 until weatherJsonInfoList.size) {
                             weatherList.add(weatherJsonInfoList.get(i).getString("weather"))
                             weatherList2.add(weatherJsonInfoList.get(i).getString("precipitationType"))
@@ -118,10 +117,14 @@ class SearchOthertime : AppCompatActivity() {
 
                         for (info in weatherJsonInfoList) {
                             val time = info.getString("time")
+                            val weatherText = getWeatherStr(info.getString("weather"), info.getString("precipitationType"))
                             val weatherIconId = getWeatherIconId(info.getString("weather"), info.getString("precipitationType"))
                             val temp = info.getString("temp")
+                            val hum = info.getString("hum")
+                            val precipitation = info.getString("precipitation")
+                            val precipitationProbability = info.getString("precipitationProbability")
 
-                            weatherInfoList.add(Weather(time, weatherIconId, temp))
+                            weatherInfoList.add(Weather(time, weatherIconId, temp, hum, weatherText, precipitation, precipitationProbability))
                         }
                         adapter.weatherList = weatherInfoList
                         adapter.notifyDataSetChanged()
@@ -179,5 +182,49 @@ class SearchOthertime : AppCompatActivity() {
         }
 
         return weatherIconId
+    }
+
+    fun getWeatherStr(weather: String, weather2: String): String {
+
+        lateinit var weatherStr: String
+
+        if (weather.contains("흐림")) {
+            if (weather2.contains("비")) {
+                weatherStr = "비"
+            } else if (weather2.contains("눈")) {
+                weatherStr = "눈"
+            } else if (weather2.contains("비 또는 눈")) {
+                weatherStr = "비 또는 눈"
+            } else if (weather2.contains("소나기")) {
+                weatherStr = "소나기"
+            } else {
+                weatherStr = "흐림"
+            }
+        } else if (weather.contains("구름많음")) {
+            if (weather2.contains("비")) {
+                weatherStr = "비"
+            } else if (weather2.contains("눈")) {
+                weatherStr = "눈"
+            } else if (weather2.contains("비 또는 눈")) {
+                weatherStr = "비 또는 눈"
+            } else if (weather2.contains("소나기")) {
+                weatherStr = "소나기"
+            } else {
+                weatherStr = "구름많음"
+            }
+        } else if (weather.contains("맑음")) {
+            if (weather2.contains("비")) {
+                weatherStr = "비"
+            } else if (weather2.contains("눈")) {
+                weatherStr = "눈"
+            } else if (weather2.contains("비 또는 눈")) {
+                weatherStr = "비 또는 눈"
+            } else if (weather2.contains("소나기")) {
+                weatherStr = "소나기"
+            } else {
+                weatherStr = "맑음"
+            }
+        }
+        return weatherStr
     }
 }
