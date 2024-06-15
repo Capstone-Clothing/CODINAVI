@@ -157,9 +157,14 @@ class WeatherActivity : AppCompatActivity() {
                 }
             }
             address.let {
-                Log.d("checkAddress", "$address")
                 if (locality != null && adminArea != null && thoroughfare != null) {
-                    binding.currentLocationTv.text = "${adminArea} ${locality} ${thoroughfare}"
+                    if (adminArea == locality) {
+                        binding.currentLocationTv.text ="${adminArea} ${thoroughfare}"
+                    } else if (locality == thoroughfare) {
+                        binding.currentLocationTv.text ="${adminArea} ${thoroughfare}"
+                    } else {
+                        binding.currentLocationTv.text = "${adminArea} ${locality} ${thoroughfare}"
+                    }
                 } else if (locality == null) {
                     binding.currentLocationTv.text = "${adminArea} ${thoroughfare}"
                 } else if (adminArea == null) {
@@ -184,7 +189,6 @@ class WeatherActivity : AppCompatActivity() {
                         }
                     }
                     addresses.let {
-                        Log.d("checkAddress2", "$addresses")
                         if (locality != null && adminArea != null && thoroughfare != null) {
                             if (adminArea == locality) {
                                 binding.currentLocationTv.text ="${adminArea} ${thoroughfare}"
