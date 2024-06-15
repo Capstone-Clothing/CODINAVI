@@ -153,7 +153,7 @@ class SearchOthertime : AppCompatActivity() {
             } else if (weather2.contains("소나기")) {
                 weatherIconId = R.drawable.rainy
             } else {
-                weatherIconId = R.drawable.cloudy
+                weatherIconId = R.drawable.overcast
             }
         } else if (weather.contains("구름많음")) {
             if (weather2.contains("비")) {
