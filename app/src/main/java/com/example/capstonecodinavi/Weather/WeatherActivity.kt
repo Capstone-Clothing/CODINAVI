@@ -258,8 +258,6 @@ class WeatherActivity : AppCompatActivity() {
                         lateinit var weather: String
                         lateinit var weather2: String
 
-//                        val weatherSummaryInfoList: ArrayList<WeatherSummary> = ArrayList()
-
                         val weatherSummaryDateList: ArrayList<String> = ArrayList()
                         val weatherSummaryTimeList: ArrayList<String> = ArrayList()
                         val weatherSummaryPtyList: ArrayList<String> = ArrayList()
