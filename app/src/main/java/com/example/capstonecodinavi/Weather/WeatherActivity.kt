@@ -64,6 +64,21 @@ class WeatherActivity : AppCompatActivity() {
         setTitle(" ")
     }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_PERMISSION_LOCATION) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                getCurrentLocation()
+            } else {
+                Toast.makeText(this, "권한이 없어 해당 기능을 실행할 수 없습니다", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
     private fun initData() {
         LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, timeInterval).apply {
 
@@ -214,7 +229,6 @@ class WeatherActivity : AppCompatActivity() {
     }
     fun getCurrentWeather(lat: Double, lon: Double) {
         val url = "http://3.34.34.170:8080/weather?lat=${lat}&lon=${lon}"
-        Log.d("checkURL", "$url")
         val request = object :
             StringRequest(
                 Method.GET,
@@ -273,21 +287,6 @@ class WeatherActivity : AppCompatActivity() {
             ) {}
         request.setShouldCache(false) // 이전 결과가 있어도 새 요청하여 결과 보여주기
         requestQueue!!.add(request)
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == REQUEST_PERMISSION_LOCATION) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                getCurrentLocation()
-            } else {
-                Toast.makeText(this, "권한이 없어 해당 기능을 실행할 수 없습니다", Toast.LENGTH_SHORT).show()
-            }
-        }
     }
 
     private fun recommendCodi(temp: Double, gender: String) {
