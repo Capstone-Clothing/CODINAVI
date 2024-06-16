@@ -124,7 +124,7 @@ class SearchOthertime : AppCompatActivity() {
                             val precipitation = info.getString("precipitation")
                             val precipitationProbability = info.getString("precipitationProbability")
 
-                            weatherInfoList.add(Weather(time, weatherIconId, temp, hum, weatherText, precipitation, precipitationProbability))
+                            weatherInfoList.add(Weather(time, weatherIconId, temp, hum, weatherText, precipitationProbability, precipitation))
                         }
                         adapter.weatherList = weatherInfoList
                         adapter.notifyDataSetChanged()
