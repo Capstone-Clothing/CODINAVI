@@ -1,6 +1,7 @@
 package com.example.capstonecodinavi.Weather
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.location.Geocoder
 import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
@@ -24,9 +25,11 @@ import java.util.Locale
 
 class OtherlocationActivity : AppCompatActivity() {
     lateinit var binding: ActivityOtherlocationBinding
+    private lateinit var sharedPreferences: SharedPreferences
 
     private var lat: Double? = null
     private var lon : Double? = null
+    lateinit var gender: String
 
     var nextNum: Int = 0
     val nowTime = LocalDateTime.now();
@@ -44,6 +47,16 @@ class OtherlocationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityOtherlocationBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        sharedPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE)
+        val genderInt = sharedPreferences.getInt("gender", MODE_PRIVATE)
+
+        if (genderInt == 0) {
+            gender = "남자"
+        } else if (genderInt == 1) {
+            gender = "여자"
+        }
+
         setTitle(" ")
         initData()
         action()
@@ -171,7 +184,7 @@ class OtherlocationActivity : AppCompatActivity() {
                         binding.highLowTempTv.text = "최고 : ${highTemp}º / 최저 : ${lowTemp}º"
                         binding.weatherSummaryTv.text = getWeatherSummary(weatherSummaryDateList, weatherSummaryTimeList, weatherSummaryPtyList, weatherSummaryTvList)
 
-                        recommendCodi(temp.toDouble(), "여자")
+                        recommendCodi(temp.toDouble(), gender)
                     } catch (e: JSONException) {
                         e.printStackTrace()
                     }
