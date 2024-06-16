@@ -3,6 +3,7 @@ package com.example.capstonecodinavi.Weather
 import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
@@ -41,12 +42,15 @@ class WeatherActivity : AppCompatActivity() {
     private var locality: String? = null
     private var thoroughfare: String? = null
     private var timeInterval: Long = 3
+    private lateinit var sharedPreferences: SharedPreferences
 
     var nextNum: Int = 0
     val nowTime = LocalDateTime.now();
     val formatedNowTime = nowTime.format(DateTimeFormatter.ofPattern("yyyyMMdd HH:mm:ss"))
     val substringNowDate = formatedNowTime.substring(0 until 8)
     val substringNowTime = formatedNowTime.substring(9 until 11)
+
+    val gender = sharedPreferences.getInt("gender", -1)
 
     private var weatherInfoList: ArrayList<JSONObject> = ArrayList()
 
@@ -278,7 +282,7 @@ class WeatherActivity : AppCompatActivity() {
                         binding.currentWeatherTv.text = "날씨 : $weatherStr"
                         binding.temperatureTv.text = "기온 : ${temp}º"
                         binding.highLowTempTv.text = "최고 : ${highTemp}º / 최저 : ${lowTemp}º"
-                        recommendCodi(temp.toDouble(), "여자")
+//                        recommendCodi(temp.toDouble(), gender)
                     } catch (e: JSONException) {
                         e.printStackTrace()
                     }
