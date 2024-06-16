@@ -3,6 +3,7 @@ package com.example.capstonecodinavi.Weather
 import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
@@ -34,6 +35,8 @@ import java.util.Locale
 class WeatherActivity : AppCompatActivity() {
     lateinit var binding: ActivityWeatherBinding
 
+    private lateinit var sharedPreferences: SharedPreferences
+
     private val REQUEST_PERMISSION_LOCATION = 10
     private var lat: Double? = null
     private var lon: Double? = null
@@ -41,6 +44,8 @@ class WeatherActivity : AppCompatActivity() {
     private var locality: String? = null
     private var thoroughfare: String? = null
     private var timeInterval: Long = 3
+
+    lateinit var gender: String
 
     var nextNum: Int = 0
     val nowTime = LocalDateTime.now();
@@ -58,6 +63,16 @@ class WeatherActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityWeatherBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        sharedPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE)
+        val genderInt = sharedPreferences.getInt("gender", MODE_PRIVATE)
+
+        if (genderInt == 0) {
+            gender = "남자"
+        } else if (genderInt == 1) {
+            gender = "여자"
+        }
+
         initData()
         action()
         getCurrentLocation()
@@ -278,7 +293,7 @@ class WeatherActivity : AppCompatActivity() {
                         binding.currentWeatherTv.text = "날씨 : $weatherStr"
                         binding.temperatureTv.text = "기온 : ${temp}º"
                         binding.highLowTempTv.text = "최고 : ${highTemp}º / 최저 : ${lowTemp}º"
-                        recommendCodi(temp.toDouble(), "여자")
+                        recommendCodi(temp.toDouble(), gender)
                     } catch (e: JSONException) {
                         e.printStackTrace()
                     }
