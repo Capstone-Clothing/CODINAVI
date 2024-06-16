@@ -35,6 +35,8 @@ import java.util.Locale
 class WeatherActivity : AppCompatActivity() {
     lateinit var binding: ActivityWeatherBinding
 
+    private lateinit var sharedPreferences: SharedPreferences
+
     private val REQUEST_PERMISSION_LOCATION = 10
     private var lat: Double? = null
     private var lon: Double? = null
@@ -42,15 +44,14 @@ class WeatherActivity : AppCompatActivity() {
     private var locality: String? = null
     private var thoroughfare: String? = null
     private var timeInterval: Long = 3
-    private lateinit var sharedPreferences: SharedPreferences
+
+    lateinit var gender: String
 
     var nextNum: Int = 0
     val nowTime = LocalDateTime.now();
     val formatedNowTime = nowTime.format(DateTimeFormatter.ofPattern("yyyyMMdd HH:mm:ss"))
     val substringNowDate = formatedNowTime.substring(0 until 8)
     val substringNowTime = formatedNowTime.substring(9 until 11)
-
-    val gender = sharedPreferences.getInt("gender", -1)
 
     private var weatherInfoList: ArrayList<JSONObject> = ArrayList()
 
@@ -62,6 +63,16 @@ class WeatherActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityWeatherBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        sharedPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE)
+        val genderInt = sharedPreferences.getInt("gender", MODE_PRIVATE)
+
+        if (genderInt == 0) {
+            gender = "남자"
+        } else if (genderInt == 1) {
+            gender = "여자"
+        }
+
         initData()
         action()
         getCurrentLocation()
@@ -282,7 +293,7 @@ class WeatherActivity : AppCompatActivity() {
                         binding.currentWeatherTv.text = "날씨 : $weatherStr"
                         binding.temperatureTv.text = "기온 : ${temp}º"
                         binding.highLowTempTv.text = "최고 : ${highTemp}º / 최저 : ${lowTemp}º"
-//                        recommendCodi(temp.toDouble(), gender)
+                        recommendCodi(temp.toDouble(), gender)
                     } catch (e: JSONException) {
                         e.printStackTrace()
                     }
