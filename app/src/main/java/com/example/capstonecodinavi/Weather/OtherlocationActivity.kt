@@ -121,6 +121,12 @@ class OtherlocationActivity : AppCompatActivity() {
                         lateinit var weather: String
                         lateinit var weather2: String
 
+                        val weatherSummaryDateList: ArrayList<String> = ArrayList()
+                        val weatherSummaryTimeList: ArrayList<String> = ArrayList()
+                        val weatherSummaryPtyList: ArrayList<String> = ArrayList()
+                        val weatherSummaryTvList: ArrayList<String> = ArrayList()
+
+
                         val jsonObject = JSONObject(response)
                         val jsonArray = jsonObject.getJSONArray("infoFromDateList")
 
@@ -133,8 +139,6 @@ class OtherlocationActivity : AppCompatActivity() {
                             }
                         }
 
-                        Log.d("weatherList = ", "$weatherInfoList")
-
                         for (i in 0 until weatherInfoList.size) {
                             if (weatherInfoList.get(i).getString("time")
                                     .equals(substringNowTime + "00")
@@ -143,6 +147,15 @@ class OtherlocationActivity : AppCompatActivity() {
                                 weather2 = weatherInfoList.get(i).getString("precipitationType")
                                 temp = weatherInfoList.get(i).getString("temp")
                                 nextNum = i + 1
+                            }
+                        }
+
+                        for (i in nextNum until nextNum+24) {
+                            val pty = jsonArray.getJSONObject(i).getJSONObject("info").getString("precipitationType")
+                            if  (pty.equals("비") || pty.equals("눈") || pty.equals("비 또는 눈") || pty.equals("소나기")) {
+                                weatherSummaryDateList.add(jsonArray.getJSONObject(i).getString("date"))
+                                weatherSummaryTimeList.add(weatherInfoList.get(i).getString("time"))
+                                weatherSummaryPtyList.add(pty)
                             }
                         }
 
@@ -156,6 +169,8 @@ class OtherlocationActivity : AppCompatActivity() {
                         binding.weatherTv.text = "날씨 : $weatherStr"
                         binding.temperatureTv.text = "기온 : ${temp}º"
                         binding.highLowTempTv.text = "최고 : ${highTemp}º / 최저 : ${lowTemp}º"
+                        binding.weatherSummaryTv.text = getWeatherSummary(weatherSummaryDateList, weatherSummaryTimeList, weatherSummaryPtyList, weatherSummaryTvList)
+
                         recommendCodi(temp.toDouble(), "여자")
                     } catch (e: JSONException) {
                         e.printStackTrace()
@@ -188,6 +203,39 @@ class OtherlocationActivity : AppCompatActivity() {
                 Response.ErrorListener { }) {}
         request.setShouldCache(false) // 이전 결과가 있어도 새 요청하여 결과 보여주기
         requestQueue!!.add(request)
+    }
+
+    private fun getWeatherSummary(dateList: ArrayList<String>, timeList: ArrayList<String>, ptyList: ArrayList<String>, summaryList: ArrayList<String>): String {
+
+        lateinit var summary: String
+        var date: String = ""
+
+        if (dateList.isEmpty()) {
+            summary = "24시간 내에는 비 또는 눈이 안 옵니다."
+        } else {
+            for (i in 0 until dateList.size) {
+                if (dateList.get(i).equals(substringNowDate)) {
+                    date = "오늘은"
+                    summaryList.add(timeList.get(i).substring(0 until 2))
+                } else if (dateList.equals(substringNowDate + 1)){
+                    date = "내일은"
+                    summaryList.add(timeList.get(i).substring(0 until 2))
+                } else if (dateList.get(i).equals(substringNowDate) && dateList.equals(substringNowDate + 1)) {
+                    date = "오늘과 내일"
+                    summaryList.add(timeList.get(i).substring(0 until 2))
+                }
+            }
+        }
+
+        if (date.equals("오늘은")) {
+            summary = "$date ${summaryList}시에 각각 ${ptyList.subList(0, ptyList.size)}가 올 예정입니다."
+        } else if (date.equals("내일은")) {
+            summary = "$date ${summaryList}시에 각각 ${ptyList.subList(0, ptyList.size)}가 올 예정입니다."
+        } else if (date.equals("오늘과 내일")) {
+            summary = "오늘과 내일 ${summaryList}시에 각각 ${ptyList.subList(0, ptyList.size)}가 올 예정입니다."
+        }
+        return summary
+
     }
 
     fun getWeatherIconId(weather: String, weather2: String): Int {
