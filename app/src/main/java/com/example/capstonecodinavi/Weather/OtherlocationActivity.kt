@@ -6,32 +6,51 @@ import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.example.capstonecodinavi.Main.MainActivity
 import com.example.capstonecodinavi.R
 import com.example.capstonecodinavi.User.UserActivity
 import com.example.capstonecodinavi.databinding.ActivityOtherlocationBinding
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.Priority
 import org.json.JSONException
 import org.json.JSONObject
-import java.math.RoundingMode
-import java.text.DecimalFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 class OtherlocationActivity : AppCompatActivity() {
     lateinit var binding: ActivityOtherlocationBinding
 
-    private var lat : Double? = null
-    private var lng : Double? = null
-    private var searchText: String? = null
+    private var lat: Double? = null
+    private var lon : Double? = null
+
+    var nextNum: Int = 0
+    val nowTime = LocalDateTime.now();
+    val formatedNowTime = nowTime.format(DateTimeFormatter.ofPattern("yyyyMMdd HH:mm:ss"))
+    val substringNowDate = formatedNowTime.substring(0 until 8)
+    val substringNowTime = formatedNowTime.substring(9 until 11)
+
+    private var weatherInfoList: ArrayList<JSONObject> = ArrayList()
+
+    companion object {
+        var requestQueue: RequestQueue? = null
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityOtherlocationBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setTitle(" ")
+        initData()
         action()
-        intent.getStringExtra("address")?.let { getLatLng(it) }
+        intent.getStringExtra("address")?.let {
+            getLatLng(it)
+        }
+        binding.locationTv.text = intent.getStringExtra("address")
     }
 
     private fun action() {
@@ -41,6 +60,9 @@ class OtherlocationActivity : AppCompatActivity() {
 
         binding.hourlyWeatherBtn.setOnClickListener {
             val intent = Intent(this, SearchOthertime::class.java)
+            intent.putExtra("nextNum", nextNum)
+            intent.putExtra("lat", lat)
+            intent.putExtra("lon", lon)
             startActivity(intent)
         }
 
@@ -61,15 +83,20 @@ class OtherlocationActivity : AppCompatActivity() {
         }
     }
 
+    private fun initData() {
+        if (requestQueue == null) {
+            requestQueue = Volley.newRequestQueue(applicationContext)
+        }
+    }
+
     fun getLatLng(address: String) {
         val geocoder = Geocoder(this, Locale.getDefault())
         try {
             geocoder.getFromLocationName(address, 1)?.let {
                 Location("").apply {
-                    Log.d("check1000","$it")
                     lat = it[0].latitude
-                    lng = it[0].longitude
-                    getCurrentWeather(lat!!, lng!!)
+                    lon = it[0].longitude
+                    getCurrentWeather(lat!!, lon!!)
                 }
             }
         } catch (e : Exception){
@@ -79,42 +106,57 @@ class OtherlocationActivity : AppCompatActivity() {
     }
 
     fun getCurrentWeather(lat: Double, lon: Double) {
-        var weatherStr: String
-        val url = "https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=2d360c1fe9d2bade8fc08a1679683e24"
-        Log.d("check12345","$lat, $lon")
+        val url = "http://3.34.34.170:8080/weather?lat=$lat&lon=$lon"
         val request = object :
             StringRequest(
                 Method.GET,
                 url,
                 Response.Listener { response ->
                     try {
+                        var weatherStr: String
+                        var weatherIconId: Int? = null
+                        lateinit var temp: String
+                        lateinit var lowTemp: String
+                        lateinit var highTemp: String
+                        lateinit var weather: String
+                        lateinit var weather2: String
+
                         val jsonObject = JSONObject(response)
-                        val weather = jsonObject.getJSONArray("weather").getJSONObject(0).getString("main")
-                        val kelvin = jsonObject.getJSONObject("main").getString("temp").toDouble()
-                        var celsius = changeKelvinToCelsius(kelvin)
+                        val jsonArray = jsonObject.getJSONArray("infoFromDateList")
 
-                        val weatherIconId = when {
-                            weather.contains("Rain") -> R.drawable.rainy
-                            weather.contains("Snow") -> R.drawable.snowy
-                            weather.contains("Clouds") -> R.drawable.cloudy
-                            else -> R.drawable.sunny
+                        for (i in 0 until jsonArray.length()) {
+                            val item = jsonArray.getJSONObject(i)
+                            val date = item.getString("date")
+
+                            if (date.equals(substringNowDate)) {
+                                weatherInfoList.add(item.getJSONObject("info"))
+                            }
                         }
 
-                        if (weather.contains("Rain")) {
-                            weatherStr = "비"
-                        } else if (weather.contains("Snow")) {
-                            weatherStr = "눈"
-                        } else if (weather.contains("Clouds")) {
-                            weatherStr = "흐림"
-                        } else {
-                            weatherStr = "맑음"
+                        Log.d("weatherList = ", "$weatherInfoList")
+
+                        for (i in 0 until weatherInfoList.size) {
+                            if (weatherInfoList.get(i).getString("time")
+                                    .equals(substringNowTime + "00")
+                            ) {
+                                weather = weatherInfoList.get(i).getString("weather")
+                                weather2 = weatherInfoList.get(i).getString("precipitationType")
+                                temp = weatherInfoList.get(i).getString("temp")
+                                nextNum = i + 1
+                            }
                         }
 
-                        binding.weatherIV.setImageResource(weatherIconId)
-                        binding.locationTv.text = "${intent.getStringExtra("address")}"
-                        binding.weatherTv.text = "날씨 : ${weatherStr}"
-                        binding.temperatureTv.text = "기온 : ${celsius}º"
-                        recommendCodi(celsius.toDouble())
+                        weatherIconId = getWeatherIconId(weather, weather2)
+                        weatherStr = getWeatherStr(weather, weather2)
+
+                        lowTemp = jsonArray.getJSONObject(0).getString("lowTemp")
+                        highTemp = jsonArray.getJSONObject(0).getString("highTemp")
+
+                        binding.weatherIV.setImageResource(weatherIconId!!)
+                        binding.weatherTv.text = "날씨 : $weatherStr"
+                        binding.temperatureTv.text = "기온 : ${temp}º"
+                        binding.highLowTempTv.text = "최고 : ${highTemp}º / 최저 : ${lowTemp}º"
+                        recommendCodi(temp.toDouble(), "여자")
                     } catch (e: JSONException) {
                         e.printStackTrace()
                     }
@@ -125,37 +167,115 @@ class OtherlocationActivity : AppCompatActivity() {
         WeatherActivity.requestQueue!!.add(request)
     }
 
-    fun changeKelvinToCelsius(temp: Double): String {
-        val changedTemp = (temp - 273.15)
-        val df = DecimalFormat("#.#")
-        df.roundingMode = RoundingMode.DOWN
-        return df.format(changedTemp)
+    private fun recommendCodi(temp: Double, gender: String) {
+        val url = "http://3.34.34.170:8080/weather/clothInfo?temp=${temp}&gender=${gender}"
+        val request = object :
+            StringRequest(
+                Method.GET,
+                url,
+                Response.Listener { response ->
+                    try {
+                        val jsonObject = JSONObject(response)
+                        val codi = jsonObject.getString("codi")
+                        val clothRec = jsonObject.getString("clothRec")
+                        binding.recommendClothTv.text = codi
+                        binding.recommendItemTv.text = "추천 아이템 : $clothRec"
+
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                    }
+                },
+                Response.ErrorListener { }) {}
+        request.setShouldCache(false) // 이전 결과가 있어도 새 요청하여 결과 보여주기
+        requestQueue!!.add(request)
     }
 
-    private fun recommendCodi(temp: Double) {
-        if (temp >= 28) {
-            binding.recommendClothTv.text = "상의는 민소매, 반팔을 추천해드리며 하의는 짧은 치마, 린넨 옷, 반바지를 추천드립니다."
+    fun getWeatherIconId(weather: String, weather2: String): Int {
+
+        var weatherIconId: Int = 0
+
+        if (weather.contains("흐림")) {
+            if (weather2.contains("비")) {
+                weatherIconId = R.drawable.rainy
+            } else if (weather2.contains("눈")) {
+                weatherIconId = R.drawable.snowy
+            } else if (weather2.contains("비 또는 눈")) {
+                weatherIconId = R.drawable.rainy
+            } else if (weather2.contains("소나기")) {
+                weatherIconId = R.drawable.rainy
+            } else {
+                weatherIconId = R.drawable.overcast
+            }
+        } else if (weather.contains("구름많음")) {
+            if (weather2.contains("비")) {
+                weatherIconId = R.drawable.rainy
+            } else if (weather2.contains("눈")) {
+                weatherIconId = R.drawable.snowy
+            } else if (weather2.contains("비 또는 눈")) {
+                weatherIconId = R.drawable.rainy
+            } else if (weather2.contains("소나기")) {
+                weatherIconId = R.drawable.rainy
+            } else {
+                weatherIconId = R.drawable.cloudy
+            }
+        } else if (weather.contains("맑음")) {
+            if (weather2.contains("비")) {
+                weatherIconId = R.drawable.rainy
+            } else if (weather2.contains("눈")) {
+                weatherIconId = R.drawable.snowy
+            } else if (weather2.contains("비 또는 눈")) {
+                weatherIconId = R.drawable.rainy
+            } else if (weather2.contains("소나기")) {
+                weatherIconId = R.drawable.rainy
+            } else {
+                weatherIconId = R.drawable.sunny
+            }
         }
-        else if (temp in 23.0..27.0) {
-            binding.recommendClothTv.text = "상의는 얇은 셔츠, 반팔을 추천해드리며 하의는 반바지, 면바지를 추천드립니다."
+
+        return weatherIconId
+    }
+
+    fun getWeatherStr(weather: String, weather2: String): String {
+
+        lateinit var weatherStr: String
+
+        if (weather.contains("흐림")) {
+            if (weather2.contains("비")) {
+                weatherStr = "비"
+            } else if (weather2.contains("눈")) {
+                weatherStr = "눈"
+            } else if (weather2.contains("비 또는 눈")) {
+                weatherStr = "비 또는 눈"
+            } else if (weather2.contains("소나기")) {
+                weatherStr = "소나기"
+            } else {
+                weatherStr = "흐림"
+            }
+        } else if (weather.contains("구름많음")) {
+            if (weather2.contains("비")) {
+                weatherStr = "비"
+            } else if (weather2.contains("눈")) {
+                weatherStr = "눈"
+            } else if (weather2.contains("비 또는 눈")) {
+                weatherStr = "비 또는 눈"
+            } else if (weather2.contains("소나기")) {
+                weatherStr = "소나기"
+            } else {
+                weatherStr = "구름많음"
+            }
+        } else if (weather.contains("맑음")) {
+            if (weather2.contains("비")) {
+                weatherStr = "비"
+            } else if (weather2.contains("눈")) {
+                weatherStr = "눈"
+            } else if (weather2.contains("비 또는 눈")) {
+                weatherStr = "비 또는 눈"
+            } else if (weather2.contains("소나기")) {
+                weatherStr = "소나기"
+            } else {
+                weatherStr = "맑음"
+            }
         }
-        else if (temp in 20.0..22.0) {
-            binding.recommendClothTv.text = "상의는 블라우스, 긴팔티를 추천해드리며 하의는 면바지, 슬랙스를 추천드립니다."
-        }
-        else if (temp in 17.0..19.0) {
-            binding.recommendClothTv.text = "상의는 얇은 가디건, 니트, 맨투맨, 후드를 추천해드리며 하의는 긴 바지를 추천드립니다."
-        }
-        else if (temp in 12.0..16.0) {
-            binding.recommendClothTv.text = "상의는 자켓 또는 청자켓, 가디건, 니트를 추천해드리며 하의는 스타킹, 청바지를 추천드립니다."
-        }
-        else if (temp in 9.0..11.0) {
-            binding.recommendClothTv.text = "상의는 트렌치 코트, 야상, 점퍼를 추천해드리며 하의는 스타킹, 기모바지를 추천드립니다."
-        }
-        else if (temp in 5.0..8.0) {
-            binding.recommendClothTv.text = "상의는 울 코트 또는 가죽 옷과 히트텍을 추천해드리며 하의 또한 기모가 들어간 바지를 추천드립니다."
-        }
-        else {
-            binding.recommendClothTv.text = "상의는 패딩, 두꺼운 코트, 누빔 옷, 기모가 들어간 소재, 그리고 목도리를 걸치시는 것을 추천드립니다."
-        }
+        return weatherStr
     }
 }

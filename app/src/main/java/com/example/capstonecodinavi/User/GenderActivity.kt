@@ -24,7 +24,6 @@ class GenderActivity : AppCompatActivity() {
 
         // 저장된 성별 정보 가져오기
         val gender = sharedPreferences.getInt("gender", -1)
-        Log.d("gender", gender.toString())
 
         // 저장된 성별이 있으면 해당 라디오 버튼 체크
         if (gender != -1) {
