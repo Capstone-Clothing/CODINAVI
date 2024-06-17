@@ -96,7 +96,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/weatherback"
                 app:layout_constraintTop_toBottomOf="@+id/weatherIV"
                 app:layout_constraintBottom_toTopOf="@+id/temperatureTv"
-                app:layout_constraintHorizontal_bias="0.2"
+                app:layout_constraintHorizontal_bias="0.15"
                 />
 
             <!-- 기온 -->
@@ -109,10 +109,8 @@
                 android:textSize="20dp"
                 android:accessibilityTraversalAfter="@id/currentWeatherTv"
                 android:accessibilityTraversalBefore="@id/humidityTv"
-                app:layout_constraintStart_toStartOf="@+id/weatherback"
-                app:layout_constraintEnd_toEndOf="@+id/weatherback"
+                app:layout_constraintStart_toStartOf="@+id/currentWeatherTv"
                 app:layout_constraintTop_toTopOf="@+id/precipitationProbTv"
-                app:layout_constraintHorizontal_bias="0.2"
                 />
 
             <!-- 습도 -->
