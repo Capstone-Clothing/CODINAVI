@@ -143,4 +143,8 @@ class CameraActivity : AppCompatActivity() {
     fun updateTextView(message: String) {
         binding.recogtext.text = message
     }
+    fun updateAnalysisResult(message2: String){
+        Log.d("CameraActivity", "Updating UI with message: $message2")
+        binding.textView2.text = message2
+    }
 }
