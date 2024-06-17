@@ -1,6 +1,7 @@
 package com.example.capstonecodinavi.Weather
 
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -22,6 +23,10 @@ import org.json.JSONObject
 class OthertimeActivity : AppCompatActivity() {
     lateinit var binding: ActivityOthertimeBinding
     lateinit var weather: Weather
+    lateinit var gender: String
+
+    private lateinit var sharedPreferences: SharedPreferences
+
 
     companion object {
         var requestQueue: RequestQueue? = null
@@ -34,10 +39,19 @@ class OthertimeActivity : AppCompatActivity() {
 
         weather = intent.getSerializableExtra("weather") as Weather
 
+        sharedPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE)
+        val genderInt = sharedPreferences.getInt("gender", MODE_PRIVATE)
+
+        if (genderInt == 0) {
+            gender = "남자"
+        } else if (genderInt == 1) {
+            gender = "여자"
+        }
+
         initData()
         action()
         connectData(weather)
-        recommendCodi(weather.temp.toDouble(), "여자")
+        recommendCodi(weather.temp.toDouble(), gender)
         setTitle(" ")
     }
 
