@@ -71,7 +71,7 @@ class OthertimeActivity : AppCompatActivity() {
     }
 
     fun connectData(weather: Weather) {
-        binding.timeTv.text = "시간 : ${weather.time.substring(0 until 2)}시"
+        binding.timeTv.text = "${weather.time.substring(0 until 2)}시"
         binding.humidityTv.text = "습도 : ${weather.humidity}%"
         binding.weatherIV.setImageResource(weather.weatherIconId)
         binding.precipitationTv.text = "강수량 : ${weather.precipitation}"
