@@ -70,9 +70,9 @@
         android:id="@+id/weatherIV"
         android:layout_width="90dp"
         android:layout_height="90dp"
-        android:layout_marginStart="30dp"
         app:layout_constraintBottom_toTopOf="@+id/currentWeatherTv"
-        app:layout_constraintStart_toStartOf="@+id/timeTv"
+        app:layout_constraintStart_toStartOf="@+id/weatherback"
+        app:layout_constraintEnd_toEndOf="@+id/weatherback"
         app:layout_constraintTop_toBottomOf="@+id/timeTv"
         />
 
@@ -83,10 +83,11 @@
         android:text="날씨 : "
         android:textColor="@color/black"
         android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="@+id/weatherIV"
-        app:layout_constraintEnd_toEndOf="@+id/weatherIV"
+        app:layout_constraintStart_toStartOf="@+id/weatherback"
+        app:layout_constraintEnd_toEndOf="@+id/weatherback"
         app:layout_constraintTop_toBottomOf="@+id/weatherIV"
         app:layout_constraintBottom_toTopOf="@+id/temperatureTv"
+        app:layout_constraintHorizontal_bias="0.2"
         />
 
     <!-- 기온 -->
@@ -94,13 +95,15 @@
         android:id="@+id/temperatureTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="기온"
+        android:text="기온 : "
         android:textColor="@color/black"
-        android:textSize="30dp"
-        app:layout_constraintStart_toStartOf="@+id/weatherIV"
-        app:layout_constraintEnd_toEndOf="@+id/weatherIV"
-        app:layout_constraintTop_toBottomOf="@+id/currentWeatherTv"
-        app:layout_constraintBottom_toBottomOf="@+id/weatherback"
+        android:textSize="20dp"
+        android:accessibilityTraversalAfter="@id/currentWeatherTv"
+        android:accessibilityTraversalBefore="@id/humidityTv"
+        app:layout_constraintStart_toStartOf="@+id/weatherback"
+        app:layout_constraintEnd_toEndOf="@+id/weatherback"
+        app:layout_constraintTop_toTopOf="@+id/precipitationTv"
+        app:layout_constraintHorizontal_bias="0.2"
         />
 
     <!-- 습도 -->
@@ -111,10 +114,11 @@
         android:text="습도 : "
         android:textColor="@color/black"
         android:textSize="20dp"
+        android:accessibilityTraversalAfter="@id/temperatureTv"
+        android:accessibilityTraversalBefore="@id/precipitationTv"
         app:layout_constraintStart_toStartOf="@+id/weatherback"
         app:layout_constraintEnd_toEndOf="@+id/weatherback"
-        app:layout_constraintTop_toTopOf="@+id/weatherIV"
-        app:layout_constraintBottom_toTopOf="@+id/precipitationTv"
+        app:layout_constraintTop_toTopOf="@+id/currentWeatherTv"
         app:layout_constraintHorizontal_bias="0.7"
         />
 
@@ -126,6 +130,8 @@
         android:text="강수량 : "
         android:textColor="@color/black"
         android:textSize="20dp"
+        android:accessibilityTraversalAfter="@id/humidityTv"
+        android:accessibilityTraversalBefore="@id/precipitationProbTv"
         app:layout_constraintStart_toStartOf="@+id/humidityTv"
         app:layout_constraintTop_toBottomOf="@+id/humidityTv"
         app:layout_constraintBottom_toTopOf="@+id/precipitationProbTv"
@@ -139,7 +145,7 @@
         android:text="강수확률 : "
         android:textColor="@color/black"
         android:textSize="20dp"
-        android:layout_marginBottom="50dp"
+        android:accessibilityTraversalAfter="@id/precipitationTv"
         app:layout_constraintStart_toStartOf="@+id/humidityTv"
         app:layout_constraintTop_toBottomOf="@+id/precipitationTv"
         app:layout_constraintBottom_toBottomOf="@+id/weatherback"
