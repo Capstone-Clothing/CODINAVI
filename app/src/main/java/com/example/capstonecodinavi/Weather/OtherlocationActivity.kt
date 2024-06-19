@@ -145,17 +145,12 @@ class OtherlocationActivity : AppCompatActivity() {
 
                         for (i in 0 until jsonArray.length()) {
                             val item = jsonArray.getJSONObject(i)
-                            val date = item.getString("date")
+                            weatherInfoList.add(item.getJSONObject("info"))
 
-                            if (date.equals(substringNowDate)) {
-                                weatherInfoList.add(item.getJSONObject("info"))
-                            }
                         }
 
                         for (i in 0 until weatherInfoList.size) {
-                            if (weatherInfoList.get(i).getString("time")
-                                    .equals(substringNowTime + "00")
-                            ) {
+                            if (weatherInfoList.get(i).getString("time").equals(substringNowTime + "00") && jsonArray.getJSONObject(i).getString("date").equals(substringNowDate)) {
                                 weather = weatherInfoList.get(i).getString("weather")
                                 weather2 = weatherInfoList.get(i).getString("precipitationType")
                                 temp = weatherInfoList.get(i).getString("temp")
@@ -192,7 +187,7 @@ class OtherlocationActivity : AppCompatActivity() {
                 Response.ErrorListener { }
             ) { }
         request.setShouldCache(false) // 이전 결과가 있어도 새 요청하여 결과 보여주기
-        WeatherActivity.requestQueue!!.add(request)
+        requestQueue!!.add(request)
     }
 
     private fun recommendCodi(temp: Double, gender: String) {
@@ -220,8 +215,8 @@ class OtherlocationActivity : AppCompatActivity() {
 
     private fun getWeatherSummary(dateList: ArrayList<String>, timeList: ArrayList<String>, ptyList: ArrayList<String>, summaryList: ArrayList<String>): String {
 
-        lateinit var summary: String
-        var date: String = ""
+        var summary = ""
+        var date = ""
 
         if (dateList.isEmpty()) {
             summary = "24시간 내에는 비 또는 눈이 안 옵니다."
@@ -230,10 +225,10 @@ class OtherlocationActivity : AppCompatActivity() {
                 if (dateList.get(i).equals(substringNowDate)) {
                     date = "오늘은"
                     summaryList.add(timeList.get(i).substring(0 until 2))
-                } else if (dateList.equals(substringNowDate + 1)){
+                } else if (dateList.get(i).equals((substringNowDate.toInt() + 1).toString())){
                     date = "내일은"
                     summaryList.add(timeList.get(i).substring(0 until 2))
-                } else if (dateList.get(i).equals(substringNowDate) && dateList.equals(substringNowDate + 1)) {
+                } else if (dateList.get(i).equals(substringNowDate) && dateList.equals((substringNowDate.toInt() + 1).toString())) {
                     date = "오늘과 내일"
                     summaryList.add(timeList.get(i).substring(0 until 2))
                 }
@@ -241,11 +236,11 @@ class OtherlocationActivity : AppCompatActivity() {
         }
 
         if (date.equals("오늘은")) {
-            summary = "$date ${summaryList}시에 각각 ${ptyList.subList(0, ptyList.size)}가 올 예정입니다."
+            summary = "오늘은 ${summaryList}시에 각각 ${ptyList.get(0)}가 올 예정입니다.\n내일은 비 또는 눈 소식이 없습니다."
         } else if (date.equals("내일은")) {
-            summary = "$date ${summaryList}시에 각각 ${ptyList.subList(0, ptyList.size)}가 올 예정입니다."
+            summary = "오늘은 비 또는 눈 소식이 없습니다.\n내일은 ${summaryList}시에 ${ptyList.get(0)}가 올 예정입니다."
         } else if (date.equals("오늘과 내일")) {
-            summary = "오늘과 내일 ${summaryList}시에 각각 ${ptyList.subList(0, ptyList.size)}가 올 예정입니다."
+            summary = "오늘과 내일은 ${summaryList}시에 ${ptyList.get(0)}가 올 예정입니다."
         }
         return summary
 
