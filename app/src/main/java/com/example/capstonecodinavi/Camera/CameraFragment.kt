@@ -246,7 +246,7 @@ class CameraFragment : Fragment() {
                     val result = response.body()
                     result?.let {
                         val clothingItem = it.result[0]
-                        val message2 = "Clothing Type Message: ${clothingItem.설명}, Type: ${clothingItem.종류}"
+                        val message2 = "옷의 종류는 ${clothingItem.종류}이고,\n무늬는 ${clothingItem.무늬정보}이며,\n색상은 ${clothingItem.색상}입니다."
                         (activity as CameraActivity).updateAnalysisResult(message2)
                     }
                 } else {
