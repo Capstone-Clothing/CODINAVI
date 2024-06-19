@@ -145,10 +145,7 @@ class OtherlocationActivity : AppCompatActivity() {
 
                         for (i in 0 until jsonArray.length()) {
                             val item = jsonArray.getJSONObject(i)
-                            val date = item.getString("date")
-
                             weatherInfoList.add(item.getJSONObject("info"))
-
                         }
 
                         for (i in 0 until weatherInfoList.size) {
@@ -233,10 +230,10 @@ class OtherlocationActivity : AppCompatActivity() {
                 if (dateList.get(i).equals(substringNowDate)) {
                     date = "오늘은"
                     summaryList.add(timeList.get(i).substring(0 until 2))
-                } else if (dateList.get(i).equals((substringNowDate.toInt() + 1).toString())) {
+                } else if (dateList.get(i).equals((substringNowDate.toInt() + 1).toString())){
                     date = "내일은"
                     summaryList.add(timeList.get(i).substring(0 until 2))
-                } else if (dateList.get(i).equals(substringNowDate) && dateList.equals(substringNowDate.toInt() + 1)) {
+                } else if (dateList.get(i).equals(substringNowDate) && dateList.equals((substringNowDate.toInt() + 1).toString())) {
                     date = "오늘과 내일"
                     summaryList.add(timeList.get(i).substring(0 until 2))
                 }
@@ -245,11 +242,11 @@ class OtherlocationActivity : AppCompatActivity() {
         Log.d("checkDate","$date")
 
         if (date.equals("오늘은")) {
-            summary = "오늘은 ${summaryList}시에 ${ptyList.get(0)}가 올 예정입니다."
+            summary = "오늘은 ${summaryList}시에 각각 ${ptyList.get(0)}가 올 예정입니다.\n내일은 비 또는 눈 소식이 없습니다."
         } else if (date.equals("내일은")) {
-            summary = "내일은 ${summaryList}시에 ${ptyList.get(0)}가 올 예정입니다."
+            summary = "오늘은 비 또는 눈 소식이 없습니다.\n내일은 ${summaryList}시에 ${ptyList.get(0)}가 올 예정입니다."
         } else if (date.equals("오늘과 내일")) {
-            summary = "오늘과 내일은 ${summaryList}시에 각각 ${ptyList.get(0)}가 올 예정입니다."
+            summary = "오늘과 내일은 ${summaryList}시에 ${ptyList.get(0)}가 올 예정입니다."
         }
         return summary
 
