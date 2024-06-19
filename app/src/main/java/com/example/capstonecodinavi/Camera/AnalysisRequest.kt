@@ -1,7 +1,7 @@
 package com.example.capstonecodinavi.Camera
 
 data class AnalysisRequest(
-    val codinaviImage: String,
-    val key: String
+    val bucket_name: String,
+    val image_key: String
 )
 

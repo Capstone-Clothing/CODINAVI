@@ -11,6 +11,6 @@ import retrofit2.http.Part
 import retrofit2.http.Path
 
 interface ApiServiceFlask {
-    @POST("predict")
+    @POST("analyze")
     fun getAnalysisResult(@Body request: AnalysisRequest): Call<AnalysisResult>
 }

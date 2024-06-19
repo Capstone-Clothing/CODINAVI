@@ -234,8 +234,8 @@ class CameraFragment : Fragment() {
     private fun getAnalysisResult(imageId: String) {
         Log.d("CameraFragment", "Requesting analysis for image: $imageId")
         val request = AnalysisRequest(
-            codinaviImage = "codinavi-image",
-            key = imageId
+            bucket_name = "codinavi-image",
+            image_key = imageId
         )
 
         val call = RetrofitFlaskClient.instance.getAnalysisResult(request)
@@ -245,7 +245,8 @@ class CameraFragment : Fragment() {
                 if (response.isSuccessful) {
                     val result = response.body()
                     result?.let {
-                        val message2 = "Pattern: ${it.pattern}, Type: ${it.type}, Dominant Color: ${it.dominant_color}"
+                        val clothingItem = it.result[0]
+                        val message2 = "Clothing Type Message: ${clothingItem.설명}, Type: ${clothingItem.종류}"
                         (activity as CameraActivity).updateAnalysisResult(message2)
                     }
                 } else {

@@ -8,7 +8,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.concurrent.TimeUnit
 
 object RetrofitFlaskClient {
-    private const val BASE_URL = "http://3.34.34.170:8000/"
+    private const val BASE_URL = "http://3.34.34.170:8001/"
 
     private val client = OkHttpClient.Builder()
         .connectTimeout(30, TimeUnit.SECONDS)
