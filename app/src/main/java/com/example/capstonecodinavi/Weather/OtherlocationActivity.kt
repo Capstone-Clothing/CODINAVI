@@ -109,6 +109,7 @@ class OtherlocationActivity : AppCompatActivity() {
                 Location("").apply {
                     lat = it[0].latitude
                     lon = it[0].longitude
+                    Log.d("checkKKKKKK","$lat $lon")
                     getCurrentWeather(lat!!, lon!!)
                 }
             }
@@ -119,7 +120,7 @@ class OtherlocationActivity : AppCompatActivity() {
     }
 
     fun getCurrentWeather(lat: Double, lon: Double) {
-        val url = "http://3.34.34.170:8080/weather?lat=$lat&lon=$lon"
+        val url = "http://3.34.34.170:8080/weather?lat=${lat}&lon=${lon}"
         val request = object :
             StringRequest(
                 Method.GET,
@@ -139,7 +140,6 @@ class OtherlocationActivity : AppCompatActivity() {
                         val weatherSummaryPtyList: ArrayList<String> = ArrayList()
                         val weatherSummaryTvList: ArrayList<String> = ArrayList()
 
-
                         val jsonObject = JSONObject(response)
                         val jsonArray = jsonObject.getJSONArray("infoFromDateList")
 
@@ -147,21 +147,22 @@ class OtherlocationActivity : AppCompatActivity() {
                             val item = jsonArray.getJSONObject(i)
                             val date = item.getString("date")
 
-                            if (date.equals(substringNowDate)) {
-                                weatherInfoList.add(item.getJSONObject("info"))
-                            }
+                            weatherInfoList.add(item.getJSONObject("info"))
+
                         }
 
                         for (i in 0 until weatherInfoList.size) {
-                            if (weatherInfoList.get(i).getString("time")
-                                    .equals(substringNowTime + "00")
-                            ) {
+                            if (weatherInfoList.get(i).getString("time").equals(substringNowTime + "00") && jsonArray.getJSONObject(i).getString("date").equals(substringNowDate)) {
                                 weather = weatherInfoList.get(i).getString("weather")
                                 weather2 = weatherInfoList.get(i).getString("precipitationType")
                                 temp = weatherInfoList.get(i).getString("temp")
                                 nextNum = i + 1
                             }
                         }
+
+                        Log.d("weatherInfoList","$weatherInfoList")
+                        Log.d("weatherInfoList","${weatherInfoList.size}")
+                        Log.d("nextNum","$nextNum")
 
                         for (i in nextNum until nextNum+24) {
                             val pty = jsonArray.getJSONObject(i).getJSONObject("info").getString("precipitationType")
@@ -171,6 +172,8 @@ class OtherlocationActivity : AppCompatActivity() {
                                 weatherSummaryPtyList.add(pty)
                             }
                         }
+
+                        Log.d("weatherInfoList2","$weatherSummaryDateList $weatherSummaryTimeList $weatherSummaryPtyList $weatherSummaryTvList")
 
                         weatherIconId = getWeatherIconId(weather, weather2)
                         weatherStr = getWeatherStr(weather, weather2)
@@ -192,7 +195,7 @@ class OtherlocationActivity : AppCompatActivity() {
                 Response.ErrorListener { }
             ) { }
         request.setShouldCache(false) // 이전 결과가 있어도 새 요청하여 결과 보여주기
-        WeatherActivity.requestQueue!!.add(request)
+        requestQueue!!.add(request)
     }
 
     private fun recommendCodi(temp: Double, gender: String) {
@@ -220,8 +223,8 @@ class OtherlocationActivity : AppCompatActivity() {
 
     private fun getWeatherSummary(dateList: ArrayList<String>, timeList: ArrayList<String>, ptyList: ArrayList<String>, summaryList: ArrayList<String>): String {
 
-        lateinit var summary: String
-        var date: String = ""
+        var summary = ""
+        var date = ""
 
         if (dateList.isEmpty()) {
             summary = "24시간 내에는 비 또는 눈이 안 옵니다."
@@ -230,22 +233,23 @@ class OtherlocationActivity : AppCompatActivity() {
                 if (dateList.get(i).equals(substringNowDate)) {
                     date = "오늘은"
                     summaryList.add(timeList.get(i).substring(0 until 2))
-                } else if (dateList.equals(substringNowDate + 1)){
+                } else if (dateList.get(i).equals((substringNowDate.toInt() + 1).toString())) {
                     date = "내일은"
                     summaryList.add(timeList.get(i).substring(0 until 2))
-                } else if (dateList.get(i).equals(substringNowDate) && dateList.equals(substringNowDate + 1)) {
+                } else if (dateList.get(i).equals(substringNowDate) && dateList.equals(substringNowDate.toInt() + 1)) {
                     date = "오늘과 내일"
                     summaryList.add(timeList.get(i).substring(0 until 2))
                 }
             }
         }
+        Log.d("checkDate","$date")
 
         if (date.equals("오늘은")) {
-            summary = "$date ${summaryList}시에 각각 ${ptyList.subList(0, ptyList.size)}가 올 예정입니다."
+            summary = "오늘은 ${summaryList}시에 ${ptyList.get(0)}가 올 예정입니다."
         } else if (date.equals("내일은")) {
-            summary = "$date ${summaryList}시에 각각 ${ptyList.subList(0, ptyList.size)}가 올 예정입니다."
+            summary = "내일은 ${summaryList}시에 ${ptyList.get(0)}가 올 예정입니다."
         } else if (date.equals("오늘과 내일")) {
-            summary = "오늘과 내일 ${summaryList}시에 각각 ${ptyList.subList(0, ptyList.size)}가 올 예정입니다."
+            summary = "오늘과 내일은 ${summaryList}시에 각각 ${ptyList.get(0)}가 올 예정입니다."
         }
         return summary
 
