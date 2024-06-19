@@ -31,6 +31,8 @@ class CameraActivity : AppCompatActivity() {
     private lateinit var photoFile: File
     private lateinit var objectDetectorHelper: ObjectDetectorHelper
 
+    lateinit var imageId2: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCameraBinding.inflate(layoutInflater)
@@ -71,11 +73,13 @@ class CameraActivity : AppCompatActivity() {
 
         binding.codiBtn.setOnClickListener {
             val intent = Intent(this, CodiRecommendActivity::class.java)
+            intent.putExtra("imageId", imageId2)
             startActivity(intent)
         }
 
         binding.colorBtn.setOnClickListener {
             val intent = Intent(this, ColorRecommendActivity::class.java)
+            intent.putExtra("imageId", imageId2)
             startActivity(intent)
         }
 
@@ -146,5 +150,8 @@ class CameraActivity : AppCompatActivity() {
     fun updateAnalysisResult(message2: String){
         Log.d("CameraActivity", "Updating UI with message: $message2")
         binding.textView2.text = message2
+    }
+    fun getImageId(imageId: String) {
+        imageId2 = imageId
     }
 }
