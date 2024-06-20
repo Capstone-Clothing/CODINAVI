@@ -45,6 +45,7 @@ class SearchOthertime : AppCompatActivity() {
 
         initUI()
         action()
+        setTitle(" ")
         getHourlyWeather(lat, lon)
     }
 
