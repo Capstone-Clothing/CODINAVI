@@ -40,7 +40,7 @@
 
     </FrameLayout>
 
-    <ImageView
+<!--    <ImageView
         android:id="@+id/colorIv"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -48,7 +48,7 @@
         android:background="@drawable/color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout" />-->
 
     <ImageView
         android:id="@+id/colorV"
@@ -58,7 +58,7 @@
         android:background="@drawable/rectangle_1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/colorIv" />
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
 
     <TextView
         android:id="@+id/colorTv"
@@ -66,7 +66,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/soyo_maple_regular"
         android:lineSpacingExtra="10dp"
-        android:text=""
+        android:text="잠시만 기다려주세요"
         android:textColor="@color/black"
         android:textSize="22dp"
         app:layout_constraintEnd_toEndOf="parent"
