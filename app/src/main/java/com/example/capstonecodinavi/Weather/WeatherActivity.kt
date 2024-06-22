@@ -268,16 +268,13 @@ class WeatherActivity : AppCompatActivity() {
 
                         for (i in 0 until jsonArray.length()) {
                             val item = jsonArray.getJSONObject(i)
-                            val date = item.getString("date")
 
-                            if (date.equals(substringNowDate)) {
-                                weatherInfoList.add(item.getJSONObject("info"))
-                            }
+                            weatherInfoList.add(item.getJSONObject("info"))
+
                         }
 
                         for (i in 0 until weatherInfoList.size) {
-                            if (weatherInfoList.get(i).getString("time").equals(substringNowTime + "00")
-                            ) {
+                            if (weatherInfoList.get(i).getString("time").equals(substringNowTime + "00") && jsonArray.getJSONObject(i).getString("date").equals(substringNowDate)) {
                                 weather = weatherInfoList.get(i).getString("weather")
                                 weather2 = weatherInfoList.get(i).getString("precipitationType")
                                 temp = weatherInfoList.get(i).getString("temp")
