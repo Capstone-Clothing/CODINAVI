@@ -319,8 +319,8 @@ class WeatherActivity : AppCompatActivity() {
 
     private fun getWeatherSummary(dateList: ArrayList<String>, timeList: ArrayList<String>, ptyList: ArrayList<String>, summaryList: ArrayList<String>): String {
 
-        lateinit var summary: String
-        var date: String = ""
+        var summary = ""
+        var date = ""
 
         if (dateList.isEmpty()) {
             summary = "24시간 내에는 비 또는 눈이 안 옵니다."
@@ -329,10 +329,10 @@ class WeatherActivity : AppCompatActivity() {
                 if (dateList.get(i).equals(substringNowDate)) {
                     date = "오늘은"
                     summaryList.add(timeList.get(i).substring(0 until 2))
-                } else if (dateList.equals(substringNowDate + 1)){
+                } else if (dateList.get(i).equals((substringNowDate.toInt() + 1).toString())){
                     date = "내일은"
                     summaryList.add(timeList.get(i).substring(0 until 2))
-                } else if (dateList.get(i).equals(substringNowDate) && dateList.equals(substringNowDate + 1)) {
+                } else if (dateList.get(i).equals(substringNowDate) && dateList.equals((substringNowDate.toInt() + 1).toString())) {
                     date = "오늘과 내일"
                     summaryList.add(timeList.get(i).substring(0 until 2))
                 }
@@ -340,11 +340,11 @@ class WeatherActivity : AppCompatActivity() {
         }
 
         if (date.equals("오늘은")) {
-            summary = "$date ${summaryList}시에 각각 ${ptyList.subList(0, ptyList.size)}가 올 예정입니다."
+            summary = "오늘은 ${summaryList}시에 각각 ${ptyList.get(0)}가 올 예정입니다.\n내일은 비 또는 눈 소식이 없습니다."
         } else if (date.equals("내일은")) {
-            summary = "$date ${summaryList}시에 각각 ${ptyList.subList(0, ptyList.size)}가 올 예정입니다."
+            summary = "오늘은 비 또는 눈 소식이 없습니다.\n내일은 ${summaryList}시에 ${ptyList.get(0)}가 올 예정입니다."
         } else if (date.equals("오늘과 내일")) {
-            summary = "오늘과 내일 ${summaryList}시에 각각 ${ptyList.subList(0, ptyList.size)}가 올 예정입니다."
+            summary = "오늘과 내일은 ${summaryList}시에 ${ptyList.get(0)}가 올 예정입니다."
         }
         return summary
 
