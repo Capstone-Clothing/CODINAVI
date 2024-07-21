@@ -42,7 +42,7 @@
         android:id="@+id/OccasionTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="아래는 총 ?개의 상황별 키워드가 있습니다.\n원하는 키워드를 선택해주세요."
+        android:text="아래는 총 4개의 상황별 키워드가 있습니다.\n원하는 키워드를 선택해주세요."
         android:lineSpacingExtra="10dp"
         android:fontFamily="@font/soyo_maple_regular"
         android:textColor="@color/black"
@@ -50,94 +50,67 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/frameLayout"
-        app:layout_constraintBottom_toTopOf="@+id/occasionGrid"/>
+        app:layout_constraintBottom_toTopOf="@+id/weddingBtn"/>
 
-
-    <GridLayout
-        android:id="@+id/occasionGrid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:columnCount="3"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
+    <android.widget.Button
+        android:id="@+id/weddingBtn"
+        android:layout_width="330dp"
+        android:layout_height="90dp"
+        android:background="@drawable/mainbtn"
+        android:fontFamily="@font/soyo_maple_regular"
+        android:text="결혼식"
+        android:textColor="@color/white"
+        android:textSize="35dp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/OccasionTv"
-        app:layout_constraintBottom_toTopOf="@id/menuBottomNav"
-        tools:ignore="MissingConstraints" >
+        app:layout_constraintBottom_toTopOf="@+id/funeralBtn"/>
 
-        <android.widget.Button
-            android:id="@+id/occasionBtn"
-            android:layout_width="100dp"
-            android:layout_height="90dp"
-            android:layout_margin="10dp"
-            android:text="결혼식장"
-            android:fontFamily="@font/soyo_maple_regular"
-            android:textColor="@color/black"
-            android:textSize="17dp"
-            android:background="@drawable/rectangle_1" />
+    <android.widget.Button
+        android:id="@+id/funeralBtn"
+        android:layout_width="330dp"
+        android:layout_height="90dp"
+        android:background="@drawable/mainbtn"
+        android:fontFamily="@font/soyo_maple_regular"
+        android:text="장례식"
+        android:textColor="@color/white"
+        android:textSize="35dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/weddingBtn"
+        app:layout_constraintBottom_toTopOf="@+id/interviewBtn"/>
 
-        <android.widget.Button
-            android:layout_width="100dp"
-            android:layout_height="90dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/rectangle_1" />
+    <android.widget.Button
+        android:id="@+id/interviewBtn"
+        android:layout_width="330dp"
+        android:layout_height="90dp"
+        android:background="@drawable/mainbtn"
+        android:fontFamily="@font/soyo_maple_regular"
+        android:text="면접"
+        android:textColor="@color/white"
+        android:textSize="35dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/funeralBtn"
+        app:layout_constraintBottom_toTopOf="@+id/exerciseBtn"/>
 
-        <android.widget.Button
-            android:layout_width="100dp"
-            android:layout_height="90dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/rectangle_1" />
-
-        <android.widget.Button
-            android:layout_width="100dp"
-            android:layout_height="90dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/rectangle_1" />
-
-        <android.widget.Button
-            android:layout_width="100dp"
-            android:layout_height="90dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/rectangle_1" />
-
-        <android.widget.Button
-            android:layout_width="100dp"
-            android:layout_height="90dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/rectangle_1" />
-        <android.widget.Button
-            android:layout_width="100dp"
-            android:layout_height="90dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/rectangle_1" />
-        <android.widget.Button
-            android:layout_width="100dp"
-            android:layout_height="90dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/rectangle_1" />
-        <android.widget.Button
-            android:layout_width="100dp"
-            android:layout_height="90dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/rectangle_1" />
-        <android.widget.Button
-            android:layout_width="100dp"
-            android:layout_height="90dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/rectangle_1" />
-        <android.widget.Button
-            android:layout_width="100dp"
-            android:layout_height="90dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/rectangle_1" />
-        <android.widget.Button
-            android:layout_width="100dp"
-            android:layout_height="90dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/rectangle_1" />
-
-
-    </GridLayout>
+    <android.widget.Button
+        android:id="@+id/exerciseBtn"
+        android:layout_width="330dp"
+        android:layout_height="90dp"
+        android:background="@drawable/mainbtn"
+        android:fontFamily="@font/soyo_maple_regular"
+        android:text="운동"
+        android:textColor="@color/white"
+        android:textSize="35dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/interviewBtn"
+        app:layout_constraintBottom_toTopOf="@+id/menuBottomNav"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/menuBottomNav"
