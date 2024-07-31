@@ -1,5 +1,6 @@
 package com.example.capstonecodinavi.Camera
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.ImageFormat
@@ -23,6 +24,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.capstonecodinavi.R
+import com.example.capstonecodinavi.Recommend.OccasionActivity
 import com.example.capstonecodinavi.databinding.FragmentCameraBinding
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -249,6 +251,15 @@ class CameraFragment : Fragment() {
                         val message2 = "옷의 종류는 ${clothingItem.종류}이고,\n무늬는 ${clothingItem.무늬정보}이며,\n색상은 ${clothingItem.색상}입니다."
                         (activity as CameraActivity).updateAnalysisResult(message2)
                         (activity as CameraActivity).getImageId(imageId)
+
+                        // 적합성 판별을 위해 데이터 전달
+                        val intent = Intent(activity, OccasionActivity::class.java).apply {
+                            putExtra("occasion", "운동") // 예시: 실제 선택된 상황에 맞게 설정
+                            putExtra("type", clothingItem.종류)
+                            putExtra("pattern", clothingItem.무늬정보)
+                            putExtra("color", clothingItem.색상)
+                        }
+                        startActivity(intent)
                     }
                 } else {
                     Log.e("CameraFragment", "Failed to get analysis result: ${response.errorBody()?.string()}")

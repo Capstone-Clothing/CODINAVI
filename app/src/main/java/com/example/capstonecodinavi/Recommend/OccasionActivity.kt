@@ -7,6 +7,7 @@ import com.example.capstonecodinavi.Main.MainActivity
 import com.example.capstonecodinavi.R
 import com.example.capstonecodinavi.User.UserActivity
 import com.example.capstonecodinavi.databinding.ActivityOccasionBinding
+import com.kakao.sdk.common.KakaoSdk.type
 
 class OccasionActivity : AppCompatActivity() {
     private lateinit var binding: ActivityOccasionBinding
@@ -18,13 +19,22 @@ class OccasionActivity : AppCompatActivity() {
         action()
 
         val occasion = intent.getStringExtra("occasion")
-        updateTextViewForOccasion(occasion)
+        val type = intent.getStringExtra("type")
+        val pattern = intent.getStringExtra("pattern")
+        val color = intent.getStringExtra("color")
+        updateTextViewForOccasion(occasion, type, pattern, color)
     }
 
-    private fun updateTextViewForOccasion(occasion: String?) {
-        val type = "셔츠" // 분석 결과에서 받은 옷 종류
-        val pattern = "무지" // 분석 결과에서 받은 옷 패턴
-        val color = "검정색" // 분석 결과에서 받은 옷 색상
+    private fun updateTextViewForOccasion(occasion: String?, type: String?, pattern: String?, color: String?) {
+//        // 우선 임의 데이터 적용
+//        val type = "셔츠" // 분석 결과에서 받은 옷 종류
+//        val pattern = "무지" // 분석 결과에서 받은 옷 패턴
+//        val color = "검정색" // 분석 결과에서 받은 옷 색상
+
+        if (type == null || pattern == null || color == null) {
+            binding.clothTv.text = "분석 결과를 받아오지 못했습니다."
+            return
+        }
 
         val analysisResult = if (isSuitableForOccasion(type, pattern, color, occasion)) {
             "이 옷은 ${occasion} 상황에 적합합니다."
