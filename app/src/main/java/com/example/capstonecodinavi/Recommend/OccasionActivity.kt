@@ -26,10 +26,10 @@ class OccasionActivity : AppCompatActivity() {
     }
 
     private fun updateTextViewForOccasion(occasion: String?, type: String?, pattern: String?, color: String?) {
-//        // 우선 임의 데이터 적용
-//        val type = "셔츠" // 분석 결과에서 받은 옷 종류
-//        val pattern = "무지" // 분석 결과에서 받은 옷 패턴
-//        val color = "검정색" // 분석 결과에서 받은 옷 색상
+        // 우선 임의 데이터 적용
+        val type = "브라탑" // 분석 결과에서 받은 옷 종류
+        val pattern = "무지" // 분석 결과에서 받은 옷 패턴
+        val color = "검정색" // 분석 결과에서 받은 옷 색상
 
         if (type == null || pattern == null || color == null) {
             binding.clothTv.text = "분석 결과를 받아오지 못했습니다."
@@ -51,6 +51,7 @@ class OccasionActivity : AppCompatActivity() {
                 val unsuitableTypes = listOf("브라탑", "탑", "래깅스")
                 val unsuitablePatterns = listOf("페이즐리", "뱀피", "해골", "카무플라쥬", "호피", "타이다이")
                 val unsuitableColors = listOf("흰색")
+                // 결혼식의 경우, 하나라도 부적합한 조건이 포함되면 적합하지 않다고 판단
                 !(unsuitableTypes.contains(type) || unsuitablePatterns.contains(pattern) || unsuitableColors.contains(color))
             }
             "funeral" -> {
