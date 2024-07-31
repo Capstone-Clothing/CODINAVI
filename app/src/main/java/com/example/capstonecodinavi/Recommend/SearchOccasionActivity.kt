@@ -3,7 +3,6 @@ package com.example.capstonecodinavi.Recommend
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.capstonecodinavi.Guide.IntroduceAppBtn
 import com.example.capstonecodinavi.Main.MainActivity
 import com.example.capstonecodinavi.R
 import com.example.capstonecodinavi.User.UserActivity
@@ -17,16 +16,33 @@ class SearchOccasionActivity : AppCompatActivity() {
         setContentView(binding.root)
         setTitle(" ")
         action()
+
+        binding.weddingBtn.setOnClickListener {
+            navigateToOccasionActivity("wedding")
+        }
+
+        binding.funeralBtn.setOnClickListener {
+            navigateToOccasionActivity("funeral")
+        }
+
+        binding.interviewBtn.setOnClickListener {
+            navigateToOccasionActivity("interview")
+        }
+
+        binding.exerciseBtn.setOnClickListener {
+            navigateToOccasionActivity("exercise")
+        }
+    }
+
+    private fun navigateToOccasionActivity(occasion: String) {
+        val intent = Intent(this, OccasionActivity::class.java)
+        intent.putExtra("occasion", occasion)
+        startActivity(intent)
     }
 
     private fun action() {
         binding.backBtn.setOnClickListener {
             finish()
-        }
-
-        binding.occasionBtn.setOnClickListener {
-            val intent = Intent( this, OccasionActivity::class.java)
-            startActivity(intent)
         }
 
         binding.menuBottomNav.setOnItemSelectedListener { menuItem ->
@@ -35,6 +51,7 @@ class SearchOccasionActivity : AppCompatActivity() {
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                     true
+
                 }
                 R.id.menu_user -> {
                     val intent = Intent(this, UserActivity::class.java)
