@@ -17,16 +17,33 @@ class SearchOccasionActivity : AppCompatActivity() {
         setContentView(binding.root)
         setTitle(" ")
         action()
+
+        binding.weddingBtn.setOnClickListener {
+            navigateToOccasionActivity("wedding")
+        }
+
+        binding.funeralBtn.setOnClickListener {
+            navigateToOccasionActivity("funeral")
+        }
+
+        binding.interviewBtn.setOnClickListener {
+            navigateToOccasionActivity("interview")
+        }
+
+        binding.exerciseBtn.setOnClickListener {
+            navigateToOccasionActivity("exercise")
+        }
+    }
+
+    private fun navigateToOccasionActivity(occasion: String) {
+        val intent = Intent(this, OccasionActivity::class.java)
+        intent.putExtra("occasion", occasion)
+        startActivity(intent)
     }
 
     private fun action() {
         binding.backBtn.setOnClickListener {
             finish()
-        }
-
-        binding.occasionBtn.setOnClickListener {
-            val intent = Intent( this, OccasionActivity::class.java)
-            startActivity(intent)
         }
 
         binding.menuBottomNav.setOnItemSelectedListener { menuItem ->
