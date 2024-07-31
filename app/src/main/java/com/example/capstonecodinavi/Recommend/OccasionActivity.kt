@@ -22,14 +22,14 @@ class OccasionActivity : AppCompatActivity() {
     }
 
     private fun updateTextViewForOccasion(occasion: String?) {
-        val type = "exampleType" // 분석 결과에서 받은 옷 종류
-        val pattern = "examplePattern" // 분석 결과에서 받은 옷 패턴
-        val color = "exampleColor" // 분석 결과에서 받은 옷 색상
+        val type = "셔츠" // 분석 결과에서 받은 옷 종류
+        val pattern = "무지" // 분석 결과에서 받은 옷 패턴
+        val color = "검정색" // 분석 결과에서 받은 옷 색상
 
         val analysisResult = if (isSuitableForOccasion(type, pattern, color, occasion)) {
-            "이 옷은 ${occasion}에 적합합니다."
+            "이 옷은 ${occasion} 상황에 적합합니다."
         } else {
-            "이 옷은 ${occasion}에 적합하지 않습니다."
+            "이 옷은 ${occasion} 상황에 적합하지 않습니다."
         }
 
         binding.clothTv.text = analysisResult
@@ -44,18 +44,21 @@ class OccasionActivity : AppCompatActivity() {
                 !(unsuitableTypes.contains(type) || unsuitablePatterns.contains(pattern) || unsuitableColors.contains(color))
             }
             "funeral" -> {
-                val unsuitableTypes = listOf("브라탑", "탑", "래깅스")
-                val unsuitablePatterns = listOf("페이즐리", "뱀피", "해골", "카무플라쥬", "호피", "타이다이")
-                val unsuitableColors = listOf("빨간색")
-                !(unsuitableTypes.contains(type) || unsuitablePatterns.contains(pattern) || unsuitableColors.contains(color))
+                val suitableTypes = listOf("재킷", "스커트", "티셔츠", "셔츠", "팬츠")
+                val suitablePatterns = listOf("무지")
+                val suitableColors = listOf("검은색", "짙은 회색", "짙은 남색", "짙은 갈색")
+                val suitableWhiteTypes = listOf("티셔츠", "셔츠")
+                (suitableTypes.contains(type) && suitablePatterns.contains(pattern) && (suitableColors.contains(color) || (color == "흰색" && suitableWhiteTypes.contains(type))))
             }
             "interview" -> {
-                // 면접에 적합한지 여부를 판별하는 로직
-                true // 예시로 true 반환
+                val suitableTypes = listOf("재킷", "스커트", "가디건", "티셔츠", "셔츠", "팬츠", "블라우스")
+                val suitablePatterns = listOf("무지")
+                val suitableColors = listOf("검은색", "회색", "남색", "흰색", "베이지")
+                (suitableTypes.contains(type) && suitablePatterns.contains(pattern) && suitableColors.contains(color))
             }
             "exercise" -> {
-                // 운동에 적합한지 여부를 판별하는 로직
-                true // 예시로 true 반환
+                val suitableTypes = listOf("티셔츠", "팬츠", "브라탑", "탑", "후드티", "래깅스")
+                suitableTypes.contains(type)
             }
             else -> true
         }
