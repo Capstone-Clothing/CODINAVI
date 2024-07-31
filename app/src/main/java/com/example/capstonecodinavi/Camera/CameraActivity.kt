@@ -32,12 +32,19 @@ class CameraActivity : AppCompatActivity() {
     private lateinit var objectDetectorHelper: ObjectDetectorHelper
 
     lateinit var imageId2: String
+    lateinit var occasion: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCameraBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setTitle(" ")
+
+        occasion = intent.getStringExtra("occasion").toString()
+        // 프래그먼트에서 이 값을 사용할 수 있도록 설정
+        supportFragmentManager.setFragmentResult("occasionKey", Bundle().apply {
+            putString("occasion", occasion)
+        })
 
         if (savedInstanceState == null) {
             val navHostFragment = NavHostFragment.create(R.navigation.nav_graph)
