@@ -3,7 +3,7 @@ package com.example.capstonecodinavi.Recommend
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.capstonecodinavi.Guide.IntroduceAppBtn
+import com.example.capstonecodinavi.Camera.CameraActivity
 import com.example.capstonecodinavi.Main.MainActivity
 import com.example.capstonecodinavi.R
 import com.example.capstonecodinavi.User.UserActivity
@@ -36,7 +36,7 @@ class SearchOccasionActivity : AppCompatActivity() {
     }
 
     private fun navigateToOccasionActivity(occasion: String) {
-        val intent = Intent(this, OccasionActivity::class.java)
+        val intent = Intent(this, CameraActivity::class.java)
         intent.putExtra("occasion", occasion)
         startActivity(intent)
     }
