@@ -18,26 +18,25 @@ class SearchOccasionActivity : AppCompatActivity() {
         setTitle(" ")
         action()
 
+        // 버튼 클릭 리스너 설정
         binding.weddingBtn.setOnClickListener {
-            navigateToOccasionActivity("wedding")
+            openOccasionActivity("wedding")
         }
-
         binding.funeralBtn.setOnClickListener {
-            navigateToOccasionActivity("funeral")
+            openOccasionActivity("funeral")
         }
-
         binding.interviewBtn.setOnClickListener {
-            navigateToOccasionActivity("interview")
+            openOccasionActivity("interview")
         }
-
         binding.exerciseBtn.setOnClickListener {
-            navigateToOccasionActivity("exercise")
+            openOccasionActivity("exercise")
         }
     }
 
-    private fun navigateToOccasionActivity(occasion: String) {
-        val intent = Intent(this, CameraActivity::class.java)
-        intent.putExtra("occasion", occasion)
+    private fun openOccasionActivity(occasion: String) {
+        val intent = Intent(this, OccasionActivity::class.java).apply {
+            putExtra("occasion", occasion)
+        }
         startActivity(intent)
     }
 
