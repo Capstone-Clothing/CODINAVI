@@ -22,30 +22,42 @@ class OccasionActivity : AppCompatActivity() {
     }
 
     private fun updateTextViewForOccasion(occasion: String?) {
-        when (occasion) {
+        val type = "exampleType" // 분석 결과에서 받은 옷 종류
+        val pattern = "examplePattern" // 분석 결과에서 받은 옷 패턴
+        val color = "exampleColor" // 분석 결과에서 받은 옷 색상
+
+        val analysisResult = if (isSuitableForOccasion(type, pattern, color, occasion)) {
+            "이 옷은 ${occasion}에 적합합니다."
+        } else {
+            "이 옷은 ${occasion}에 적합하지 않습니다."
+        }
+
+        binding.clothTv.text = analysisResult
+    }
+
+    private fun isSuitableForOccasion(type: String, pattern: String, color: String, occasion: String?): Boolean {
+        return when (occasion) {
             "wedding" -> {
-                // 결혼식에 적합한지 여부를 판별하는 코드를 호출하고 결과를 업데이트
-                val analysisResult = "이 옷은 결혼식 상황에 적합하지 않습니다."
-                binding.clothTv.text = analysisResult
+                val unsuitableTypes = listOf("브라탑", "탑", "래깅스")
+                val unsuitablePatterns = listOf("페이즐리", "뱀피", "해골", "카무플라쥬", "호피", "타이다이")
+                val unsuitableColors = listOf("흰색")
+                !(unsuitableTypes.contains(type) || unsuitablePatterns.contains(pattern) || unsuitableColors.contains(color))
             }
             "funeral" -> {
-                // 장례식에 적합한지 여부를 판별하는 코드를 호출하고 결과를 업데이트
-                val analysisResult = "이 옷은 장례식 상황에 적합하지 않습니다."
-                binding.clothTv.text = analysisResult
+                val unsuitableTypes = listOf("브라탑", "탑", "래깅스")
+                val unsuitablePatterns = listOf("페이즐리", "뱀피", "해골", "카무플라쥬", "호피", "타이다이")
+                val unsuitableColors = listOf("빨간색")
+                !(unsuitableTypes.contains(type) || unsuitablePatterns.contains(pattern) || unsuitableColors.contains(color))
             }
             "interview" -> {
-                // 면접에 적합한지 여부를 판별하는 코드를 호출하고 결과를 업데이트
-                val analysisResult = "이 옷은 면접 상황에 적합하지 않습니다."
-                binding.clothTv.text = analysisResult
+                // 면접에 적합한지 여부를 판별하는 로직
+                true // 예시로 true 반환
             }
             "exercise" -> {
-                // 운동에 적합한지 여부를 판별하는 코드를 호출하고 결과를 업데이트
-                val analysisResult = "이 옷은 운동 상황에 적합하지 않습니다."
-                binding.clothTv.text = analysisResult
+                // 운동에 적합한지 여부를 판별하는 로직
+                true // 예시로 true 반환
             }
-            else -> {
-                binding.clothTv.text = "알 수 없는 상황입니다."
-            }
+            else -> true
         }
     }
 
