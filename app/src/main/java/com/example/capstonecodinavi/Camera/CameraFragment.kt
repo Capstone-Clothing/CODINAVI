@@ -52,12 +52,19 @@ class CameraFragment : Fragment() {
     private lateinit var objectDetectorHelper: ObjectDetectorHelper
     private var isOverlayViewReady = false
     private var pendingImageProxy: ImageProxy? = null
+    private var occasion: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentCameraBinding.inflate(inflater, container, false)
+
+        // CameraActivity로부터 전달된 occasion 값 가져오기
+        parentFragmentManager.setFragmentResultListener("occasionKey", this) { key, bundle ->
+            occasion = bundle.getString("occasion")
+        }
+
         return binding.root
     }
 
@@ -254,7 +261,7 @@ class CameraFragment : Fragment() {
 
                         // 적합성 판별을 위해 데이터 전달
                         val intent = Intent(activity, OccasionActivity::class.java).apply {
-                            putExtra("occasion", "운동") // 예시: 실제 선택된 상황에 맞게 설정
+                            putExtra("occasion", occasion)
                             putExtra("type", clothingItem.종류)
                             putExtra("pattern", clothingItem.무늬정보)
                             putExtra("color", clothingItem.색상)
