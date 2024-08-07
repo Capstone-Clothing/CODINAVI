@@ -70,7 +70,7 @@ class OccasionActivity : AppCompatActivity() {
                 clothing,
                 suitableTypes = listOf("재킷", "스커트", "티셔츠", "셔츠", "팬츠"),
                 suitablePatterns = listOf("무지"),
-                suitableColors = listOf("검은색", "어두운 계열", "흰색"),
+                suitableColors = listOf("검은색", "회색"),
                 occasionName = "장례식"
             )
             "면접" -> checkSuitability(

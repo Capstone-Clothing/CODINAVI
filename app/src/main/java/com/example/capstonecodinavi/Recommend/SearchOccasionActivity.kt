@@ -63,9 +63,9 @@ class SearchOccasionActivity : AppCompatActivity() {
 
     private fun openOccasionActivity(occasion: String){
         // 임시 데이터 설정
-        val clothingType = "래깅스"
+        val clothingType = "티셔츠"
         val clothingPattern = "무지"
-        val clothingColor = "검은색"
+        val clothingColor = "흰색"
 
         val intent = Intent(this, OccasionActivity::class.java).apply {
             putExtra("OCCASION", occasion)
