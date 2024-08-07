@@ -24,9 +24,24 @@ class SearchOccasionActivity : AppCompatActivity() {
             finish()
         }
 
-        binding.occasionBtn.setOnClickListener {
-            val intent = Intent( this, OccasionActivity::class.java)
-            startActivity(intent)
+        // '결혼식' 버튼 클릭 시
+        binding.weddingBtn.setOnClickListener {
+            openOccasionActivity("결혼식")
+        }
+
+        // '장례식' 버튼 클릭 시
+        binding.funeralBtn.setOnClickListener {
+            openOccasionActivity("장례식")
+        }
+
+        // '면접' 버튼 클릭 시
+        binding.interviewBtn.setOnClickListener {
+            openOccasionActivity("면접")
+        }
+
+        // '운동' 버튼 클릭 시
+        binding.exerciseBtn.setOnClickListener {
+            openOccasionActivity("운동")
         }
 
         binding.menuBottomNav.setOnItemSelectedListener { menuItem ->
@@ -44,5 +59,20 @@ class SearchOccasionActivity : AppCompatActivity() {
                 else -> false
             }
         }
+    }
+
+    private fun openOccasionActivity(occasion: String){
+        // 임시 데이터 설정
+        val clothingType = "티셔츠"
+        val clothingPattern = "무지"
+        val clothingColor = "흰색"
+
+        val intent = Intent(this, OccasionActivity::class.java).apply {
+            putExtra("OCCASION", occasion)
+            putExtra("CLOTHING_TYPE", clothingType)
+            putExtra("CLOTHING_PATTERN", clothingPattern)
+            putExtra("CLOTHING_COLOR", clothingColor)
+        }
+        startActivity(intent)
     }
 }

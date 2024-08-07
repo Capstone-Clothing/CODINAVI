@@ -50,7 +50,7 @@
         app:layout_constraintTop_toBottomOf="@+id/frameLayout"/>
 
     <TextView
-        android:id="@+id/clothTv"
+        android:id="@+id/resultTv"
         android:layout_width="290dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/soyo_maple_regular"
@@ -61,11 +61,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/occasionTvback"
-        app:layout_constraintBottom_toTopOf="@+id/occasionCodiTv"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineTv"
         />
 
     <TextView
-        android:id="@+id/occasionCodiTv"
+        android:id="@+id/guidelineTv"
         android:layout_width="290dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/soyo_maple_regular"
@@ -75,7 +75,7 @@
         android:text="~~\n~~\n~~"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/clothTv"
+        app:layout_constraintTop_toBottomOf="@+id/resultTv"
         app:layout_constraintBottom_toBottomOf="@+id/occasionTvback"
         />
 
