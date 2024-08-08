@@ -26,7 +26,12 @@
         android:theme="@style/Theme.CapstoneCODINAVI"
         android:usesCleartextTraffic="true"
         tools:targetApi="34">
-
+        <activity
+            android:name=".User.RecommendResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".User.ResultListActivity"
+            android:exported="false" />
         <activity
             android:name=".User.FirstGenderSetActivity"
             android:exported="false" />

@@ -60,6 +60,11 @@ class UserActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.recommendResultBtn.setOnClickListener {
+            val intent = Intent(this, ResultListActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.guideBtn.setOnClickListener {
             val intent = Intent(this, GuideActivity::class.java)
             startActivity(intent)
