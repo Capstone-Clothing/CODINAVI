@@ -39,6 +39,45 @@
 
     </FrameLayout>
 
+    <View
+        android:id="@+id/recommendResultBack"
+        android:layout_width="330dp"
+        android:layout_height="275dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/rectangle_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout"/>
+
+    <TextView
+        android:id="@+id/codiResultTv"
+        android:layout_width="291dp"
+        android:layout_height="wrap_content"
+        android:text="코디 추천 결과"
+        android:fontFamily="@font/soyo_maple_regular"
+        android:textColor="@color/black"
+        android:lineSpacingExtra="10dp"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recommendResultBack"
+        app:layout_constraintBottom_toTopOf="@+id/colorResultTv"/>
+
+    <TextView
+        android:id="@+id/colorResultTv"
+        android:layout_width="291dp"
+        android:layout_height="wrap_content"
+        android:text="색상 추천 결과"
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/soyo_maple_regular"
+        android:textColor="@color/black"
+        android:lineSpacingExtra="10dp"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/codiResultTv"
+        app:layout_constraintBottom_toTopOf="@+id/recommendResultBack"/>
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/menuBottomNav"
