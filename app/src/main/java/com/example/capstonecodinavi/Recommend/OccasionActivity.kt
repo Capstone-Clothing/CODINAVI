@@ -63,21 +63,22 @@ class OccasionActivity : AppCompatActivity() {
                 clothing,
                 unsuitableTypes = listOf("브라탑", "탑", "래깅스"),
                 unsuitablePatterns = listOf("페이즐리", "뱀피", "해골", "카무플라쥬", "호피", "타이다이"),
-                unsuitableColors = listOf("흰색"),
+                unsuitableColors = listOf("깨끗한 흰색"),
                 occasionName = "결혼식"
             )
             "장례식" -> checkSuitability(
                 clothing,
                 suitableTypes = listOf("재킷", "스커트", "티셔츠", "셔츠", "팬츠"),
                 suitablePatterns = listOf("무지"),
-                suitableColors = listOf("검은색", "회색"),
+                suitableColors = listOf("깜깜한 검정색", "조용한 갈색빛 회색", "조용한 어두운 회색", "단정한 남색"),
                 occasionName = "장례식"
             )
             "면접" -> checkSuitability(
                 clothing,
                 suitableTypes = listOf("재킷", "스커트", "가디건", "티셔츠", "셔츠", "팬츠", "블라우스"),
                 suitablePatterns = listOf("무지"),
-                suitableColors = listOf("검은색", "흰색", "회색"),
+                suitableColors = listOf("깨끗한 흰색", "깜깜한 검정색", "조용한 회색", "조용한 보라빛 회색",
+                    "조용한 파란빛 회색", "조용한 갈색빛 회색", "조용한 어두운 회색", "단정한 남색", "부드러운 베이지색", "부드러운 연한 베이지색"),
                 occasionName = "면접"
             )
             "운동" -> checkSuitability(
@@ -117,7 +118,7 @@ class OccasionActivity : AppCompatActivity() {
         }
     }
 
-    // 장소별 정형화된 옷차림 정보 함수
+    // 상황별 정형화된 옷차림 정보 함수
     private fun getGuidelineForOccasion(occasion: String?): String {
         return when (occasion) {
             "결혼식" -> "결혼식에서는 노출이 심한 옷, 너무 눈에 띄는 옷, 흰색 옷은 피해주세요."
