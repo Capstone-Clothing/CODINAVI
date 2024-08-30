@@ -29,9 +29,25 @@
         <activity
             android:name=".TextSizeActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".User.UserActivity"
+            android:exported="false"
+            android:launchMode="singleTop" />
+
+        <activity
+            android:name=".User.RecommendResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".User.ResultListActivity"
+            android:exported="false" />
         <activity
             android:name=".User.FirstGenderSetActivity"
             android:exported="false" />
+        <activity
+            android:name=".User.GenderActivity"
+            android:exported="false" />
+
         <activity
             android:name=".Recommend.OccasionActivity"
             android:exported="false" />
@@ -47,6 +63,7 @@
         <activity
             android:name=".Recommend.CodiRecommendActivity"
             android:exported="false" />
+
         <activity
             android:name=".Weather.SearchOthertime"
             android:exported="false" />
@@ -62,28 +79,26 @@
         <activity
             android:name=".Weather.SearchOtherlocation"
             android:exported="false" />
-        <activity
-            android:name=".User.GenderActivity"
-            android:exported="false" />
+
         <activity
             android:name=".Admin.AdminActivity"
             android:exported="false" />
+
+
+        <activity
+            android:name=".Main.MainActivity"
+            android:exported="false"
+            android:launchMode="singleTask" />
+
+        <activity
+            android:name=".Camera.CameraActivity"
+            android:exported="false" />
+
         <activity
             android:name=".Guide.IntroduceCameraBtn"
             android:exported="false" />
         <activity
             android:name=".Guide.GuideActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Main.MainActivity"
-            android:exported="false"
-            android:launchMode="singleTask" />
-        <activity
-            android:name=".User.UserActivity"
-            android:exported="false"
-            android:launchMode="singleTop" />
-        <activity
-            android:name=".Camera.CameraActivity"
             android:exported="false" />
         <activity
             android:name=".Guide.IntroduceWeatherBtn"
