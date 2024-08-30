@@ -120,22 +120,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/result4" />
 
-            <android.widget.Button
-                android:id="@+id/recommendResultBtn"
-                android:layout_width="310dp"
-                android:layout_height="90dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="30dp"
-                android:background="@drawable/mainbtn"
-                android:fontFamily="@font/soyo_maple_regular"
-                android:text="더보기?"
-                android:textColor="@color/white"
-                android:textSize="35dp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/result5" />
-
         </LinearLayout>
 
     </ScrollView>
