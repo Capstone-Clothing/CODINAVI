@@ -53,6 +53,7 @@ class ResultListActivity : AppCompatActivity() {
 
         adapter.itemClicked.observe(this) {
             val intent = Intent(this, RecommendResultActivity::class.java)
+            intent.putExtra("id", adapter.itemClicked.value?.id)
             startActivity(intent)
         }
 
@@ -85,11 +86,12 @@ class ResultListActivity : AppCompatActivity() {
 
                     for (i in 0 until jsonArray.length()) {
                         val jsonObject = jsonArray.getJSONObject(i)
+                        val id = jsonObject.get("id")
                         val color = jsonObject.get("color")
                         val pattern = jsonObject.get("pattern")
                         val type = jsonObject.get("type")
 
-                        resultSummaryList.add(ResultSummary(color.toString(), pattern.toString(), type.toString()))
+                        resultSummaryList.add(ResultSummary(id.toString(), color.toString(), pattern.toString(), type.toString()))
                     }
                     adapter.resultSummaryList = resultSummaryList
                     adapter.notifyDataSetChanged()

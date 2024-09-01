@@ -39,6 +39,7 @@ class CameraActivity : AppCompatActivity() {
     private lateinit var photoFile: File
     private lateinit var objectDetectorHelper: ObjectDetectorHelper
 
+    private lateinit var id: String
     lateinit var imageId2: String
 
     companion object {
@@ -94,12 +95,14 @@ class CameraActivity : AppCompatActivity() {
         binding.codiBtn.setOnClickListener {
             val intent = Intent(this, CodiRecommendActivity::class.java)
             intent.putExtra("imageId", imageId2)
+            intent.putExtra("parentId", id)
             startActivity(intent)
         }
 
         binding.colorBtn.setOnClickListener {
             val intent = Intent(this, ColorRecommendActivity::class.java)
             intent.putExtra("imageId", imageId2)
+            intent.putExtra("parentId", id)
             startActivity(intent)
         }
 
@@ -205,6 +208,9 @@ class CameraActivity : AppCompatActivity() {
             body,
             Response.Listener { response ->
                 try {
+
+                    id = response.getString("id").toString();
+
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }

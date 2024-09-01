@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import com.android.volley.RequestQueue
 import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.capstonecodinavi.Camera.AnalysisRequest
@@ -19,6 +20,7 @@ import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
+import java.lang.RuntimeException
 
 class ColorRecommendActivity : AppCompatActivity() {
     private lateinit var binding: ActivityColorBinding
@@ -109,12 +111,41 @@ class ColorRecommendActivity : AppCompatActivity() {
                 } else {
                     binding.colorTv.text = "${colorInfo}를 추천드립니다."
                 }
+                saveInfo(binding.colorTv.text as String)
             } catch (e: JSONException) {
                 e.printStackTrace()
             }
 
         }, Response.ErrorListener { }) {}
         request.setShouldCache(false) // 이전 결과가 있어도 새 요청하여 결과 보여주기
+        requestQueue!!.add(request)
+    }
+
+    fun saveInfo(result: String) {
+        val url = "http://3.34.34.170:8080/cloth/colorRecommendHistory"
+
+        val body: JSONObject = JSONObject()
+        try {
+            body.put("parentId", intent.getStringExtra("parentId"))
+            body.put("result", result)
+        } catch (e: JSONException) {
+            throw RuntimeException(e)
+        }
+
+        val request = object :
+            JsonObjectRequest(
+                Method.POST,
+                url,
+                body,
+                Response.Listener { response ->
+                    try {
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                    }
+                },
+                Response.ErrorListener {  }
+            ) {}
+        request.setShouldCache(false)
         requestQueue!!.add(request)
     }
 }
