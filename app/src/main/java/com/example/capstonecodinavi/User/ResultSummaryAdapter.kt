@@ -4,14 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
-import com.example.capstonecodinavi.databinding.ItemResultSummaryBinding
+import com.example.capstonecodinavi.databinding.ItemResultBinding
 
 class ResultSummaryAdapter(var resultSummaryList: ArrayList<ResultSummary>) : RecyclerView.Adapter<ResultSummaryViewHolder>() {
 
     val itemClicked = MutableLiveData<ResultSummary>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ResultSummaryViewHolder {
-        val binding = ItemResultSummaryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemResultBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ResultSummaryViewHolder(binding)
     }
 

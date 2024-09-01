@@ -11,6 +11,11 @@ import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.NavHostFragment
+import com.android.volley.RequestQueue
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
@@ -21,7 +26,10 @@ import com.example.capstonecodinavi.R
 import com.example.capstonecodinavi.Recommend.SearchOccasionActivity
 import com.example.capstonecodinavi.User.UserActivity
 import com.example.capstonecodinavi.databinding.ActivityCameraBinding
+import org.json.JSONException
+import org.json.JSONObject
 import java.io.File
+import java.lang.RuntimeException
 import java.util.concurrent.ExecutorService
 
 class CameraActivity : AppCompatActivity() {
@@ -33,11 +41,17 @@ class CameraActivity : AppCompatActivity() {
 
     lateinit var imageId2: String
 
+    companion object {
+        var requestQueue: RequestQueue? = null
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCameraBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setTitle(" ")
+
+        initUI()
 
         if (savedInstanceState == null) {
             val navHostFragment = NavHostFragment.create(R.navigation.nav_graph)
@@ -48,6 +62,12 @@ class CameraActivity : AppCompatActivity() {
         }
 
         action()
+    }
+
+    private fun initUI() {
+        if (requestQueue == null) {
+            requestQueue = Volley.newRequestQueue(applicationContext)
+        }
     }
 
     private fun action() {
@@ -150,8 +170,48 @@ class CameraActivity : AppCompatActivity() {
     fun updateAnalysisResult(message2: String){
         Log.d("CameraActivity", "Updating UI with message: $message2")
         binding.textView2.text = message2
+
+        val typeRegex = Regex("종류는 (.+)이고,")
+        val patternRegex = Regex("무늬는 (.+)이며,")
+        val colorRegex = Regex("색상은 (.+)입니다")
+
+        val typeMatch = typeRegex.find(message2)?.groups?.get(1)?.value ?: "알 수 없음"
+        val patterMatch = patternRegex.find(message2)?.groups?.get(1)?.value ?: "알 수 없음"
+        val colorMatch = colorRegex.find(message2)?.groups ?.get(1)?.value ?: "알 수 없음"
+
+
+        saveInfo(typeMatch, patterMatch, colorMatch)
     }
     fun getImageId(imageId: String) {
         imageId2 = imageId
+    }
+
+    fun saveInfo(type: String, pattern: String, color: String) {
+        val url = "http://3.34.34.170:8080/cloth/history"
+
+        val body: JSONObject = JSONObject()
+        try {
+            body.put("color", color)
+            body.put("pattern", pattern)
+            body.put("type", type)
+        } catch (e: JSONException) {
+            throw RuntimeException(e)
+        }
+
+        val request = object :
+        JsonObjectRequest(
+            Method.POST,
+            url,
+            body,
+            Response.Listener { response ->
+                try {
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+            },
+            Response.ErrorListener {  }
+        ) {}
+        request.setShouldCache(false)
+        requestQueue!!.add(request)
     }
 }

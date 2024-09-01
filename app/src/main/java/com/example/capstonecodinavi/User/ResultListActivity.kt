@@ -52,7 +52,7 @@ class ResultListActivity : AppCompatActivity() {
         }
 
         adapter.itemClicked.observe(this) {
-            val intent = Intent(this, ResultContent::class.java)
+            val intent = Intent(this, RecommendResultActivity::class.java)
             startActivity(intent)
         }
 
