@@ -157,10 +157,6 @@ class OtherlocationActivity : AppCompatActivity() {
                             }
                         }
 
-                        Log.d("weatherInfoList","$weatherInfoList")
-                        Log.d("weatherInfoList","${weatherInfoList.size}")
-                        Log.d("nextNum","$nextNum")
-
                         for (i in nextNum until nextNum+24) {
                             val pty = jsonArray.getJSONObject(i).getJSONObject("info").getString("precipitationType")
                             if  (pty.equals("비") || pty.equals("눈") || pty.equals("비 또는 눈") || pty.equals("소나기")) {
@@ -169,8 +165,6 @@ class OtherlocationActivity : AppCompatActivity() {
                                 weatherSummaryPtyList.add(pty)
                             }
                         }
-
-                        Log.d("weatherInfoList2","$weatherSummaryDateList $weatherSummaryTimeList $weatherSummaryPtyList $weatherSummaryTvList")
 
                         weatherIconId = getWeatherIconId(weather, weather2)
                         weatherStr = getWeatherStr(weather, weather2)

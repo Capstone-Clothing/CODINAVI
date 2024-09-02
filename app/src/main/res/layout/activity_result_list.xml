@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:orientation="vertical"
-    tools:context=".Recommend.OccasionActivity">
+    android:background="@color/white"
+    tools:context=".User.ResultListActivity">
 
     <FrameLayout
         android:id="@+id/frameLayout"
@@ -37,47 +36,20 @@
             android:layout_marginRight="170dp"
             android:background="@drawable/back_btn"
             android:contentDescription="뒤로가기" />
+
     </FrameLayout>
 
-    <View
-        android:id="@+id/occasionTvback"
-        android:layout_width="330dp"
-        android:layout_height="530dp"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/rectangle_1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout"/>
-
-    <TextView
-        android:id="@+id/resultTv"
-        android:layout_width="290dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/soyo_maple_regular"
-        android:textColor="@color/black"
-        android:lineSpacingExtra="10dp"
-        android:textSize="20dp"
-        android:text="~~\n~~\n~~"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="3"
+        app:layout_constraintTop_toBottomOf="@id/frameLayout"
+        app:layout_constraintBottom_toTopOf="@id/menuBottomNav"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/occasionTvback"
-        app:layout_constraintBottom_toTopOf="@+id/guidelineTv"
-        />
-
-    <TextView
-        android:id="@+id/guidelineTv"
-        android:layout_width="290dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/soyo_maple_regular"
-        android:textColor="@color/black"
-        android:lineSpacingExtra="10dp"
-        android:textSize="20dp"
-        android:text="~~\n~~\n~~"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/resultTv"
-        app:layout_constraintBottom_toBottomOf="@+id/occasionTvback"
-        />
+        tools:ignore="UselessParent" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/menuBottomNav"

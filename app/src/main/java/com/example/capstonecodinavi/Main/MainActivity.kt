@@ -12,6 +12,7 @@ import com.example.capstonecodinavi.User.FirstGenderSetActivity
 import com.example.capstonecodinavi.User.UserActivity
 import com.example.capstonecodinavi.Weather.WeatherActivity
 import com.example.capstonecodinavi.databinding.ActivityMainBinding
+import java.util.UUID
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -37,9 +38,20 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+        initializeUserId()
 
         setTitle(" ")
         action()
+    }
+
+    private fun initializeUserId() {
+        if (sharedPreferences.getString("userId", null) == null) {
+            saveUserId(UUID.randomUUID().toString())
+        }
+    }
+
+    private fun saveUserId(userId: String) {
+        sharedPreferences.edit().putString("userId", userId).apply()
     }
 
     private fun action() {
