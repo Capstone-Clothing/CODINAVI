@@ -1,6 +1,7 @@
 package com.example.capstonecodinavi.Camera
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -38,6 +39,8 @@ class CameraActivity : AppCompatActivity() {
     private var imageCapture: ImageCapture? = null
     private lateinit var photoFile: File
     private lateinit var objectDetectorHelper: ObjectDetectorHelper
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var userId: String
 
     private lateinit var id: String
     lateinit var imageId2: String
@@ -51,6 +54,10 @@ class CameraActivity : AppCompatActivity() {
         binding = ActivityCameraBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setTitle(" ")
+
+        sharedPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE)
+
+        userId = sharedPreferences.getString("userId", "")!!
 
         initUI()
 
@@ -96,6 +103,7 @@ class CameraActivity : AppCompatActivity() {
             val intent = Intent(this, CodiRecommendActivity::class.java)
             intent.putExtra("imageId", imageId2)
             intent.putExtra("parentId", id)
+            intent.putExtra("userId", userId)
             startActivity(intent)
         }
 
@@ -103,6 +111,7 @@ class CameraActivity : AppCompatActivity() {
             val intent = Intent(this, ColorRecommendActivity::class.java)
             intent.putExtra("imageId", imageId2)
             intent.putExtra("parentId", id)
+            intent.putExtra("userId", userId)
             startActivity(intent)
         }
 
@@ -194,6 +203,7 @@ class CameraActivity : AppCompatActivity() {
 
         val body: JSONObject = JSONObject()
         try {
+            body.put("userId", userId)
             body.put("color", color)
             body.put("pattern", pattern)
             body.put("type", type)

@@ -15,6 +15,7 @@ import com.kakao.sdk.user.UserApiClient
 class UserActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUserBinding
     private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var userId: String
 
     // SharedPreferences에 사용자의 로그인 방법을 저장하는 키
     companion object {
@@ -31,6 +32,8 @@ class UserActivity : AppCompatActivity() {
 
         // 저장된 사용자 이름 가져오기
         val username = sharedPreferences.getString("username", "")
+
+        userId = sharedPreferences.getString("userId", "")!!
 
         // 사용자 이름이 비어있는 경우 "Unknown"을 사용
         val displayedName = if (username.isNullOrEmpty()) "Unknown" else username
@@ -62,6 +65,7 @@ class UserActivity : AppCompatActivity() {
 
         binding.recommendResultBtn.setOnClickListener {
             val intent = Intent(this, ResultListActivity::class.java)
+            intent.putExtra("userId", userId)
             startActivity(intent)
         }
 

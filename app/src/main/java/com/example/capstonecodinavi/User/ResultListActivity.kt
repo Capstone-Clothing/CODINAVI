@@ -18,6 +18,7 @@ import org.json.JSONObject
 class ResultListActivity : AppCompatActivity() {
     lateinit var binding: ActivityResultListBinding
     lateinit var adapter: ResultSummaryAdapter
+    private lateinit var userId: String
 
     val resultSummaryList = ArrayList<ResultSummary>()
 
@@ -33,7 +34,9 @@ class ResultListActivity : AppCompatActivity() {
         initUI()
         setTitle(" ")
         action()
-        getResultFromDB()
+        userId = intent.getStringExtra("userId")!!
+        getResultFromDB(userId)
+
     }
 
     private fun initUI() {
@@ -74,8 +77,8 @@ class ResultListActivity : AppCompatActivity() {
         }
     }
 
-    fun getResultFromDB() {
-        val url = "http://3.34.34.170:8080/cloth/history"
+    fun getResultFromDB(userId: String) {
+        val url = "http://3.34.34.170:8080/cloth/history/$userId"
         val request = object :
         StringRequest(
             Method.GET,
