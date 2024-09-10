@@ -1,5 +1,6 @@
 package com.example.capstonecodinavi.Camera
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.ImageFormat
@@ -247,6 +248,10 @@ class CameraFragment : Fragment() {
                     result?.let {
                         val clothingItem = it.result[0]
                         val message2 = "옷의 종류는 ${clothingItem.종류}이고,\n무늬는 ${clothingItem.무늬정보}이며,\n색상은 ${clothingItem.색상}입니다."
+
+                        // SharedPreferences에 데이터 저장
+                        saveClothingData(clothingItem.종류, clothingItem.무늬정보, clothingItem.색상)
+
                         (activity as CameraActivity).updateAnalysisResult(message2)
                         (activity as CameraActivity).getImageId(imageId)
                     }
@@ -270,5 +275,15 @@ class CameraFragment : Fragment() {
 
     fun getImageCapture(): ImageCapture? {
         return imageCapture
+    }
+
+    private fun saveClothingData(clothingType: String, clothingPattern: String, clothingColor: String) {
+        val sharedPreferences = requireContext().getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
+        with(sharedPreferences.edit()) {
+            putString("CLOTHING_TYPE", clothingType)
+            putString("CLOTHING_PATTERN", clothingPattern)
+            putString("CLOTHING_COLOR", clothingColor)
+            apply()
+        }
     }
 }

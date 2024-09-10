@@ -1,5 +1,6 @@
 package com.example.capstonecodinavi.Recommend
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -62,10 +63,11 @@ class SearchOccasionActivity : AppCompatActivity() {
     }
 
     private fun openOccasionActivity(occasion: String){
-        // 임시 데이터 설정
-        val clothingType = "티셔츠"
-        val clothingPattern = "무지"
-        val clothingColor = "흰색"
+        // SharedPreferences에서 데이터 조회
+        val sharedPreferences = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
+        val clothingType = sharedPreferences.getString("CLOTHING_TYPE", "기본값")
+        val clothingPattern = sharedPreferences.getString("CLOTHING_PATTERN", "기본값")
+        val clothingColor = sharedPreferences.getString("CLOTHING_COLOR", "기본값")
 
         val intent = Intent(this, OccasionActivity::class.java).apply {
             putExtra("OCCASION", occasion)
