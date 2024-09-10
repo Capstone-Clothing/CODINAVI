@@ -109,7 +109,7 @@
         android:id="@+id/introduceAppcTv5"
         android:layout_width="291dp"
         android:layout_height="wrap_content"
-        android:text="2. 마이페이지 : 위에서부터 '성별 변경', '사용설명서', '관리자 문의', '로그아웃' 버튼이 있습니다."
+        android:text="2. 마이페이지 : 위에서부터 '성별 변경', '코디 추천 내역', '사용설명서', '관리자 문의', '로그아웃' 버튼이 있습니다."
         android:fontFamily="@font/soyo_maple_regular"
         android:textColor="@color/black"
         android:lineSpacingExtra="10dp"
