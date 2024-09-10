@@ -254,9 +254,12 @@ class CameraFragment : Fragment() {
                         // SharedPreferences에 데이터 저장
                         saveClothingData(clothingItem.종류, clothingItem.무늬정보, clothingItem.색상)
 
-                        (activity as CameraActivity).updateAnalysisResult(message2)
-                        (activity as CameraActivity).getImageId(imageId)
-                        (activity as ConfirmActivity).updateAnalysisResult(message2)
+                        if (activity is ConfirmActivity) {
+                            (activity as ConfirmActivity).updateAnalysisResult(message2)
+                        } else if (activity is CameraActivity) {
+                            (activity as CameraActivity).updateAnalysisResult(message2)
+                            (activity as CameraActivity).getImageId(imageId)
+                        }
                     }
                 } else {
                     Log.e("CameraFragment", "Failed to get analysis result: ${response.errorBody()?.string()}")
