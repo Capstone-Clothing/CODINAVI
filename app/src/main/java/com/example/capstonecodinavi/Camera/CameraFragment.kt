@@ -41,6 +41,7 @@ import java.util.Locale
 import java.util.UUID
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import com.example.capstonecodinavi.Recommend.ConfirmActivity
 
 class CameraFragment : Fragment() {
 
@@ -173,6 +174,7 @@ class CameraFragment : Fragment() {
             recogmessage = "다시 인식해주세요."
         }
         (activity as? CameraActivity)?.updateTextView(recogmessage)
+        (activity as? ConfirmActivity)?.updateTextView(recogmessage)
     }
 
     private fun imageProxyToBitmap(imageProxy: ImageProxy): Bitmap {
@@ -254,6 +256,7 @@ class CameraFragment : Fragment() {
 
                         (activity as CameraActivity).updateAnalysisResult(message2)
                         (activity as CameraActivity).getImageId(imageId)
+                        (activity as ConfirmActivity).updateAnalysisResult(message2)
                     }
                 } else {
                     Log.e("CameraFragment", "Failed to get analysis result: ${response.errorBody()?.string()}")
