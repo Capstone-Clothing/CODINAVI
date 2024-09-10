@@ -10,14 +10,6 @@
     android:id="@+id/parentLl"
     >
 
-    <TextView
-        android:id = "@+id/idTv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:layout_gravity="left"
-        android:textColor="@color/black"
-        android:textSize="20dp"/>
 
     <TextView
         android:id="@+id/colorTv"
