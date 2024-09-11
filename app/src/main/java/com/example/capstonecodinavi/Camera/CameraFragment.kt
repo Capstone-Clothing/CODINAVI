@@ -150,29 +150,17 @@ class CameraFragment : Fragment() {
     }
 
     private fun updateTextView(detectionResults: List<DetectionResult>) {
-        val recogmessage: String
+        var recogmessage: String = "다시 인식해주세요."
+
         if (detectionResults.isNotEmpty()) {
             val boundingBox = detectionResults[0].boundingBox
-            val boxWidth = boundingBox.width()
-            val boxHeight = boundingBox.height()
 
-            val minSize = 400
-            val maxSize = 800
-
-            recogmessage = when {
-                boxWidth < minSize || boxHeight < minSize -> {
-                    "가까이 가주세요."
-                }
-                boxWidth > maxSize || boxHeight > maxSize -> {
-                    "떨어져 주세요."
-                }
-                else -> {
-                    "사진을 찍어주세요."
-                }
+            if (!boundingBox.isEmpty) {
+                recogmessage = "사진을 찍어주세요."
             }
-        } else {
-            recogmessage = "다시 인식해주세요."
+
         }
+
         (activity as? CameraActivity)?.updateTextView(recogmessage)
         (activity as? ConfirmActivity)?.updateTextView(recogmessage)
     }
