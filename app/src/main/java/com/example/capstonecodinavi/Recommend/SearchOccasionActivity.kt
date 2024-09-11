@@ -63,11 +63,10 @@ class SearchOccasionActivity : AppCompatActivity() {
     }
 
     private fun openOccasionActivity(occasion: String){
-        // SharedPreferences에서 데이터 조회
-        val sharedPreferences = getSharedPreferences("MyPreferences", Context.MODE_PRIVATE)
-        val clothingType = sharedPreferences.getString("CLOTHING_TYPE", "기본값")
-        val clothingPattern = sharedPreferences.getString("CLOTHING_PATTERN", "기본값")
-        val clothingColor = sharedPreferences.getString("CLOTHING_COLOR", "기본값")
+
+        val clothingType = intent.getStringExtra("type")
+        val clothingPattern = intent.getStringExtra("pattern")
+        val clothingColor = intent.getStringExtra("color")
 
         val intent = Intent(this, OccasionActivity::class.java).apply {
             putExtra("OCCASION", occasion)

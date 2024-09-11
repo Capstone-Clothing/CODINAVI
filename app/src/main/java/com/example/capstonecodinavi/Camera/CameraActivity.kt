@@ -45,6 +45,10 @@ class CameraActivity : AppCompatActivity() {
     private lateinit var id: String
     lateinit var imageId2: String
 
+    lateinit var typeMatch: String
+    lateinit var patterMatch: String
+    lateinit var colorMatch: String
+
     companion object {
         var requestQueue: RequestQueue? = null
     }
@@ -117,6 +121,9 @@ class CameraActivity : AppCompatActivity() {
 
         binding.occasionCodiBtn.setOnClickListener {
             val intent = Intent(this, SearchOccasionActivity::class.java)
+            intent.putExtra("type", typeMatch)
+            intent.putExtra("pattern", patterMatch)
+            intent.putExtra("color", colorMatch)
             startActivity(intent)
         }
 
@@ -188,9 +195,9 @@ class CameraActivity : AppCompatActivity() {
         val patternRegex = Regex("무늬는 (.+)이며,")
         val colorRegex = Regex("색상은 (.+)입니다")
 
-        val typeMatch = typeRegex.find(message2)?.groups?.get(1)?.value ?: "알 수 없음"
-        val patterMatch = patternRegex.find(message2)?.groups?.get(1)?.value ?: "알 수 없음"
-        val colorMatch = colorRegex.find(message2)?.groups ?.get(1)?.value ?: "알 수 없음"
+        typeMatch = typeRegex.find(message2)?.groups?.get(1)?.value ?: "알 수 없음"
+        patterMatch = patternRegex.find(message2)?.groups?.get(1)?.value ?: "알 수 없음"
+        colorMatch = colorRegex.find(message2)?.groups ?.get(1)?.value ?: "알 수 없음"
 
 
         saveInfo(typeMatch, patterMatch, colorMatch)
