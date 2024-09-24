@@ -220,21 +220,21 @@ class CameraActivity : AppCompatActivity() {
         }
 
         val request = object :
-        JsonObjectRequest(
-            Method.POST,
-            url,
-            body,
-            Response.Listener { response ->
-                try {
+            JsonObjectRequest(
+                Method.POST,
+                url,
+                body,
+                Response.Listener { response ->
+                    try {
 
-                    id = response.getString("id").toString();
+                        id = response.getString("id").toString();
 
-                } catch (e: JSONException) {
-                    e.printStackTrace()
-                }
-            },
-            Response.ErrorListener {  }
-        ) {}
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                    }
+                },
+                Response.ErrorListener {  }
+            ) {}
         request.setShouldCache(false)
         requestQueue!!.add(request)
     }
